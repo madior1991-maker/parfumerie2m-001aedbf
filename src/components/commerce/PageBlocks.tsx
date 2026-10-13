@@ -51,22 +51,38 @@ export function ProductGrid({ limit }: { limit?: number }) {
 
 export function Ticker() {
   const items = [
-    "✦ Livraison rapide à Dakar · 24 à 48h en régions",
-    "✦ Livraison offerte dès 75 000 F",
-    "✦ Wave · Orange Money · espèces",
+    // Bandeau d'origine
+    "✦ Livraison partout à Dakar",
     "✦ +100 collections exclusives",
     "✦ Commande avec le gérant",
     "✦ Notes olfactives certifiées",
     "✦ SCENTLAB · DUBAI · TAKEOFF",
     "✦ Réponse WhatsApp en moins d'1h",
     "✦ Haqqi · Pocket · Authentic",
+    // Livraison et paiement
+    "✦ Livraison rapide à Dakar · 24 à 48h en régions",
+    "✦ Livraison offerte dès 75 000 F",
+    "✦ Paiement Wave · Orange Money · espèces",
+    // Catégories du site
+    "✦ SCENTLAB",
+    "✦ Takeoff Fragrance",
+    "✦ Dubai Perfumes",
+    "✦ Parfums de poche",
+    "✦ Parfums authentiques",
+    "✦ Haqqi",
+    "✦ Collections privées",
+    "✦ Coffrets",
+    "✦ Fragrance Library",
   ];
   return (
     <div
       className="flex h-11 items-center overflow-hidden whitespace-nowrap bg-accent md:h-12"
       aria-hidden="true"
     >
-      <div className="ticker-track flex w-max shrink-0 flex-nowrap items-center gap-8">
+      <div
+        className="ticker-track flex w-max shrink-0 flex-nowrap items-center gap-8"
+        style={{ animationDuration: `${Math.round((45 * items.length) / 7)}s` }}
+      >
         {[...items, ...items, ...items, ...items].map((item, index) => (
           <span
             key={`${item}-${index}`}
