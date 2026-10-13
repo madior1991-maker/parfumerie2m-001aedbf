@@ -23,6 +23,9 @@ function buildOrderMessage(items: ReturnType<typeof useCart>["items"], total: nu
 
 export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { items, removeItem, updateQuantity, clearCart, total, itemCount } = useCart();
+  const takeoffCount = items
+    .filter((item) => /takeoff/i.test(item.collection ?? ""))
+    .reduce((sum, item) => sum + item.quantity, 0);
 
   const checkout = () => {
     if (!items.length) return;
@@ -136,7 +139,7 @@ export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => vo
                 <strong className="text-lg text-accent">{formatCartPrice(total)} FCFA</strong>
               </div>
               <p className="mb-2 rounded-md bg-accent/10 px-3 py-2 text-center text-xs font-medium text-accent">
-                {total >= FREE_DELIVERY
+                {total >= FREE_DELIVERY || takeoffCount >= 2
                   ? "🎉 Livraison offerte sur cette commande"
                   : `Plus que ${formatCartPrice(FREE_DELIVERY - total)} FCFA pour la livraison offerte`}
               </p>
