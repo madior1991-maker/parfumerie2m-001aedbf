@@ -12,6 +12,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Checkbox } from "@/components/ui/checkbox";
 import { SiteLayout } from "@/components/commerce/SiteLayout";
 import { WhatsAppLogo } from "@/components/commerce/WhatsAppLogo";
+import { TutoVideoSection } from "@/components/commerce/TutoVideoSection";
 import { catalog, formatPrice, slugifyProduct } from "@/lib/catalog-data";
 import { whatsappUrl } from "@/lib/perfume-data";
 
@@ -396,6 +397,8 @@ function CoffretSignaturePage() {
           </div>
         </div>
       </section>
+
+      <TutoVideoSection />
 
       <section id="compose" className="bg-surface py-16 md:py-24">
         <div className="section-shell grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
