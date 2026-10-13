@@ -26,12 +26,18 @@ export const Route = createFileRoute("/boutique/$productSlug")({
   head: ({ params }) => {
     const product = findProductBySlug(params.productSlug);
     const url = `https://www.2mparfumeriedk.com/boutique/${params.productSlug}`;
+    // Produits ajoutés depuis l'admin : absents du catalogue local, on part du nom dans l'adresse.
+    const slugName = params.productSlug
+      .split("-")
+      .filter(Boolean)
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
     const title = product
       ? `${product.name} – ${collectionLabel(product.collection)} | 2M Parfumerie Dakar`
-      : "Parfum introuvable | 2M Parfumerie";
+      : `${slugName} | 2M Parfumerie Dakar`;
     const description = product
-      ? `${product.name} par ${collectionLabel(product.collection)} : notes de ${product.notes}. ${formatPrice(product.price)}. Livraison à Dakar. Commandez sur WhatsApp chez 2M Parfumerie.`
-      : "Ce parfum n'est pas disponible dans la boutique 2M Parfumerie.";
+      ? `${product.name} par ${collectionLabel(product.collection)} : notes de ${product.notes}. ${formatPrice(product.price)}. Livraison rapide à Dakar. Commandez sur WhatsApp chez 2M Parfumerie.`
+      : `${slugName} chez 2M Parfumerie. Commande sur WhatsApp, livraison rapide à Dakar, 24 à 48h en régions. Paiement Wave, Orange Money ou espèces.`;
     const image = product?.image ? optimizedProductImageUrl(product.image, 1200) : undefined;
     const meta: Array<Record<string, string>> = [
       { title },
