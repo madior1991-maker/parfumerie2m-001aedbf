@@ -44,7 +44,7 @@ const faqs = [
   {
     question: "Combien coûte la livraison et en combien de temps ?",
     answer:
-      "Nous livrons partout au Sénégal en 24 à 48h maximum. Tarifs : 1 500 à 2 000 FCFA à Dakar selon la zone, 2 000 FCFA en régions. La livraison est offerte dès 75 000 FCFA d'achat, et pour 2 parfums Takeoff (50 000 FCFA).",
+      "Nous livrons partout au Sénégal : livraison rapide à Dakar (1 500 à 2 000 FCFA selon la zone) et en 24 à 48h dans les régions (2 000 FCFA). La livraison est offerte dès 75 000 FCFA d'achat, et pour 2 parfums Takeoff (50 000 FCFA).",
   },
   {
     question: "Comment finaliser ma commande ?",

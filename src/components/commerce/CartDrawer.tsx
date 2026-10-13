@@ -152,7 +152,7 @@ export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => vo
                 Commander sur WhatsApp
               </Button>
               <p className="mt-3 text-center text-xs text-muted-foreground">
-                Paiement Wave, Orange Money ou espèces. Livraison 24 à 48h : Dakar 1 500 à 2 000 F, régions 2 000 F.
+                Paiement Wave, Orange Money ou espèces. Livraison rapide à Dakar (1 500 à 2 000 F), 24 à 48h en régions (2 000 F).
               </p>
               <Button
                 type="button"

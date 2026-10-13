@@ -164,7 +164,7 @@ function ContactPage() {
               >
                 <p className="text-foreground">Partout au Sénégal</p>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  Livraison en 24 à 48h · Dakar 1 500 à 2 000 F, régions 2 000 F · offerte dès 75 000 F
+                  Livraison rapide à Dakar (1 500 à 2 000 F) · 24 à 48h en régions (2 000 F) · offerte dès 75 000 F
                 </p>
               </ContactItem>
             </div>

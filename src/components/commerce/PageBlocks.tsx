@@ -51,7 +51,7 @@ export function ProductGrid({ limit }: { limit?: number }) {
 
 export function Ticker() {
   const items = [
-    "✦ Livraison 24 à 48h partout au Sénégal",
+    "✦ Livraison rapide à Dakar · 24 à 48h en régions",
     "✦ Livraison offerte dès 75 000 F",
     "✦ Wave · Orange Money · espèces",
     "✦ +100 collections exclusives",

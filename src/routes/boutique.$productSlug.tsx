@@ -229,7 +229,7 @@ function ProductTemplate({ product, products }: { product: BoutiqueProduct; prod
               {formatPrice(product.price)}
             </p>
             <p className="mt-2 text-[13px] text-whatsapp">
-              ✓ En stock — Livré en 24 à 48h partout au Sénégal
+              ✓ En stock — Livraison rapide à Dakar, 24 à 48h en régions
             </p>
 
             <div className="mt-8 space-y-2">

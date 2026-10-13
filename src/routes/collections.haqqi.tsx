@@ -40,7 +40,7 @@ export const Route = createFileRoute("/collections/haqqi")({
       collection="haqqi"
       eyebrow="Collection Haqqi"
       h1="Haqqi — Parfums quotidiens accessibles livrés partout au Sénégal"
-      intro="Haqqi est la collection de parfums abordables et quotidiens de 2M Parfumerie. Pensés pour le quotidien sénégalais, les parfums Haqqi offrent une tenue remarquable à un prix accessible, à partir de 4 000 FCFA. Livrés en 24 à 48h partout au Sénégal. Commandez sur WhatsApp ou composez votre pack de 3 Haqqi à 10 000 FCFA."
+      intro="Haqqi est la collection de parfums abordables et quotidiens de 2M Parfumerie. Pensés pour le quotidien sénégalais, les parfums Haqqi offrent une tenue remarquable à un prix accessible, à partir de 4 000 FCFA. Livraison rapide à Dakar, 24 à 48h en régions. Commandez sur WhatsApp ou composez votre pack de 3 Haqqi à 10 000 FCFA."
       ctaLabel="Pack Haqqi (3 parfums) — 10 000 FCFA"
       ctaHref="/coffret-signature"
     />

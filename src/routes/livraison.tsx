@@ -14,7 +14,7 @@ export const Route = createFileRoute("/livraison")({
       {
         name: "description",
         content:
-          "Livraison 2M Parfumerie en 24 à 48h partout au Sénégal : 1 500 à 2 000 FCFA à Dakar, 2 000 FCFA en régions, offerte dès 75 000 FCFA. Paiement Wave, Orange Money ou espèces.",
+          "Livraison 2M Parfumerie : rapide à Dakar (1 500 à 2 000 FCFA selon la zone), 24 à 48h en régions (2 000 FCFA), offerte dès 75 000 FCFA. Paiement Wave, Orange Money ou espèces.",
       },
     ],
   }),
@@ -31,7 +31,7 @@ function DeliveryPage() {
     {
       icon: Clock,
       title: "Confirmation",
-      text: "Nous confirmons la disponibilité et l'adresse. Vous êtes livré en 24 à 48h maximum.",
+      text: "Nous confirmons la disponibilité et l'adresse. Livraison rapide à Dakar, 24 à 48h en régions.",
     },
     {
       icon: MapPinned,
@@ -40,9 +40,8 @@ function DeliveryPage() {
     },
   ];
   const rates = [
-    { label: "Dakar", value: "1 500 à 2 000 FCFA" },
-    { label: "Régions", value: "2 000 FCFA" },
-    { label: "Délai", value: "24 à 48h max" },
+    { label: "Dakar · livraison rapide", value: "1 500 à 2 000 FCFA" },
+    { label: "Régions · 24 à 48h", value: "2 000 FCFA" },
     { label: "Livraison offerte", value: "Dès 75 000 FCFA" },
   ];
   return (
@@ -54,7 +53,7 @@ function DeliveryPage() {
             title="Une commande simple, suivie et humaine."
             text="Chaque détail est confirmé sur WhatsApp pour éviter les surprises et garder l’expérience fluide."
           />
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-3 sm:grid-cols-3">
             {rates.map(({ label, value }) => (
               <div key={label} className="rounded-lg border border-accent/30 bg-accent-muted p-5">
                 <p className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground">{label}</p>

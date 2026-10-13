@@ -10,7 +10,7 @@ import { whatsappUrl } from "@/lib/perfume-data";
 const URL = "https://www.2mparfumeriedk.com/collections/takeoff";
 const TITLE = "Takeoff Fragrance Dakar — 25 000 F, les 2 à 50 000 F | 2M Parfumerie";
 const DESC =
-  "Takeoff Fragrance à Dakar : parfums inspirés des grandes villes du monde à 25 000 FCFA, les 2 à 50 000 FCFA avec livraison offerte. Livré en 24 à 48h partout au Sénégal.";
+  "Takeoff Fragrance à Dakar : parfums inspirés des grandes villes du monde à 25 000 FCFA, les 2 à 50 000 FCFA avec livraison offerte. Livraison rapide à Dakar, 24 à 48h en régions.";
 
 export const Route = createFileRoute("/collections/takeoff")({
   head: () => ({
@@ -45,7 +45,7 @@ export const Route = createFileRoute("/collections/takeoff")({
       collection="takeoff"
       eyebrow="Collection Takeoff — Scent of Journey"
       h1="Takeoff — Scent of Journey, la collection voyage de 2M Parfumerie"
-      intro="Takeoff est la collection signature de 2M Parfumerie : des parfums inspirés des grandes villes du monde — Paris, New York, Dubai, Rome, Lisbon, Capri et bien d'autres. Chaque flacon (Eau de Parfum, 100 ml) est à 25 000 FCFA. Les 2 à 50 000 FCFA, livraison offerte. Commandez sur WhatsApp, livraison en 24 à 48h partout au Sénégal."
+      intro="Takeoff est la collection signature de 2M Parfumerie : des parfums inspirés des grandes villes du monde — Paris, New York, Dubai, Rome, Lisbon, Capri et bien d'autres. Chaque flacon (Eau de Parfum, 100 ml) est à 25 000 FCFA. Les 2 à 50 000 FCFA, livraison offerte. Commandez sur WhatsApp, livraison rapide à Dakar, 24 à 48h en régions."
       heroImage={takeoffMoscow}
       heroImageAlt="Parfum Takeoff Moscow, inspiré de Xerjoff La Capitale"
     >
