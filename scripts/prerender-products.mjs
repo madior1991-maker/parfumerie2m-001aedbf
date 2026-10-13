@@ -47,7 +47,9 @@ async function main() {
     return console.log(`prerender-products: base injoignable (${error.message}), ignoré`);
   }
   const base = fs.readFileSync(path.join(dist, "index.html"), "utf8");
-  const live = rows.filter((r) => r.slug && r.description !== DELETED);
+  const live = rows
+    .filter((r) => r.slug && r.description !== DELETED)
+    .map((r) => ({ ...r, name: String(r.name || "").trim() }));
   const deleted = new Set(rows.filter((r) => r.slug && r.description === DELETED).map((r) => r.slug));
 
   for (const r of live) {
