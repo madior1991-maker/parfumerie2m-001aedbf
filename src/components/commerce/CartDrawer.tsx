@@ -149,7 +149,7 @@ export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => vo
                 className="mt-3 w-full bg-whatsapp py-4 text-primary-foreground hover:bg-whatsapp-hover"
               >
                 <WhatsAppLogo tone="light" className="size-5" />
-                Confirmer avec le gérant sur WhatsApp
+                Commander sur WhatsApp
               </Button>
               <p className="mt-3 text-center text-xs text-muted-foreground">
                 Paiement Wave, Orange Money ou espèces. Livraison 24 à 48h : Dakar 1 500 à 2 000 F, régions 2 000 F.
