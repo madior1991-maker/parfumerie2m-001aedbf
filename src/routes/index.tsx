@@ -7,7 +7,7 @@ import { AddToCartButton } from "@/components/commerce/AddToCartButton";
 const Ticker = React.lazy(() => import("@/components/commerce/PageBlocks").then((m) => ({ default: m.Ticker })));
 import { SiteLayout } from "@/components/commerce/SiteLayout";
 import { WhatsAppLogo } from "@/components/commerce/WhatsAppLogo";
-import homeHeroBottle from "@/assets/home-white-bottle.png";
+import homeHeroBottle from "@/assets/home-white-bottle.webp";
 import {
   catalog,
   collectionLabel,
@@ -141,7 +141,7 @@ const promises = [
   {
     icon: Handshake,
     title: "Accord avec le gérant",
-    body: "La commande se finalise directement avec le gérant, sans système de paiement en ligne.",
+    body: "La commande se finalise directement avec le gérant. Paiement Wave, Orange Money ou espèces.",
   },
 ];
 
@@ -233,6 +233,7 @@ function Index() {
             <div className="relative order-2 h-[38vh] min-h-[260px] overflow-hidden bg-surface-alt md:h-full md:min-h-0">
               <video
                 src="/videos/authentic.mp4"
+                poster="/videos/authentic-poster.jpg"
                 autoPlay
                 loop
                 muted

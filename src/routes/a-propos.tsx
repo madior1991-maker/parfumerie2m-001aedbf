@@ -2,8 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Gem, MapPin, Phone, Plus, Users } from "lucide-react";
 import { useState } from "react";
 
-import aboutHero from "@/assets/about-perfume-grid.png";
-import brandLogo from "@/assets/2m-parfumerie-logo.png";
+import aboutHero from "@/assets/about-perfume-grid.webp";
+import brandLogo from "@/assets/2m-parfumerie-logo.webp";
 import { WhatsAppLogo } from "@/components/commerce/WhatsAppLogo";
 import { Button } from "@/components/ui/button";
 import { SiteLayout } from "@/components/commerce/SiteLayout";
@@ -69,7 +69,7 @@ const faqs = [
   {
     question: "Quelle est la différence entre vos collections ?",
     answer:
-      "Chaque collection a son univers :\n· SCENTLAB — fragrances contemporaines et épurées\n· TAKEOFF FRAGANCE — signatures audacieuses et marquées\n· Dubai Perfumes — oud, rose, musc — l'Orient en flacon\n· Pocket Perfumes — formats voyage compacts\n· Authentic Perfumes — grandes maisons, originaux certifiés\n· Haqqi — sélection exclusive, qualité premium",
+      "Chaque collection a son univers :\n· SCENTLAB — fragrances contemporaines et épurées\n· TAKEOFF FRAGRANCE — signatures audacieuses et marquées\n· Dubai Perfumes — oud, rose, musc — l'Orient en flacon\n· Pocket Perfumes — formats voyage compacts\n· Authentic Perfumes — grandes maisons, originaux certifiés\n· Haqqi — sélection exclusive, qualité premium",
   },
   {
     question: "Comment passer une commande ?",

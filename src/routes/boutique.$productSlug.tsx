@@ -100,16 +100,30 @@ export const Route = createFileRoute("/boutique/$productSlug")({
 function ProductPage() {
   const { productSlug } = Route.useParams();
   const [products, setProducts] = useState<BoutiqueProduct[]>(() => catalog);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     const loadProducts = async () => {
       const { data } = await supabase.from("products").select("*");
       setProducts(mergeLiveCatalog(data ?? []));
+      setLoaded(true);
     };
     void loadProducts();
   }, []);
 
   const product = products?.find((item) => slugifyProduct(item) === productSlug) ?? null;
+
+  // Produit ajouté depuis l'admin : on attend la base avant d'afficher « introuvable ».
+  if (!product && !loaded) {
+    return (
+      <SiteLayout>
+        <section className="section-shell py-40 text-center" aria-busy="true">
+          <p className="caption-luxe text-accent">Boutique</p>
+          <p className="mt-4 font-display text-2xl text-muted-foreground">Chargement du parfum…</p>
+        </section>
+      </SiteLayout>
+    );
+  }
 
   if (!product) {
     return (
@@ -130,7 +144,40 @@ function ProductPage() {
     );
   }
 
-  return <ProductTemplate product={product} products={products} />;
+  return (
+    <>
+      {!findProductBySlug(productSlug) && <ProductJsonLd product={product} slug={productSlug} />}
+      <ProductTemplate product={product} products={products} />
+    </>
+  );
+}
+
+// Données « Produit » pour Google (prix, stock) quand la fiche vient de la base.
+function ProductJsonLd({ product, slug }: { product: BoutiqueProduct; slug: string }) {
+  const url = `https://www.2mparfumeriedk.com/boutique/${slug}`;
+  const rawImage = optimizedProductImageUrl(product.image, 1200);
+  const image = rawImage
+    ? rawImage.startsWith("http")
+      ? rawImage
+      : `https://www.2mparfumeriedk.com${rawImage.startsWith("/") ? "" : "/"}${rawImage}`
+    : undefined;
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    description: product.description,
+    image,
+    brand: { "@type": "Brand", name: collectionLabel(product.collection) },
+    offers: {
+      "@type": "Offer",
+      price: product.price,
+      priceCurrency: "XOF",
+      availability: "https://schema.org/InStock",
+      url,
+      seller: { "@type": "Organization", name: "2M Parfumerie" },
+    },
+  };
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />;
 }
 
 function ProductTemplate({ product, products }: { product: BoutiqueProduct; products: BoutiqueProduct[] }) {
@@ -271,7 +318,9 @@ function ProductTemplate({ product, products }: { product: BoutiqueProduct; prod
                 ["🌸", "Notes de tête", product.headNotes],
                 ["💐", "Notes de cœur", product.heartNotes],
                 ["🌿", "Notes de fond", product.baseNotes],
-              ].map(([icon, title, notes]) => (
+              ]
+                .filter(([, , notes]) => notes && !/notes à préciser/i.test(notes))
+                .map(([icon, title, notes]) => (
                 <div
                   key={title}
                   className="flex gap-3 border-b border-border py-2 text-sm text-muted-foreground last:border-0"

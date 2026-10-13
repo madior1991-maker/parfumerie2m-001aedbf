@@ -15,8 +15,8 @@ import {
 } from "@/lib/catalog-data";
 import { supabase } from "@/integrations/supabase/client";
 import { mergeLiveCatalog } from "@/lib/live-catalog";
-import pocketHommeImage from "@/assets/pocket-perfumes-homme.png";
-import pocketFemmeImage from "@/assets/pocket-perfumes-femme.png";
+import pocketHommeImage from "@/assets/pocket-perfumes-homme.webp";
+import pocketFemmeImage from "@/assets/pocket-perfumes-femme.webp";
 
 function validateBoutiqueSearch(search: Record<string, unknown>): { collection?: Collection } {
   if (typeof search.collection !== "string" || !search.collection.trim()) {

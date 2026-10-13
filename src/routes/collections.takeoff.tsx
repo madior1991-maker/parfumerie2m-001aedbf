@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import takeoffPoster from "@/assets/poster takeoff.jpeg";
-import takeoffMoscow from "@/assets/takeoff-moscow.png";
+import takeoffMoscow from "@/assets/takeoff-moscow.webp";
 import { CollectionPage } from "@/components/commerce/CollectionPage";
 import { WhatsAppLogo } from "@/components/commerce/WhatsAppLogo";
 import { Button } from "@/components/ui/button";

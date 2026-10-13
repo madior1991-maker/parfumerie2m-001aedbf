@@ -1,35 +1,35 @@
-import losAngelesImage from "@/assets/takeoff-los-angeles.png";
-import amsterdamImage from "@/assets/takeoff-amsterdam.png";
-import zurichImage from "@/assets/takeoff-zurich.png";
-import berlinImage from "@/assets/takeoff-berlin.png";
-import dubaiImage from "@/assets/takeoff-dubai.png";
-import riyadhImage from "@/assets/takeoff-riyadh.png";
-import viennaImage from "@/assets/takeoff-vienna.png";
+import losAngelesImage from "@/assets/takeoff-los-angeles.webp";
+import amsterdamImage from "@/assets/takeoff-amsterdam.webp";
+import zurichImage from "@/assets/takeoff-zurich.webp";
+import berlinImage from "@/assets/takeoff-berlin.webp";
+import dubaiImage from "@/assets/takeoff-dubai.webp";
+import riyadhImage from "@/assets/takeoff-riyadh.webp";
+import viennaImage from "@/assets/takeoff-vienna.webp";
 import lisbonImage from "@/assets/hero-lisbon.jpg";
-import capriImage from "@/assets/takeoff-capri.png";
-import seoulImage from "@/assets/takeoff-seoul.png";
-import romeImage from "@/assets/takeoff-rome.png";
-import istanbulImage from "@/assets/takeoff-istanbul.png";
-import monacoImage from "@/assets/takeoff-monaco.png";
-import newYorkImage from "@/assets/takeoff-new-york.png";
-import moscowImage from "@/assets/takeoff-moscow.png";
-import milanImage from "@/assets/takeoff-milan.png";
-import budapestImage from "@/assets/takeoff-budapest.png";
-import parisImage from "@/assets/takeoff-paris.png";
+import capriImage from "@/assets/takeoff-capri.webp";
+import seoulImage from "@/assets/takeoff-seoul.webp";
+import romeImage from "@/assets/takeoff-rome.webp";
+import istanbulImage from "@/assets/takeoff-istanbul.webp";
+import monacoImage from "@/assets/takeoff-monaco.webp";
+import newYorkImage from "@/assets/takeoff-new-york.webp";
+import moscowImage from "@/assets/takeoff-moscow.webp";
+import milanImage from "@/assets/takeoff-milan.webp";
+import budapestImage from "@/assets/takeoff-budapest.webp";
+import parisImage from "@/assets/takeoff-paris.webp";
 // Use optimized public images for large assets to reduce bundle size
 const creamyAlmondImage = "/images/optimized/scentlab-creamy-almond-upload-w800.webp";
-import brightMandarinImage from "@/assets/scentlab-bright-mandarin.png";
-import caramelCitrusImage from "@/assets/scentlab-caramel-citrus.png";
-import fruityGourmandImage from "@/assets/scentlab-fruity-gourmand-upload.png";
+import brightMandarinImage from "@/assets/scentlab-bright-mandarin.webp";
+import caramelCitrusImage from "@/assets/scentlab-caramel-citrus.webp";
+import fruityGourmandImage from "@/assets/scentlab-fruity-gourmand-upload.webp";
 const fruityVanillaImage = "/images/optimized/scentlab-fruity-vanilla-w800.webp";
-import leatherVioletImage from "@/assets/scentlab-leather-violet.png";
-import spicyCaramelImage from "@/assets/scentlab-spicy-caramel-upload.png";
-import spicyLeatherImage from "@/assets/scentlab-spicy-leather-upload.png";
-import rosyHazelnutImage from "@/assets/scentlab-rosy-hazelnut-upload.png";
-import orientalOudImage from "@/assets/scentlab-oriental-oud-upload.png";
-import vanillaDreamImage from "@/assets/scentlab-vanilla-dream-upload.png";
-import savannaVetiverImage from "@/assets/scentlab-savanna-vetiver-upload.png";
-import cognacWhisperImage from "@/assets/scentlab-cognac-whisper-upload.png";
+import leatherVioletImage from "@/assets/scentlab-leather-violet.webp";
+import spicyCaramelImage from "@/assets/scentlab-spicy-caramel-upload.webp";
+import spicyLeatherImage from "@/assets/scentlab-spicy-leather-upload.webp";
+import rosyHazelnutImage from "@/assets/scentlab-rosy-hazelnut-upload.webp";
+import orientalOudImage from "@/assets/scentlab-oriental-oud-upload.webp";
+import vanillaDreamImage from "@/assets/scentlab-vanilla-dream-upload.webp";
+import savannaVetiverImage from "@/assets/scentlab-savanna-vetiver-upload.webp";
+import cognacWhisperImage from "@/assets/scentlab-cognac-whisper-upload.webp";
 import rosyGlowImage from "@/assets/scentlab-rosy-glow-upload.png";
 const haqqiCollectionImage = "/images/optimized/haqqi-collection-w800.webp";
 const pocketHommeImage = "/images/optimized/pocket-perfumes-homme-w800.webp";
@@ -75,7 +75,7 @@ export type BoutiqueProduct = {
 export const collectionFilters: { label: string; value: Collection }[] = [
   { label: "Toutes", value: "all" },
   { label: "SCENTLAB", value: "scentlab" },
-  { label: "TAKEOFF FRAGANCE", value: "takeoff" },
+  { label: "TAKEOFF FRAGRANCE", value: "takeoff" },
   { label: "Dubai Perfumes", value: "dubai" },
   { label: "Parfums de poches", value: "pocket" },
   { label: "Parfums authentiques", value: "authentic" },

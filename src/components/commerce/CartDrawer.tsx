@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { PerfumePlaceholder } from "@/components/commerce/PerfumePlaceholder";
 import { useCart } from "@/hooks/useCart";
 import { cn } from "@/lib/utils";
+import { track } from "@/lib/analytics";
 
 const FREE_DELIVERY = 75000;
 
@@ -29,6 +30,12 @@ export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => vo
 
   const checkout = () => {
     if (!items.length) return;
+    track("begin_checkout", {
+      currency: "XOF",
+      value: total,
+      items: items.map((item) => ({ item_id: item.id, item_name: item.name, item_category: item.collection, price: item.price, quantity: item.quantity })),
+    });
+    track("whatsapp_click", { link_text: "Panier" });
     window.open(
       `https://wa.me/221761923441?text=${encodeURIComponent(buildOrderMessage(items, total))}`,
       "_blank",

@@ -1,6 +1,7 @@
 import type { Database } from "@/integrations/supabase/types";
 import {
   catalog,
+  collectionLabel,
   collectionValues,
   normalizeCollectionValue,
   slugifyProduct,
@@ -48,11 +49,23 @@ function productFromRow(product: ProductRow, fallback?: BoutiqueProduct): Boutiq
     family: fallback?.family || collectionLabelFallback(collection),
     concentration: fallback?.concentration || "Eau de parfum",
     volume: fallback?.volume || "100 ml",
-    description: product.description || fallback?.description || "Disponible chez 2M Parfumerie à Dakar.",
+    description: product.description || fallback?.description || buildDescription(product.name, collection, product),
     slug: product.slug,
   };
 }
 
 function collectionLabelFallback(collection: Collection) {
-  return collection === "takeoff" ? "Scent of Journey" : "Parfum sélectionné";
+  return collection === "takeoff" ? "Scent of Journey" : collectionLabel(collection);
+}
+
+// Description de secours quand la fiche n'en a pas : nom, collection et notes réelles.
+function buildDescription(name: string, collection: Collection, product: ProductRow) {
+  const notes = [product.notes_top, product.notes_heart, product.notes_base]
+    .map((value) => value?.trim().replace(/[.;]+$/, ""))
+    .filter((value): value is string => Boolean(value));
+  const label = collectionLabel(collection);
+  const intro = notes.length
+    ? `${name} (${label}) s'ouvre sur ${notes[0].toLowerCase()}${notes[1] ? `, avec un cœur de ${notes[1].toLowerCase()}` : ""}${notes[2] ? ` et un fond de ${notes[2].toLowerCase()}` : ""}.`
+    : `${name}, de la collection ${label}.`;
+  return `${intro} Disponible chez 2M Parfumerie : commande sur WhatsApp, livraison rapide à Dakar et en 24 à 48h dans les régions.`;
 }

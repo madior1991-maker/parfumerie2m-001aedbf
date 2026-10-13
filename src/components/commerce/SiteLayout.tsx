@@ -30,7 +30,7 @@ const navItems = [
 
 const footerCollections = [
   { label: "SCENTLAB", collection: "scentlab" },
-  { label: "TAKEOFF FRAGANCE", collection: "takeoff" },
+  { label: "TAKEOFF FRAGRANCE", collection: "takeoff" },
   { label: "Dubai Perfumes", collection: "dubai" },
   { label: "Parfums de poches", collection: "pocket" },
   { label: "Parfums authentiques", collection: "authentic" },
@@ -46,7 +46,7 @@ const boutiqueCategories = [
   { label: "Coffrets", to: "/collections/coffrets" as const },
   { label: "Fragrance library", to: "/collections/fragrance-library" as const },
   { label: "SCENTLAB", to: "/collections/scentlab" as const },
-  { label: "TAKEOFF FRAGANCE", to: "/collections/takeoff" as const },
+  { label: "TAKEOFF FRAGRANCE", to: "/collections/takeoff" as const },
   { label: "Dubai Perfumes", to: "/boutique" as const, collection: "dubai" },
   { label: "Parfums de poches", to: "/boutique" as const, collection: "pocket" },
   { label: "Parfums authentiques", to: "/boutique" as const, collection: "authentic" },
@@ -211,7 +211,8 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
         {children}
       </main>
       <SiteFooter />
-      <FloatingWhatsApp />
+      {/* Sur les fiches produits, le grand bouton WhatsApp suffit : la bulle le cachait sur mobile. */}
+      {!location.pathname.startsWith("/boutique/") && <FloatingWhatsApp />}
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
     </div>
   );

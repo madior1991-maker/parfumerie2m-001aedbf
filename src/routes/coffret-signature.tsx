@@ -2,9 +2,9 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { ArrowDown, Check, Sparkles, WandSparkles } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-import haqqiCollectionImage from "@/assets/haqqi-collection.png";
-import scentlabBoxesImage from "@/assets/scentlab-boxes.png";
-import pocketPerfumesHommeImage from "@/assets/pocket-perfumes-homme.png";
+import haqqiCollectionImage from "@/assets/haqqi-collection.webp";
+import scentlabBoxesImage from "@/assets/scentlab-boxes.webp";
+import pocketPerfumesHommeImage from "@/assets/pocket-perfumes-homme.webp";
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
