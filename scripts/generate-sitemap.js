@@ -33,6 +33,15 @@ const routes = [
   '/coffret-signature',
   '/a-propos',
   '/mentions-legales',
+  '/livraison',
+  '/conseils',
+  '/collections/takeoff',
+  '/collections/haqqi',
+  '/collections/scentlab',
+  '/collections/parfums-de-poches',
+  '/collections/collections-privees',
+  '/collections/coffrets',
+  '/collections/fragrance-library',
 ];
 
 const productUrls = products.map((p) => `${baseUrl}/boutique/${slugify(p.name, p.ref)}`);

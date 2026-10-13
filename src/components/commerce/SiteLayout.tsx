@@ -16,7 +16,8 @@ import { CartDrawer } from "@/components/commerce/CartDrawer";
 import { WhatsAppLogo } from "@/components/commerce/WhatsAppLogo";
 import { useCart } from "@/hooks/useCart";
 import { cn } from "@/lib/utils";
-import { displayPhone, email, instagram, secondPhone, whatsappUrl } from "@/lib/perfume-data";
+import { displayPhone, email, instagram, secondPhone, tiktokUrl, whatsappUrl } from "@/lib/perfume-data";
+import { TikTokLogo } from "@/components/commerce/TikTokLogo";
 
 const navItems = [
   { label: "Boutique", to: "/boutique" },
@@ -239,6 +240,16 @@ function SiteFooter() {
               <Instagram className="size-5" aria-label="Logo Instagram 2M Parfumerie" />
             </a>
             <a
+              href={tiktokUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-border text-muted-foreground hover:border-accent hover:text-accent hover:bg-accent/5 transition-all"
+              aria-label="TikTok 2M Parfumerie"
+              title="TikTok 2M Parfumerie"
+            >
+              <TikTokLogo className="size-5" />
+            </a>
+            <a
               href={facebookUrl}
               target="_blank"
               rel="noopener noreferrer"
@@ -300,7 +311,7 @@ function SiteFooter() {
             <Mail className="size-4 shrink-0" aria-hidden="true" /> {email}
           </a>
           <p className="flex min-h-9 items-center gap-2 py-1 text-[13px] text-muted-foreground">
-            <MapPin className="size-4 shrink-0" aria-hidden="true" /> dakar
+            <MapPin className="size-4 shrink-0" aria-hidden="true" /> Dakar
           </p>
           <a
             href={whatsappUrl()}
@@ -315,7 +326,7 @@ function SiteFooter() {
       <div className="mx-auto mt-8 flex max-w-7xl flex-col justify-between gap-3 border-t border-foreground/5 px-4 pt-8 text-xs text-muted-foreground md:flex-row md:px-6">
         <p>© 2026 2M Parfumerie. Tous droits réservés.</p>
         <p>
-          Fait avec ♥ au dakar · Site by{" "}
+          Fait avec ♥ à Dakar · Site by{" "}
           <a
             href="https://www.nextwavesn.com"
             target="_blank"

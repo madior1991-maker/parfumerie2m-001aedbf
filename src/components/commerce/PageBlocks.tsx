@@ -9,8 +9,11 @@ import {
   instagram,
   products,
   secondPhone,
+  tiktok,
+  tiktokUrl,
   whatsappUrl,
 } from "@/lib/perfume-data";
+import { TikTokLogo } from "./TikTokLogo";
 import { ProductCard } from "./ProductCard";
 
 const facebookUrl = "https://www.facebook.com/profile.php?id=61551806734713";
@@ -48,7 +51,9 @@ export function ProductGrid({ limit }: { limit?: number }) {
 
 export function Ticker() {
   const items = [
-    "✦ Livraison partout au dakar",
+    "✦ Livraison 24 à 48h partout au Sénégal",
+    "✦ Livraison offerte dès 75 000 F",
+    "✦ Wave · Orange Money · espèces",
     "✦ +100 collections exclusives",
     "✦ Commande avec le gérant",
     "✦ Notes olfactives certifiées",
@@ -111,11 +116,12 @@ export function ContactCards() {
       value: instagram,
       href: "https://instagram.com/2mparfumeriesn",
     },
+    { icon: TikTokLogo, label: "TikTok", value: tiktok, href: tiktokUrl },
     { icon: Facebook, label: "Facebook", value: "2MPARFUMERIE-Dk", href: facebookUrl },
     { icon: Mail, label: "Email", value: email, href: `mailto:${email}` },
   ];
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {cards.map(({ icon: Icon, label, value, href, brand }) => (
         <a
           key={label}
@@ -129,7 +135,7 @@ export function ContactCards() {
           <p className="mt-2 font-medium text-foreground">{value}</p>
         </a>
       ))}
-      <div className="rounded-lg border border-border bg-card p-5 shadow-card sm:col-span-2 lg:col-span-4">
+      <div className="rounded-lg border border-border bg-card p-5 shadow-card sm:col-span-2 lg:col-span-3">
         <MapPin className="mb-5 text-accent" aria-hidden="true" />
         <p className="caption-luxe text-muted-foreground">Zone</p>
         <p className="mt-2 font-display text-2xl text-foreground">

@@ -3,9 +3,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { CollectionPage } from "@/components/commerce/CollectionPage";
 
 const URL = "https://www.2mparfumeriedk.com/collections/haqqi";
-const TITLE = "Haqqi Parfums dakar | Collection abordable — 2M Parfumerie Dakar";
+const TITLE = "Haqqi Parfums Dakar | Collection abordable — 2M Parfumerie Dakar";
 const DESC =
-  "Découvrez la collection Haqqi chez 2M Parfumerie. Parfums de qualité à partir de 4 000 FCFA, livrés partout au dakar. Commandez sur WhatsApp.";
+  "Découvrez la collection Haqqi chez 2M Parfumerie. Parfums de qualité à partir de 4 000 FCFA, livrés partout au Sénégal. Commandez sur WhatsApp.";
 
 export const Route = createFileRoute("/collections/haqqi")({
   head: () => ({
@@ -39,8 +39,8 @@ export const Route = createFileRoute("/collections/haqqi")({
     <CollectionPage
       collection="haqqi"
       eyebrow="Collection Haqqi"
-      h1="Haqqi — Parfums quotidiens accessibles livrés au dakar"
-      intro="Haqqi est la collection de parfums abordables et quotidiens de 2M Parfumerie. Pensés pour le quotidien dakar, les parfums Haqqi offrent une tenue remarquable à un prix accessible, à partir de 4 000 FCFA. Idéaux pour le bureau, les sorties ou le quotidien, les parfums Haqqi sont disponibles en livraison partout au dakar. Commandez sur WhatsApp et recevez votre parfum Haqqi à Dakar le jour même."
+      h1="Haqqi — Parfums quotidiens accessibles livrés partout au Sénégal"
+      intro="Haqqi est la collection de parfums abordables et quotidiens de 2M Parfumerie. Pensés pour le quotidien sénégalais, les parfums Haqqi offrent une tenue remarquable à un prix accessible, à partir de 4 000 FCFA. Livrés en 24 à 48h partout au Sénégal. Commandez sur WhatsApp ou composez votre pack de 3 Haqqi à 10 000 FCFA."
       ctaLabel="Pack Haqqi (3 parfums) — 10 000 FCFA"
       ctaHref="/coffret-signature"
     />

@@ -3,9 +3,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { CollectionPage } from "@/components/commerce/CollectionPage";
 
 const URL = "https://www.2mparfumeriedk.com/collections/fragrance-library";
-const TITLE = "Fragrance Library dakar | 2M Parfumerie";
+const TITLE = "Fragrance Library Dakar | 2M Parfumerie";
 const DESC =
-  "Explorez la Fragrance Library de 2M Parfumerie : notre bibliothèque complète de parfums, livrée partout au dakar. Commandez sur WhatsApp.";
+  "Explorez la Fragrance Library de 2M Parfumerie : notre bibliothèque complète de parfums, livrée partout au Sénégal. Commandez sur WhatsApp.";
 
 export const Route = createFileRoute("/collections/fragrance-library")({
   head: () => ({
@@ -40,7 +40,7 @@ export const Route = createFileRoute("/collections/fragrance-library")({
       collection="library"
       eyebrow="Fragrance Library"
       h1="Fragrance Library — Notre bibliothèque complète de parfums"
-      intro="La Fragrance Library de 2M Parfumerie réunit l'ensemble de nos références olfactives dans un même espace. Livraison partout au dakar, avec confirmation directe avec le gérant."
+      intro="La Fragrance Library de 2M Parfumerie réunit l'ensemble de nos références olfactives dans un même espace. Livraison partout au Sénégal, avec confirmation directe avec le gérant."
     />
   ),
 });

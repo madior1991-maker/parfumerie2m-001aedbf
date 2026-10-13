@@ -10,11 +10,11 @@ import { SiteLayout } from "@/components/commerce/SiteLayout";
 export const Route = createFileRoute("/livraison")({
   head: () => ({
     meta: [
-      { title: "Livraison | 2M Parfumerie dakar" },
+      { title: "Livraison | 2M Parfumerie Dakar" },
       {
         name: "description",
         content:
-          "Informations de livraison et confirmation WhatsApp pour vos commandes 2M Parfumerie partout au dakar.",
+          "Livraison 2M Parfumerie en 24 à 48h partout au Sénégal : 1 500 à 2 000 FCFA à Dakar, 2 000 FCFA en régions, offerte dès 75 000 FCFA. Paiement Wave, Orange Money ou espèces.",
       },
     ],
   }),
@@ -31,13 +31,19 @@ function DeliveryPage() {
     {
       icon: Clock,
       title: "Confirmation",
-      text: "Nous confirmons disponibilité, prix, délai et zone avant toute validation.",
+      text: "Nous confirmons la disponibilité et l'adresse. Vous êtes livré en 24 à 48h maximum.",
     },
     {
       icon: MapPinned,
       title: "Réception",
-      text: "La remise est organisée selon votre localisation au dakar et votre disponibilité.",
+      text: "Vous payez à réception par Wave, Orange Money ou en espèces.",
     },
+  ];
+  const rates = [
+    { label: "Dakar", value: "1 500 à 2 000 FCFA" },
+    { label: "Régions", value: "2 000 FCFA" },
+    { label: "Délai", value: "24 à 48h max" },
+    { label: "Livraison offerte", value: "Dès 75 000 FCFA" },
   ];
   return (
     <SiteLayout>
@@ -48,6 +54,14 @@ function DeliveryPage() {
             title="Une commande simple, suivie et humaine."
             text="Chaque détail est confirmé sur WhatsApp pour éviter les surprises et garder l’expérience fluide."
           />
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {rates.map(({ label, value }) => (
+              <div key={label} className="rounded-lg border border-accent/30 bg-accent-muted p-5">
+                <p className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground">{label}</p>
+                <p className="mt-2 font-display text-2xl text-foreground">{value}</p>
+              </div>
+            ))}
+          </div>
           <div className="grid gap-4 md:grid-cols-3 md:gap-5">
             {steps.map(({ icon: Icon, title, text }, index) => (
               <article

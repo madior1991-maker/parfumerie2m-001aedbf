@@ -2,6 +2,8 @@ export const whatsappNumber = "221761923441";
 export const displayPhone = "+221 76 192 34 41";
 export const secondPhone = "+221 78 144 17 66";
 export const instagram = "@2mparfumeriesn";
+export const tiktok = "@2mparfumerie";
+export const tiktokUrl = "https://www.tiktok.com/@2mparfumerie";
 export const email = "2mparfumerie2025@gmail.com";
 
 export type Product = {

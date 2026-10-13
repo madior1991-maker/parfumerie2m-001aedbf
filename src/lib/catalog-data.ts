@@ -131,7 +131,7 @@ const takeoffProducts = [
   {
     name: "Los Angeles",
     ref: "Kilian Love Don’t Be Shy",
-    price: 40000,
+    price: 25000,
     image: losAngelesImage,
     notes: "Ambre · Fruits rouges · Musc",
     family: "Ambré fruité",
@@ -139,7 +139,7 @@ const takeoffProducts = [
   {
     name: "Amsterdam",
     ref: "Initio Side Effect",
-    price: 40000,
+    price: 25000,
     image: amsterdamImage,
     notes: "Violette · Bois doux · Musc",
     family: "Floral boisé",
@@ -147,7 +147,7 @@ const takeoffProducts = [
   {
     name: "Zurich",
     ref: "MFK Oud Satin Mood",
-    price: 40000,
+    price: 25000,
     image: zurichImage,
     notes: "Bois frais · Ambre · Épices",
     family: "Boisé ambré",
@@ -155,7 +155,7 @@ const takeoffProducts = [
   {
     name: "Berlin",
     ref: "Xerjoff Naxos 1861",
-    price: 40000,
+    price: 25000,
     image: berlinImage,
     notes: "Vanille · Musc · Fleurs blanches",
     family: "Musqué doux",
@@ -163,7 +163,7 @@ const takeoffProducts = [
   {
     name: "Dubai",
     ref: "Montale Arabian Tonka",
-    price: 40000,
+    price: 25000,
     image: dubaiImage,
     notes: "Oud · Ambre · Épices",
     family: "Oriental boisé",
@@ -171,7 +171,7 @@ const takeoffProducts = [
   {
     name: "Riyadh",
     ref: "Louis Vuitton Ombre Nomade",
-    price: 40000,
+    price: 25000,
     image: riyadhImage,
     notes: "Résines · Safran · Bois chauds",
     family: "Oriental ambré",
@@ -179,7 +179,7 @@ const takeoffProducts = [
   {
     name: "Vienna",
     ref: "Delina Parfums de Marly",
-    price: 40000,
+    price: 25000,
     image: viennaImage,
     notes: "Rose · Musc · Fruits tendres",
     family: "Floral musqué",
@@ -187,7 +187,7 @@ const takeoffProducts = [
   {
     name: "Lisbon",
     ref: "Xerjoff Sospiro Erba Pura",
-    price: 40000,
+    price: 25000,
     image: lisbonImage,
     notes: "Agrumes · Musc propre · Bois clair",
     family: "Frais musqué",
@@ -195,7 +195,7 @@ const takeoffProducts = [
   {
     name: "Capri",
     ref: "Tiziani Terenzi Kirke",
-    price: 40000,
+    price: 25000,
     image: capriImage,
     notes: "Marine · Agrumes · Ambre gris",
     family: "Frais aromatique",
@@ -203,7 +203,7 @@ const takeoffProducts = [
   {
     name: "Seoul",
     ref: "Louis Vuitton Imagination",
-    price: 40000,
+    price: 25000,
     image: seoulImage,
     notes: "Musc bleu · Agrumes · Bois propres",
     family: "Frais boisé",
@@ -211,7 +211,7 @@ const takeoffProducts = [
   {
     name: "Rome",
     ref: "Xerjoff Accento",
-    price: 40000,
+    price: 25000,
     image: romeImage,
     notes: "Violette · Ambre doux · Musc",
     family: "Floral ambré",
@@ -219,7 +219,7 @@ const takeoffProducts = [
   {
     name: "Istanbul",
     ref: "Nishane Hacivat",
-    price: 40000,
+    price: 25000,
     image: istanbulImage,
     notes: "Musc blanc · Fleurs propres · Bois doux",
     family: "Musqué floral",
@@ -227,7 +227,7 @@ const takeoffProducts = [
   {
     name: "Monaco",
     ref: "Xerjoff 40 Knots",
-    price: 40000,
+    price: 25000,
     image: monacoImage,
     notes: "Accord marin · Agrumes · Ambre clair",
     family: "Aromatique frais",
@@ -235,7 +235,7 @@ const takeoffProducts = [
   {
     name: "New York",
     ref: "Dior Sauvage Elixir",
-    price: 40000,
+    price: 25000,
     image: newYorkImage,
     notes: "Bois urbains · Ambre · Épices fraîches",
     family: "Boisé épicé",
@@ -243,7 +243,7 @@ const takeoffProducts = [
   {
     name: "Moscow",
     ref: "Xerjoff La Capitale",
-    price: 40000,
+    price: 25000,
     image: moscowImage,
     notes: "Vanille claire · Ambre · Musc",
     family: "Ambré doux",
@@ -251,7 +251,7 @@ const takeoffProducts = [
   {
     name: "Milan",
     ref: "Xerjoff Torino 21",
-    price: 40000,
+    price: 25000,
     image: milanImage,
     notes: "Bergamote · Musc · Bois élégants",
     family: "Chypré frais",
@@ -259,7 +259,7 @@ const takeoffProducts = [
   {
     name: "Budapest",
     ref: "MFK Grand Soir",
-    price: 40000,
+    price: 25000,
     image: budapestImage,
     notes: "Ambre doré · Musc · Bois blonds",
     family: "Ambré musqué",
@@ -267,7 +267,7 @@ const takeoffProducts = [
   {
     name: "Paris",
     ref: "MFK Baccarat Rouge",
-    price: 40000,
+    price: 25000,
     image: parisImage,
     notes: "Rose rouge · Ambre · Musc",
     family: "Floral ambré",
@@ -388,7 +388,7 @@ const takeoffCatalog: BoutiqueProduct[] = takeoffProducts.map((product) => ({
   family: product.family,
   concentration: "Eau de parfum",
   volume: "100 ml",
-  description: `${product.name} par TAKEOFF Fragrance est une eau de parfum 100 ml de la collection Scent of Journey, disponible chez 2M Parfumerie au dakar.`,
+  description: `${product.name} par TAKEOFF Fragrance est une eau de parfum 100 ml de la collection Scent of Journey, disponible chez 2M Parfumerie à Dakar.`,
 }));
 
 const scentlabCatalog: BoutiqueProduct[] = scentlabProducts.map((product) => ({
@@ -404,7 +404,7 @@ const scentlabCatalog: BoutiqueProduct[] = scentlabProducts.map((product) => ({
   family: product.family,
   concentration: "Eau de parfum",
   volume: "50 ml",
-  description: `${product.name} par SCENTLAB est une eau de parfum sélectionnée par 2M Parfumerie pour un sillage moderne et facile à porter au dakar.`,
+  description: `${product.name} par SCENTLAB est une eau de parfum sélectionnée par 2M Parfumerie pour un sillage moderne et facile à porter à Dakar.`,
 }));
 
 const haqqiProducts: { name: string; ref: string; family: string; notes: string }[] = [

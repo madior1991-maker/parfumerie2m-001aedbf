@@ -48,7 +48,7 @@ function productFromRow(product: ProductRow, fallback?: BoutiqueProduct): Boutiq
     family: fallback?.family || collectionLabelFallback(collection),
     concentration: fallback?.concentration || "Eau de parfum",
     volume: fallback?.volume || "100 ml",
-    description: product.description || fallback?.description || "Disponible chez 2M Parfumerie au dakar.",
+    description: product.description || fallback?.description || "Disponible chez 2M Parfumerie à Dakar.",
     slug: product.slug,
   };
 }

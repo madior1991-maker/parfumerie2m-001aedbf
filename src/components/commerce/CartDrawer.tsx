@@ -7,6 +7,8 @@ import { PerfumePlaceholder } from "@/components/commerce/PerfumePlaceholder";
 import { useCart } from "@/hooks/useCart";
 import { cn } from "@/lib/utils";
 
+const FREE_DELIVERY = 75000;
+
 function formatCartPrice(price: number) {
   return new Intl.NumberFormat("fr-FR").format(price);
 }
@@ -16,7 +18,7 @@ function buildOrderMessage(items: ReturnType<typeof useCart>["items"], total: nu
     (item) =>
       `• ${item.name} × ${item.quantity} — ${formatCartPrice(item.price * item.quantity)} FCFA`,
   );
-  return `Bonjour 2M Parfumerie 👋 Je souhaite passer la commande suivante :\n\n${lines.join("\n")}\n\n💰 TOTAL : ${formatCartPrice(total)} FCFA\n\n📍 Livraison à : ___________\n\n📞 Mon numéro : ___________\n\nMerci !`;
+  return `Bonjour 2M Parfumerie 👋 Je souhaite passer la commande suivante :\n\n${lines.join("\n")}\n\n💰 TOTAL : ${formatCartPrice(total)} FCFA\n\n📍 Livraison à : ___________\n\n📞 Mon numéro : ___________\n\n💳 Paiement (Wave / Orange Money / espèces) : ___________\n\nMerci !`;
 }
 
 export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {
@@ -129,10 +131,15 @@ export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => vo
               ))}
             </div>
             <footer className="sticky bottom-0 border-t border-accent/15 bg-placeholder p-4 md:p-6">
-              <div className="mb-5 flex items-center justify-between text-sm">
+              <div className="mb-3 flex items-center justify-between text-sm">
                 <span className="text-muted-foreground">Sous-total</span>
                 <strong className="text-lg text-accent">{formatCartPrice(total)} FCFA</strong>
               </div>
+              <p className="mb-2 rounded-md bg-accent/10 px-3 py-2 text-center text-xs font-medium text-accent">
+                {total >= FREE_DELIVERY
+                  ? "🎉 Livraison offerte sur cette commande"
+                  : `Plus que ${formatCartPrice(FREE_DELIVERY - total)} FCFA pour la livraison offerte`}
+              </p>
               <Button
                 type="button"
                 onClick={checkout}
@@ -142,7 +149,7 @@ export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => vo
                 Confirmer avec le gérant sur WhatsApp
               </Button>
               <p className="mt-3 text-center text-xs text-muted-foreground">
-                Le règlement se fait directement avec le gérant, sans paiement en ligne.
+                Paiement Wave, Orange Money ou espèces. Livraison 24 à 48h : Dakar 1 500 à 2 000 F, régions 2 000 F.
               </p>
               <Button
                 type="button"

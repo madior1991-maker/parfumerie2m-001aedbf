@@ -16,9 +16,9 @@ export const Route = createFileRoute("/a-propos")({
       {
         name: "description",
         content:
-          "Découvrez l'histoire de 2M Parfumerie, votre parfumerie authentique au dakar, et retrouvez les réponses à toutes vos questions sur la livraison, l'authenticité et la commande.",
+          "Découvrez l'histoire de 2M Parfumerie, votre parfumerie authentique à Dakar, et retrouvez les réponses à toutes vos questions sur la livraison, l'authenticité et la commande.",
       },
-      { property: "og:title", content: "À Propos & FAQ | 2M Parfumerie dakar" },
+      { property: "og:title", content: "À Propos & FAQ | 2M Parfumerie Dakar" },
       {
         property: "og:description",
         content:
@@ -42,14 +42,14 @@ const faqs = [
       "Absolument. Tous nos parfums sont sourcés directement auprès de distributeurs certifiés. Nous ne vendons aucune imitation ou contrefaçon. Si vous avez le moindre doute après réception, contactez-nous immédiatement sur WhatsApp.",
   },
   {
-    question: "Comment se passe la livraison au dakar ?",
+    question: "Combien coûte la livraison et en combien de temps ?",
     answer:
-      "Nous livrons partout au dakar. Pour toute commande passée avant 21h, nous faisons le maximum pour livrer le jour même selon votre zone. Passé 21h, livraison garantie le lendemain ou selon les délais de transport vers votre région. Contactez-nous sur WhatsApp ou par appel pour confirmer votre localité.",
+      "Nous livrons partout au Sénégal en 24 à 48h maximum. Tarifs : 1 500 à 2 000 FCFA à Dakar selon la zone, 2 000 FCFA en régions. La livraison est offerte dès 75 000 FCFA d'achat, et pour 2 parfums Takeoff (50 000 FCFA).",
   },
   {
     question: "Comment finaliser ma commande ?",
     answer:
-      "Vous passez par WhatsApp ou téléphone, puis vous convenez directement avec le gérant du règlement et des détails de livraison. Il n'y a plus de paiement en ligne à travers le site.",
+      "Vous passez par WhatsApp ou téléphone, puis vous convenez directement avec le gérant du règlement et des détails de livraison. Vous payez par Wave, Orange Money ou en espèces. Il n'y a pas de paiement en ligne sur le site.",
   },
   {
     question: "Puis-je retourner un produit si je ne suis pas satisfait(e) ?",
@@ -62,9 +62,9 @@ const faqs = [
       "C'est notre spécialité. Écrivez-nous sur WhatsApp en décrivant votre style, l'occasion pour laquelle vous cherchez un parfum, et votre budget — nous vous conseillerons personnellement sur 2-3 options parfaites pour vous.",
   },
   {
-    question: "Livrez-vous dans les régions du dakar ?",
+    question: "Livrez-vous dans les régions du Sénégal ?",
     answer:
-      "Oui, nous livrons partout dans les régions du dakar. Nous avons déjà des clients satisfaits de nos produits dans plusieurs régions ; contactez-nous sur WhatsApp ou par appel pour confirmer le délai et le mode de livraison adaptés à votre localité.",
+      "Oui, nous livrons partout dans les régions du Sénégal. Nous avons déjà des clients satisfaits de nos produits dans plusieurs régions ; contactez-nous sur WhatsApp ou par appel pour confirmer le délai et le mode de livraison adaptés à votre localité.",
   },
   {
     question: "Quelle est la différence entre vos collections ?",
@@ -102,8 +102,8 @@ const values = [
   },
   {
     icon: MapPin,
-    title: "Le dakar, au cœur de tout",
-    body: "Notre marché, c'est le dakar. Notre livraison couvre le pays. Notre équipe accompagne chaque client avec la même exigence, où qu’il se trouve.",
+    title: "Le Sénégal, au cœur de tout",
+    body: "Notre marché, c'est le Sénégal. Notre livraison couvre le pays. Notre équipe accompagne chaque client avec la même exigence, où qu’il se trouve.",
   },
 ];
 

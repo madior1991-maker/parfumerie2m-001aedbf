@@ -3,9 +3,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { CollectionPage } from "@/components/commerce/CollectionPage";
 
 const URL = "https://www.2mparfumeriedk.com/collections/collections-privees";
-const TITLE = "Collections privées dakar | Parfums exclusifs — 2M Parfumerie";
+const TITLE = "Collections privées Dakar | Parfums exclusifs — 2M Parfumerie";
 const DESC =
-  "Découvrez les Collections privées de 2M Parfumerie : une sélection exclusive de parfums rares, livrée partout au dakar. Commandez sur WhatsApp.";
+  "Découvrez les Collections privées de 2M Parfumerie : une sélection exclusive de parfums rares, livrée partout au Sénégal. Commandez sur WhatsApp.";
 
 export const Route = createFileRoute("/collections/collections-privees")({
   head: () => ({
@@ -40,7 +40,7 @@ export const Route = createFileRoute("/collections/collections-privees")({
       collection="privees"
       eyebrow="Collections privées"
       h1="Collections privées — Une sélection exclusive de parfums"
-      intro="Les Collections privées de 2M Parfumerie rassemblent une sélection exclusive de parfums, réservée à nos clients les plus exigeants. Livraison partout au dakar, avec confirmation directe avec le gérant."
+      intro="Les Collections privées de 2M Parfumerie rassemblent une sélection exclusive de parfums, réservée à nos clients les plus exigeants. Livraison partout au Sénégal, avec confirmation directe avec le gérant."
     />
   ),
 });

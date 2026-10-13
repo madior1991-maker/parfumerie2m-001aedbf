@@ -22,7 +22,7 @@ import { whatsappUrl } from "@/lib/perfume-data";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "2M Parfumerie dakar | Parfums authentiques livrés à Dakar" },
+      { title: "2M Parfumerie Dakar | Parfums authentiques livrés à Dakar" },
       {
         name: "description",
         content:
@@ -30,11 +30,11 @@ export const Route = createFileRoute("/")({
       },
       { name: "ai:summary", content: "2M Parfumerie vend des parfums de qualité (Haqqi, Scentlab, Takeoff), livraison au Sénégal." },
       { name: "keywords", content: "Haqqi, Scentlab, Takeoff Fragance, Parfums authentique, Parfums Dubai, Parfums de poches, Collections privées, Fragance Library" },
-      { property: "og:title", content: "2M Parfumerie dakar | Parfums authentiques livrés à Dakar" },
+      { property: "og:title", content: "2M Parfumerie Dakar | Parfums authentiques livrés à Dakar" },
       {
         property: "og:description",
         content:
-          "Achetez des parfums authentiques de luxe au dakar. Livraison partout au dakar, commande finalisée directement avec le gérant.",
+          "Achetez des parfums authentiques de luxe à Dakar. Livraison partout au Sénégal, commande finalisée directement avec le gérant.",
       },
       { property: "og:url", content: "https://www.2mparfumeriedk.com/" },
       { property: "og:type", content: "website" },

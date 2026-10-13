@@ -3,22 +3,23 @@ import { Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
 
 import { WhatsAppLogo } from "@/components/commerce/WhatsAppLogo";
 import { SiteLayout } from "@/components/commerce/SiteLayout";
-import { displayPhone, email, instagram, secondPhone, whatsappUrl } from "@/lib/perfume-data";
+import { displayPhone, email, instagram, secondPhone, tiktok, tiktokUrl, whatsappUrl } from "@/lib/perfume-data";
+import { TikTokLogo } from "@/components/commerce/TikTokLogo";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — 2M Parfumerie dakar | WhatsApp & Téléphone" },
+      { title: "Contact — 2M Parfumerie Dakar | WhatsApp & Téléphone" },
       {
         name: "description",
         content:
-          "Contactez 2M Parfumerie au dakar. WhatsApp et appels disponibles 7j/7. Livraison partout au dakar. 2mparfumerie2025@gmail.com",
+          "Contactez 2M Parfumerie à Dakar. WhatsApp et appels disponibles 7j/7. Livraison partout au Sénégal. 2mparfumerie2025@gmail.com",
       },
       { name: "keywords", content: "Haqqi, Scentlab, Takeoff Fragance, Parfums authentique, Parfums Dubai, Parfums de poches" },
-      { property: "og:title", content: "Contact — 2M Parfumerie dakar" },
+      { property: "og:title", content: "Contact — 2M Parfumerie Dakar" },
       {
         property: "og:description",
-        content: "WhatsApp et appels disponibles 7j/7. Livraison partout au dakar.",
+        content: "WhatsApp et appels disponibles 7j/7. Livraison partout au Sénégal.",
       },
     ],
     scripts: [
@@ -36,7 +37,7 @@ const contactLocalBusinessJson = JSON.stringify({
   telephone: "+221761923441",
   email: "2mparfumerie2025@gmail.com",
   address: { "@type": "PostalAddress", addressCountry: "SN", addressLocality: "Dakar" },
-  sameAs: ["https://instagram.com/2mparfumeriesn", "https://www.facebook.com/profile.php?id=61551806734713"],
+  sameAs: ["https://instagram.com/2mparfumeriesn", "https://www.tiktok.com/@2mparfumerie", "https://www.facebook.com/profile.php?id=61551806734713"],
 });
 
 const schedules = [
@@ -130,6 +131,20 @@ function ContactPage() {
               </ContactItem>
 
               <ContactItem
+                icon={<TikTokLogo className="size-6 text-accent" />}
+                label="TikTok"
+              >
+                <a
+                  href={tiktokUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-foreground hover:text-accent"
+                >
+                  {tiktok}
+                </a>
+              </ContactItem>
+
+              <ContactItem
                 icon={<Facebook className="size-6 text-accent" aria-hidden="true" />}
                 label="Facebook"
               >
@@ -149,7 +164,7 @@ function ContactPage() {
               >
                 <p className="text-foreground">Partout au Sénégal</p>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  Livraison le jour même selon la zone pour commandes avant 21h
+                  Livraison en 24 à 48h · Dakar 1 500 à 2 000 F, régions 2 000 F · offerte dès 75 000 F
                 </p>
               </ContactItem>
             </div>

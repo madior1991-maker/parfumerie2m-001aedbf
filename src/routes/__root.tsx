@@ -1,4 +1,5 @@
-import { Outlet, Link, createRootRoute } from "@tanstack/react-router";
+import { useEffect } from "react";
+import { HeadContent, Outlet, Link, createRootRoute, useRouterState } from "@tanstack/react-router";
 
 import { Toaster } from "@/components/ui/sonner";
 
@@ -35,9 +36,23 @@ export const Route = createRootRoute({
   }),
 });
 
+// Retire la description par défaut de index.html quand la page a la sienne,
+// pour que Google ne voie qu'une seule description.
+function useSingleDescription() {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  useEffect(() => {
+    const own = document.querySelectorAll('meta[name="description"]:not([data-static])');
+    if (own.length) {
+      document.querySelectorAll('meta[name="description"][data-static]').forEach((el) => el.remove());
+    }
+  }, [pathname]);
+}
+
 function RootComponent() {
+  useSingleDescription();
   return (
     <>
+      <HeadContent />
       <Outlet />
       <Toaster position="top-right" richColors={false} closeButton />
     </>

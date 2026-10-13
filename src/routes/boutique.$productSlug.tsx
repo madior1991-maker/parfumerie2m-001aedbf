@@ -27,10 +27,10 @@ export const Route = createFileRoute("/boutique/$productSlug")({
     const product = findProductBySlug(params.productSlug);
     const url = `https://www.2mparfumeriedk.com/boutique/${params.productSlug}`;
     const title = product
-      ? `${product.name} – ${collectionLabel(product.collection)} | 2M Parfumerie dakar`
+      ? `${product.name} – ${collectionLabel(product.collection)} | 2M Parfumerie Dakar`
       : "Parfum introuvable | 2M Parfumerie";
     const description = product
-      ? `${product.name} par ${collectionLabel(product.collection)} : notes de ${product.notes}. ${formatPrice(product.price)}. Livraison au dakar. Commandez sur WhatsApp chez 2M Parfumerie.`
+      ? `${product.name} par ${collectionLabel(product.collection)} : notes de ${product.notes}. ${formatPrice(product.price)}. Livraison à Dakar. Commandez sur WhatsApp chez 2M Parfumerie.`
       : "Ce parfum n'est pas disponible dans la boutique 2M Parfumerie.";
     const image = product?.image ? optimizedProductImageUrl(product.image, 1200) : undefined;
     const meta: Array<Record<string, string>> = [
@@ -229,7 +229,7 @@ function ProductTemplate({ product, products }: { product: BoutiqueProduct; prod
               {formatPrice(product.price)}
             </p>
             <p className="mt-2 text-[13px] text-whatsapp">
-              ✓ En stock — Livraison partout au Sénégal
+              ✓ En stock — Livré en 24 à 48h partout au Sénégal
             </p>
 
             <div className="mt-8 space-y-2">
@@ -254,6 +254,9 @@ function ProductTemplate({ product, products }: { product: BoutiqueProduct; prod
             >
               <Phone className="size-4" aria-hidden="true" /> Ou appeler : {displayPhone}
             </a>
+            <p className="mt-1 text-center text-[12px] text-muted-foreground">
+              Paiement Wave, Orange Money ou espèces · Livraison offerte dès 75 000 FCFA
+            </p>
 
             <div className="my-8 h-px bg-border" />
             <div>
