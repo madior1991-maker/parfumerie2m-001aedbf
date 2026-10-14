@@ -13,7 +13,7 @@ export const guarantees = [
     icon: "shield",
     title: "Vrais produits, vraie marque",
     short: "Chaque flacon vendu sous sa vraie marque",
-    body: "Chaque parfum est vendu sous sa vraie marque : TAKEOFF, SCENTLAB, Haqqi, les maisons de Dubaï ou la grande marque d’origine. Quand un parfum est « inspiré de », c'est écrit sur la fiche. Pas de surprise.",
+    body: "Chaque parfum est vendu sous sa vraie marque : TAKEOFF, SCENTLAB, Haqqi, les maisons de Dubaï ou la grande marque d’origine. Nos créations « inspirées de » ne sont jamais vendues comme des originaux. Pas de surprise.",
   },
   {
     icon: "package",

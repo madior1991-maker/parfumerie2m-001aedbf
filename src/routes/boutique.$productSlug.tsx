@@ -273,7 +273,7 @@ function ProductTemplate({ product, products }: { product: BoutiqueProduct; prod
             <h1 className="font-display text-4xl font-medium leading-tight text-foreground md:text-5xl">
               {product.name}
             </h1>
-            {product.collection !== "dubai" && product.collection !== "authentic" && (
+            {product.collection !== "dubai" && product.collection !== "authentic" && product.ref && (
               <p className="mt-3 text-sm italic text-muted-foreground">
                 Inspiré de {product.ref}
                 {product.inspiration ? ` · ${product.inspiration}` : ""}
@@ -409,7 +409,7 @@ function SimilarCard({ product }: { product: BoutiqueProduct }) {
         })()}
       </Link>
       <div className="p-3 sm:p-5">
-        {product.collection !== "dubai" && product.collection !== "authentic" && (
+        {product.collection !== "dubai" && product.collection !== "authentic" && product.ref && (
           <p className="mb-1 hidden text-[11px] uppercase tracking-[0.1em] text-muted-foreground sm:block">
             {product.ref}
           </p>
