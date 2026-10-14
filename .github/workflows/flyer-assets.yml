@@ -1,0 +1,43 @@
+name: flyer-assets
+on:
+  push:
+    branches: [flyer-assets]
+permissions:
+  contents: write
+jobs:
+  fetch:
+    if: "!contains(github.event.head_commit.message, '[data]')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch products and images
+        run: |
+          set -e
+          URL=$(grep VITE_SUPABASE_URL .env | cut -d'"' -f2)
+          KEY=$(grep VITE_SUPABASE_PUBLISHABLE_KEY .env | cut -d'"' -f2)
+          mkdir -p flyer-data/img
+          curl -sf "$URL/rest/v1/products?select=*" -H "apikey: $KEY" -H "Authorization: Bearer $KEY" -o flyer-data/products.json
+          python3 - <<'PY'
+          import json, urllib.request, os, hashlib
+          rows = json.load(open('flyer-data/products.json'))
+          print(len(rows), 'rows')
+          for r in rows:
+              urls = [u for u in ([r.get('image_url')] + (r.get('image_urls') or [])) if u]
+              for k, u in enumerate(urls[:2]):
+                  if not u.startswith('http'): continue
+                  name = hashlib.md5(u.encode()).hexdigest()[:12] + os.path.splitext(u.split('?')[0])[1][:5]
+                  p = 'flyer-data/img/' + name
+                  if os.path.exists(p): continue
+                  try:
+                      urllib.request.urlretrieve(u, p)
+                  except Exception as e:
+                      print('fail', u, e)
+          PY
+          ls flyer-data/img | wc -l
+      - name: Commit
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add flyer-data
+          git commit -m "flyer data [data]" || echo nothing
+          git push
