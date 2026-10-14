@@ -224,36 +224,37 @@ function PickCard({ product }: { product: BoutiqueProduct }) {
   const label = collectionLabel(product.collection);
   const slug = slugifyProduct(product);
   return (
-    <article className="flex flex-col overflow-hidden rounded-lg border border-border bg-card shadow-card">
+    <article className="flex overflow-hidden rounded-lg border border-border bg-card shadow-card sm:flex-col">
       <Link
         to="/boutique/$productSlug"
         params={{ productSlug: slug }}
         search={{}}
-        className="relative block aspect-square bg-surface"
+        className="relative block aspect-square w-32 shrink-0 bg-surface sm:w-auto"
         aria-label={`Voir ${product.name}`}
       >
-        <span className="absolute left-3 top-3 z-10 rounded-full bg-surface px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+        <span className="absolute left-3 top-3 z-10 hidden rounded-full bg-surface px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground sm:inline">
           {label}
         </span>
         <img
           src={product.image}
           alt={`${product.name} chez 2M Parfumerie`}
-          className="h-full w-full object-contain p-4"
+          className="h-full w-full object-contain p-2 sm:p-4"
           loading="lazy"
         />
       </Link>
-      <div className="flex flex-1 flex-col p-4">
+      <div className="flex min-w-0 flex-1 flex-col p-4">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground sm:hidden">{label}</p>
         <Link
           to="/boutique/$productSlug"
           params={{ productSlug: slug }}
           search={{}}
-          className="font-display text-2xl leading-tight text-foreground hover:text-accent"
+          className="font-display text-xl leading-tight text-foreground hover:text-accent sm:text-2xl"
         >
           {product.name}
         </Link>
         <p className="mt-1 text-[13px] text-muted-foreground">{product.notes}</p>
-        <p className="mt-3 text-lg font-semibold text-accent">{formatPrice(product.price)}</p>
-        <div className="mt-auto pt-4">
+        <p className="mt-2 text-lg font-semibold text-accent sm:mt-3">{formatPrice(product.price)}</p>
+        <div className="mt-auto pt-3 sm:pt-4">
           <AddToCartButton
             item={{ id: slug, name: product.name, collection: label, price: product.price, imageUrl: product.image }}
           />
