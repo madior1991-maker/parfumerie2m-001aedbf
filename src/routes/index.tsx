@@ -438,21 +438,22 @@ function Index() {
         <div className="section-shell mx-auto max-w-2xl text-center">
           <p className="caption-luxe mb-4 text-accent">Trouvez votre signature</p>
           <h2 className="font-display text-[32px] leading-[1.2] text-foreground md:text-5xl">
-            Votre parfum parfait est à un message WhatsApp.
+            Pas sûr de votre choix ? 4 questions suffisent.
           </h2>
           <p className="mt-4 text-muted-foreground">
-            Décrivez-nous votre style, votre occasion, votre budget — on s'occupe du reste.
+            Le quiz vous propose 3 parfums selon votre style, votre budget et le moment. Ou écrivez-nous
+            directement, on s'occupe du reste.
           </p>
-          <Button
-            asChild
-            variant="whatsapp"
-            size="lg"
-            className="mt-8 min-h-14 px-10 py-5 text-[15px]"
-          >
-            <a href={whatsappUrl(finalMessage)} target="_blank" rel="noopener noreferrer">
-              <WhatsAppLogo tone="light" className="size-5" /> Démarrer sur WhatsApp
-            </a>
-          </Button>
+          <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
+            <Button asChild size="lg" className="min-h-14 px-10 text-[15px]">
+              <Link to="/trouve-ton-parfum">Faire le quiz</Link>
+            </Button>
+            <Button asChild variant="whatsapp" size="lg" className="min-h-14 px-10 text-[15px]">
+              <a href={whatsappUrl(finalMessage)} target="_blank" rel="noopener noreferrer">
+                <WhatsAppLogo tone="light" className="size-5" /> Démarrer sur WhatsApp
+              </a>
+            </Button>
+          </div>
         </div>
       </section>
 

@@ -35,6 +35,7 @@ const routes = [
   '/mentions-legales',
   '/livraison',
   '/conseils',
+  '/trouve-ton-parfum',
   '/collections/takeoff',
   '/collections/haqqi',
   '/collections/scentlab',

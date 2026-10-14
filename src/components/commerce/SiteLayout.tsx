@@ -23,6 +23,7 @@ const navItems = [
   { label: "Boutique", to: "/boutique" },
   { label: "Takeoff", to: "/collections/takeoff" },
   { label: "Compose ton pack", to: "/coffret-signature" },
+  { label: "Quiz parfum", to: "/trouve-ton-parfum" },
   { label: "Blog", to: "/blog" },
   { label: "À Propos", to: "/a-propos" },
   { label: "Contact", to: "/contact" },
@@ -366,6 +367,7 @@ function FooterLink({
   to:
     | "/"
     | "/boutique"
+    | "/trouve-ton-parfum"
     | "/collections/takeoff"
     | "/coffret-signature"
     | "/blog"

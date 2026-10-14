@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TrouveTonParfumRouteImport } from './routes/trouve-ton-parfum'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as LivraisonRouteImport } from './routes/livraison'
 import { Route as FaqRouteImport } from './routes/faq'
@@ -30,6 +31,11 @@ import { Route as CollectionsCoffretsRouteImport } from './routes/collections.co
 import { Route as BoutiqueProductSlugRouteImport } from './routes/boutique.$productSlug'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 
+const TrouveTonParfumRoute = TrouveTonParfumRouteImport.update({
+  id: '/trouve-ton-parfum',
+  path: '/trouve-ton-parfum',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MentionsLegalesRoute = MentionsLegalesRouteImport.update({
   id: '/mentions-legales',
   path: '/mentions-legales',
@@ -146,6 +152,7 @@ export interface FileRoutesByFullPath {
   '/faq': typeof FaqRoute
   '/livraison': typeof LivraisonRoute
   '/mentions-legales': typeof MentionsLegalesRoute
+  '/trouve-ton-parfum': typeof TrouveTonParfumRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/boutique/$productSlug': typeof BoutiqueProductSlugRoute
   '/collections/coffrets': typeof CollectionsCoffretsRoute
@@ -168,6 +175,7 @@ export interface FileRoutesByTo {
   '/faq': typeof FaqRoute
   '/livraison': typeof LivraisonRoute
   '/mentions-legales': typeof MentionsLegalesRoute
+  '/trouve-ton-parfum': typeof TrouveTonParfumRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/boutique/$productSlug': typeof BoutiqueProductSlugRoute
   '/collections/coffrets': typeof CollectionsCoffretsRoute
@@ -191,6 +199,7 @@ export interface FileRoutesById {
   '/faq': typeof FaqRoute
   '/livraison': typeof LivraisonRoute
   '/mentions-legales': typeof MentionsLegalesRoute
+  '/trouve-ton-parfum': typeof TrouveTonParfumRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/boutique/$productSlug': typeof BoutiqueProductSlugRoute
   '/collections/coffrets': typeof CollectionsCoffretsRoute
@@ -215,6 +224,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/livraison'
     | '/mentions-legales'
+    | '/trouve-ton-parfum'
     | '/blog/$slug'
     | '/boutique/$productSlug'
     | '/collections/coffrets'
@@ -237,6 +247,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/livraison'
     | '/mentions-legales'
+    | '/trouve-ton-parfum'
     | '/blog/$slug'
     | '/boutique/$productSlug'
     | '/collections/coffrets'
@@ -259,6 +270,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/livraison'
     | '/mentions-legales'
+    | '/trouve-ton-parfum'
     | '/blog/$slug'
     | '/boutique/$productSlug'
     | '/collections/coffrets'
@@ -282,6 +294,7 @@ export interface RootRouteChildren {
   FaqRoute: typeof FaqRoute
   LivraisonRoute: typeof LivraisonRoute
   MentionsLegalesRoute: typeof MentionsLegalesRoute
+  TrouveTonParfumRoute: typeof TrouveTonParfumRoute
   CollectionsCoffretsRoute: typeof CollectionsCoffretsRoute
   CollectionsCollectionsPriveesRoute: typeof CollectionsCollectionsPriveesRoute
   CollectionsFragranceLibraryRoute: typeof CollectionsFragranceLibraryRoute
@@ -293,6 +306,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/trouve-ton-parfum': {
+      id: '/trouve-ton-parfum'
+      path: '/trouve-ton-parfum'
+      fullPath: '/trouve-ton-parfum'
+      preLoaderRoute: typeof TrouveTonParfumRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/mentions-legales': {
       id: '/mentions-legales'
       path: '/mentions-legales'
@@ -470,6 +490,7 @@ const rootRouteChildren: RootRouteChildren = {
   FaqRoute: FaqRoute,
   LivraisonRoute: LivraisonRoute,
   MentionsLegalesRoute: MentionsLegalesRoute,
+  TrouveTonParfumRoute: TrouveTonParfumRoute,
   CollectionsCoffretsRoute: CollectionsCoffretsRoute,
   CollectionsCollectionsPriveesRoute: CollectionsCollectionsPriveesRoute,
   CollectionsFragranceLibraryRoute: CollectionsFragranceLibraryRoute,

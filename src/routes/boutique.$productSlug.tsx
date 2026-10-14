@@ -1,5 +1,6 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { Phone } from "lucide-react";
+import { GuaranteeStrip } from "@/components/commerce/Guarantee";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -310,6 +311,7 @@ function ProductTemplate({ product, products }: { product: BoutiqueProduct; prod
             <p className="mt-1 text-center text-[12px] text-muted-foreground">
               Paiement Wave, Orange Money ou espèces · Livraison offerte dès 75 000 FCFA
             </p>
+            <GuaranteeStrip />
 
             <div className="my-8 h-px bg-border" />
             <div>

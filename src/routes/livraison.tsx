@@ -6,6 +6,7 @@ import React, { Suspense } from "react";
 import { SectionHeader } from "@/components/commerce/PageBlocks";
 const WhatsAppBand = React.lazy(() => import("@/components/commerce/PageBlocks").then((m) => ({ default: m.WhatsAppBand })));
 import { SiteLayout } from "@/components/commerce/SiteLayout";
+import { GuaranteeSection } from "@/components/commerce/Guarantee";
 
 export const Route = createFileRoute("/livraison")({
   head: () => ({
@@ -74,6 +75,7 @@ function DeliveryPage() {
               </article>
             ))}
           </div>
+          <GuaranteeSection />
         </div>
       </section>
       <Suspense fallback={null}>

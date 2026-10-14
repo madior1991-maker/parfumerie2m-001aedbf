@@ -54,12 +54,12 @@ const faqs = [
   {
     question: "Puis-je retourner un produit si je ne suis pas satisfait(e) ?",
     answer:
-      "Nous sommes fiers de la qualité de nos produits. Si un article arrive endommagé ou ne correspond pas à ce que vous avez commandé, contactez-nous dans les 24h sur WhatsApp avec une photo. Nous trouverons une solution.",
+      "Nous sommes fiers de la qualité de nos produits. Si un flacon arrive cassé, qu'il fuit ou qu'il ne correspond pas à votre commande, envoyez-nous une photo sur WhatsApp dans les 24h après réception. Nous vous l'échangeons, sans frais.",
   },
   {
     question: "Comment savoir quel parfum me correspond ?",
     answer:
-      "C'est notre spécialité. Écrivez-nous sur WhatsApp en décrivant votre style, l'occasion pour laquelle vous cherchez un parfum, et votre budget — nous vous conseillerons personnellement sur 2-3 options parfaites pour vous.",
+      "Faites le quiz « Trouve ton parfum » sur le site : 4 questions, 3 suggestions en 30 secondes. Vous pouvez aussi nous écrire sur WhatsApp en décrivant votre style, l'occasion pour laquelle vous cherchez un parfum, et votre budget — nous vous conseillerons personnellement sur 2-3 options parfaites pour vous.",
   },
   {
     question: "Livrez-vous dans les régions du Sénégal ?",

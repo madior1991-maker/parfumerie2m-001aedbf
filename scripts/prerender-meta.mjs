@@ -23,6 +23,7 @@ const pages = [
   { path: "/a-propos", title: "À propos & FAQ | 2M Parfumerie Dakar", desc: "L'histoire de 2M Parfumerie et les réponses à vos questions : livraison, authenticité, paiement Wave, Orange Money ou espèces.", image: "default" },
   { path: "/faq", title: "FAQ | 2M Parfumerie Dakar", desc: "Livraison, paiement, authenticité, conseils : toutes les réponses de 2M Parfumerie.", image: "default" },
   { path: "/blog", title: "Blog parfum Sénégal | Conseils et tendances — 2M Parfumerie", desc: "Conseils parfum, tendances à Dakar et comparatifs pour bien choisir avant d'acheter.", image: "default" },
+  { path: "/trouve-ton-parfum", title: "Trouve ton parfum en 4 questions | 2M Parfumerie Dakar", desc: "Quiz gratuit : 4 questions, 3 parfums faits pour toi, à partir de 2 500 F. Commande sur WhatsApp, livraison rapide à Dakar, 24 à 48h en régions.", image: "default" },
   { path: "/conseils", title: "Conseils parfum | 2M Parfumerie Dakar", desc: "Bien choisir, porter et faire durer son parfum : les conseils de 2M Parfumerie.", image: "default" },
 ];
 
