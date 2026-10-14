@@ -22,6 +22,11 @@ const LABELS = { scentlab: "SCENTLAB", takeoff: "Takeoff Fragrance", dubai: "Dub
 const ALIASES = { "scent lab": "scentlab", "takeoff fragrance": "takeoff", "takeoff fragance": "takeoff", "dubai perfumes": "dubai", "pocket perfumes": "pocket", "authentic perfumes": "authentic", haqqui: "haqqi", "collections privees": "privees", "collections privées": "privees", "collection privee": "privees", "private collection": "privees", coffret: "coffrets", "fragrance library": "library" };
 const collectionOf = (v) => { const n = (v || "").trim().toLowerCase(); return LABELS[n] ? n : ALIASES[n] || "scentlab"; };
 const price = (n) => `${new Intl.NumberFormat("fr-FR").format(n).replace(/ | /g, " ")} FCFA`;
+const clean = (v) => {
+  let t = String(v || "");
+  try { t = decodeURIComponent(t); } catch {}
+  return t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+};
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
 
 function setMeta(html, attr, key, value) {
@@ -49,8 +54,9 @@ async function main() {
   const base = fs.readFileSync(path.join(dist, "index.html"), "utf8");
   const live = rows
     .filter((r) => r.slug && r.description !== DELETED)
-    .map((r) => ({ ...r, name: String(r.name || "").trim() }));
-  const deleted = new Set(rows.filter((r) => r.slug && r.description === DELETED).map((r) => r.slug));
+    .map((r) => ({ ...r, name: String(r.name || "").trim(), slug: clean(r.slug) }))
+    .filter((r) => r.slug);
+  const deleted = new Set(rows.filter((r) => r.slug && r.description === DELETED).map((r) => clean(r.slug)));
 
   for (const r of live) {
     const label = LABELS[collectionOf(r.collection)];

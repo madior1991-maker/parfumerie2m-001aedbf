@@ -558,9 +558,13 @@ const pocketCatalog: BoutiqueProduct[] = pocketProducts.map((product) => ({
 
 export const catalog: BoutiqueProduct[] = [...takeoffCatalog, ...scentlabCatalog, ...haqqiCatalog, ...pocketCatalog];
 
-export function slugifyProduct(product: BoutiqueProduct) {
-  if (product.slug) return product.slug;
-  return `${product.name}-${product.ref}`
+// Adresse propre : minuscules, sans accents, mots séparés par des tirets.
+export function cleanSlug(value: string) {
+  let text = value;
+  try {
+    text = decodeURIComponent(value);
+  } catch {}
+  return text
     .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
@@ -568,8 +572,15 @@ export function slugifyProduct(product: BoutiqueProduct) {
     .replace(/^-|-$/g, "");
 }
 
+export function slugifyProduct(product: BoutiqueProduct) {
+  // Une adresse saisie à la main dans l'admin (espaces, parenthèses…) est nettoyée aussi.
+  if (product.slug) return cleanSlug(product.slug);
+  return cleanSlug(`${product.name}-${product.ref}`);
+}
+
 export function findProductBySlug(slug: string) {
-  return catalog.find((product) => slugifyProduct(product) === slug);
+  const wanted = cleanSlug(slug);
+  return catalog.find((product) => slugifyProduct(product) === wanted);
 }
 
 export function productImages(product: BoutiqueProduct) {

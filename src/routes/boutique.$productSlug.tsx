@@ -1,4 +1,4 @@
-import { Link, createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Phone } from "lucide-react";
 import { GuaranteeStrip } from "@/components/commerce/Guarantee";
 import { useEffect, useState } from "react";
@@ -8,6 +8,7 @@ import { AddToCartButton } from "@/components/commerce/AddToCartButton";
 import { SiteLayout } from "@/components/commerce/SiteLayout";
 import { WhatsAppLogo } from "@/components/commerce/WhatsAppLogo";
 import {
+  cleanSlug,
   catalog,
   collectionLabel,
   findProductBySlug,
@@ -26,9 +27,9 @@ import { displayPhone } from "@/lib/perfume-data";
 export const Route = createFileRoute("/boutique/$productSlug")({
   head: ({ params }) => {
     const product = findProductBySlug(params.productSlug);
-    const url = `https://www.2mparfumeriedk.com/boutique/${params.productSlug}`;
+    const url = `https://www.2mparfumeriedk.com/boutique/${cleanSlug(params.productSlug)}`;
     // Produits ajoutés depuis l'admin : absents du catalogue local, on part du nom dans l'adresse.
-    const slugName = params.productSlug
+    const slugName = cleanSlug(params.productSlug)
       .split("-")
       .filter(Boolean)
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -112,7 +113,16 @@ function ProductPage() {
     void loadProducts();
   }, []);
 
-  const product = products?.find((item) => slugifyProduct(item) === productSlug) ?? null;
+  const wanted = cleanSlug(productSlug);
+  const product = products?.find((item) => slugifyProduct(item) === wanted) ?? null;
+  const navigate = useNavigate();
+
+  // Ancienne adresse mal formée (espaces, majuscules…) : on bascule sur l'adresse propre.
+  useEffect(() => {
+    if (product && productSlug !== wanted) {
+      void navigate({ to: "/boutique/$productSlug", params: { productSlug: wanted }, replace: true });
+    }
+  }, [product, productSlug, wanted, navigate]);
 
   // Produit ajouté depuis l'admin : on attend la base avant d'afficher « introuvable ».
   if (!product && !loaded) {
@@ -147,7 +157,7 @@ function ProductPage() {
 
   return (
     <>
-      {!findProductBySlug(productSlug) && <ProductJsonLd product={product} slug={productSlug} />}
+      {!findProductBySlug(wanted) && <ProductJsonLd product={product} slug={wanted} />}
       <ProductTemplate product={product} products={products} />
     </>
   );

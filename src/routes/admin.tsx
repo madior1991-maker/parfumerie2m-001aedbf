@@ -1456,7 +1456,7 @@ function productPayloadFromForm(form: typeof blankProduct): ProductInsert {
     image_url: image_urls[0] || "",
     image_urls,
     price: Number(form.price),
-    slug: form.slug || slugify(form.name),
+    slug: slugify(form.slug || form.name),
   };
   return form.collection === "haqqi"
     ? {
