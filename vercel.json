@@ -1,6 +1,253 @@
 {
-  "buildCommand": "vite build && node scripts/prerender-meta.mjs && node scripts/prerender-products.mjs",
+  "buildCommand": "node scripts/generate-sitemap.mjs && vite build && node scripts/prerender-meta.mjs && node scripts/prerender-products.mjs",
   "outputDirectory": "dist",
+  "redirects": [
+    {
+      "source": "/boutique/acqua-di-gio-inspiration-armani-acqua-di-gio",
+      "destination": "/boutique/acqua-di-gio",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/african-leather-inspiration-memo-african-leather",
+      "destination": "/boutique/african-leather",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/allure-homme-sport-inspiration-chanel-allure-homme-sport",
+      "destination": "/boutique/allure-homme-sport",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/baccarat-rouge-540-extrait-inspiration-mfk-baccarat-rouge-extrait",
+      "destination": "/boutique/baccarat-rouge-540-extrait",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/black-code-inspiration-armani-code",
+      "destination": "/boutique/black-code",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/black-opium-inspiration-ysl-black-opium",
+      "destination": "/boutique/black-opium",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/bleu-de-chanel-inspiration-chanel-bleu-de-chanel",
+      "destination": "/boutique/bleu-de-chanel",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/bois-d-inspiration-dior-bois-d",
+      "destination": "/boutique/bois-d-argent",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/bright-crystal-inspiration-versace-bright-crystal",
+      "destination": "/boutique/bright-crystal",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/burberry-classic-inspiration-burberry-classic",
+      "destination": "/boutique/burberry-classic",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/cartier-declaration-inspiration-cartier-declaration",
+      "destination": "/boutique/cartier-declaration",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/desert-oud-inspiration-desert-oud",
+      "destination": "/boutique/desert-oud",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/diesel-fuel-for-life-inspiration-diesel-fuel-for-life",
+      "destination": "/boutique/diesel-fuel-for-life",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/dior-addict-inspiration-dior-addict",
+      "destination": "/boutique/dior-addict",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/dolce-gabbana-the-one-inspiration-d-g-the-one",
+      "destination": "/boutique/dolce-gabbana-the-one",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/encre-noire-inspiration-lalique-encre-noire",
+      "destination": "/boutique/encre-noire",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/euphoria-femme-inspiration-calvin-klein-euphoria",
+      "destination": "/boutique/euphoria-femme",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/guidance-inspiration-amouage-guidance",
+      "destination": "/boutique/guidance",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/hypnotic-poison-inspiration-dior-hypnotic-poison",
+      "destination": "/boutique/hypnotic-poison",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/imagination-inspiration-louis-vuitton-imagination",
+      "destination": "/boutique/imagination",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/invictus-inspiration-paco-rabanne-invictus",
+      "destination": "/boutique/invictus",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/kouros-inspiration-ysl-kouros",
+      "destination": "/boutique/kouros",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/la-nuit-de-l-inspiration-ysl-la-nuit-de-l",
+      "destination": "/boutique/la-nuit-de-l-homme",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/la-nuit-tresor-inspiration-lancome-la-nuit-tresor",
+      "destination": "/boutique/la-nuit-tresor",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/lacoste-noir-l12-inspiration-lacoste-l12-12-noir",
+      "destination": "/boutique/lacoste-noir-l12",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/le-male-inspiration-jean-paul-gaultier-le-male",
+      "destination": "/boutique/le-male",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/lolita-lempicka-inspiration-lolita-lempicka",
+      "destination": "/boutique/lolita-lempicka",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/man-in-black-inspiration-bvlgari-man-in-black",
+      "destination": "/boutique/man-in-black",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/manifesto-inspiration-ysl-manifesto",
+      "destination": "/boutique/manifesto",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/my-way-inspiration-armani-my-way",
+      "destination": "/boutique/my-way",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/narciso-pink-for-her-inspiration-narciso-rodriguez-for-her",
+      "destination": "/boutique/narciso-pink-for-her",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/oud-noir-inspiration-oud-noir",
+      "destination": "/boutique/oud-noir",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/oud-satin-mood-inspiration-mfk-oud-satin-mood",
+      "destination": "/boutique/oud-satin-mood",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/pegasus-inspiration-parfums-de-marly-pegasus",
+      "destination": "/boutique/pegasus",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/sauvage-elixir-inspiration-dior-sauvage-elixir",
+      "destination": "/boutique/sauvage-elixir",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/sauvage-inspiration-dior-sauvage",
+      "destination": "/boutique/sauvage",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/scandal-inspiration-jpg-scandal",
+      "destination": "/boutique/scandal",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/si-passione-inspiration-armani-si-passione",
+      "destination": "/boutique/si-passione",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/so-scandal-inspiration-jpg-so-scandal",
+      "destination": "/boutique/so-scandal",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/stronger-with-you-inspiration-emporio-armani-stronger-with-you",
+      "destination": "/boutique/stronger-with-you",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/supreme-bouquet-inspiration-supreme-bouquet",
+      "destination": "/boutique/supreme-bouquet",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/terre-d-inspiration-hermes-terre-d",
+      "destination": "/boutique/terre-d-hermes",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/tom-ford-neroli-portofino-inspiration-tom-ford-neroli-portofino",
+      "destination": "/boutique/tom-ford-neroli-portofino",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/tom-ford-ombre-leather-inspiration-tom-ford-ombre-leather",
+      "destination": "/boutique/tom-ford-ombre-leather",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/tom-ford-soleil-blanc-inspiration-tom-ford-soleil-blanc",
+      "destination": "/boutique/tom-ford-soleil-blanc",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/tom-ford-tobacco-vanille-inspiration-tom-ford-tobacco-vanille",
+      "destination": "/boutique/tom-ford-tobacco-vanille",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/tom-ford-white-patchouli-inspiration-tom-ford-white-patchouli",
+      "destination": "/boutique/tom-ford-white-patchouli",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/valentino-uomo-inspiration-valentino-uomo",
+      "destination": "/boutique/valentino-uomo",
+      "permanent": true
+    },
+    {
+      "source": "/boutique/ysl-cinema-inspiration-ysl-cinema",
+      "destination": "/boutique/ysl-cinema",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",
@@ -37,19 +284,6 @@
           "value": "public, max-age=31536000, immutable"
         }
       ]
-    }
-  ],
-  "redirects": [
-    {
-      "source": "/(.*)",
-      "has": [
-        {
-          "type": "host",
-          "value": "2mparfumeriedk.com"
-        }
-      ],
-      "destination": "https://www.2mparfumeriedk.com/$1",
-      "permanent": true
     }
   ],
   "cleanUrls": true
