@@ -480,9 +480,9 @@ const haqqiCatalog: BoutiqueProduct[] = haqqiProducts.map((product) => ({
   collection: "haqqi",
   image: haqqiCollectionImage,
   family: product.family,
-  concentration: "Extrait de parfum",
-  volume: "30 ml",
-  description: `${product.name} de la collection Haqqi : un parfum oriental, chaud et profond, disponible à l'unité chez 2M Parfumerie ou dans le Pack de 3 Haqqi à composer.`,
+  concentration: "Eau de parfum",
+  volume: "40 ml",
+  description: `${product.name} de la collection Haqqi : une eau de parfum de 40 ml (${product.notes.toLowerCase()}), disponible à l'unité chez 2M Parfumerie ou dans le Pack de 3 Haqqi à composer.`,
 }));
 
 const pocketProducts: { name: string; ref: string; family: "Homme" | "Unisex" | "Femme"; notes: string; image: string }[] = [
