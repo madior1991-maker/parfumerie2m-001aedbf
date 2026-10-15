@@ -325,8 +325,10 @@ const scentlabProducts = [
     family: "Gourmand épicé",
   },
   {
-    name: "Spicy Leather",
+    name: "Spicy Leather Exclusive",
     ref: "One Million Lucky",
+    // Adresse d'origine conservée
+    slug: "spicy-leather-one-million-lucky",
     image: spicyLeatherImage,
     notes: "Cuir · Épices · Résines",
     family: "Cuir épicé",
@@ -391,7 +393,64 @@ const takeoffCatalog: BoutiqueProduct[] = takeoffProducts.map((product) => ({
   description: `${product.name} par TAKEOFF Fragrance est une eau de parfum 100 ml de la collection Scent of Journey, disponible chez 2M Parfumerie à Dakar.`,
 }));
 
+
+// SCENTLAB ajoutés depuis la liste du fournisseur (photos scentlabfragrance.com).
+const scentlabExtraProducts: {
+  name: string;
+  ref: string;
+  slug: string;
+  notes: string;
+  family: string;
+  concentration?: string;
+}[] = [
+  { name: "Warm Spicy", ref: "Armani Stronger With You", slug: "warm-spicy", notes: "Châtaigne · Épices chaudes · Vanille", family: "Ambré épicé" },
+  { name: "Woody Bergamot", ref: "Dior Sauvage", slug: "woody-bergamot", notes: "Bergamote · Poivre · Ambroxan", family: "Aromatique frais" },
+  { name: "Fresh Grapefruit", ref: "Paco Rabanne Invictus", slug: "fresh-grapefruit", notes: "Pamplemousse · Notes marines · Bois", family: "Frais aquatique" },
+  { name: "Aquatic Jasmine", ref: "Armani Acqua di Giò", slug: "aquatic-jasmine", notes: "Notes marines · Jasmin · Bois", family: "Aquatique floral" },
+  { name: "Minty Cedar", ref: "Bleu de Chanel", slug: "minty-cedar", notes: "Agrumes · Menthe · Cèdre", family: "Boisé aromatique" },
+  { name: "Cool Mint", ref: "Chanel Allure Homme Sport", slug: "cool-mint", notes: "Menthe · Agrumes · Musc", family: "Frais aromatique" },
+  { name: "Spicy Leather", ref: "Paco Rabanne 1 Million", slug: "spicy-leather", notes: "Cannelle · Cuir · Ambre", family: "Cuir épicé" },
+  { name: "Earthy Vetiver", ref: "Terre d'Hermès", slug: "earthy-vetiver", notes: "Orange · Vétiver · Bois", family: "Boisé terreux" },
+  { name: "Minty Vanilla", ref: "Versace Eros", slug: "minty-vanilla", notes: "Menthe · Pomme verte · Vanille", family: "Fougère vanillée" },
+  { name: "Minty Lavender", ref: "Jean Paul Gaultier Le Male", slug: "minty-lavender", notes: "Menthe · Lavande · Vanille", family: "Fougère orientale" },
+  { name: "Iris Cedar", ref: "Dior Homme Intense", slug: "iris-cedar", notes: "Iris · Cèdre · Vétiver", family: "Boisé poudré" },
+  { name: "Dark Leather", ref: "Tom Ford Ombré Leather", slug: "dark-leather", notes: "Cuir · Épices · Patchouli", family: "Cuir boisé" },
+  { name: "Exotic Vanilla", ref: "Armani My Way", slug: "exotic-vanilla", notes: "Fleur d'oranger · Tubéreuse · Vanille", family: "Floral vanillé" },
+  { name: "Gardenia Jam", ref: "Jean Paul Gaultier Scandal", slug: "gardenia-jam", notes: "Miel · Gardénia · Patchouli", family: "Floral gourmand" },
+  { name: "Spicy Citrus", ref: "Chanel Chance", slug: "spicy-citrus", notes: "Agrumes · Poivre rose · Jasmin", family: "Floral hespéridé" },
+  { name: "Floral Musk", ref: "Coco Mademoiselle", slug: "floral-musk", notes: "Orange · Rose · Patchouli", family: "Floral chypré" },
+  { name: "Golden Floral", ref: "Dior J'adore", slug: "golden-floral", notes: "Ylang-ylang · Rose · Jasmin", family: "Floral bouquet" },
+  { name: "Mystic Jasmine", ref: "Mugler Alien", slug: "mystic-jasmine", notes: "Jasmin · Bois · Ambre", family: "Floral boisé" },
+  { name: "Fruity Chypre", ref: "Armani Sì", slug: "fruity-chypre", notes: "Cassis · Rose · Vanille", family: "Chypré fruité" },
+  { name: "Lush Gardenia", ref: "Gucci Bloom", slug: "lush-gardenia", notes: "Tubéreuse · Jasmin · Gardénia", family: "Floral blanc" },
+  { name: "Ambery Vanilla", ref: "YSL Black Opium", slug: "ambery-vanilla", notes: "Café · Fleur blanche · Vanille", family: "Oriental vanillé" },
+  { name: "Jasmine Cedar", ref: "Amouage Reflection", slug: "jasmine-cedar", notes: "Jasmin · Néroli · Cèdre", family: "Floral boisé" },
+  { name: "Pineapple Bergamot", ref: "Creed Aventus", slug: "pineapple-bergamot", notes: "Ananas · Bergamote · Bouleau fumé", family: "Chypré fruité" },
+  { name: "Addictive Peach", ref: "Ex Nihilo Fleur Narcotique", slug: "addictive-peach", notes: "Pêche · Fleurs blanches · Musc", family: "Floral fruité" },
+  { name: "Caramel Orange", ref: "Kilian Love Don't Be Shy", slug: "caramel-orange", notes: "Orange · Caramel · Fleur d'oranger", family: "Gourmand fleuri" },
+  { name: "Sandalwood Leather", ref: "Le Labo Santal 33", slug: "sandalwood-leather", notes: "Santal · Cuir · Cardamome", family: "Boisé cuiré" },
+  { name: "Smoky Oud", ref: "Louis Vuitton Ombre Nomade", slug: "smoky-oud", notes: "Oud · Framboise · Encens", family: "Oriental boisé" },
+  { name: "Galactic Musk", ref: "Marc-Antoine Barrois Ganymede", slug: "galactic-musk", notes: "Mandarine · Musc · Bois minéraux", family: "Boisé musqué" },
+  { name: "Dreamy Bloom", ref: "Memo Marfa", slug: "dreamy-bloom", notes: "Tubéreuse · Fleur d'oranger · Musc", family: "Floral blanc" },
+  { name: "Sweet Saffron Extrait", ref: "MFK Baccarat Rouge 540 Extrait", slug: "sweet-saffron-extrait", notes: "Safran · Amandes amères · Ambre", family: "Ambré boisé", concentration: "Extrait de parfum" },
+  { name: "Sweet Saffron", ref: "MFK Baccarat Rouge 540", slug: "sweet-saffron", notes: "Safran · Jasmin · Ambre", family: "Ambré floral" },
+  { name: "Glow Amber", ref: "MFK Grand Soir", slug: "glow-amber", notes: "Ambre · Vanille · Benjoin", family: "Ambré oriental" },
+  { name: "Satin Rose", ref: "MFK Oud Satin Mood", slug: "satin-rose", notes: "Rose · Oud · Vanille", family: "Oriental floral" },
+  { name: "Oriental Tonka", ref: "Montale Arabians Tonka", slug: "oriental-tonka", notes: "Fève tonka · Rose · Ambre", family: "Oriental gourmand" },
+  { name: "Marine Citrus", ref: "Orto Parisi Megamare", slug: "marine-citrus", notes: "Notes marines · Agrumes · Algues", family: "Aquatique hespéridé" },
+  { name: "Pink Peony", ref: "Parfums de Marly Delina", slug: "pink-peony", notes: "Litchi · Pivoine · Rose", family: "Floral fruité" },
+  { name: "Woody Bergamot Exclusive", ref: "Dior Sauvage Elixir", slug: "woody-bergamot-exclusive", notes: "Épices · Bergamote · Bois de réglisse", family: "Aromatique boisé" },
+  { name: "Fruity Passion", ref: "Tiziana Terenzi Kirke", slug: "fruity-passion", notes: "Fruits rouges · Fruit de la passion · Vanille", family: "Fruité gourmand" },
+  { name: "Ambery Orchid", ref: "Tom Ford Black Orchid", slug: "ambery-orchid", notes: "Truffe noire · Orchidée · Patchouli", family: "Oriental floral" },
+  { name: "Cherry Almond", ref: "Tom Ford Lost Cherry", slug: "cherry-almond", notes: "Cerise · Amande amère · Tonka", family: "Gourmand fruité" },
+  { name: "Woody Oud", ref: "Tom Ford Oud Wood", slug: "woody-oud", notes: "Oud · Bois de rose · Cardamome", family: "Boisé oriental" },
+  { name: "Spicy Vanilla", ref: "Tom Ford Tobacco Vanille", slug: "spicy-vanilla", notes: "Tabac · Épices · Vanille", family: "Oriental épicé" },
+  { name: "Poetic Amber", ref: "Xerjoff More Than Words", slug: "poetic-amber", notes: "Iris · Vanille · Bois", family: "Ambré poudré" },
+  { name: "Sweet Tobacco", ref: "Xerjoff Naxos", slug: "sweet-tobacco", notes: "Lavande · Miel · Tabac", family: "Oriental aromatique" },
+];
+
 const scentlabCatalog: BoutiqueProduct[] = scentlabProducts.map((product) => ({
+  ...("slug" in product ? { slug: product.slug } : {}),
   name: product.name,
   ref: product.ref,
   notes: product.notes,
@@ -405,6 +464,22 @@ const scentlabCatalog: BoutiqueProduct[] = scentlabProducts.map((product) => ({
   concentration: "Eau de parfum",
   volume: "50 ml",
   description: `${product.name} par SCENTLAB est une eau de parfum sélectionnée par 2M Parfumerie pour un sillage moderne et facile à porter à Dakar.`,
+}));
+
+const scentlabExtraCatalog: BoutiqueProduct[] = scentlabExtraProducts.map((product) => ({
+  name: product.name,
+  ref: product.ref,
+  notes: product.notes,
+  headNotes: product.notes,
+  heartNotes: "Notes à préciser",
+  baseNotes: "Notes à préciser",
+  price: 6000,
+  collection: "scentlab",
+  image: `/images/optimized/scentlab-${product.slug}-w800.webp`,
+  family: product.family,
+  concentration: product.concentration ?? "Eau de parfum",
+  volume: "50 ml",
+  description: `${product.name} par SCENTLAB est une ${(product.concentration ?? "Eau de parfum").toLowerCase()} de 50 ml, aux notes ${product.notes.toLowerCase()}, disponible chez 2M Parfumerie à Dakar.`,
 }));
 
 const haqqiProducts: { name: string; ref: string; family: string; notes: string }[] = [
@@ -556,7 +631,7 @@ const pocketCatalog: BoutiqueProduct[] = pocketProducts.map((product) => ({
   description: `${product.name} fait partie de la sélection Parfums de poches : un format 50 ml pratique, disponible à l'unité chez 2M Parfumerie ou dans le Pack de 5 Parfums de poches à composer.`,
 }));
 
-export const catalog: BoutiqueProduct[] = [...takeoffCatalog, ...scentlabCatalog, ...haqqiCatalog, ...pocketCatalog];
+export const catalog: BoutiqueProduct[] = [...takeoffCatalog, ...scentlabCatalog, ...scentlabExtraCatalog, ...haqqiCatalog, ...pocketCatalog];
 
 // Adresse propre : minuscules, sans accents, mots séparés par des tirets.
 export function cleanSlug(value: string) {
