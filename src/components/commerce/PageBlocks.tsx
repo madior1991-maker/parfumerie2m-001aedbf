@@ -51,28 +51,16 @@ export function ProductGrid({ limit }: { limit?: number }) {
 
 export function Ticker() {
   const items = [
-    // Bandeau d'origine
-    "✦ Livraison partout à Dakar",
-    "✦ +100 collections exclusives",
-    "✦ Commande avec le gérant",
-    "✦ Notes olfactives certifiées",
-    "✦ SCENTLAB · DUBAI · TAKEOFF",
-    "✦ Réponse WhatsApp en moins d'1h",
-    "✦ Haqqi · Pocket · Authentic",
-    // Livraison et paiement
+    "✦ Haqqi dès 4 000 F",
+    "✦ SCENTLAB 6 000 F · pack de 3 à 15 000 F",
+    "✦ Takeoff 25 000 F · les 2 à 50 000 F",
+    "✦ Parfums de poche · pack de 5 à 10 000 F",
     "✦ Livraison rapide à Dakar · 24 à 48h en régions",
     "✦ Livraison offerte dès 75 000 F",
     "✦ Paiement Wave · Orange Money · espèces",
-    // Catégories du site
-    "✦ SCENTLAB",
-    "✦ Takeoff Fragrance",
-    "✦ Dubai Perfumes",
-    "✦ Parfums de poche",
-    "✦ Parfums authentiques",
-    "✦ Haqqi",
-    "✦ Collections privées",
-    "✦ Coffrets",
-    "✦ Fragrance Library",
+    "✦ Commande avec le gérant sur WhatsApp",
+    "✦ Réponse WhatsApp en moins d'1h",
+    "✦ Dubai Perfumes · Parfums authentiques · Collections privées",
   ];
   return (
     <div

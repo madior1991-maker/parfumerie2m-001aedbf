@@ -8,6 +8,7 @@ const Ticker = React.lazy(() => import("@/components/commerce/PageBlocks").then(
 import { SiteLayout } from "@/components/commerce/SiteLayout";
 import { WhatsAppLogo } from "@/components/commerce/WhatsAppLogo";
 import homeHeroBottle from "@/assets/home-white-bottle.webp";
+import takeoffParisImage from "@/assets/takeoff-paris.webp";
 import {
   catalog,
   collectionLabel,
@@ -21,26 +22,16 @@ import { whatsappUrl } from "@/lib/perfume-data";
 
 export const Route = createFileRoute("/")({
   head: () => ({
+    // Les balises de partage (og:, twitter:) sont dans index.html, une seule fois.
     meta: [
-      { title: "2M Parfumerie Dakar | Parfums authentiques livrés à Dakar" },
+      { title: "2M Parfumerie Dakar | Parfums dès 4 000 F, livrés partout au Sénégal" },
       {
         name: "description",
         content:
-          "2M Parfumerie — parfums de qualité au Sénégal. Collections : Haqqi, Scentlab, Takeoff Fragance, Dubai, Parfums de poches.",
+          "Parfums à Dakar dès 4 000 F : Haqqi, SCENTLAB, Takeoff, Dubai Perfumes et parfums authentiques. Commande sur WhatsApp, livraison rapide à Dakar, 24 à 48h en régions. Paiement Wave, Orange Money ou espèces.",
       },
-      { name: "ai:summary", content: "2M Parfumerie vend des parfums de qualité (Haqqi, Scentlab, Takeoff), livraison au Sénégal." },
+      { name: "ai:summary", content: "2M Parfumerie vend des parfums à Dakar (Haqqi, SCENTLAB, Takeoff, Dubai Perfumes, parfums authentiques), livraison partout au Sénégal." },
       { name: "keywords", content: "Haqqi, Scentlab, Takeoff Fragance, Parfums authentique, Parfums Dubai, Parfums de poches, Collections privées, Fragance Library" },
-      { property: "og:title", content: "2M Parfumerie Dakar | Parfums authentiques livrés à Dakar" },
-      {
-        property: "og:description",
-        content:
-          "Achetez des parfums authentiques de luxe à Dakar. Livraison partout au Sénégal, commande finalisée directement avec le gérant.",
-      },
-      { property: "og:url", content: "https://www.2mparfumeriedk.com/" },
-      { property: "og:type", content: "website" },
-      { property: "og:locale", content: "fr_FR" },
-      { property: "og:image", content: "https://www.2mparfumeriedk.com/assets/og-image.jpg" },
-      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "https://www.2mparfumeriedk.com/" }],
     scripts: [
@@ -76,6 +67,30 @@ export const Route = createFileRoute("/")({
 const heroMessage =
   "Bonjour 2M Parfumerie 👋 Je souhaite découvrir vos collections. Pouvez-vous m'aider ?";
 const finalMessage = "Bonjour 2M Parfumerie 👋 Je cherche un parfum. Pouvez-vous m'aider ?";
+
+const heroPrices = [
+  { label: "Haqqi", price: "dès 4 000 F", to: "/collections/haqqi" },
+  { label: "SCENTLAB", price: "6 000 F", to: "/collections/scentlab" },
+  { label: "Takeoff", price: "25 000 F", to: "/collections/takeoff" },
+] as const;
+
+const homeCollections = [
+  { name: "Haqqi", price: "Dès 4 000 F", note: "Pack de 3 à 10 000 F", image: "/images/home/tuile-haqqi.webp", to: "/collections/haqqi" },
+  { name: "SCENTLAB", price: "6 000 F", note: "Pack de 3 à 15 000 F", image: "/images/optimized/scentlab-boxes-w800.webp", to: "/collections/scentlab" },
+  { name: "Takeoff", price: "25 000 F", note: "Les 2 à 50 000 F", image: takeoffParisImage, to: "/collections/takeoff" },
+  { name: "Dubai Perfumes", price: "Dès 20 000 F", note: "Parfums orientaux", image: "/images/home/tuile-dubai.webp", to: "/boutique", collection: "dubai" },
+  { name: "Parfums de poche", price: "Pack de 5", note: "10 000 F", image: "/images/optimized/pocket-perfumes-homme-w800.webp", to: "/collections/parfums-de-poches" },
+  { name: "Parfums authentiques", price: "Originaux", note: "Grandes maisons", image: "/videos/authentic-poster.jpg", to: "/boutique", collection: "authentic" },
+] as const;
+
+// Best-sellers affichés sur l'accueil (adresse de la fiche produit).
+// Pour en changer, il suffit de remplacer les adresses ci-dessous.
+const bestSellerSlugs = [
+  "kirke",
+  "citrus-caramel-xerjoff-casamorati-lira",
+  "paris-mfk-baccarat-rouge",
+  "lataffa-khamrah",
+];
 
 const featuredPackCards = [
   { title: "Pack Haqqi", subtitle: "3 parfums", price: "10 000 FCFA", imageBase: "haqqi-collection" },
@@ -120,7 +135,16 @@ function pickFeaturedProducts(products: BoutiqueProduct[], weekNumber = currentW
     .filter((product): product is BoutiqueProduct => Boolean(product));
 }
 
-const fallbackFeaturedProducts = pickFeaturedProducts(catalog);
+function pickBestSellers(products: BoutiqueProduct[]) {
+  const chosen = bestSellerSlugs
+    .map((slug) => products.find((product) => slugifyProduct(product) === slug))
+    .filter((product): product is BoutiqueProduct => Boolean(product));
+  if (chosen.length >= 4) return chosen;
+  const extra = pickFeaturedProducts(products).filter((product) => !chosen.includes(product));
+  return [...chosen, ...extra].slice(0, 4);
+}
+
+const fallbackFeaturedProducts = pickBestSellers(catalog);
 
 const promises = [
   {
@@ -130,8 +154,8 @@ const promises = [
   },
   {
     icon: ShieldCheck,
-    title: "Authenticité certifiée",
-    body: "Chaque flacon est contrôlé avant envoi. Zéro contrefaçon, zéro compromis.",
+    title: "Qualité contrôlée",
+    body: "Chaque flacon est vérifié avant envoi. Nos parfums authentiques sont des originaux ; nos créations inspirées le disent clairement.",
   },
   {
     icon: Truck,
@@ -208,7 +232,7 @@ function Index() {
     const loadFeaturedProducts = async () => {
       const { data } = await supabase.from("products").select("*");
       const liveProducts = mergeLiveCatalog(data ?? []);
-      setFeaturedProducts(pickFeaturedProducts(liveProducts));
+      setFeaturedProducts(pickBestSellers(liveProducts));
     };
     void loadFeaturedProducts();
   }, []);
@@ -224,14 +248,30 @@ function Index() {
                 className="fade-up font-display text-4xl font-semibold leading-[1.1] text-foreground md:text-5xl lg:text-6xl"
                 style={{ animationDelay: "120ms" }}
               >
-                Parfums authentiques à Dakar | 2M Parfumerie
+                Ton parfum dès 4 000 F, livré partout au Sénégal
               </h1>
               <p
                 className="fade-up mt-4 text-lg text-muted-foreground md:text-xl"
                 style={{ animationDelay: "240ms" }}
               >
-                Livraison partout au Sénégal
+                Haqqi, SCENTLAB, Takeoff, Dubai Perfumes et parfums authentiques. Tu choisis, on te
+                livre.
               </p>
+              <div
+                className="fade-up mt-6 flex flex-wrap gap-2"
+                style={{ animationDelay: "300ms" }}
+              >
+                {heroPrices.map((item) => (
+                  <Link
+                    key={item.label}
+                    to={item.to}
+                    className="inline-flex items-baseline gap-2 whitespace-nowrap rounded-full border border-accent/40 bg-surface px-4 py-2 text-sm text-foreground transition-colors hover:border-accent hover:bg-accent/10"
+                  >
+                    <span className="font-semibold">{item.label}</span>
+                    <span className="font-semibold text-accent">{item.price}</span>
+                  </Link>
+                ))}
+              </div>
               <div
                 className="fade-up mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"
                 style={{ animationDelay: "360ms" }}
@@ -251,7 +291,7 @@ function Index() {
                 className="fade-up mt-8 flex flex-wrap gap-x-6 gap-y-2 text-xs text-muted-foreground"
                 style={{ animationDelay: "480ms" }}
               >
-                {["Livraison Sénégal", "Authenticité garantie", "Commande avec le gérant"].map(
+                {["Livraison rapide à Dakar, 24 à 48h en régions", "Wave · Orange Money · espèces", "Commande avec le gérant"].map(
                   (item) => (
                     <span key={item} className="inline-flex items-center gap-1">
                       <Check className="size-3 text-accent" aria-hidden="true" /> {item}
@@ -263,14 +303,14 @@ function Index() {
           </div>
             <div className="relative order-2 h-[38vh] min-h-[260px] overflow-hidden bg-surface-alt md:h-full md:min-h-0">
               <video
-                src="/videos/authentic.mp4"
-                poster="/videos/authentic-poster.jpg"
+                src="/videos/haqqi-collection.mp4"
+                poster="/videos/haqqi-collection-poster.jpg"
                 autoPlay
                 loop
                 muted
                 playsInline
                 preload="metadata"
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover object-[50%_40%]"
               />
           </div>
         </div>
@@ -280,11 +320,51 @@ function Index() {
         <Ticker />
       </Suspense>
 
+      <section className="relative bg-surface-alt py-14 md:py-20">
+        <div className="section-shell">
+          <div className="fade-up mb-8 text-center">
+            <p className="caption-luxe mb-3 text-accent">Nos collections</p>
+            <h2 className="font-display text-[32px] font-medium text-foreground md:text-5xl">
+              Un parfum pour chaque budget
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-sm text-muted-foreground">
+              Haqqi, SCENTLAB et Takeoff sont nos créations inspirées des grands parfums. Nos
+              parfums authentiques sont les originaux des grandes maisons.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-6">
+            {homeCollections.map((item, index) => (
+              <Link
+                key={item.name}
+                to={item.to}
+                search={"collection" in item ? { collection: item.collection } : {}}
+                className="fade-up group overflow-hidden rounded-lg border border-border bg-card shadow-card transition-all hover:-translate-y-1 hover:border-accent"
+                style={{ animationDelay: `${index * 60}ms` }}
+              >
+                <div className="aspect-[4/5] overflow-hidden bg-surface">
+                  <img
+                    src={item.image}
+                    alt={`Collection ${item.name}, 2M Parfumerie`}
+                    loading="lazy"
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="p-3 sm:p-4">
+                  <h3 className="font-display text-lg leading-tight text-foreground sm:text-xl">{item.name}</h3>
+                  <p className="mt-1 text-sm font-semibold text-accent">{item.price}</p>
+                  <p className="text-xs text-muted-foreground">{item.note}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="relative border-t-4 border-accent/20 bg-background py-16 md:py-24">
         <div className="section-shell text-center">
           <HomeHeader
-            title="Nos parfums du moment"
-            subtitle="Quelques de nos best sellers, choisis pour vous !"
+            title="Nos best-sellers"
+            subtitle="Quelques-uns de nos best-sellers, une sélection par collection."
           />
           <div className="mx-auto grid max-w-6xl grid-cols-2 gap-3 text-left sm:gap-6 lg:grid-cols-4">
             {featuredProducts.map((product, index) => (
@@ -302,14 +382,14 @@ function Index() {
                 >
                   <img
                     src={product.image}
-                    alt={`${product.name} TAKEOFF Fragrance chez 2M Parfumerie`}
+                    alt={`${product.name}, ${collectionLabel(product.collection)}, chez 2M Parfumerie`}
                     className="h-full w-full object-contain p-2 transition-transform duration-500 group-hover:scale-105 sm:p-5"
                     loading="lazy"
                   />
                 </Link>
                 <div className="p-3 sm:p-5">
-                  <p className="mb-1 hidden text-[11px] uppercase tracking-[0.1em] text-muted-foreground sm:block">
-                    {product.ref}
+                  <p className="mb-1 text-[11px] uppercase tracking-[0.1em] text-muted-foreground">
+                    {collectionLabel(product.collection)}
                   </p>
                   <h3 className="mb-1 line-clamp-2 font-display text-sm text-foreground sm:text-[22px]">
                     {product.name}
