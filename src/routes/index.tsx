@@ -83,15 +83,6 @@ const homeCollections = [
   { name: "Parfums authentiques", price: "Originaux", note: "Grandes maisons", image: "/videos/authentic-poster.jpg", to: "/boutique", collection: "authentic" },
 ] as const;
 
-// Best-sellers affichés sur l'accueil (adresse de la fiche produit).
-// Pour en changer, il suffit de remplacer les adresses ci-dessous.
-const bestSellerSlugs = [
-  "kirke",
-  "citrus-caramel-xerjoff-casamorati-lira",
-  "paris-mfk-baccarat-rouge",
-  "lataffa-khamrah",
-];
-
 const featuredPackCards = [
   { title: "Pack Haqqi", subtitle: "3 parfums", price: "10 000 FCFA", imageBase: "haqqi-collection" },
   { title: "Pack SCENTLAB", subtitle: "3 parfums", price: "15 000 FCFA", imageBase: "scentlab-boxes" },
@@ -103,48 +94,36 @@ const featuredPackCards = [
   },
 ] as const;
 
-function currentWeekNumber(date = new Date()) {
-  const utcDate = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
-  const day = utcDate.getUTCDay() || 7;
-  utcDate.setUTCDate(utcDate.getUTCDate() + 4 - day);
-  const yearStart = new Date(Date.UTC(utcDate.getUTCFullYear(), 0, 1));
-  return Math.ceil(((utcDate.getTime() - yearStart.getTime()) / 86_400_000 + 1) / 7);
+
+// Tirage renouvelé tous les 3 jours : un parfum de chaque collection.
+const FEATURED_COLLECTIONS: BoutiqueProduct["collection"][] = [
+  "authentic",
+  "coffrets",
+  "dubai",
+  "scentlab",
+  "haqqi",
+  "takeoff",
+];
+
+function currentPeriod(date = new Date(), days = 3) {
+  return Math.floor(date.getTime() / 86_400_000 / days);
 }
 
-function pickFeaturedProducts(products: BoutiqueProduct[], weekNumber = currentWeekNumber()) {
-  const featuredCollections: BoutiqueProduct["collection"][] = [
-    "takeoff",
-    "scentlab",
-    "dubai",
-    "authentic",
-  ];
-
-  return featuredCollections
-    .map((collection, collectionIndex) => {
-      const collectionProducts = products
-        .filter((product) => product.collection === collection)
-        // Temporaire: image Vanilla Dream cassée côté base, à retirer une fois corrigée
-        .filter((product) => product.name !== "Vanilla Dream")
-        .sort((a, b) => a.name.localeCompare(b.name, "fr"));
-
-      if (collectionProducts.length === 0) return undefined;
-
-      const weeklyIndex = (weekNumber + collectionIndex * 7) % collectionProducts.length;
-      return collectionProducts[weeklyIndex];
-    })
-    .filter((product): product is BoutiqueProduct => Boolean(product));
+function pickFeaturedProducts(products: BoutiqueProduct[], period = currentPeriod()) {
+  return FEATURED_COLLECTIONS.map((collection, collectionIndex) => {
+    const available = products
+      .filter((product) => product.collection === collection)
+      // Uniquement les parfums disponibles avec un prix
+      .filter((product) => product.price > 0)
+      // Temporaire: image Vanilla Dream cassée côté base, à retirer une fois corrigée
+      .filter((product) => product.name !== "Vanilla Dream")
+      .sort((a, b) => a.name.localeCompare(b.name, "fr"));
+    if (available.length === 0) return undefined;
+    return available[(period + collectionIndex * 7) % available.length];
+  }).filter((product): product is BoutiqueProduct => Boolean(product));
 }
 
-function pickBestSellers(products: BoutiqueProduct[]) {
-  const chosen = bestSellerSlugs
-    .map((slug) => products.find((product) => slugifyProduct(product) === slug))
-    .filter((product): product is BoutiqueProduct => Boolean(product));
-  if (chosen.length >= 4) return chosen;
-  const extra = pickFeaturedProducts(products).filter((product) => !chosen.includes(product));
-  return [...chosen, ...extra].slice(0, 4);
-}
-
-const fallbackFeaturedProducts = pickBestSellers(catalog);
+const fallbackFeaturedProducts = pickFeaturedProducts(catalog);
 
 const promises = [
   {
@@ -232,7 +211,7 @@ function Index() {
     const loadFeaturedProducts = async () => {
       const { data } = await supabase.from("products").select("*");
       const liveProducts = mergeLiveCatalog(data ?? []);
-      setFeaturedProducts(pickBestSellers(liveProducts));
+      setFeaturedProducts(pickFeaturedProducts(liveProducts));
     };
     void loadFeaturedProducts();
   }, []);
@@ -363,10 +342,10 @@ function Index() {
       <section className="relative border-t-4 border-accent/20 bg-background py-16 md:py-24">
         <div className="section-shell text-center">
           <HomeHeader
-            title="Nos best-sellers"
-            subtitle="Quelques-uns de nos best-sellers, une sélection par collection."
+            title="Nos parfums du moment"
+            subtitle="Un parfum de chaque collection, renouvelé tous les 3 jours."
           />
-          <div className="mx-auto grid max-w-6xl grid-cols-2 gap-3 text-left sm:gap-6 lg:grid-cols-4">
+          <div className="mx-auto grid max-w-6xl grid-cols-2 gap-3 text-left sm:gap-6 lg:grid-cols-3">
             {featuredProducts.map((product, index) => (
               <article
                 key={product.name}
