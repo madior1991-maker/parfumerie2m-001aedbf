@@ -66,33 +66,33 @@
   --font-display: "Cormorant Garamond", serif;
   --font-body: "Montserrat", sans-serif;
   --radius: 8px;
-  --background: oklch(0.965 0.014 85);
-  --foreground: oklch(0.15 0.025 45);
-  --card: oklch(0.99 0.004 89);
-  --card-foreground: oklch(0.15 0.025 45);
-  --popover: oklch(0.99 0.004 89);
-  --popover-foreground: oklch(0.15 0.025 45);
-  --primary: oklch(0.36 0.096 160);
-  --primary-foreground: oklch(0.99 0.005 84);
-  --secondary: oklch(0.87 0.045 160);
-  --secondary-foreground: oklch(0.15 0.025 45);
-  --muted: oklch(0.92 0.012 89);
-  --muted-foreground: oklch(0.58 0.012 85);
-  --accent: oklch(0.36 0.096 160);
-  --accent-foreground: oklch(0.99 0.005 84);
-  --accent-hover: oklch(0.32 0.085 160);
-  --accent-muted: oklch(0.87 0.045 160 / 25%);
-  --surface: oklch(0.97 0.008 89);
-  --surface-alt: oklch(0.95 0.012 89);
-  --placeholder: oklch(0.96 0.01 89);
-  --footer: oklch(0.16 0.025 45);
+  --background: #F7F1E4;
+  --foreground: #1F1A15;
+  --card: #FFFDF8;
+  --card-foreground: #1F1A15;
+  --popover: #FFFDF8;
+  --popover-foreground: #1F1A15;
+  --primary: #0E3B2C;
+  --primary-foreground: #F7F1E4;
+  --secondary: #EADFC8;
+  --secondary-foreground: #1F1A15;
+  --muted: #EFE7D6;
+  --muted-foreground: #5E554C;
+  --accent: #0E3B2C;
+  --accent-foreground: #F7F1E4;
+  --accent-hover: #14533D;
+  --accent-muted: rgba(212, 178, 106, 0.18);
+  --surface: #EFE6D3;
+  --surface-alt: #EADFC8;
+  --placeholder: #EFE7D6;
+  --footer: #0A2E22;
   --whatsapp: oklch(0.766 0.174 151.2);
   --whatsapp-hover: oklch(0.649 0.154 151.8);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.99 0.005 84);
-  --border: oklch(0.36 0.096 160 / 15%);
-  --input: oklch(0.92 0.012 89);
-  --ring: oklch(0.36 0.096 160);
+  --border: #E2D6BE;
+  --input: #E2D6BE;
+  --ring: #8A6A22;
   --chart-1: oklch(0.36 0.096 160);
   --chart-2: oklch(0.44 0.076 160);
   --chart-3: oklch(0.87 0.045 160);
@@ -106,9 +106,9 @@
   --sidebar-accent-foreground: oklch(0.26 0.018 75);
   --sidebar-border: oklch(0.78 0.035 82 / 35%);
   --sidebar-ring: oklch(0.62 0.116 82);
-  --shadow-card: 0 10px 34px oklch(0.28 0.04 75 / 10%);
-  --shadow-glow: 0 16px 46px oklch(0.36 0.096 160 / 15%);
-  --shadow-btn: 0 8px 20px oklch(0.36 0.096 160 / 18%);
+  --shadow-card: 0 12px 34px rgba(14, 59, 44, 0.10);
+  --shadow-glow: 0 16px 46px rgba(14, 59, 44, 0.14);
+  --shadow-btn: 0 8px 20px rgba(14, 59, 44, 0.18);
   --shadow-green: 0 12px 28px oklch(0.36 0.096 160 / 12%);
 }
 
@@ -251,7 +251,7 @@
   }
 
   .glass-nav {
-    background-color: rgba(252, 249, 245, 0.92);
+    background-color: rgba(14, 59, 44, 0.96);
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
   }
@@ -374,3 +374,45 @@
     transition-duration: 0.001ms !important;
   }
 }
+
+/* ——— Palette « Maison » : vert profond et or, comme les catalogues ——— */
+.caption-luxe.text-accent { color: #8A6A22; }
+
+/* En-tête vert avec liseré or */
+.nav-maison {
+  background-color: #0E3B2C;
+  border-bottom-color: rgba(212, 178, 106, 0.35) !important;
+  --foreground: #F4EEE2;
+  --muted-foreground: #E9E2D3;
+  --accent: #D4B26A;
+}
+.nav-maison [id^="menu-"] {
+  --foreground: #1F1A15;
+  --muted-foreground: #5E554C;
+  --accent: #0E3B2C;
+}
+
+/* Bandes vertes de la page d'accueil */
+.band-maison {
+  background-color: #0E3B2C;
+  color: #F4EEE2;
+  --foreground: #F4EEE2;
+  --muted-foreground: #D9D1C1;
+  --accent: #D4B26A;
+  --accent-foreground: #0E3B2C;
+  --primary-foreground: #0E3B2C;
+  --border: rgba(212, 178, 106, 0.3);
+  --card: #14453A;
+  --card-foreground: #F4EEE2;
+}
+.band-maison .caption-luxe { color: #D4B26A; }
+
+/* Pied de page vert, filet or */
+footer.bg-footer {
+  border-top: 3px solid #D4B26A;
+  --foreground: #F4EEE2;
+  --muted-foreground: #D9D1C1;
+  --border: rgba(212, 178, 106, 0.3);
+  --accent: #D4B26A;
+}
+footer.bg-footer .caption-luxe { color: #D4B26A; }

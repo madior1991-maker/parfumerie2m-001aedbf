@@ -300,7 +300,7 @@ function Index() {
         <Ticker />
       </Suspense>
 
-      <section className="relative bg-surface-alt py-14 md:py-20">
+      <section className="band-maison relative py-14 md:py-20">
         <div className="section-shell">
           <div className="fade-up mb-8 text-center">
             <p className="caption-luxe mb-3 text-accent">Nos collections</p>
@@ -400,7 +400,7 @@ function Index() {
         </div>
       </section>
 
-      <section className="relative border-t-4 border-accent/20 bg-surface-alt py-16 md:py-24">
+      <section className="band-maison relative border-t-4 border-accent/20 py-16 md:py-24">
         <div className="section-shell text-center">
           <p className="caption-luxe text-accent">Compose ton pack</p>
           <h2 className="mt-4 font-display text-[32px] font-medium text-foreground md:text-5xl">

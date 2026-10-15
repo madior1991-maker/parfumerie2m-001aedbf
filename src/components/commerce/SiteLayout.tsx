@@ -154,8 +154,8 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
       <header>
         <nav
           className={cn(
-            "fixed left-0 top-0 z-50 flex h-16 w-full items-center justify-between border-b border-transparent px-3 transition-all duration-300 md:h-20 md:px-6",
-            scrolled && "glass-nav border-accent/15",
+            "nav-maison fixed left-0 top-0 z-50 flex h-16 w-full items-center justify-between border-b px-3 transition-all duration-300 md:h-20 md:px-6",
+            scrolled && "glass-nav",
           )}
         >
           <Link
@@ -518,7 +518,7 @@ function SiteFooter() {
             href="https://www.nextwavesn.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-medium text-[#8fd4ae] hover:underline"
+            className="font-medium text-accent hover:underline"
           >
             Nextwave
           </a>
