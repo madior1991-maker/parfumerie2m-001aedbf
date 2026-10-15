@@ -134,31 +134,31 @@ const packOnlyOptions: Record<CoffretCollection, (CoffretOption & { gender: Gend
     {
       id: "haqqi-homme-scandal-man",
       title: "Scandal Man",
-      description: "Charismatique et affirmé.",
+      description: "",
       gender: "Homme",
     },
     {
       id: "haqqi-unisex-baccarat-rouge-540",
       title: "Baccarat Rouge 540",
-      description: "Ambré, lumineux, très reconnaissable.",
+      description: "",
       gender: "Unisex",
     },
     {
       id: "haqqi-unisex-more-than-words",
       title: "More Than Words",
-      description: "Élégant et légèrement boisé.",
+      description: "",
       gender: "Unisex",
     },
     {
       id: "haqqi-unisex-duetto",
       title: "Duetto",
-      description: "Équilibré et facile à porter.",
+      description: "",
       gender: "Unisex",
     },
     {
       id: "haqqi-femme-gucci-bloom",
       title: "Gucci Bloom",
-      description: "Floral blanc, pur et généreux.",
+      description: "",
       gender: "Femme",
     },
   ],
@@ -196,7 +196,7 @@ function genderOf(product: BoutiqueProduct): Gender | "Nouveautés" {
 }
 
 function optionDescription(product: BoutiqueProduct) {
-  if (product.collection === "pocket") return "";
+  if (product.collection === "pocket" || product.collection === "haqqi") return "";
   if (product.collection === "scentlab" && product.ref) return `Inspiré de ${product.ref}.`;
   return product.notes;
 }
