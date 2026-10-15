@@ -39,9 +39,23 @@ const mixedCollectionOrder: Collection[] = [
   "library",
 ];
 
+const PAGE_SIZE = 25; // 5 rangées de 5 sur ordinateur
+
+function shuffle<T>(items: T[]) {
+  const copy = [...items];
+  for (let i = copy.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
+// Ordre aléatoire à chaque visite, en gardant les collections bien mélangées.
 function mixProductsByCollection(products: BoutiqueProduct[]) {
-  const groupedProducts = mixedCollectionOrder.map((collection) =>
-    products.filter((product) => product.collection === collection),
+  const groupedProducts = shuffle(
+    mixedCollectionOrder.map((collection) =>
+      shuffle(products.filter((product) => product.collection === collection)),
+    ),
   );
   const maxGroupLength = Math.max(0, ...groupedProducts.map((group) => group.length));
 
@@ -83,12 +97,12 @@ function BoutiquePage() {
   const location = useLocation();
   const search = Route.useSearch();
   const collection: Collection = search.collection ?? "all";
-  const [visibleCount, setVisibleCount] = useState(12);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [products, setProducts] = useState<BoutiqueProduct[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    setVisibleCount(12);
+    setVisibleCount(PAGE_SIZE);
   }, [collection, searchQuery]);
 
   useEffect(() => {
@@ -236,7 +250,7 @@ function BoutiquePage() {
               <Button
                 variant="outline"
                 size="lg"
-                onClick={() => setVisibleCount((count) => count + 12)}
+                onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}
               >
                 Voir plus
               </Button>

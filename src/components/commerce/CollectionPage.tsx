@@ -40,7 +40,7 @@ export function CollectionPage({
   children,
 }: CollectionPageProps) {
   const [products, setProducts] = useState<BoutiqueProduct[]>([]);
-  const [visibleCount, setVisibleCount] = useState(12);
+  const [visibleCount, setVisibleCount] = useState(25);
 
   useEffect(() => {
     void (async () => {
@@ -197,7 +197,7 @@ export function CollectionPage({
           )}
           {visibleCount < filtered.length && (
             <div className="mt-12 text-center">
-              <Button variant="outline" size="lg" onClick={() => setVisibleCount((c) => c + 12)}>
+              <Button variant="outline" size="lg" onClick={() => setVisibleCount((c) => c + 25)}>
                 Voir plus
               </Button>
             </div>
