@@ -13,6 +13,7 @@ import {
   catalog,
   collectionLabel,
   formatPrice,
+  optimizedProductImageUrl,
   slugifyProduct,
   type BoutiqueProduct,
 } from "@/lib/catalog-data";
@@ -345,7 +346,7 @@ function Index() {
             title="Nos parfums du moment"
             subtitle="Nos coups de cœur, piochés dans chaque collection."
           />
-          <div className="mx-auto grid max-w-6xl grid-cols-2 gap-3 text-left sm:gap-6 lg:grid-cols-3">
+          <div className="mx-auto grid max-w-7xl grid-cols-2 gap-3 text-left sm:gap-5 md:grid-cols-3 lg:grid-cols-6 lg:gap-4">
             {featuredProducts.map((product, index) => (
               <article
                 key={product.name}
@@ -360,20 +361,20 @@ function Index() {
                   className="image-zoom relative block aspect-square overflow-hidden bg-surface"
                 >
                   <img
-                    src={product.image}
+                    src={optimizedProductImageUrl(product.image, 800)}
                     alt={`${product.name}, ${collectionLabel(product.collection)}, chez 2M Parfumerie`}
-                    className="h-full w-full object-contain p-2 transition-transform duration-500 group-hover:scale-105 sm:p-5"
+                    className="h-full w-full object-contain p-2 transition-transform duration-500 group-hover:scale-105 sm:p-4 lg:p-3"
                     loading="lazy"
                   />
                 </Link>
-                <div className="p-3 sm:p-5">
-                  <p className="mb-1 text-[11px] uppercase tracking-[0.1em] text-muted-foreground">
+                <div className="p-3 sm:p-4">
+                  <p className="mb-1 truncate text-[10px] uppercase tracking-[0.1em] text-muted-foreground sm:text-[11px]">
                     {collectionLabel(product.collection)}
                   </p>
-                  <h3 className="mb-1 line-clamp-2 font-display text-sm text-foreground sm:text-[22px]">
+                  <h3 className="mb-1 line-clamp-2 min-h-[2.5em] font-display text-sm leading-tight text-foreground sm:text-lg lg:text-base">
                     {product.name}
                   </h3>
-                  <p className="mb-2 font-body text-base font-semibold text-accent sm:mb-4 sm:text-xl">
+                  <p className="mb-2 font-body text-base font-semibold text-accent sm:mb-3 sm:text-lg lg:text-base">
                     {formatPrice(product.price)}
                   </p>
                   <AddToCartButton
