@@ -25,6 +25,7 @@ const ROUTES = [
   "/collections/callisto-paris",
   "/collections/coffrets",
   "/collections/fragrance-library",
+  "/catalogues",
 ];
 
 async function main() {

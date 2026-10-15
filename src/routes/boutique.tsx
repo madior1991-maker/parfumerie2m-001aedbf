@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { AddToCartButton } from "@/components/commerce/AddToCartButton";
+import { CatalogueDownload } from "@/components/commerce/CatalogueDownload";
 import { SiteLayout } from "@/components/commerce/SiteLayout";
 import {
   collectionFiltersFor,
@@ -179,10 +180,12 @@ function BoutiquePage() {
 
       <section className="bg-background py-8 md:py-12">
         <div className="mx-auto max-w-7xl px-3 md:px-6">
+          {isPocketShowcase && <CatalogueDownload collection="pocket" className="mb-8" />}
           {isPocketShowcase ? (
             <PocketShowcase />
           ) : (
             <>
+          {collection !== "all" && <CatalogueDownload collection={collection} className="mb-8" />}
           {collection === "haqqi" && (
             <div className="mb-8 overflow-hidden rounded-lg border border-border bg-card shadow-card">
               <video

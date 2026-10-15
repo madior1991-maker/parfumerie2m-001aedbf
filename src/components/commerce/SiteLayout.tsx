@@ -25,6 +25,7 @@ import { useCustomCollections } from "@/lib/live-catalog";
 const navItems = [
   { label: "Boutique", to: "/boutique" },
   { label: "Compose ton pack", to: "/coffret-signature" },
+  { label: "Catalogues", to: "/catalogues" },
   { label: "Quiz parfum", to: "/trouve-ton-parfum" },
   { label: "Livraison", to: "/livraison" },
   { label: "Contact", to: "/contact" },
@@ -54,7 +55,7 @@ const siteCollections: SiteCollection[] = [
   { label: "Parfums de poche", price: "Pack de 5 à 10 000 F", to: "/collections/parfums-de-poches" },
   { label: "Dubai Perfumes", price: "Dès 20 000 F", to: "/boutique", collection: "dubai" },
   { label: "Parfums authentiques", price: "Les originaux", to: "/boutique", collection: "authentic" },
-  { label: "Callisto Paris", price: "80 000 F", to: "/collections/callisto-paris" },
+  { label: "Callisto Paris", price: "75 000 F", to: "/collections/callisto-paris" },
   { label: "Collections privées", price: "Éditions rares", to: "/collections/collections-privees" },
   { label: "Coffrets", price: "Prêts à offrir", to: "/collections/coffrets" },
 ];
@@ -62,6 +63,7 @@ const siteCollections: SiteCollection[] = [
 const footerPages = [
   { label: "Boutique", to: "/boutique" },
   { label: "Compose ton pack", to: "/coffret-signature" },
+  { label: "Catalogues PDF", to: "/catalogues" },
   { label: "Quiz parfum", to: "/trouve-ton-parfum" },
   { label: "Livraison", to: "/livraison" },
   { label: "FAQ", to: "/faq" },

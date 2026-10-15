@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { AddToCartButton } from "@/components/commerce/AddToCartButton";
+import { CatalogueDownload } from "@/components/commerce/CatalogueDownload";
 import { SiteLayout } from "@/components/commerce/SiteLayout";
 import {
   collectionLabel,
@@ -116,6 +117,7 @@ export function CollectionPage({
 
       <section className="bg-background py-8 md:py-12">
         <div className="mx-auto max-w-7xl px-3 md:px-6">
+          <CatalogueDownload collection={collection} className="mb-8" />
           <p className="mb-4 text-sm text-muted-foreground">
             {filtered.length} parfum{filtered.length > 1 ? "s" : ""} {label}
           </p>

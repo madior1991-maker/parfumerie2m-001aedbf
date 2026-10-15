@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { SiteLayout } from "@/components/commerce/SiteLayout";
 import { PocketShowcase } from "@/components/commerce/PocketShowcase";
+import { CatalogueDownload } from "@/components/commerce/CatalogueDownload";
 import { catalog } from "@/lib/catalog-data";
 import { whatsappUrl } from "@/lib/perfume-data";
 
@@ -104,6 +105,7 @@ function PocketPage() {
 
       <section className="bg-background py-10 md:py-14">
         <div className="section-shell">
+          <CatalogueDownload collection="pocket" className="mb-8" />
           <PocketShowcase />
         </div>
       </section>
