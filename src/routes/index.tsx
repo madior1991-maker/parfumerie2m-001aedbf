@@ -219,10 +219,10 @@ function Index() {
 
   return (
     <SiteLayout>
-      <section className="relative overflow-hidden bg-background pt-20 md:h-screen md:min-h-[560px] md:pt-24">
+      <section className="relative overflow-hidden bg-background pt-16 md:min-h-[100svh] md:pt-20">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,oklch(0.36_0.096_160/0.08),transparent_36%),radial-gradient(circle_at_bottom_left,oklch(0.87_0.045_160/0.05),transparent_40%)]" />
-        <div className="grid items-center relative z-10 md:h-full md:grid-cols-[55fr_45fr]">
-          <div className="section-shell z-10 order-1 py-4 md:w-auto md:py-6 md:pl-[max(2rem,calc((100vw-1180px)/2))] md:pr-10">
+        <div className="relative z-10 grid items-stretch md:min-h-[calc(100svh-5rem)] md:grid-cols-[55fr_45fr]">
+          <div className="section-shell z-10 order-1 flex items-center py-6 md:w-auto md:py-10 md:pl-[max(2rem,calc((100vw-1180px)/2))] md:pr-10">
             <div className="max-w-2xl">
               <h1
                 className="fade-up font-display text-4xl font-semibold leading-[1.1] text-foreground md:text-5xl lg:text-6xl"
@@ -256,12 +256,12 @@ function Index() {
                 className="fade-up mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"
                 style={{ animationDelay: "360ms" }}
               >
-                <Button asChild variant="whatsapp" size="lg">
+                <Button asChild variant="whatsapp" size="lg" className="sm:whitespace-nowrap">
                   <a href={whatsappUrl(heroMessage)} target="_blank" rel="noopener noreferrer">
                     <WhatsAppLogo tone="light" className="size-5" /> Commander sur WhatsApp
                   </a>
                 </Button>
-                <Button asChild variant="outline" size="lg">
+                <Button asChild variant="outline" size="lg" className="sm:whitespace-nowrap">
                   <Link to="/boutique" search={{}}>
                     Visiter la boutique
                   </Link>
@@ -281,18 +281,27 @@ function Index() {
               </div>
             </div>
           </div>
-            <div className="relative order-2 h-[38vh] min-h-[260px] overflow-hidden bg-surface-alt md:h-full md:min-h-0">
+            <div className="relative order-2 flex items-center justify-center overflow-hidden bg-[#0E3B2C] px-6 py-8 md:py-10">
+              {/* Fond : l’image de la vidéo, floutée, pour habiller le cadre sans rien couper. */}
+              <img
+                src="/videos/haqqi-2m-poster.jpg"
+                alt=""
+                aria-hidden="true"
+                className="absolute inset-0 h-full w-full scale-110 object-cover opacity-40 blur-2xl"
+              />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,transparent_0%,rgba(14,59,44,0.55)_70%)]" />
+              {/* La vidéo verticale, affichée en entier comme une story. */}
               <video
-                src="/videos/haqqi-collection.mp4"
-                poster="/videos/haqqi-collection-poster.jpg"
+                src="/videos/haqqi-2m.mp4"
+                poster="/videos/haqqi-2m-poster.jpg"
                 autoPlay
                 loop
                 muted
                 playsInline
                 preload="metadata"
-                className="h-full w-full object-cover object-[50%_40%]"
+                className="relative aspect-[9/16] w-[min(66vw,300px)] rounded-[22px] object-cover shadow-[0_24px_60px_rgba(0,0,0,0.45)] ring-1 ring-[#D4B26A]/60 md:h-[min(78svh,760px)] md:w-auto"
               />
-          </div>
+            </div>
         </div>
       </section>
 
