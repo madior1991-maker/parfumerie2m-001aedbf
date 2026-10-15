@@ -83,7 +83,7 @@ function PocketPage() {
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-muted-foreground">
             Un petit format à glisser dans le sac ou la poche, pour changer de parfum selon ta
-            journée. Tu choisis tes 5 parfums parmi {total} références Homme, Femme et Unisex. On
+            journée. Tu choisis tes 5 parfums parmi {total} références Homme et Femme. On
             prépare ton pack et on te livre partout au Sénégal.
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
@@ -121,7 +121,7 @@ function PocketPage() {
             Les parfums au choix dans le pack
           </h2>
           <p className="mt-2 text-sm text-muted-foreground">
-            Choisis-en 5. Mélange Homme, Femme et Unisex comme tu veux.
+            Choisis-en 5. Mélange Homme et Femme comme tu veux.
           </p>
           <div className="mt-8 grid gap-8 md:grid-cols-3">
             {groups.map((group) => (
@@ -143,7 +143,7 @@ function PocketPage() {
             <Button
               asChild
               size="lg"
-              className="bg-accent text-primary-foreground hover:bg-accent/90"
+              className="h-auto max-w-full whitespace-normal py-3 bg-accent text-primary-foreground hover:bg-accent/90"
             >
               <Link to="/coffret-signature">Composer mon pack de 5 — 10 000 F</Link>
             </Button>
