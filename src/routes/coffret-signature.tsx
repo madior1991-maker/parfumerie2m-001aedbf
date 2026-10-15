@@ -111,6 +111,9 @@ const scentlabGender: Record<string, Gender> = {
   "caramel-orange-kilian-love-don-t-be-shy": "Femme",
   "citrus-caramel-xerjoff-casamorati-lira": "Femme",
   "fruity-chypre-armani-si": "Femme",
+  "naughty-rose-exclusive": "Femme",
+  "flirty-caramel-carolina-herrera-good-girl": "Femme",
+  "orange-blossom-ysl-libre": "Femme",
   "jasmine-cedar-amouage-reflection": "Unisex",
   "addictive-peach-ex-nihilo-fleur-narcotique": "Unisex",
   "sandalwood-leather-le-labo-santal-33": "Unisex",
@@ -132,44 +135,13 @@ const scentlabGender: Record<string, Gender> = {
 const packOnlyOptions: Record<CoffretCollection, (CoffretOption & { gender: Gender })[]> = {
   haqqi: [
     {
-      id: "haqqi-unisex-baccarat-rouge-540",
-      title: "Baccarat Rouge 540",
-      description: "",
-      gender: "Unisex",
-    },
-    {
-      id: "haqqi-unisex-more-than-words",
-      title: "More Than Words",
-      description: "",
-      gender: "Unisex",
-    },
-    {
       id: "haqqi-femme-gucci-bloom",
       title: "Gucci Bloom",
       description: "",
       gender: "Femme",
     },
   ],
-  scentlab: [
-    {
-      id: "scentlab-match-naughty-rose",
-      title: "Naughty Rose",
-      description: "Rose gourmande.",
-      gender: "Femme",
-    },
-    {
-      id: "scentlab-match-orange-blossom",
-      title: "Orange Blossom",
-      description: "Inspiré de Libre.",
-      gender: "Femme",
-    },
-    {
-      id: "scentlab-match-flirty-caramel",
-      title: "Flirty Caramel",
-      description: "Inspiré de Good Girl.",
-      gender: "Femme",
-    },
-  ],
+  scentlab: [],
   pocket: [],
 };
 

@@ -440,6 +440,9 @@ const scentlabExtraProducts: {
   { name: "Marine Citrus", ref: "Orto Parisi Megamare", slug: "marine-citrus", notes: "Notes marines · Agrumes · Algues", family: "Aquatique hespéridé" },
   { name: "Pink Peony", ref: "Parfums de Marly Delina", slug: "pink-peony", notes: "Litchi · Pivoine · Rose", family: "Floral fruité" },
   { name: "Woody Bergamot Exclusive", ref: "Dior Sauvage Elixir", slug: "woody-bergamot-exclusive", notes: "Épices · Bergamote · Bois de réglisse", family: "Aromatique boisé" },
+  { name: "Naughty Rose Exclusive", ref: "", slug: "naughty-rose-exclusive", notes: "Osmanthus · Pêche · Tubéreuse · Rose · Ambre", family: "Floral fruité" },
+  { name: "Flirty Caramel", ref: "Carolina Herrera Good Girl", slug: "flirty-caramel", notes: "Amande · Café · Tubéreuse · Fève tonka · Cacao", family: "Floral gourmand" },
+  { name: "Orange Blossom", ref: "YSL Libre", slug: "orange-blossom", notes: "Lavande · Mandarine · Fleur d'oranger · Jasmin · Vanille", family: "Floral aromatique" },
   { name: "Fruity Passion", ref: "Tiziana Terenzi Kirke", slug: "fruity-passion", notes: "Fruits rouges · Fruit de la passion · Vanille", family: "Fruité gourmand" },
   { name: "Ambery Orchid", ref: "Tom Ford Black Orchid", slug: "ambery-orchid", notes: "Truffe noire · Orchidée · Patchouli", family: "Oriental floral" },
   { name: "Cherry Almond", ref: "Tom Ford Lost Cherry", slug: "cherry-almond", notes: "Cerise · Amande amère · Tonka", family: "Gourmand fruité" },
@@ -516,6 +519,8 @@ const haqqiProducts: { name: string; ref: string; family: string; notes: string 
   // Unisex
   { name: "Kirke", ref: "Inspiration Tiziana Terenzi Kirke", family: "Unisex", notes: "Fruité · Solaire · Expressif" },
   { name: "Duetto", ref: "Inspiration Duetto", family: "Unisex", notes: "Équilibré · Net · Facile à porter" },
+  { name: "Baccarat Rouge 540", ref: "Inspiration MFK Baccarat Rouge 540", family: "Unisex", notes: "Ambré · Lumineux · Reconnaissable" },
+  { name: "More Than Words", ref: "Inspiration Xerjoff More Than Words", family: "Unisex", notes: "Élégant · Poétique · Boisé" },
   { name: "Baccarat Rouge 540 Extrait", ref: "Inspiration MFK Baccarat Rouge Extrait", family: "Unisex", notes: "Profond · Dense · Luxueux" },
   { name: "Oud Satin Mood", ref: "Inspiration MFK Oud Satin Mood", family: "Unisex", notes: "Velouté · Oriental · Raffiné" },
   { name: "Tom Ford Tobacco Vanille", ref: "Inspiration Tom Ford Tobacco Vanille", family: "Unisex", notes: "Tabac · Vanille · Gourmand" },
