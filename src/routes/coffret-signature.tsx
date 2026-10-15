@@ -273,7 +273,11 @@ function CoffretSignaturePage() {
   useEffect(() => {
     void (async () => {
       const { data } = await supabase.from("products").select("*");
-      if (data?.length) setPackSections(buildPackSections(mergeLiveCatalog(data)));
+      if (!data?.length) return;
+      // Les parfums de poche sont masqués un par un dans l'admin (vente en pack seulement) :
+      // leur liste reste celle du catalogue.
+      const live = buildPackSections(mergeLiveCatalog(data));
+      setPackSections({ ...live, pocket: staticPackSections.pocket });
     })();
   }, []);
 

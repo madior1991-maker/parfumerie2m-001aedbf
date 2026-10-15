@@ -1,12 +1,10 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 
 import { Button } from "@/components/ui/button";
 import { SiteLayout } from "@/components/commerce/SiteLayout";
 import { PocketShowcase } from "@/components/commerce/PocketShowcase";
-import { catalog, type BoutiqueProduct } from "@/lib/catalog-data";
-import { mergeLiveCatalog } from "@/lib/live-catalog";
-import { supabase } from "@/integrations/supabase/client";
+import { catalog } from "@/lib/catalog-data";
 import { whatsappUrl } from "@/lib/perfume-data";
 
 const URL = "https://www.2mparfumeriedk.com/collections/parfums-de-poches";
@@ -49,14 +47,9 @@ export const Route = createFileRoute("/collections/parfums-de-poches")({
 });
 
 function PocketPage() {
-  const [products, setProducts] = useState<BoutiqueProduct[]>(catalog);
-
-  useEffect(() => {
-    void (async () => {
-      const { data } = await supabase.from("products").select("*");
-      if (data?.length) setProducts(mergeLiveCatalog(data));
-    })();
-  }, []);
+  // Les parfums de poche sont masqués un par un dans l'admin (vente en pack seulement) :
+  // la liste vient du catalogue.
+  const products = catalog;
 
   const groups = useMemo(() => {
     const pocket = products.filter((product) => product.collection === "pocket");
@@ -83,8 +76,8 @@ function PocketPage() {
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-muted-foreground">
             Un petit format à glisser dans le sac ou la poche, pour changer de parfum selon ta
-            journée. Tu choisis tes 5 parfums parmi {total} références Homme et Femme. On
-            prépare ton pack et on te livre partout au Sénégal.
+            journée. Tu choisis tes 5 parfums parmi {total} références Homme et Femme. On prépare
+            ton pack et on te livre partout au Sénégal.
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <Button
