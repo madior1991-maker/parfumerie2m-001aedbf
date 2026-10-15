@@ -119,7 +119,7 @@ export function CollectionPage({
           <p className="mb-4 text-sm text-muted-foreground">
             {filtered.length} parfum{filtered.length > 1 ? "s" : ""} {label}
           </p>
-          <div className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4 xl:grid-cols-5">
             {visible.map((product, index) => (
               <article
                 key={`${product.name}-${index}`}
@@ -152,7 +152,7 @@ export function CollectionPage({
                           <img
                             src={fallback}
                             alt={`${product.name} — ${label} chez 2M Parfumerie`}
-                            className="h-full w-full object-contain p-2 transition-transform duration-500 group-hover:scale-105 sm:p-4"
+                            className="h-full w-full object-contain p-3 transition-transform duration-500 group-hover:scale-105 sm:p-5"
                             loading="lazy"
                             width={800}
                             height={800}
@@ -163,16 +163,16 @@ export function CollectionPage({
                     })()}
                   </Link>
                 </div>
-                <div className="flex flex-1 flex-col p-3 sm:p-5">
+                <div className="flex flex-1 flex-col p-3 sm:p-4">
                   <Link
                     to="/boutique/$productSlug"
                     params={{ productSlug: slugifyProduct(product) }}
                     search={{}}
-                    className="mb-1 block line-clamp-2 font-display text-sm leading-snug text-foreground hover:text-accent sm:text-xl"
+                    className="mb-1 block line-clamp-2 font-display text-sm leading-snug text-foreground hover:text-accent sm:text-base lg:text-[17px]"
                   >
                     {product.name}
                   </Link>
-                  <p className="mb-3 font-body text-base font-semibold text-accent sm:mb-4 sm:text-lg">
+                  <p className="mb-3 font-body text-sm font-semibold text-accent sm:text-base">
                     {formatPrice(product.price)}
                   </p>
                   <div className="mt-auto">

@@ -29,7 +29,7 @@ export function AddToCartButton({ item }: { item: Omit<CartItem, "quantity"> }) 
         toast(`✓ ${item.name} ajouté au panier`, { duration: 3000 });
       }}
       aria-label={`Ajouter ${item.name} au panier`}
-      className="@container h-auto min-h-11 w-full whitespace-nowrap rounded-full bg-accent px-3 py-2.5 text-center text-[11px] leading-tight text-primary-foreground hover:bg-accent-hover sm:px-4 sm:py-3 sm:text-xs"
+      className="@container h-auto min-h-11 w-full whitespace-nowrap rounded-full bg-accent px-3 py-2.5 text-center text-[11px] leading-tight text-primary-foreground hover:bg-accent-hover sm:px-4 sm:py-2.5 sm:text-[11px]"
     >
       <ShoppingBag className="size-4 shrink-0" aria-hidden="true" />
       <span className="hidden @[12.5rem]:inline">Ajouter au panier</span>

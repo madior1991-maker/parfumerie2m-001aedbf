@@ -217,7 +217,7 @@ function BoutiquePage() {
               </Link>
             )}
           </div>
-          <div className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4 xl:grid-cols-5">
             {visibleProducts.map((product, index) => (
               <CatalogCard
                 key={`${product.collection}-${product.name}-${index}`}
@@ -334,14 +334,14 @@ function CatalogCard({ product, index }: { product: BoutiqueProduct; index: numb
           <img
             src={optimizedProductImageUrl(product.image, 800)}
             alt={`${product.name} chez 2M Parfumerie`}
-            className="h-full w-full object-contain p-2 transition-transform duration-500 group-hover:scale-105 sm:p-4"
+            className="h-full w-full object-contain p-3 transition-transform duration-500 group-hover:scale-105 sm:p-5"
             loading="lazy"
           />
         </Link>
       </div>
-      <div className="flex flex-1 flex-col p-3 sm:p-5">
+      <div className="flex flex-1 flex-col p-3 sm:p-4">
         {product.collection !== "dubai" && product.collection !== "authentic" && product.ref && (
-          <p className="mb-1 hidden text-[11px] uppercase tracking-[0.1em] text-muted-foreground sm:block">
+          <p className="mb-1 hidden truncate text-[10px] uppercase tracking-[0.1em] text-muted-foreground sm:block">
             {product.ref}
           </p>
         )}
@@ -349,11 +349,11 @@ function CatalogCard({ product, index }: { product: BoutiqueProduct; index: numb
           to="/boutique/$productSlug"
           params={{ productSlug: slugifyProduct(product) }}
           search={{}}
-          className="mb-1 block line-clamp-2 font-display text-sm leading-snug text-foreground hover:text-accent sm:text-xl"
+          className="mb-1 block line-clamp-2 font-display text-sm leading-snug text-foreground hover:text-accent sm:text-base lg:text-[17px]"
         >
           {product.name}
         </Link>
-        <p className="mb-3 font-body text-base font-semibold text-accent sm:mb-4 sm:text-lg">
+        <p className="mb-3 font-body text-sm font-semibold text-accent sm:text-base">
           {formatPrice(product.price)}
         </p>
         <div className="mt-auto">
