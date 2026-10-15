@@ -409,36 +409,6 @@ function Index() {
       </section>
 
       <section className="relative border-t-4 border-accent/20 bg-background py-16 md:py-24">
-        <div className="section-shell grid gap-10 md:grid-cols-[0.8fr_1.2fr] md:gap-12">
-          <div className="fade-up">
-            <h2 className="font-display text-[32px] font-medium text-foreground md:text-5xl">
-              Notre Promesse
-            </h2>
-            <p className="mt-6 max-w-sm text-muted-foreground">
-              Chez 2M Parfumerie, chaque commande est une rencontre entre votre identité et le
-              parfum parfait. Nous ne vendons pas des flacons — nous livrons des émotions.
-            </p>
-            <Button asChild variant="outline" size="lg" className="mt-8">
-              <Link to="/contact">Nous contacter</Link>
-            </Button>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {promises.map(({ icon: Icon, title, body }, index) => (
-              <article
-                key={title}
-                className="fade-up rounded-lg border border-border bg-surface p-6 transition-all hover:border-accent hover:shadow-green"
-                style={{ animationDelay: `${index * 80}ms` }}
-              >
-                <Icon className="mb-6 size-8 text-accent drop-shadow-md" aria-hidden="true" />
-                <h3 className="font-display text-2xl text-foreground">{title}</h3>
-                <p className="mt-3 text-sm text-muted-foreground">{body}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="relative border-t-4 border-accent/20 bg-surface-alt py-16 md:py-24">
         <div className="section-shell">
           <div className="fade-up mb-10 max-w-2xl">
             <p className="caption-luxe mb-3 text-accent">Avis clients</p>
@@ -510,6 +480,36 @@ function Index() {
                 <WhatsAppLogo tone="light" className="size-5" /> Démarrer sur WhatsApp
               </a>
             </Button>
+          </div>
+        </div>
+      </section>
+
+      <section className="relative border-t-4 border-accent/20 bg-background py-16 md:py-24">
+        <div className="section-shell grid gap-10 md:grid-cols-[0.8fr_1.2fr] md:gap-12">
+          <div className="fade-up">
+            <h2 className="font-display text-[32px] font-medium text-foreground md:text-5xl">
+              Notre Promesse
+            </h2>
+            <p className="mt-6 max-w-sm text-muted-foreground">
+              Chez 2M Parfumerie, chaque commande est une rencontre entre votre identité et le
+              parfum parfait. Nous ne vendons pas des flacons — nous livrons des émotions.
+            </p>
+            <Button asChild variant="outline" size="lg" className="mt-8">
+              <Link to="/contact">Nous contacter</Link>
+            </Button>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {promises.map(({ icon: Icon, title, body }, index) => (
+              <article
+                key={title}
+                className="fade-up rounded-lg border border-border bg-surface p-6 transition-all hover:border-accent hover:shadow-green"
+                style={{ animationDelay: `${index * 80}ms` }}
+              >
+                <Icon className="mb-6 size-8 text-accent drop-shadow-md" aria-hidden="true" />
+                <h3 className="font-display text-2xl text-foreground">{title}</h3>
+                <p className="mt-3 text-sm text-muted-foreground">{body}</p>
+              </article>
+            ))}
           </div>
         </div>
       </section>
