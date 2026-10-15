@@ -196,6 +196,7 @@ function genderOf(product: BoutiqueProduct): Gender | "Nouveautés" {
 }
 
 function optionDescription(product: BoutiqueProduct) {
+  if (product.collection === "pocket") return "";
   if (product.collection === "scentlab" && product.ref) return `Inspiré de ${product.ref}.`;
   return product.notes;
 }
@@ -511,9 +512,11 @@ function CoffretSignaturePage() {
                             <div className="min-w-0 flex-1">
                               <div className="flex items-start justify-between gap-3">
                                 <div className="min-w-0">
-                                  <p className="text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
-                                    {collectionShortLabel[selectedCollection]} · {section.title}
-                                  </p>
+                                  {selectedCollection !== "pocket" && (
+                                    <p className="text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
+                                      {collectionShortLabel[selectedCollection]} · {section.title}
+                                    </p>
+                                  )}
                                   <h4 className="mt-1 font-display text-lg text-foreground sm:text-[22px]">
                                     {option.title}
                                   </h4>
