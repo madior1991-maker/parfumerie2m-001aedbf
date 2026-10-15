@@ -568,6 +568,17 @@ const haqqiPhotos: Record<string, string> = {
   "Tom Ford Ombré Leather": "tom-ford-ombre-leather",
   "Cartier Déclaration": "cartier-declaration",
   "Desert Oud": "desert-oud",
+  "Baccarat Rouge 540 Extrait": "baccarat-rouge-540-extrait",
+  "Hypnotic Poison": "hypnotic-poison",
+  "Terre d'Hermès": "terre-d-hermes",
+  "Pegasus": "pegasus",
+  "Creed Aventus": "creed-aventus",
+  "Valentino Uomo": "valentino-uomo",
+  "Tom Ford White Patchouli": "tom-ford-white-patchouli",
+  "Kirke": "kirke",
+  "Black Opium": "black-opium",
+  "Invictus": "invictus",
+  "Allure Homme Sport": "allure-homme-sport",
 };
 
 const haqqiCatalog: BoutiqueProduct[] = haqqiProducts.map((product) => ({
