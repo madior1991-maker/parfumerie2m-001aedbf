@@ -18,9 +18,10 @@ function readEnv() {
   return env;
 }
 
-const LABELS = { scentlab: "SCENTLAB", takeoff: "Takeoff Fragrance", dubai: "Dubai Perfumes", pocket: "Parfums de poche", authentic: "Parfums authentiques", haqqi: "Haqqi", privees: "Collections privées", coffrets: "Coffrets", library: "Fragrance Library" };
+const LABELS = { scentlab: "SCENTLAB", takeoff: "Takeoff Fragrance", dubai: "Dubai Perfumes", pocket: "Parfums de poche", authentic: "Parfums authentiques", haqqi: "Haqqi", callisto: "Callisto Paris", privees: "Collections privées", coffrets: "Coffrets", library: "Fragrance Library" };
 const ALIASES = { "scent lab": "scentlab", "takeoff fragrance": "takeoff", "takeoff fragance": "takeoff", "dubai perfumes": "dubai", "pocket perfumes": "pocket", "authentic perfumes": "authentic", haqqui: "haqqi", "collections privees": "privees", "collections privées": "privees", "collection privee": "privees", "private collection": "privees", coffret: "coffrets", "fragrance library": "library" };
-const collectionOf = (v) => { const n = (v || "").trim().toLowerCase(); return LABELS[n] ? n : ALIASES[n] || "scentlab"; };
+const collectionOf0 = (v) => { const n = (v || "").trim().toLowerCase(); return LABELS[n] ? n : ALIASES[n] || "scentlab"; };
+const collectionOf = (v, name = "") => (/callisto/i.test(name) ? "callisto" : collectionOf0(v));
 const price = (n) => `${new Intl.NumberFormat("fr-FR").format(n).replace(/ | /g, " ")} FCFA`;
 const clean = (v) => {
   let t = String(v || "");
@@ -52,8 +53,9 @@ function resolveImage(image) {
   return `${SITE}/og/default.jpg`;
 }
 
-function writeProductPage(base, p) {
-  const label = LABELS[collectionOf(p.collection)];
+function writeProductPage(base, p0) {
+  const p = { ...p0, name: String(p0.name || "").replace(/\s*[(\-–]\s*callisto paris\s*\)?\s*$/i, "").trim() || p0.name };
+  const label = LABELS[collectionOf(p0.collection, p0.name)];
   const pageUrl = `${SITE}/boutique/${p.slug}`;
   const title = `${p.name} – ${label} | 2M Parfumerie Dakar`;
   const desc = `${p.name} (${label}) à ${price(p.price)}${p.notes ? `. Notes : ${p.notes}` : ""}. Commande sur WhatsApp, livraison rapide à Dakar, 24 à 48h en régions.`.slice(0, 300);

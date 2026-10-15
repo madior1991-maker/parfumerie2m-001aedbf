@@ -31,13 +31,20 @@ export function mergeLiveCatalog(productRows: ProductRow[]) {
   return [...mergedCatalog, ...extraProducts];
 }
 
+// Les parfums Callisto Paris forment leur propre collection,
+// même s'ils sont encore rangés dans « Parfums authentiques » dans l'admin.
+const CALLISTO = /callisto/i;
+const CALLISTO_SUFFIX = /\s*[(\-–]\s*callisto paris\s*\)?\s*$/i;
+
 function productFromRow(product: ProductRow, fallback?: BoutiqueProduct): BoutiqueProduct {
-  const collection = normalizeCollectionValue(product.collection);
+  const isCallisto = CALLISTO.test(product.name) || CALLISTO.test(product.subtitle ?? "");
+  const collection = isCallisto ? "callisto" : normalizeCollectionValue(product.collection);
+  const name = isCallisto ? product.name.replace(CALLISTO_SUFFIX, "").trim() || product.name : product.name;
   const image = product.image_url || product.image_urls?.[0] || fallback?.image || "";
   const notes = product.notes_top || fallback?.notes || "Notes à préciser";
 
   return {
-    name: product.name,
+    name,
     ref: product.subtitle || fallback?.ref || "Collection 2M",
     notes,
     headNotes: product.notes_top || fallback?.headNotes || notes,

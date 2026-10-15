@@ -22,6 +22,7 @@ const ROUTES = [
   "/collections/scentlab",
   "/collections/parfums-de-poches",
   "/collections/collections-privees",
+  "/collections/callisto-paris",
   "/collections/coffrets",
   "/collections/fragrance-library",
 ];

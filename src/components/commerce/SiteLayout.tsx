@@ -39,6 +39,7 @@ type SiteCollection = {
     | "/collections/takeoff"
     | "/collections/parfums-de-poches"
     | "/collections/collections-privees"
+    | "/collections/callisto-paris"
     | "/collections/coffrets"
     | "/collections/fragrance-library"
     | "/boutique";
@@ -53,6 +54,7 @@ const siteCollections: SiteCollection[] = [
   { label: "Parfums de poche", price: "Pack de 5 à 10 000 F", to: "/collections/parfums-de-poches" },
   { label: "Dubai Perfumes", price: "Dès 20 000 F", to: "/boutique", collection: "dubai" },
   { label: "Parfums authentiques", price: "Les originaux", to: "/boutique", collection: "authentic" },
+  { label: "Callisto Paris", price: "80 000 F", to: "/collections/callisto-paris" },
   { label: "Collections privées", price: "Éditions rares", to: "/collections/collections-privees" },
   { label: "Coffrets", price: "Prêts à offrir", to: "/collections/coffrets" },
 ];

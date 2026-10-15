@@ -28,6 +28,7 @@ import { Route as CollectionsHaqqiRouteImport } from './routes/collections.haqqi
 import { Route as CollectionsFragranceLibraryRouteImport } from './routes/collections.fragrance-library'
 import { Route as CollectionsCollectionsPriveesRouteImport } from './routes/collections.collections-privees'
 import { Route as CollectionsCoffretsRouteImport } from './routes/collections.coffrets'
+import { Route as CollectionsCallistoParisRouteImport } from './routes/collections.callisto-paris'
 import { Route as BoutiqueProductSlugRouteImport } from './routes/boutique.$productSlug'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 
@@ -129,6 +130,12 @@ const CollectionsCoffretsRoute = CollectionsCoffretsRouteImport.update({
   path: '/collections/coffrets',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CollectionsCallistoParisRoute =
+  CollectionsCallistoParisRouteImport.update({
+    id: '/collections/callisto-paris',
+    path: '/collections/callisto-paris',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const BoutiqueProductSlugRoute = BoutiqueProductSlugRouteImport.update({
   id: '/$productSlug',
   path: '/$productSlug',
@@ -155,6 +162,7 @@ export interface FileRoutesByFullPath {
   '/trouve-ton-parfum': typeof TrouveTonParfumRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/boutique/$productSlug': typeof BoutiqueProductSlugRoute
+  '/collections/callisto-paris': typeof CollectionsCallistoParisRoute
   '/collections/coffrets': typeof CollectionsCoffretsRoute
   '/collections/collections-privees': typeof CollectionsCollectionsPriveesRoute
   '/collections/fragrance-library': typeof CollectionsFragranceLibraryRoute
@@ -178,6 +186,7 @@ export interface FileRoutesByTo {
   '/trouve-ton-parfum': typeof TrouveTonParfumRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/boutique/$productSlug': typeof BoutiqueProductSlugRoute
+  '/collections/callisto-paris': typeof CollectionsCallistoParisRoute
   '/collections/coffrets': typeof CollectionsCoffretsRoute
   '/collections/collections-privees': typeof CollectionsCollectionsPriveesRoute
   '/collections/fragrance-library': typeof CollectionsFragranceLibraryRoute
@@ -202,6 +211,7 @@ export interface FileRoutesById {
   '/trouve-ton-parfum': typeof TrouveTonParfumRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/boutique/$productSlug': typeof BoutiqueProductSlugRoute
+  '/collections/callisto-paris': typeof CollectionsCallistoParisRoute
   '/collections/coffrets': typeof CollectionsCoffretsRoute
   '/collections/collections-privees': typeof CollectionsCollectionsPriveesRoute
   '/collections/fragrance-library': typeof CollectionsFragranceLibraryRoute
@@ -227,6 +237,7 @@ export interface FileRouteTypes {
     | '/trouve-ton-parfum'
     | '/blog/$slug'
     | '/boutique/$productSlug'
+    | '/collections/callisto-paris'
     | '/collections/coffrets'
     | '/collections/collections-privees'
     | '/collections/fragrance-library'
@@ -250,6 +261,7 @@ export interface FileRouteTypes {
     | '/trouve-ton-parfum'
     | '/blog/$slug'
     | '/boutique/$productSlug'
+    | '/collections/callisto-paris'
     | '/collections/coffrets'
     | '/collections/collections-privees'
     | '/collections/fragrance-library'
@@ -273,6 +285,7 @@ export interface FileRouteTypes {
     | '/trouve-ton-parfum'
     | '/blog/$slug'
     | '/boutique/$productSlug'
+    | '/collections/callisto-paris'
     | '/collections/coffrets'
     | '/collections/collections-privees'
     | '/collections/fragrance-library'
@@ -295,6 +308,7 @@ export interface RootRouteChildren {
   LivraisonRoute: typeof LivraisonRoute
   MentionsLegalesRoute: typeof MentionsLegalesRoute
   TrouveTonParfumRoute: typeof TrouveTonParfumRoute
+  CollectionsCallistoParisRoute: typeof CollectionsCallistoParisRoute
   CollectionsCoffretsRoute: typeof CollectionsCoffretsRoute
   CollectionsCollectionsPriveesRoute: typeof CollectionsCollectionsPriveesRoute
   CollectionsFragranceLibraryRoute: typeof CollectionsFragranceLibraryRoute
@@ -439,6 +453,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CollectionsCoffretsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/collections/callisto-paris': {
+      id: '/collections/callisto-paris'
+      path: '/collections/callisto-paris'
+      fullPath: '/collections/callisto-paris'
+      preLoaderRoute: typeof CollectionsCallistoParisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/boutique/$productSlug': {
       id: '/boutique/$productSlug'
       path: '/$productSlug'
@@ -491,6 +512,7 @@ const rootRouteChildren: RootRouteChildren = {
   LivraisonRoute: LivraisonRoute,
   MentionsLegalesRoute: MentionsLegalesRoute,
   TrouveTonParfumRoute: TrouveTonParfumRoute,
+  CollectionsCallistoParisRoute: CollectionsCallistoParisRoute,
   CollectionsCoffretsRoute: CollectionsCoffretsRoute,
   CollectionsCollectionsPriveesRoute: CollectionsCollectionsPriveesRoute,
   CollectionsFragranceLibraryRoute: CollectionsFragranceLibraryRoute,
