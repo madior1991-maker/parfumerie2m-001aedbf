@@ -132,12 +132,6 @@ const scentlabGender: Record<string, Gender> = {
 const packOnlyOptions: Record<CoffretCollection, (CoffretOption & { gender: Gender })[]> = {
   haqqi: [
     {
-      id: "haqqi-homme-scandal-man",
-      title: "Scandal Man",
-      description: "",
-      gender: "Homme",
-    },
-    {
       id: "haqqi-unisex-baccarat-rouge-540",
       title: "Baccarat Rouge 540",
       description: "",
@@ -146,12 +140,6 @@ const packOnlyOptions: Record<CoffretCollection, (CoffretOption & { gender: Gend
     {
       id: "haqqi-unisex-more-than-words",
       title: "More Than Words",
-      description: "",
-      gender: "Unisex",
-    },
-    {
-      id: "haqqi-unisex-duetto",
-      title: "Duetto",
       description: "",
       gender: "Unisex",
     },

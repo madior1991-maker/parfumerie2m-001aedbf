@@ -512,8 +512,10 @@ const haqqiProducts: { name: string; ref: string; family: string; notes: string 
   { name: "Cartier Déclaration", ref: "Inspiration Cartier Déclaration", family: "Homme", notes: "Boisé épicé · Classique · Net" },
   { name: "Dolce Gabbana The One", ref: "Inspiration D&G The One", family: "Homme", notes: "Chaud · Suave · Séduisant" },
   { name: "Valentino Uomo", ref: "Inspiration Valentino Uomo", family: "Homme", notes: "Doux · Ambré · Raffiné" },
+  { name: "Scandal Man", ref: "Inspiration Jean Paul Gaultier Scandal Pour Homme", family: "Homme", notes: "Charismatique · Affirmé · Présent" },
   // Unisex
   { name: "Kirke", ref: "Inspiration Tiziana Terenzi Kirke", family: "Unisex", notes: "Fruité · Solaire · Expressif" },
+  { name: "Duetto", ref: "Inspiration Duetto", family: "Unisex", notes: "Équilibré · Net · Facile à porter" },
   { name: "Baccarat Rouge 540 Extrait", ref: "Inspiration MFK Baccarat Rouge Extrait", family: "Unisex", notes: "Profond · Dense · Luxueux" },
   { name: "Oud Satin Mood", ref: "Inspiration MFK Oud Satin Mood", family: "Unisex", notes: "Velouté · Oriental · Raffiné" },
   { name: "Tom Ford Tobacco Vanille", ref: "Inspiration Tom Ford Tobacco Vanille", family: "Unisex", notes: "Tabac · Vanille · Gourmand" },
