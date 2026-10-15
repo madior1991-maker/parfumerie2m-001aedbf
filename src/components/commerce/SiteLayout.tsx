@@ -289,8 +289,8 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
 function SiteFooter() {
   return (
     <footer className="border-t border-border bg-footer py-10 md:py-20">
-      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-x-6 gap-y-8 px-4 md:grid-cols-4 md:gap-10 md:px-6">
-        <div className="col-span-2 md:col-span-1">
+      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-x-6 gap-y-8 px-4 md:gap-10 md:px-6 lg:grid-cols-4">
+        <div className="col-span-2 lg:col-span-1">
           <Link to="/" className="brand-wordmark text-2xl font-bold text-[#8fd4ae]">
             2M Parfumerie
           </Link>
@@ -364,7 +364,7 @@ function SiteFooter() {
             Fragrance Library
           </Link>
         </FooterColumn>
-        <FooterColumn title="Contact" className="col-span-2 md:col-span-1">
+        <FooterColumn title="Contact" className="col-span-2 lg:col-span-1">
           <a
             href="tel:+221761923441"
             className="flex min-h-9 items-center gap-2 py-1 text-[13px] text-muted-foreground hover:text-primary-foreground"
@@ -424,7 +424,7 @@ function FooterColumn({
   className?: string;
 }) {
   return (
-    <div className={className}>
+    <div className={cn("min-w-0 [overflow-wrap:anywhere]", className)}>
       <p className="caption-luxe mb-3 text-muted-foreground">{title}</p>
       {children}
     </div>
