@@ -343,7 +343,7 @@ function Index() {
         <div className="section-shell text-center">
           <HomeHeader
             title="Nos parfums du moment"
-            subtitle="Un parfum de chaque collection, renouvelé tous les 3 jours."
+            subtitle="Nos coups de cœur, piochés dans chaque collection."
           />
           <div className="mx-auto grid max-w-6xl grid-cols-2 gap-3 text-left sm:gap-6 lg:grid-cols-3">
             {featuredProducts.map((product, index) => (
