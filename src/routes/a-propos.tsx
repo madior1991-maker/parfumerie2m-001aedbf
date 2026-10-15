@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Gem, MapPin, Users } from "lucide-react";
 
 import aboutHero from "@/assets/about-perfume-grid.webp";
-import brandLogo from "@/assets/2m-parfumerie-logo.webp";
 import { FaqAccordion, FaqContact } from "@/components/commerce/Faq";
 import { SiteLayout } from "@/components/commerce/SiteLayout";
 
@@ -64,7 +63,7 @@ function AboutPage() {
         <div className="section-shell grid gap-10 md:grid-cols-[40fr_60fr] md:items-center md:gap-12">
           <div className="fade-up flex min-h-[320px] items-center justify-center overflow-hidden rounded-xl border border-border bg-white p-8 shadow-card">
             <img
-              src={brandLogo}
+              src="/logo-2m-parfumerie.svg"
               alt="Logo 2M Parfumerie"
               className="max-h-[340px] w-full object-contain"
             />

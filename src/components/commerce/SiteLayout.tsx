@@ -160,10 +160,18 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
         >
           <Link
             to="/"
-            className="brand-wordmark whitespace-nowrap text-xl font-bold text-accent md:text-[24px]"
+            className="brand-wordmark flex items-center gap-2 whitespace-nowrap text-lg font-bold text-accent md:gap-3 md:text-[22px]"
             aria-label="2M Parfumerie accueil"
           >
-            2M Parfumerie
+            <img
+              src="/logo-2m-parfumerie.svg"
+              alt=""
+              width={2683}
+              height={2357}
+              className="h-11 w-auto md:h-[60px]"
+              fetchPriority="high"
+            />
+            <span>2M Parfumerie</span>
           </Link>
           <div className="hidden items-center gap-7 xl:flex">
             <div
@@ -390,8 +398,15 @@ function SiteFooter() {
     <footer className="border-t border-border bg-footer py-10 md:py-20">
       <div className="mx-auto grid max-w-7xl grid-cols-2 gap-x-6 gap-y-8 px-4 md:gap-10 md:px-6 lg:grid-cols-4">
         <div className="col-span-2 lg:col-span-1">
-          <Link to="/" className="brand-wordmark text-2xl font-bold text-[#8fd4ae]">
-            2M Parfumerie
+          <Link to="/" className="inline-block" aria-label="2M Parfumerie accueil">
+            <img
+              src="/logo-2m-parfumerie.svg"
+              alt="Logo 2M Parfumerie"
+              width={2683}
+              height={2357}
+              loading="lazy"
+              className="h-24 w-auto md:h-28"
+            />
           </Link>
           <p className="mt-2 max-w-xs text-[13px] text-muted-foreground">
             Parfums dès 4 000 F. Livraison partout au Sénégal.
