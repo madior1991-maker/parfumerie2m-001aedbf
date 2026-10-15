@@ -325,6 +325,16 @@
   }
 }
 
+@keyframes whatsapp-glow {
+  0%,
+  100% {
+    box-shadow: 0 4px 20px oklch(0.766 0.174 151.2 / 40%);
+  }
+  50% {
+    box-shadow: 0 6px 30px oklch(0.766 0.174 151.2 / 60%);
+  }
+}
+
 @keyframes whatsapp-pulse {
   0%,
   100% {
@@ -346,6 +356,11 @@
 
   .whatsapp-pulse {
     animation: whatsapp-pulse 4s ease-in-out infinite;
+  }
+
+  /* Boutons pleine largeur : la lueur pulse, la taille ne bouge pas. */
+  .whatsapp-pulse.pulse-glow-only {
+    animation-name: whatsapp-glow;
   }
 }
 

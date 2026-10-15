@@ -298,7 +298,7 @@ function ProductTemplate({ product, products }: { product: BoutiqueProduct; prod
                   imageUrl: optimizedProductImageUrl(product.image, 1200),
                 }}
               />
-              <Button asChild variant="whatsapp" size="lg" className="w-full">
+              <Button asChild variant="whatsapp" size="lg" className="pulse-glow-only w-full hover:scale-100">
                 <a href={productOrderUrl(product)} target="_blank" rel="noopener noreferrer">
                   <WhatsAppLogo tone="light" className="size-5" /> Commander sur WhatsApp
                 </a>
