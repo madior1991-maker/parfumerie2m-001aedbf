@@ -79,7 +79,7 @@ const homeCollections = [
   { name: "Haqqi", price: "Dès 4 000 F", note: "Pack de 3 à 10 000 F", image: "/images/home/tuile-haqqi.webp", to: "/collections/haqqi" },
   { name: "SCENTLAB", price: "6 000 F", note: "Pack de 3 à 15 000 F", image: "/images/optimized/scentlab-boxes-w800.webp", to: "/collections/scentlab" },
   { name: "Takeoff", price: "25 000 F", note: "Les 2 à 50 000 F", image: takeoffParisImage, to: "/collections/takeoff" },
-  { name: "Dubai Perfumes", price: "Dès 20 000 F", note: "Parfums orientaux", image: "/images/home/tuile-dubai.webp", to: "/boutique", collection: "dubai" },
+  { name: "Dubai Perfumes", price: "Dès 12 000 F", note: "Parfums orientaux", image: "/images/home/tuile-dubai.webp", to: "/boutique", collection: "dubai" },
   { name: "Parfums de poche", price: "Pack de 5", note: "10 000 F", image: "/images/optimized/pocket-perfumes-homme-w800.webp", to: "/collections/parfums-de-poches" },
   { name: "Parfums authentiques", price: "Originaux", note: "Grandes maisons", image: "/videos/authentic-poster.jpg", to: "/boutique", collection: "authentic" },
 ] as const;
