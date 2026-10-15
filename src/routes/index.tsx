@@ -1,5 +1,5 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { ArrowDown, Check, Handshake, ShieldCheck, Truck, Quote } from "lucide-react";
+import { ArrowDown, Check, Handshake, ShieldCheck, Truck } from "lucide-react";
 import React, { Suspense, useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -145,27 +145,58 @@ const promises = [
   },
 ];
 
-const testimonials = [
+type ReviewMessage = { from: "shop" | "client"; text: string; time: string };
+
+// Vrais messages reçus sur WhatsApp, recopiés mot pour mot.
+// Noms réduits au prénom ou aux initiales, numéros et photos retirés.
+const testimonials: { id: string; name: string; initials: string; messages: ReviewMessage[] }[] = [
   {
-    quote:
-      "Kyoto sent exactement comme Amouage guidance mais sans casser la tirelire. Je l'porte au bureau chaque semaine. On me demande souvent où j'achète.",
-    name: "Khalil M.",
-    location: "Les Almadies, Sénégal",
-    initials: "KM",
+    id: "r",
+    name: "R.",
+    initials: "R",
+    messages: [{ from: "client", text: "Bien reçu 🫡 et satisfait comme d'habitude ✅✅✅", time: "18:16" }],
   },
   {
-    quote:
-      "J'ai essayé Takeoff Paris qui a la même senteur que Baccarat Rouge chez une amie. Je l'ai commandé le lendemain via Whatsapp et le flacon est arrivé le soir même. Franchement impeccable!",
-    name: "Rokhaya S.",
-    location: "Plateau, Sénégal",
-    initials: "RS",
+    id: "philippe",
+    name: "Philippe",
+    initials: "P",
+    messages: [
+      {
+        from: "client",
+        text: "Merci, bien réceptionné et satisfait. Je peux avoir une liste des parfums femmes à votre disposition ?",
+        time: "20:33",
+      },
+    ],
   },
   {
-    quote:
-      "Je suis très regardant sur l'authenticité. J'ai commandé un Dubai Perfumes et la qualité est sans discussion. Ce sont de vrais parfums, pas des imitations.",
-    name: "Ibrahima D.",
-    location: "Sacré-Cœur, Sénégal",
-    initials: "ID",
+    id: "client-tres-bon",
+    name: "Client",
+    initials: "2M",
+    messages: [
+      { from: "client", text: "Merci Mr le parfum est tres bon", time: "20:54" },
+      { from: "client", text: "Vrmt merci mr vous avez tout fait pour que votre client soit satisfait", time: "20:55" },
+    ],
+  },
+  {
+    id: "client-bon-parfum",
+    name: "Client",
+    initials: "2M",
+    messages: [
+      { from: "shop", text: "Satisfait ?", time: "17:21" },
+      { from: "client", text: "Ouii ouii c'est un bon parfum ma cha ALLÂH", time: "17:24" },
+    ],
+  },
+  {
+    id: "a",
+    name: "A.",
+    initials: "A",
+    messages: [{ from: "client", text: "Client satisfait 🤝🤝", time: "23:48" }],
+  },
+  {
+    id: "satisfaite",
+    name: "Cliente",
+    initials: "2M",
+    messages: [{ from: "client", text: "Je suis satisfaite", time: "14:38" }],
   },
 ];
 
@@ -409,24 +440,50 @@ function Index() {
 
       <section className="relative border-t-4 border-accent/20 bg-surface-alt py-16 md:py-24">
         <div className="section-shell">
+          <div className="fade-up mb-10 max-w-2xl">
+            <p className="caption-luxe mb-3 text-accent">Avis clients</p>
+            <h2 className="font-display text-[32px] font-medium leading-[1.15] text-foreground md:text-5xl">
+              Ils nous ont écrit sur WhatsApp
+            </h2>
+            <p className="mt-4 text-sm text-muted-foreground">
+              Messages reçus après livraison, recopiés tels quels et publiés avec l'accord de nos
+              clients. Numéros et photos retirés.
+            </p>
+          </div>
           <div className="flex snap-x gap-5 overflow-x-auto pb-4 md:grid md:grid-cols-3 md:overflow-visible">
             {testimonials.map((item, index) => (
               <article
-                key={item.name}
-                className="fade-up min-w-[86%] snap-center rounded-lg border border-border bg-surface p-8 transition-all hover:border-accent-hover hover:shadow-green md:min-w-0"
+                key={item.id}
+                className="fade-up flex min-w-[86%] snap-center flex-col overflow-hidden rounded-lg border border-border bg-surface transition-all hover:border-accent-hover hover:shadow-green md:min-w-0"
                 style={{ animationDelay: `${index * 80}ms` }}
               >
-                <div className="mb-4 text-xl text-accent">★★★★★</div>
-                <Quote className="mb-4 text-accent drop-shadow-md" aria-hidden="true" />
-                <p className="text-sm text-muted-foreground">“{item.quote}”</p>
-                <div className="mt-6 flex items-center gap-3">
-                  <span className="flex size-10 items-center justify-center rounded-full bg-accent/15 border border-accent text-sm font-semibold text-accent">
+                <header className="flex items-center gap-3 bg-[#075E54] px-4 py-3 text-white">
+                  <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-white/20 text-xs font-semibold">
                     {item.initials}
                   </span>
-                  <span>
-                    <strong className="block text-sm text-foreground">{item.name}</strong>
-                    <small className="text-muted-foreground">{item.location}</small>
+                  <span className="min-w-0">
+                    <strong className="block truncate text-sm font-semibold">{item.name}</strong>
+                    <small className="text-xs text-white/75">Client 2M Parfumerie</small>
                   </span>
+                  <WhatsAppLogo tone="light" className="ml-auto size-5 opacity-90" />
+                </header>
+                <div className="flex flex-1 flex-col justify-end gap-2 bg-[#ECE5DD] px-3 py-5">
+                  {item.messages.map((m, i) => (
+                    <p
+                      key={i}
+                      className={
+                        "max-w-[88%] rounded-lg px-3 py-2 text-[15px] leading-snug text-[#111b21] shadow-sm " +
+                        (m.from === "shop"
+                          ? "self-end rounded-tr-none bg-[#D9FDD3]"
+                          : "self-start rounded-tl-none bg-white")
+                      }
+                    >
+                      {m.text}
+                      <span className="ml-2 inline-block translate-y-1 text-[11px] text-[#667781]">
+                        {m.time}
+                      </span>
+                    </p>
+                  ))}
                 </div>
               </article>
             ))}
