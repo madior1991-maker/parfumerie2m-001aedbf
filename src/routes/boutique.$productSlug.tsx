@@ -343,9 +343,9 @@ function ProductTemplate({ product, products }: { product: BoutiqueProduct; prod
                 ["Concentration", product.concentration],
                 ["Famille", product.family],
               ].map(([title, value]) => (
-                <div key={title} className="rounded-md bg-surface p-4 text-center">
-                  <p className="caption-luxe text-muted-foreground">{title}</p>
-                  <p className="mt-2 text-xs text-foreground">{value}</p>
+                <div key={title} className="min-w-0 rounded-md bg-surface px-2 py-4 text-center">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground sm:text-[11px]">{title}</p>
+                  <p className="mt-2 text-sm text-foreground">{value}</p>
                 </div>
               ))}
             </div>
@@ -383,12 +383,12 @@ function ProductTemplate({ product, products }: { product: BoutiqueProduct; prod
 function SimilarCard({ product }: { product: BoutiqueProduct }) {
   const label = collectionLabel(product.collection);
   return (
-    <article className="overflow-hidden rounded-lg border border-border bg-card shadow-card transition-all hover:-translate-y-1.5 hover:border-accent">
+    <article className="flex flex-col overflow-hidden rounded-lg border border-border bg-card shadow-card transition-all hover:-translate-y-1.5 hover:border-accent">
       <Link
         to="/boutique/$productSlug"
         params={{ productSlug: slugifyProduct(product) }}
         search={{}}
-        className="image-zoom block aspect-square overflow-hidden bg-surface"
+        className="image-zoom block aspect-square overflow-hidden bg-white"
       >
         {(() => {
           const sources = optimizedProductImageSet(product.image);
@@ -400,7 +400,7 @@ function SimilarCard({ product }: { product: BoutiqueProduct }) {
               <img
                 src={fallback}
                 alt={`${product.name} chez 2M Parfumerie`}
-                className="h-full w-full object-contain p-2 transition-transform duration-500 hover:scale-105 sm:p-5"
+                className="h-full w-full object-contain p-2 transition-transform duration-500 hover:scale-105 sm:p-4"
                 loading="lazy"
                 width={800}
                 height={800}
@@ -410,7 +410,7 @@ function SimilarCard({ product }: { product: BoutiqueProduct }) {
           );
         })()}
       </Link>
-      <div className="p-3 sm:p-5">
+      <div className="flex flex-1 flex-col p-3 sm:p-5">
         {product.collection !== "dubai" && product.collection !== "authentic" && product.ref && (
           <p className="mb-1 hidden text-[11px] uppercase tracking-[0.1em] text-muted-foreground sm:block">
             {product.ref}
@@ -420,14 +420,14 @@ function SimilarCard({ product }: { product: BoutiqueProduct }) {
           to="/boutique/$productSlug"
           params={{ productSlug: slugifyProduct(product) }}
           search={{}}
-          className="line-clamp-2 font-display text-sm text-foreground hover:text-accent sm:text-[22px]"
+          className="line-clamp-2 font-display text-sm leading-snug text-foreground hover:text-accent sm:text-xl"
         >
           {product.name}
         </Link>
-        <p className="mt-2 font-body text-base font-semibold text-accent sm:mt-4 sm:text-xl">
+        <p className="mt-2 font-body text-base font-semibold text-accent sm:mt-3 sm:text-lg">
           {formatPrice(product.price)}
         </p>
-        <div className="mt-4">
+        <div className="mt-auto pt-4">
           <AddToCartButton
             item={{
               id: slugifyProduct(product),

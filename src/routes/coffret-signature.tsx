@@ -297,7 +297,7 @@ function CoffretSignaturePage() {
             <Badge variant="outline" className="border-accent/30 bg-accent-muted text-accent">
               Compose ton pack
             </Badge>
-            <h1 className="mt-3 max-w-2xl font-display text-4xl font-semibold leading-[1.08] text-foreground md:text-[64px]">
+            <h1 className="mt-3 max-w-2xl font-display text-[34px] font-semibold leading-[1.1] text-foreground md:text-5xl">
               Compose ton coffret, coche le bon nombre de parfums, on s’occupe du reste.
             </h1>
             <p className="mt-3 max-w-xl text-base leading-7 text-muted-foreground md:text-lg">
@@ -396,7 +396,7 @@ function CoffretSignaturePage() {
         <div className="section-shell grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
           <Card className="border-border bg-card shadow-card">
             <CardHeader>
-              <CardTitle className="font-display text-[28px] text-foreground md:text-[34px]">
+              <CardTitle className="font-display text-2xl leading-tight text-foreground md:text-[32px]">
                 Choisis ton univers, puis coche le bon nombre de parfums
               </CardTitle>
               <CardDescription className="mt-2 text-base text-muted-foreground">
@@ -515,7 +515,7 @@ function CoffretSignaturePage() {
 
           <Card className="border-border bg-card shadow-card">
             <CardHeader>
-              <CardTitle className="font-display text-[28px] text-foreground">
+              <CardTitle className="font-display text-2xl leading-tight text-foreground md:text-[28px]">
                 Ton coffret en cours
               </CardTitle>
               <CardDescription>Résumé rapide avant l’envoi du message.</CardDescription>

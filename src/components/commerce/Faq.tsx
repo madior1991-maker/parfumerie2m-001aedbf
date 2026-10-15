@@ -8,42 +8,42 @@ import { displayPhone, secondPhone, whatsappUrl } from "@/lib/perfume-data";
 // Questions fréquentes : affichées sur À propos et sur la page FAQ.
 export const faqs = [
   {
-    question: "Vos parfums sont-ils authentiques ?",
+    question: "Vos parfums sont-ils authentiques ?",
     answer:
       "Nous vendons deux types de parfums et nous le disons clairement. Nos parfums authentiques sont les originaux des grandes maisons. Haqqi, SCENTLAB et Takeoff sont des créations inspirées des grands parfums : chaque fiche indique le parfum dont elle s'inspire. Nous ne vendons aucune contrefaçon, c'est-à-dire aucune copie qui se ferait passer pour la marque d'origine. Au moindre doute après réception, écrivez-nous sur WhatsApp.",
   },
   {
-    question: "Combien coûte la livraison et en combien de temps ?",
+    question: "Combien coûte la livraison et en combien de temps ?",
     answer:
       "Nous livrons partout au Sénégal : livraison rapide à Dakar (1 500 à 2 000 FCFA selon la zone) et en 24 à 48h dans les régions (2 000 FCFA). La livraison est offerte dès 75 000 FCFA d'achat, et pour 2 parfums Takeoff (50 000 FCFA).",
   },
   {
-    question: "Comment passer une commande ?",
+    question: "Comment passer une commande ?",
     answer:
       "Trouvez votre parfum dans la boutique et cliquez sur « Commander » : WhatsApp s'ouvre avec le parfum déjà indiqué dans le message. Vous pouvez aussi composer votre pack sur la page « Compose ton pack », ou nous appeler au 76 192 34 41 ou au 78 144 17 66.",
   },
   {
-    question: "Comment je paie ?",
+    question: "Comment je paie ?",
     answer:
       "La commande se finalise avec le gérant, sur WhatsApp ou par téléphone. Vous payez par Wave, Orange Money ou en espèces à la livraison. Il n'y a pas de paiement en ligne sur le site.",
   },
   {
-    question: "Puis-je retourner un produit si je ne suis pas satisfait(e) ?",
+    question: "Puis-je retourner un produit si je ne suis pas satisfait(e) ?",
     answer:
       "Si un flacon arrive cassé, qu'il fuit ou qu'il ne correspond pas à votre commande, envoyez-nous une photo sur WhatsApp dans les 24h après réception. Nous vous l'échangeons, sans frais.",
   },
   {
-    question: "Comment savoir quel parfum me correspond ?",
+    question: "Comment savoir quel parfum me correspond ?",
     answer:
       "Faites le quiz « Trouve ton parfum » : 4 questions, 3 suggestions en 30 secondes. Vous pouvez aussi nous écrire sur WhatsApp en décrivant votre style, l'occasion et votre budget : nous vous proposerons 2 ou 3 parfums.",
   },
   {
-    question: "Livrez-vous dans les régions du Sénégal ?",
+    question: "Livrez-vous dans les régions du Sénégal ?",
     answer:
       "Oui, partout au Sénégal, en 24 à 48h pour 2 000 FCFA. Écrivez-nous sur WhatsApp pour confirmer le délai et le mode de livraison pour votre ville.",
   },
   {
-    question: "Quelle est la différence entre vos collections ?",
+    question: "Quelle est la différence entre vos collections ?",
     answer:
       "· Haqqi — eaux de parfum 40 ml inspirées des grands parfums, dès 4 000 F (pack de 3 à 10 000 F)\n· SCENTLAB — eaux de parfum 50 ml inspirées des grands parfums, 6 000 F (pack de 3 à 15 000 F)\n· Takeoff — eaux de parfum 100 ml inspirées des grands parfums, aux noms de grandes villes, 25 000 F (les 2 à 50 000 F)\n· Parfums de poche — 50 ml faciles à emporter, pack de 5 à 10 000 F\n· Dubai Perfumes — parfums orientaux : oud, rose, musc\n· Parfums authentiques — les originaux des grandes maisons\n· Collections privées et coffrets — éditions rares et idées cadeaux",
   },

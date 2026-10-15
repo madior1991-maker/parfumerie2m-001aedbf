@@ -69,7 +69,9 @@ export function CollectionPage({
               <p className="mx-auto mt-5 max-w-3xl text-muted-foreground md:mx-0">{intro}</p>
               <div className="mt-6 flex flex-wrap justify-center gap-3 md:justify-start">
                 <Button asChild variant="outline">
-                  <Link to="/boutique" search={{}}>Voir toute la boutique</Link>
+                  <Link to="/boutique" search={{}}>
+                    Voir toute la boutique
+                  </Link>
                 </Button>
                 {ctaLabel && ctaHref && (
                   <Button asChild className="bg-accent text-primary-foreground hover:bg-accent/90">
@@ -78,11 +80,11 @@ export function CollectionPage({
                 )}
               </div>
             </div>
-            <div className="fade-up mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-xl border border-border bg-card shadow-card md:max-w-none">
+            <div className="fade-up mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-xl border border-border bg-white shadow-card md:max-w-none">
               <img
                 src={heroImage}
                 alt={heroImageAlt ?? h1}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-contain p-4"
                 loading="eager"
               />
             </div>
@@ -98,7 +100,9 @@ export function CollectionPage({
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-3">
               <Button asChild variant="outline">
-                <Link to="/boutique" search={{}}>Voir toute la boutique</Link>
+                <Link to="/boutique" search={{}}>
+                  Voir toute la boutique
+                </Link>
               </Button>
               {ctaLabel && ctaHref && (
                 <Button asChild className="bg-accent text-primary-foreground hover:bg-accent/90">
@@ -119,10 +123,10 @@ export function CollectionPage({
             {visible.map((product, index) => (
               <article
                 key={`${product.name}-${index}`}
-                className="fade-up group overflow-hidden rounded-lg border border-border bg-card shadow-card transition-all hover:-translate-y-1.5 hover:border-accent"
+                className="fade-up group flex flex-col overflow-hidden rounded-lg border border-border bg-card shadow-card transition-all hover:-translate-y-1.5 hover:border-accent"
                 style={{ animationDelay: `${index * 60}ms` }}
               >
-                <div className="relative aspect-square overflow-hidden bg-surface">
+                <div className="relative aspect-square overflow-hidden bg-white">
                   <Link
                     to="/boutique/$productSlug"
                     params={{ productSlug: slugifyProduct(product) }}
@@ -135,12 +139,20 @@ export function CollectionPage({
                       const fallback = optimizedProductImageUrl(product.image, 800);
                       return (
                         <picture>
-                          <source type="image/avif" srcSet={sources.avif} sizes="(min-width: 1280px) 25vw, (min-width: 640px) 50vw, 100vw" />
-                          <source type="image/webp" srcSet={sources.webp} sizes="(min-width: 1280px) 25vw, (min-width: 640px) 50vw, 100vw" />
+                          <source
+                            type="image/avif"
+                            srcSet={sources.avif}
+                            sizes="(min-width: 1280px) 25vw, (min-width: 640px) 50vw, 100vw"
+                          />
+                          <source
+                            type="image/webp"
+                            srcSet={sources.webp}
+                            sizes="(min-width: 1280px) 25vw, (min-width: 640px) 50vw, 100vw"
+                          />
                           <img
                             src={fallback}
                             alt={`${product.name} — ${label} chez 2M Parfumerie`}
-                            className="h-full w-full object-contain p-2 transition-transform duration-500 group-hover:scale-105 sm:p-5"
+                            className="h-full w-full object-contain p-2 transition-transform duration-500 group-hover:scale-105 sm:p-4"
                             loading="lazy"
                             width={800}
                             height={800}
@@ -151,27 +163,29 @@ export function CollectionPage({
                     })()}
                   </Link>
                 </div>
-                <div className="p-3 sm:p-5">
+                <div className="flex flex-1 flex-col p-3 sm:p-5">
                   <Link
                     to="/boutique/$productSlug"
                     params={{ productSlug: slugifyProduct(product) }}
                     search={{}}
-                    className="mb-1 block line-clamp-2 font-display text-sm text-foreground hover:text-accent sm:text-xl"
+                    className="mb-1 block line-clamp-2 font-display text-sm leading-snug text-foreground hover:text-accent sm:text-xl"
                   >
                     {product.name}
                   </Link>
-                  <p className="mb-2 font-body text-base font-semibold text-accent sm:mb-4 sm:text-lg">
+                  <p className="mb-3 font-body text-base font-semibold text-accent sm:mb-4 sm:text-lg">
                     {formatPrice(product.price)}
                   </p>
-                  <AddToCartButton
-                    item={{
-                      id: slugifyProduct(product),
-                      name: product.name,
-                      collection: label,
-                      price: product.price,
-                      imageUrl: optimizedProductImageUrl(product.image, 800),
-                    }}
-                  />
+                  <div className="mt-auto">
+                    <AddToCartButton
+                      item={{
+                        id: slugifyProduct(product),
+                        name: product.name,
+                        collection: label,
+                        price: product.price,
+                        imageUrl: optimizedProductImageUrl(product.image, 800),
+                      }}
+                    />
+                  </div>
                 </div>
               </article>
             ))}

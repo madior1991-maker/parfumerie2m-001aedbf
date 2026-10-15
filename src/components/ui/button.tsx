@@ -18,14 +18,14 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline hover:text-accent",
         whatsapp:
-          "bg-whatsapp text-primary-foreground shadow-btn hover:scale-[1.02] hover:bg-whatsapp-hover whatsapp-pulse",
+          "bg-whatsapp text-primary-foreground shadow-btn hover:scale-[1.02] hover:bg-whatsapp-hover whatsapp-pulse pulse-glow-only",
         luxe: "border border-border bg-surface text-foreground shadow-card hover:-translate-y-1 hover:border-accent hover:bg-surface-alt hover:shadow-green",
         green: "border border-accent/30 bg-accent-muted text-accent hover:bg-accent/10 hover:border-accent",
       },
       size: {
-        default: "h-12 px-5 py-3",
+        default: "h-auto min-h-12 max-w-full whitespace-normal px-5 py-3 text-center leading-snug",
         sm: "h-11 px-4 text-xs",
-        lg: "h-14 px-8",
+        lg: "h-auto min-h-14 max-w-full whitespace-normal px-6 py-3 text-center leading-snug sm:px-8",
         icon: "h-11 w-11",
       },
     },

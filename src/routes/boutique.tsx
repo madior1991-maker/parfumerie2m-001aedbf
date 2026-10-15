@@ -9,6 +9,7 @@ import {
   collectionLabel,
   formatPrice,
   normalizeCollectionValue,
+  optimizedProductImageUrl,
   slugifyProduct,
   type BoutiqueProduct,
   type Collection,
@@ -156,7 +157,7 @@ function BoutiquePage() {
             />
           </div>
           <p className="caption-luxe mb-3 text-center text-accent">Catégories</p>
-          <div className="-mx-4 flex snap-x gap-2 overflow-x-auto px-4 pb-2 [scrollbar-width:none] md:mx-0 md:flex-wrap md:justify-center md:gap-3 md:overflow-visible md:px-0">
+          <div className="-mx-3 flex snap-x gap-2 overflow-x-auto px-3 pb-2 [scrollbar-width:none] md:mx-0 md:flex-wrap md:justify-center md:gap-3 md:overflow-visible md:px-0">
             {collectionFilters.map((filter) => (
               <FilterLink
                 key={filter.value}
@@ -311,10 +312,10 @@ function CatalogCard({ product, index }: { product: BoutiqueProduct; index: numb
   return (
     <article
       data-collection={product.collection}
-      className="fade-up group overflow-hidden rounded-lg border border-border bg-card shadow-card transition-all hover:-translate-y-1.5 hover:border-accent"
+      className="fade-up group flex flex-col overflow-hidden rounded-lg border border-border bg-card shadow-card transition-all hover:-translate-y-1.5 hover:border-accent"
       style={{ animationDelay: `${index * 80}ms` }}
     >
-      <div className="image-zoom relative aspect-square overflow-hidden bg-surface">
+      <div className="image-zoom relative aspect-square overflow-hidden bg-white">
         <span className="absolute left-3 top-3 z-10 rounded-full bg-surface px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
           {label}
         </span>
@@ -331,14 +332,14 @@ function CatalogCard({ product, index }: { product: BoutiqueProduct; index: numb
           className="block h-full w-full"
         >
           <img
-            src={product.image}
+            src={optimizedProductImageUrl(product.image, 800)}
             alt={`${product.name} chez 2M Parfumerie`}
-            className="h-full w-full object-contain p-2 transition-transform duration-500 group-hover:scale-105 sm:p-5"
+            className="h-full w-full object-contain p-2 transition-transform duration-500 group-hover:scale-105 sm:p-4"
             loading="lazy"
           />
         </Link>
       </div>
-      <div className="p-3 sm:p-5">
+      <div className="flex flex-1 flex-col p-3 sm:p-5">
         {product.collection !== "dubai" && product.collection !== "authentic" && product.ref && (
           <p className="mb-1 hidden text-[11px] uppercase tracking-[0.1em] text-muted-foreground sm:block">
             {product.ref}
@@ -348,22 +349,24 @@ function CatalogCard({ product, index }: { product: BoutiqueProduct; index: numb
           to="/boutique/$productSlug"
           params={{ productSlug: slugifyProduct(product) }}
           search={{}}
-          className="mb-1 block line-clamp-2 font-display text-sm text-foreground hover:text-accent sm:text-[22px]"
+          className="mb-1 block line-clamp-2 font-display text-sm leading-snug text-foreground hover:text-accent sm:text-xl"
         >
           {product.name}
         </Link>
-        <p className="mb-2 font-body text-base font-semibold text-accent sm:mb-4 sm:text-xl">
+        <p className="mb-3 font-body text-base font-semibold text-accent sm:mb-4 sm:text-lg">
           {formatPrice(product.price)}
         </p>
+        <div className="mt-auto">
         <AddToCartButton
           item={{
             id: slugifyProduct(product),
             name: product.name,
             collection: label,
             price: product.price,
-            imageUrl: product.image,
+            imageUrl: optimizedProductImageUrl(product.image, 800),
           }}
         />
+        </div>
       </div>
     </article>
   );

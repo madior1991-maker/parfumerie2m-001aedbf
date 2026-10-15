@@ -117,12 +117,12 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
         >
           <Link
             to="/"
-            className="brand-wordmark text-xl font-bold text-accent md:text-[24px]"
+            className="brand-wordmark whitespace-nowrap text-xl font-bold text-accent md:text-[24px]"
             aria-label="2M Parfumerie accueil"
           >
             2M Parfumerie
           </Link>
-          <div className="hidden items-center gap-7 md:flex">
+          <div className="hidden items-center gap-7 xl:flex">
             <div
               className="relative"
               data-collections-menu
@@ -189,7 +189,7 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
           <button
             type="button"
             onClick={() => setCartOpen(true)}
-            className="relative hidden size-11 items-center justify-center text-muted-foreground hover:text-accent md:flex"
+            className="relative hidden size-11 items-center justify-center text-muted-foreground hover:text-accent xl:flex"
             aria-label="Ouvrir le panier"
           >
             <ShoppingBag className="size-[22px]" aria-hidden="true" />
@@ -199,12 +199,12 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
               </span>
             )}
           </button>
-          <Button asChild variant="whatsapp" size="sm" className="hidden md:inline-flex">
+          <Button asChild variant="whatsapp" size="sm" className="hidden xl:inline-flex">
             <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
               <WhatsAppLogo tone="light" className="size-4" /> Commander
             </a>
           </Button>
-          <div className="flex items-center gap-1 md:hidden">
+          <div className="flex items-center gap-1 xl:hidden">
             <button
               type="button"
               onClick={() => setCartOpen(true)}
@@ -232,7 +232,7 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
 
       <div
         className={cn(
-          "fixed inset-0 z-40 flex flex-col bg-background px-5 pt-20 transition-all duration-300 md:hidden",
+          "fixed inset-0 z-40 flex flex-col bg-background px-5 pt-20 transition-all duration-300 xl:hidden",
           open ? "visible opacity-100" : "invisible opacity-0",
         )}
         style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
@@ -291,7 +291,7 @@ function SiteFooter() {
     <footer className="border-t border-border bg-footer py-10 md:py-20">
       <div className="mx-auto grid max-w-7xl grid-cols-2 gap-x-6 gap-y-8 px-4 md:grid-cols-4 md:gap-10 md:px-6">
         <div className="col-span-2 md:col-span-1">
-          <Link to="/" className="brand-wordmark text-2xl font-bold text-accent">
+          <Link to="/" className="brand-wordmark text-2xl font-bold text-[#8fd4ae]">
             2M Parfumerie
           </Link>
           <p className="mt-2 max-w-xs text-[13px] text-muted-foreground">
@@ -404,7 +404,7 @@ function SiteFooter() {
             href="https://www.nextwavesn.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-medium text-accent hover:underline"
+            className="font-medium text-[#8fd4ae] hover:underline"
           >
             Nextwave
           </a>

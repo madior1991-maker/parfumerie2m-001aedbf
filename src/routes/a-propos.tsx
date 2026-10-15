@@ -62,7 +62,7 @@ function AboutPage() {
 
       <section className="bg-background py-16 md:py-24">
         <div className="section-shell grid gap-10 md:grid-cols-[40fr_60fr] md:items-center md:gap-12">
-          <div className="fade-up flex min-h-[320px] items-center justify-center overflow-hidden rounded-xl border border-border bg-card p-8 shadow-card">
+          <div className="fade-up flex min-h-[320px] items-center justify-center overflow-hidden rounded-xl border border-border bg-white p-8 shadow-card">
             <img
               src={brandLogo}
               alt="Logo 2M Parfumerie"

@@ -88,7 +88,7 @@ const featuredPackCards = [
   { title: "Pack Haqqi", subtitle: "3 parfums", price: "10 000 FCFA", imageBase: "haqqi-collection" },
   { title: "Pack SCENTLAB", subtitle: "3 parfums", price: "15 000 FCFA", imageBase: "scentlab-boxes" },
   {
-    title: "Parfums de poches",
+    title: "Parfums de poche",
     subtitle: "5 parfums",
     price: "10 000 FCFA",
     imageBase: "pocket-perfumes-homme",
@@ -350,7 +350,7 @@ function Index() {
             {featuredProducts.map((product, index) => (
               <article
                 key={product.name}
-                className="fade-up group overflow-hidden rounded-lg border border-border bg-card shadow-card transition-all hover:-translate-y-1.5 hover:border-accent"
+                className="fade-up group flex flex-col overflow-hidden rounded-lg border border-border bg-card shadow-card transition-all hover:-translate-y-1.5 hover:border-accent"
                 style={{ animationDelay: `${index * 80}ms` }}
               >
                 <Link
@@ -358,7 +358,7 @@ function Index() {
                   params={{ productSlug: slugifyProduct(product) }}
                   search={{}}
                   aria-label={`Voir la fiche produit de ${product.name}`}
-                  className="image-zoom relative block aspect-square overflow-hidden bg-surface"
+                  className="image-zoom relative block aspect-square overflow-hidden bg-white"
                 >
                   <img
                     src={optimizedProductImageUrl(product.image, 800)}
@@ -367,7 +367,7 @@ function Index() {
                     loading="lazy"
                   />
                 </Link>
-                <div className="p-3 sm:p-4">
+                <div className="flex flex-1 flex-col p-3 sm:p-4">
                   <p className="mb-1 truncate text-[10px] uppercase tracking-[0.1em] text-muted-foreground sm:text-[11px]">
                     {collectionLabel(product.collection)}
                   </p>
@@ -377,6 +377,7 @@ function Index() {
                   <p className="mb-2 font-body text-base font-semibold text-accent sm:mb-3 sm:text-lg lg:text-base">
                     {formatPrice(product.price)}
                   </p>
+                  <div className="mt-auto">
                   <AddToCartButton
                     item={{
                       id: slugifyProduct(product),
@@ -386,6 +387,7 @@ function Index() {
                       imageUrl: product.image,
                     }}
                   />
+                  </div>
                 </div>
               </article>
             ))}
