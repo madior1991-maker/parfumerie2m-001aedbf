@@ -19,6 +19,8 @@ import { useCart } from "@/hooks/useCart";
 import { cn } from "@/lib/utils";
 import { displayPhone, email, instagram, secondPhone, tiktokUrl, whatsappUrl } from "@/lib/perfume-data";
 import { TikTokLogo } from "@/components/commerce/TikTokLogo";
+import type { Collection } from "@/lib/catalog-data";
+import { useCustomCollections } from "@/lib/live-catalog";
 
 const navItems = [
   { label: "Boutique", to: "/boutique" },
@@ -40,7 +42,7 @@ type SiteCollection = {
     | "/collections/coffrets"
     | "/collections/fragrance-library"
     | "/boutique";
-  collection?: "dubai" | "authentic";
+  collection?: Collection;
 };
 
 // Collections du menu, du menu mobile et du pied de page (une seule liste).
@@ -70,6 +72,23 @@ const footerPages = [
 
 const collectionSearch = (item: SiteCollection) => (item.collection ? { collection: item.collection } : {});
 
+const formatFrom = (price: number) =>
+  price > 0 ? `Dès ${new Intl.NumberFormat("fr-FR").format(price).replace(/\s/g, " ")} F` : "Nouveau";
+
+// Les catégories créées dans l'admin s'ajoutent au menu et au pied de page.
+function useAllCollections(): SiteCollection[] {
+  const customCollections = useCustomCollections();
+  return [
+    ...siteCollections,
+    ...customCollections.map((item) => ({
+      label: item.label,
+      price: formatFrom(item.minPrice),
+      to: "/boutique" as const,
+      collection: item.value,
+    })),
+  ];
+}
+
 const facebookUrl = "https://www.facebook.com/profile.php?id=61551806734713";
 
 export function SiteLayout({ children }: { children: React.ReactNode }) {
@@ -79,6 +98,7 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
   const [scrolled, setScrolled] = useState(false);
   const { itemCount } = useCart();
   const location = useLocation();
+  const allCollections = useAllCollections();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -153,7 +173,7 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
                 )}
               >
                 <div className="grid grid-cols-2 gap-1 rounded-lg border border-border bg-card p-3 shadow-elegant">
-                  {siteCollections.map((item) => (
+                  {allCollections.map((item) => (
                     <Link
                       key={item.label}
                       to={item.to}
@@ -240,7 +260,7 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
         <div className="flex-1 overflow-y-auto pb-4">
           <p className="caption-luxe mb-2 text-accent">Collections</p>
           <div className="grid grid-cols-2 gap-2">
-            {siteCollections.map((item) => (
+            {allCollections.map((item) => (
               <Link
                 key={item.label}
                 to={item.to}
@@ -287,6 +307,7 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
 }
 
 function SiteFooter() {
+  const allCollections = useAllCollections();
   return (
     <footer className="border-t border-border bg-footer py-10 md:py-20">
       <div className="mx-auto grid max-w-7xl grid-cols-2 gap-x-6 gap-y-8 px-4 md:gap-10 md:px-6 lg:grid-cols-4">
@@ -347,7 +368,7 @@ function SiteFooter() {
           ))}
         </FooterColumn>
         <FooterColumn title="Collections">
-          {siteCollections.map((item) => (
+          {allCollections.map((item) => (
             <Link
               key={item.label}
               to={item.to}

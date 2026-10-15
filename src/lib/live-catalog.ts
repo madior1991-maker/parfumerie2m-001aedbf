@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import type { Database } from "@/integrations/supabase/types";
 import {
   catalog,
@@ -68,4 +69,47 @@ function buildDescription(name: string, collection: Collection, product: Product
     ? `${name} (${label}) s'ouvre sur ${notes[0].toLowerCase()}${notes[1] ? `, avec un cœur de ${notes[1].toLowerCase()}` : ""}${notes[2] ? ` et un fond de ${notes[2].toLowerCase()}` : ""}.`
     : `${name}, de la collection ${label}.`;
   return `${intro} Disponible chez 2M Parfumerie : commande sur WhatsApp, livraison rapide à Dakar et en 24 à 48h dans les régions.`;
+}
+// Catégories créées dans l'admin (hors catégories prévues dans le code).
+// Une seule requête par visite, partagée par le menu et le pied de page.
+export type CustomCollection = { value: Collection; label: string; minPrice: number };
+
+let customCollectionsPromise: Promise<CustomCollection[]> | null = null;
+
+export function loadCustomCollections() {
+  customCollectionsPromise ??= (async () => {
+    try {
+      const { supabase } = await import("@/integrations/supabase/client");
+      const { data } = await supabase.from("products").select("collection,price,description");
+      const byValue = new Map<string, CustomCollection>();
+      for (const row of data ?? []) {
+        if (row.description === DELETED_PRODUCT_MARKER) continue;
+        const value = normalizeCollectionValue(row.collection);
+        if (collectionValues.includes(value as (typeof collectionValues)[number])) continue;
+        const current = byValue.get(value);
+        const price = Number(row.price) || 0;
+        if (!current) byValue.set(value, { value, label: collectionLabel(value), minPrice: price });
+        else if (price && (!current.minPrice || price < current.minPrice)) current.minPrice = price;
+      }
+      return Array.from(byValue.values()).sort((a, b) => a.label.localeCompare(b.label, "fr"));
+    } catch {
+      customCollectionsPromise = null;
+      return [];
+    }
+  })();
+  return customCollectionsPromise;
+}
+
+export function useCustomCollections() {
+  const [collections, setCollections] = useState<CustomCollection[]>([]);
+  useEffect(() => {
+    let active = true;
+    void loadCustomCollections().then((result) => {
+      if (active) setCollections(result);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+  return collections;
 }

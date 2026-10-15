@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { AddToCartButton } from "@/components/commerce/AddToCartButton";
 import { SiteLayout } from "@/components/commerce/SiteLayout";
 import {
-  collectionFilters,
+  collectionFiltersFor,
   collectionLabel,
   formatPrice,
   normalizeCollectionValue,
@@ -128,6 +128,8 @@ function BoutiquePage() {
   }, [mixedProducts, collection, searchQuery]);
 
   const visibleProducts = filteredProducts.slice(0, visibleCount);
+  // Catégories connues + catégories créées dans l'admin.
+  const filters = useMemo(() => collectionFiltersFor(products), [products]);
 
   const isPocketShowcase = collection === "pocket";
 
@@ -163,7 +165,7 @@ function BoutiquePage() {
           </div>
           <p className="caption-luxe mb-3 text-center text-accent">Catégories</p>
           <div className="-mx-3 flex snap-x gap-2 overflow-x-auto px-3 pb-2 [scrollbar-width:none] md:mx-0 md:flex-wrap md:justify-center md:gap-3 md:overflow-visible md:px-0">
-            {collectionFilters.map((filter) => (
+            {filters.map((filter) => (
               <FilterLink
                 key={filter.value}
                 active={collection === filter.value}

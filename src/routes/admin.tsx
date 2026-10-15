@@ -33,8 +33,10 @@ import type { Database, Json } from "@/integrations/supabase/types";
 import { BlogAdminPanel } from "@/components/admin/BlogAdminPanel";
 import {
   catalog,
-  collectionFilters,
+  collectionFiltersFor,
   collectionLabel,
+  isKnownCollection,
+  normalizeCollectionValue,
   slugifyProduct,
   type Collection,
 } from "@/lib/catalog-data";
@@ -470,10 +472,21 @@ function ProductsPanel({
           .join(" ")
           .toLowerCase()
           .includes(query.toLowerCase());
-        const matchesCollection = collection === "all" || product.collection === collection;
+        const matchesCollection =
+          collection === "all" || normalizeCollectionValue(product.collection) === collection;
         return matchesQuery && matchesCollection;
       }),
     [products, query, collection],
+  );
+  // Catégories prévues + catégories créées dans l'admin.
+  const categoryFilters = useMemo(
+    () =>
+      collectionFiltersFor(
+        products
+          .filter((product) => product.description !== "__2M_ADMIN_DELETED_PRODUCT__")
+          .map((product) => ({ collection: normalizeCollectionValue(product.collection) })),
+      ),
+    [products],
   );
 
   const editProduct = (product: AdminProduct) => {
@@ -539,6 +552,7 @@ function ProductsPanel({
             onSubmit={saveProduct}
             editing={Boolean(editingProductId)}
             saving={saving}
+            categories={categoryFilters.filter((filter) => filter.value !== "all")}
           />
         </DialogContent>
       </Dialog>
@@ -559,7 +573,7 @@ function ProductsPanel({
           value={collection}
           onChange={(event) => setCollection(event.target.value as Collection | "all")}
         >
-          {collectionFilters.map((filter) => (
+          {categoryFilters.map((filter) => (
             <option key={filter.value} value={filter.value}>
               {filter.label}
             </option>
@@ -589,7 +603,7 @@ function ProductsPanel({
                   <div>
                     <h2 className="line-clamp-2 font-semibold text-foreground">{product.name}</h2>
                     <p className="mt-1 text-xs text-muted-foreground">
-                      {collectionLabel(product.collection as Collection)}
+                      {collectionLabel(normalizeCollectionValue(product.collection))}
                     </p>
                   </div>
                   <span className="rounded border border-border px-2 py-1 text-xs text-muted-foreground">
@@ -821,12 +835,14 @@ function ProductForm({
   onSubmit,
   editing,
   saving,
+  categories,
 }: {
   form: typeof blankProduct;
   setForm: Dispatch<SetStateAction<typeof blankProduct>>;
   onSubmit: (event: FormEvent) => void;
   editing: boolean;
   saving: boolean;
+  categories: { label: string; value: Collection }[];
 }) {
   type ImageEditorMode = "crop" | "resize";
   type CropPreset = "square" | "landscape";
@@ -1014,36 +1030,7 @@ function ProductForm({
           value={form.subtitle}
           onChange={(value) => setForm({ ...form, subtitle: value })}
         />
-        <label className="grid gap-2 text-sm font-medium text-foreground">
-          Collection
-          <select
-            className="min-h-12 rounded-md border border-border bg-background px-4 text-foreground"
-            value={form.collection}
-            onChange={(event) => {
-              const nextCollection = event.target.value as Collection;
-              setForm(
-                nextCollection === "haqqi"
-                  ? {
-                      ...form,
-                      collection: nextCollection,
-                      notes_top: "",
-                      notes_heart: "",
-                      notes_base: "",
-                      description: "",
-                    }
-                  : { ...form, collection: nextCollection },
-              );
-            }}
-          >
-            {collectionFilters
-              .filter((filter) => filter.value !== "all")
-              .map((filter) => (
-                <option key={filter.value} value={filter.value}>
-                  {filter.label}
-                </option>
-              ))}
-          </select>
-        </label>
+        <CategoryField form={form} setForm={setForm} categories={categories} />
         <Field
           label="Prix FCFA"
           type="number"
@@ -1593,4 +1580,75 @@ function formatDate(value: string | null) {
 function normalizePhone(value: string) {
   const digits = value.replace(/\D/g, "");
   return digits.startsWith("221") ? digits : `221${digits}`;
+}
+
+const NEW_CATEGORY = "__nouvelle_categorie__";
+
+// Choix de la catégorie, avec la possibilité d'en créer une nouvelle.
+function CategoryField({
+  form,
+  setForm,
+  categories,
+}: {
+  form: typeof blankProduct;
+  setForm: Dispatch<SetStateAction<typeof blankProduct>>;
+  categories: { label: string; value: Collection }[];
+}) {
+  const current = normalizeCollectionValue(form.collection);
+  const listed = categories.some((category) => category.value === current);
+  const [creating, setCreating] = useState(false);
+  const showInput = creating || (!listed && Boolean(form.collection.trim()));
+
+  const pick = (next: string) => {
+    if (next === NEW_CATEGORY) {
+      setCreating(true);
+      setForm((value) => ({ ...value, collection: "" }));
+      return;
+    }
+    setCreating(false);
+    // Une catégorie créée dans l'admin est enregistrée sous son nom (ex. « Musc Blanc »).
+    const stored = isKnownCollection(next) ? next : collectionLabel(next);
+    setForm((value) =>
+      next === "haqqi"
+        ? { ...value, collection: stored, notes_top: "", notes_heart: "", notes_base: "", description: "" }
+        : { ...value, collection: stored },
+    );
+  };
+
+  return (
+    <div className="grid items-start gap-2 text-sm font-medium text-foreground sm:col-span-2 sm:grid-cols-2 sm:gap-3">
+      <label className="grid gap-2">
+        Catégorie
+        <select
+          className="min-h-12 rounded-md border border-border bg-background px-4 text-foreground"
+          value={showInput ? NEW_CATEGORY : current}
+          onChange={(event) => pick(event.target.value)}
+        >
+          {categories.map((category) => (
+            <option key={category.value} value={category.value}>
+              {category.label}
+            </option>
+          ))}
+          <option value={NEW_CATEGORY}>+ Nouvelle catégorie…</option>
+        </select>
+      </label>
+      {showInput && (
+        <label className="grid gap-2">
+          Nom de la nouvelle catégorie
+          <input
+            className="min-h-12 rounded-md border border-border bg-background px-4 text-foreground"
+            value={form.collection}
+            onChange={(event) => setForm((value) => ({ ...value, collection: event.target.value }))}
+            placeholder="Ex. Musc Blanc"
+            required
+            autoFocus
+          />
+          <span className="text-xs font-normal text-muted-foreground">
+            Elle apparaîtra dans la boutique, le menu Collections et le pied de page dès que ce produit
+            sera enregistré.
+          </span>
+        </label>
+      )}
+    </div>
+  );
 }

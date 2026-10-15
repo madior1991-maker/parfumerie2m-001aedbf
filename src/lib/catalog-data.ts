@@ -49,7 +49,9 @@ export const collectionValues = [
 ] as const;
 export const priceValues = ["all", "under-10000", "10000-25000", "over-25000"] as const;
 
-export type Collection = (typeof collectionValues)[number];
+export type KnownCollection = (typeof collectionValues)[number];
+// Une catégorie créée depuis l'admin est un texte libre (ex. « musc-blanc »).
+export type Collection = KnownCollection | (string & {});
 export type PriceRange = (typeof priceValues)[number];
 
 export type BoutiqueProduct = {
@@ -72,7 +74,7 @@ export type BoutiqueProduct = {
   placeholder?: boolean;
 };
 
-export const collectionFilters: { label: string; value: Collection }[] = [
+export const collectionFilters: { label: string; value: KnownCollection }[] = [
   { label: "Toutes", value: "all" },
   { label: "Haqqi", value: "haqqi" },
   { label: "SCENTLAB", value: "scentlab" },
@@ -85,7 +87,7 @@ export const collectionFilters: { label: string; value: Collection }[] = [
   { label: "Fragrance Library", value: "library" },
 ];
 
-const collectionAliases: Record<string, Collection> = {
+const collectionAliases: Record<string, KnownCollection> = {
   all: "all",
   scentlab: "scentlab",
   "scent lab": "scentlab",
@@ -111,13 +113,37 @@ const collectionAliases: Record<string, Collection> = {
   "fragrance library": "library",
 };
 
+// Libellés des catégories créées dans l'admin (clé normalisée -> texte saisi).
+const customCollectionLabels = new Map<string, string>();
+
+export function slugifyCollection(value: string) {
+  return value
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+export function isKnownCollection(value: string): value is KnownCollection {
+  return (collectionValues as readonly string[]).includes(value);
+}
+
 export function normalizeCollectionValue(value: string | null | undefined): Collection {
-  if (!value) return "scentlab";
+  if (!value || !value.trim()) return "scentlab";
   const normalized = value.trim().toLowerCase();
-  return (
-    collectionAliases[normalized] ??
-    (collectionValues.includes(normalized as Collection) ? (normalized as Collection) : "scentlab")
-  );
+  const known =
+    collectionAliases[normalized] ?? (isKnownCollection(normalized) ? normalized : undefined);
+  if (known) return known;
+  const slug = slugifyCollection(value);
+  if (!slug) return "scentlab";
+  // Le texte saisi dans l'admin sert de libellé ; une valeur d'URL (« musc-blanc ») ne l'écrase pas.
+  const existing = customCollectionLabels.get(slug);
+  if (!existing || (existing === slug && value.trim() !== slug)) {
+    customCollectionLabels.set(slug, value.trim());
+  }
+  return slug;
 }
 
 export const priceFilters: { label: string; value: PriceRange }[] = [
@@ -731,5 +757,19 @@ export function productOrderUrl(product: BoutiqueProduct) {
 }
 
 export function collectionLabel(value: Collection) {
-  return collectionFilters.find((filter) => filter.value === value)?.label ?? "Collection";
+  const known = collectionFilters.find((filter) => filter.value === value)?.label;
+  if (known) return known;
+  const custom = customCollectionLabels.get(value);
+  if (custom) return custom;
+  const words = value.replace(/-/g, " ").trim();
+  return words ? words.charAt(0).toUpperCase() + words.slice(1) : "Collection";
+}
+
+// Filtres de la boutique : les catégories connues, puis celles créées dans l'admin.
+export function collectionFiltersFor(products: { collection: Collection }[]) {
+  const custom = Array.from(new Set(products.map((product) => product.collection)))
+    .filter((value) => !isKnownCollection(value))
+    .map((value) => ({ label: collectionLabel(value), value: value as Collection }))
+    .sort((a, b) => a.label.localeCompare(b.label, "fr"));
+  return [...(collectionFilters as { label: string; value: Collection }[]), ...custom];
 }
