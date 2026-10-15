@@ -551,6 +551,25 @@ const haqqiProducts: { name: string; ref: string; family: string; notes: string 
   { name: "Si Passione", ref: "Inspiration Armani Si Passione", family: "Femme", notes: "Rouge · Fruité · Intensément féminin" },
 ];
 
+// Photos réelles des flacons Haqqi (fond détouré). Les autres gardent la photo de la collection.
+const haqqiPhotos: Record<string, string> = {
+  "Scandal Man": "scandal-man",
+  "Baccarat Rouge 540": "baccarat-rouge-540",
+  "My Way": "my-way",
+  "Dolce Gabbana The One": "dolce-gabbana-the-one",
+  "YSL Cinéma": "ysl-cinema",
+  "Acqua di Giò": "acqua-di-gio",
+  "Sauvage": "sauvage",
+  "Oud Satin Mood": "oud-satin-mood",
+  "Tom Ford Neroli Portofino": "tom-ford-neroli-portofino",
+  "Tom Ford Soleil Blanc": "tom-ford-soleil-blanc",
+  "Le Mâle": "le-male",
+  "More Than Words": "more-than-words",
+  "Tom Ford Ombré Leather": "tom-ford-ombre-leather",
+  "Cartier Déclaration": "cartier-declaration",
+  "Desert Oud": "desert-oud",
+};
+
 const haqqiCatalog: BoutiqueProduct[] = haqqiProducts.map((product) => ({
   name: product.name,
   ref: "",
@@ -560,7 +579,9 @@ const haqqiCatalog: BoutiqueProduct[] = haqqiProducts.map((product) => ({
   baseNotes: "Notes à préciser",
   price: 4000,
   collection: "haqqi",
-  image: haqqiCollectionImage,
+  image: haqqiPhotos[product.name]
+    ? `/images/optimized/haqqi-${haqqiPhotos[product.name]}-w800.webp`
+    : haqqiCollectionImage,
   family: product.family,
   concentration: "Eau de parfum",
   volume: "40 ml",
