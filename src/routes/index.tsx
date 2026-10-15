@@ -204,6 +204,57 @@ const testimonials: { id: string; name: string; initials: string; messages: Revi
   },
 ];
 
+// Deux vidéos qui s'enchaînent en boucle : le film des collections, puis Haqqi sur le panier tressé.
+const heroVideos = [
+  { src: "/videos/film-2m.mp4", poster: "/videos/film-2m-poster.jpg", label: "Les collections 2M" },
+  { src: "/videos/haqqi-2m.mp4", poster: "/videos/haqqi-2m-poster.jpg", label: "La collection Haqqi" },
+];
+
+function HeroVideos() {
+  const [index, setIndex] = useState(0);
+  const current = heroVideos[index];
+  return (
+    <>
+      {/* Fond : l’image de la vidéo, floutée, pour habiller le cadre sans rien couper. */}
+      <img
+        src={current.poster}
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full scale-110 object-cover opacity-40 blur-2xl transition-opacity duration-700"
+      />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,transparent_0%,rgba(14,59,44,0.55)_70%)]" />
+      <div className="relative flex flex-col items-center gap-4">
+        {/* La vidéo verticale, affichée en entier comme une story. */}
+        <video
+          key={current.src}
+          src={current.src}
+          poster={current.poster}
+          autoPlay
+          muted
+          playsInline
+          preload="auto"
+          onEnded={() => setIndex((value) => (value + 1) % heroVideos.length)}
+          aria-label={current.label}
+          className="fade-up aspect-[9/16] w-[min(66vw,300px)] rounded-[22px] object-cover shadow-[0_24px_60px_rgba(0,0,0,0.45)] ring-1 ring-[#D4B26A]/60 md:h-[min(74svh,720px)] md:w-auto"
+        />
+        <div className="flex gap-2" role="tablist" aria-label="Vidéos">
+          {heroVideos.map((video, i) => (
+            <button
+              key={video.src}
+              type="button"
+              role="tab"
+              aria-selected={i === index}
+              aria-label={video.label}
+              onClick={() => setIndex(i)}
+              className={`h-2 rounded-full transition-all ${i === index ? "w-8 bg-[#D4B26A]" : "w-2 bg-[#F4EEE2]/50 hover:bg-[#F4EEE2]/80"}`}
+            />
+          ))}
+        </div>
+      </div>
+    </>
+  );
+}
+
 function Index() {
   const [featuredProducts, setFeaturedProducts] =
     useState<BoutiqueProduct[]>(fallbackFeaturedProducts);
@@ -282,25 +333,7 @@ function Index() {
             </div>
           </div>
             <div className="relative order-2 flex items-center justify-center overflow-hidden bg-[#0E3B2C] px-6 py-8 md:py-10">
-              {/* Fond : l’image de la vidéo, floutée, pour habiller le cadre sans rien couper. */}
-              <img
-                src="/videos/haqqi-2m-poster.jpg"
-                alt=""
-                aria-hidden="true"
-                className="absolute inset-0 h-full w-full scale-110 object-cover opacity-40 blur-2xl"
-              />
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,transparent_0%,rgba(14,59,44,0.55)_70%)]" />
-              {/* La vidéo verticale, affichée en entier comme une story. */}
-              <video
-                src="/videos/haqqi-2m.mp4"
-                poster="/videos/haqqi-2m-poster.jpg"
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="metadata"
-                className="relative aspect-[9/16] w-[min(66vw,300px)] rounded-[22px] object-cover shadow-[0_24px_60px_rgba(0,0,0,0.45)] ring-1 ring-[#D4B26A]/60 md:h-[min(78svh,760px)] md:w-auto"
-              />
+              <HeroVideos />
             </div>
         </div>
       </section>
