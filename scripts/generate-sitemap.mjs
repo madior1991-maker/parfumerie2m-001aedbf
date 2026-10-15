@@ -37,6 +37,13 @@ async function main() {
       .map((loc) => `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${now}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>${loc.includes("/boutique/") ? "0.7" : "0.8"}</priority>\n  </url>`)
       .join("\n")}\n</urlset>\n`;
     fs.writeFileSync(path.join(process.cwd(), "public", "sitemap.xml"), xml);
+    // Liste des produits du catalogue local, pour écrire leurs aperçus de partage après le build.
+    const cacheDir = path.join(process.cwd(), "node_modules", ".cache", "2m");
+    fs.mkdirSync(cacheDir, { recursive: true });
+    const products = catalog
+      .filter((p) => !p.placeholder)
+      .map((p) => ({ slug: slugifyProduct(p), name: p.name, collection: p.collection, price: p.price, notes: p.notes, image: p.image }));
+    fs.writeFileSync(path.join(cacheDir, "static-products.json"), JSON.stringify(products));
     console.log(`generate-sitemap: ${locs.length} adresses (${slugs.length} produits)`);
   } finally {
     await server.close();

@@ -12,12 +12,6 @@ export const Route = createFileRoute("/collections/fragrance-library")({
     meta: [
       { title: TITLE },
       { name: "description", content: DESC },
-      { property: "og:title", content: TITLE },
-      { property: "og:description", content: DESC },
-      { property: "og:url", content: URL },
-      { property: "og:type", content: "website" },
-      { property: "og:locale", content: "fr_FR" },
-      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: URL }],
     scripts: [

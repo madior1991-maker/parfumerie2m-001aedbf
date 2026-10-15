@@ -16,11 +16,6 @@ export const Route = createFileRoute("/contact")({
           "Contactez 2M Parfumerie à Dakar. WhatsApp et appels disponibles 7j/7. Livraison partout au Sénégal. 2mparfumerie2025@gmail.com",
       },
       { name: "keywords", content: "Haqqi, Scentlab, Takeoff Fragance, Parfums authentique, Parfums Dubai, Parfums de poches" },
-      { property: "og:title", content: "Contact — 2M Parfumerie Dakar" },
-      {
-        property: "og:description",
-        content: "WhatsApp et appels disponibles 7j/7. Livraison partout au Sénégal.",
-      },
     ],
     scripts: [
       { type: "application/ld+json", children: contactLocalBusinessJson },

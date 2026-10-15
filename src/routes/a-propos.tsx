@@ -18,16 +18,6 @@ export const Route = createFileRoute("/a-propos")({
         content:
           "Découvrez l'histoire de 2M Parfumerie, votre parfumerie authentique à Dakar, et retrouvez les réponses à toutes vos questions sur la livraison, l'authenticité et la commande.",
       },
-      { property: "og:title", content: "À Propos & FAQ | 2M Parfumerie Dakar" },
-      {
-        property: "og:description",
-        content:
-          "Découvrez l'histoire de 2M Parfumerie et toutes les réponses à vos questions sur la livraison, l'authenticité et la commande.",
-      },
-      { property: "og:url", content: "https://www.2mparfumeriedk.com/a-propos" },
-      { property: "og:type", content: "website" },
-      { property: "og:locale", content: "fr_FR" },
-      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "https://www.2mparfumeriedk.com/a-propos" }],
     scripts: [{ type: "application/ld+json", children: faqJsonLd }],

@@ -35,11 +35,57 @@ function setMeta(html, attr, key, value) {
   return re.test(html) ? html.replace(re, tag) : html.replace("</head>", `    ${tag}\n  </head>`);
 }
 
+function resolveImage(image) {
+  if (!image) return `${SITE}/og/default.jpg`;
+  if (/^https?:\/\//.test(image)) return image;
+  const optimized = image.match(/^\/images\/optimized\/(.+)-w\d+\.[a-z]+$/i);
+  if (optimized) return `${SITE}/images/optimized/${optimized[1]}-w1200.webp`;
+  if (image.startsWith("/src/assets/")) {
+    const file = path.basename(image);
+    const ext = path.extname(file);
+    const stem = file.slice(0, -ext.length);
+    const assets = fs.existsSync(path.join(dist, "assets")) ? fs.readdirSync(path.join(dist, "assets")) : [];
+    const hit = assets.find((a) => a.startsWith(`${stem}-`) && a.endsWith(ext));
+    return hit ? `${SITE}/assets/${hit}` : `${SITE}/og/default.jpg`;
+  }
+  if (image.startsWith("/")) return `${SITE}${image}`;
+  return `${SITE}/og/default.jpg`;
+}
+
+function writeProductPage(base, p) {
+  const label = LABELS[collectionOf(p.collection)];
+  const pageUrl = `${SITE}/boutique/${p.slug}`;
+  const title = `${p.name} – ${label} | 2M Parfumerie Dakar`;
+  const desc = `${p.name} (${label}) à ${price(p.price)}${p.notes ? `. Notes : ${p.notes}` : ""}. Commande sur WhatsApp, livraison rapide à Dakar, 24 à 48h en régions.`.slice(0, 300);
+  const image = resolveImage(p.image);
+  let html = base.replace(/<title>[^<]*<\/title>/, `<title>${esc(title)}</title>`);
+  for (const [attr, k, v] of [["name", "description", desc], ["property", "og:title", title], ["property", "og:description", desc], ["property", "og:image", image], ["property", "og:url", pageUrl], ["property", "og:type", "product"], ["name", "twitter:title", title], ["name", "twitter:description", desc], ["name", "twitter:image", image]]) {
+    html = setMeta(html, attr, k, v);
+  }
+  html = html.replace(/<meta property="og:image:(width|height)" content="[^"]*" \/>\s*/g, "");
+  html = html.replace("</head>", `    <link rel="canonical" href="${pageUrl}" />\n  </head>`);
+  const out = path.join(dist, "boutique", `${p.slug}.html`);
+  fs.mkdirSync(path.dirname(out), { recursive: true });
+  fs.writeFileSync(out, html);
+}
+
+function writeStaticProducts(base, skip = new Set()) {
+  const file = path.join(process.cwd(), "node_modules", ".cache", "2m", "static-products.json");
+  if (!fs.existsSync(file)) return 0;
+  const products = JSON.parse(fs.readFileSync(file, "utf8")).filter((p) => p.slug && !skip.has(p.slug));
+  for (const p of products) writeProductPage(base, p);
+  return products.length;
+}
+
 async function main() {
   const env = readEnv();
   const url = env.VITE_SUPABASE_URL;
   const key = env.VITE_SUPABASE_PUBLISHABLE_KEY;
-  if (!url || !key) return console.log("prerender-products: pas d'accès à la base, ignoré");
+  const baseHtml = fs.readFileSync(path.join(dist, "index.html"), "utf8");
+  if (!url || !key) {
+    const n = writeStaticProducts(baseHtml);
+    return console.log(`prerender-products: pas d'accès à la base, ${n} fiches du catalogue local`);
+  }
   let rows;
   try {
     const res = await fetch(`${url}/rest/v1/products?select=*`, {
@@ -49,31 +95,21 @@ async function main() {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     rows = await res.json();
   } catch (error) {
-    return console.log(`prerender-products: base injoignable (${error.message}), ignoré`);
+    const n = writeStaticProducts(baseHtml);
+    return console.log(`prerender-products: base injoignable (${error.message}), ${n} fiches du catalogue local`);
   }
-  const base = fs.readFileSync(path.join(dist, "index.html"), "utf8");
+  const base = baseHtml;
   const live = rows
     .filter((r) => r.slug && r.description !== DELETED)
     .map((r) => ({ ...r, name: String(r.name || "").trim(), slug: clean(r.slug) }))
     .filter((r) => r.slug);
   const deleted = new Set(rows.filter((r) => r.slug && r.description === DELETED).map((r) => clean(r.slug)));
 
+  // Fiches du catalogue local (sauf celles gérées ou supprimées dans la base), puis fiches de la base.
+  const staticCount = writeStaticProducts(base, new Set([...live.map((r) => r.slug), ...deleted]));
   for (const r of live) {
-    const label = LABELS[collectionOf(r.collection)];
-    const pageUrl = `${SITE}/boutique/${r.slug}`;
-    const title = `${r.name} – ${label} | 2M Parfumerie Dakar`;
     const notes = [r.notes_top, r.notes_heart, r.notes_base].filter(Boolean).join(", ");
-    const desc = `${r.name} (${label}) à ${price(r.price)}${notes ? `. Notes : ${notes}` : ""}. Commande sur WhatsApp, livraison rapide à Dakar, 24 à 48h en régions.`.slice(0, 300);
-    const image = r.image_url || (r.image_urls && r.image_urls[0]) || `${SITE}/og/default.jpg`;
-    let html = base.replace(/<title>[^<]*<\/title>/, `<title>${esc(title)}</title>`);
-    for (const [attr, k, v] of [["name", "description", desc], ["property", "og:title", title], ["property", "og:description", desc], ["property", "og:image", image], ["property", "og:url", pageUrl], ["property", "og:type", "product"], ["name", "twitter:title", title], ["name", "twitter:description", desc], ["name", "twitter:image", image]]) {
-      html = setMeta(html, attr, k, v);
-    }
-    html = html.replace(/<meta property="og:image:(width|height)" content="[^"]*" \/>\s*/g, "");
-    html = html.replace("</head>", `    <link rel="canonical" href="${pageUrl}" />\n  </head>`);
-    const out = path.join(dist, "boutique", `${r.slug}.html`);
-    fs.mkdirSync(path.dirname(out), { recursive: true });
-    fs.writeFileSync(out, html);
+    writeProductPage(base, { slug: r.slug, name: r.name, collection: r.collection, price: r.price, notes, image: r.image_url || (r.image_urls && r.image_urls[0]) });
   }
 
   // Plan du site : pages existantes + produits de la base, sans les produits supprimés.
@@ -84,7 +120,7 @@ async function main() {
   const now = new Date().toISOString();
   const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${[...locs].map((loc) => `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${now}</lastmod>\n  </url>`).join("\n")}\n</urlset>\n`;
   fs.writeFileSync(sitemapPath, xml);
-  console.log(`prerender-products: ${live.length} fiches, ${deleted.size} supprimées, sitemap ${locs.size} adresses`);
+  console.log(`prerender-products: ${live.length} fiches base + ${staticCount} catalogue, ${deleted.size} supprimées, sitemap ${locs.size} adresses`);
 }
 
 main();

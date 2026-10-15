@@ -47,14 +47,6 @@ export const Route = createFileRoute("/blog")({
           content:
             "Blog 2M Parfumerie: guides parfum, tendances à Dakar et conseils d'achat pour découvrir les meilleures signatures olfactives.",
         },
-        { property: "og:title", content: "Blog parfum Sénégal | 2M Parfumerie" },
-        {
-          property: "og:description",
-          content:
-            "Guides parfum, tendances et conseils d'achat pour trouver une signature olfactive adaptée au climat et au style au Sénégal.",
-        },
-        { property: "og:type", content: "website" },
-        { property: "og:locale", content: "fr_FR" },
       ],
       links: [{ rel: "canonical", href: "https://www.2mparfumeriedk.com/blog" }],
       scripts: [

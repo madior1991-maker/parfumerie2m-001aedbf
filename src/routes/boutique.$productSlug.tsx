@@ -40,21 +40,13 @@ export const Route = createFileRoute("/boutique/$productSlug")({
     const description = product
       ? `${product.name} par ${collectionLabel(product.collection)} : notes de ${product.notes}. ${formatPrice(product.price)}. Livraison rapide à Dakar. Commandez sur WhatsApp chez 2M Parfumerie.`
       : `${slugName} chez 2M Parfumerie. Commande sur WhatsApp, livraison rapide à Dakar, 24 à 48h en régions. Paiement Wave, Orange Money ou espèces.`;
-    const image = product?.image ? optimizedProductImageUrl(product.image, 1200) : undefined;
+    const rawHeadImage = product?.image ? optimizedProductImageUrl(product.image, 1200) : undefined;
+    // Les balises de partage (og:, twitter:) sont écrites dans la page HTML au build.
+    const image = rawHeadImage?.startsWith("/") ? `https://www.2mparfumeriedk.com${rawHeadImage}` : rawHeadImage;
     const meta: Array<Record<string, string>> = [
       { title },
       { name: "description", content: description },
-      { property: "og:title", content: title },
-      { property: "og:description", content: description },
-      { property: "og:url", content: url },
-      { property: "og:type", content: "product" },
-      { property: "og:locale", content: "fr_FR" },
-      { name: "twitter:card", content: "summary_large_image" },
     ];
-    if (image) {
-      meta.push({ property: "og:image", content: image });
-      meta.push({ name: "twitter:image", content: image });
-    }
     const scripts: Array<{ type: string; children: string }> = [
       {
         type: "application/ld+json",

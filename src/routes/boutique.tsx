@@ -60,20 +60,6 @@ export const Route = createFileRoute("/boutique")({
         content:
           "Explorez +100 parfums authentiques disponibles à Dakar : SCENTLAB, TAKEOFF, Dubai Perfumes, Haqqi, Pocket. Commandez sur WhatsApp, livraison express Dakar.",
       },
-      {
-        property: "og:title",
-        content: "Boutique Parfums Authentiques | 2M Parfumerie Dakar",
-      },
-      {
-        property: "og:description",
-        content:
-          "Explorez +100 parfums authentiques disponibles à Dakar. Livraison partout au Sénégal.",
-      },
-      { property: "og:url", content: "https://www.2mparfumeriedk.com/boutique" },
-      { property: "og:type", content: "website" },
-      { property: "og:locale", content: "fr_FR" },
-      { property: "og:image", content: "https://www.2mparfumeriedk.com/assets/og-image.jpg" },
-      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "https://www.2mparfumeriedk.com/boutique" }],
     scripts: [

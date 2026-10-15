@@ -31,8 +31,6 @@ export const Route = createRootRoute({
   notFoundComponent: NotFoundComponent,
   head: () => ({
     meta: [
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@2mparfumeriesn" },
     ],
   }),
 });

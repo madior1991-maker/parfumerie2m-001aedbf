@@ -239,12 +239,6 @@ export const Route = createFileRoute("/coffret-signature")({
         content:
           "Composez votre pack chez 2M Parfumerie : 3 parfums Haqqi à 10 000 FCFA, 3 parfums SCENTLAB à 15 000 FCFA ou 5 parfums de poches à 10 000 FCFA, à sélectionner vous-même.",
       },
-      { property: "og:title", content: "Compose ton pack — 2M Parfumerie" },
-      {
-        property: "og:description",
-        content:
-          "3 parfums Haqqi à 10 000 FCFA, 3 parfums SCENTLAB à 15 000 FCFA ou 5 parfums de poches à 10 000 FCFA, à composer vous-même en quelques clics.",
-      },
     ],
   }),
   component: CoffretSignaturePage,
