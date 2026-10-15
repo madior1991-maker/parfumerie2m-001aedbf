@@ -15,8 +15,7 @@ import {
 } from "@/lib/catalog-data";
 import { supabase } from "@/integrations/supabase/client";
 import { mergeLiveCatalog } from "@/lib/live-catalog";
-import pocketHommeImage from "@/assets/pocket-perfumes-homme.webp";
-import pocketFemmeImage from "@/assets/pocket-perfumes-femme.webp";
+import { PocketShowcase } from "@/components/commerce/PocketShowcase";
 
 function validateBoutiqueSearch(search: Record<string, unknown>): { collection?: Collection } {
   if (typeof search.collection !== "string" || !search.collection.trim()) {
@@ -54,11 +53,11 @@ export const Route = createFileRoute("/boutique")({
   validateSearch: validateBoutiqueSearch,
   head: () => ({
     meta: [
-      { title: "Boutique Parfums Authentiques | 2M Parfumerie Dakar" },
+      { title: "Boutique parfums Dakar | Plus de 200 parfums dès 4 000 F — 2M Parfumerie" },
       {
         name: "description",
         content:
-          "Explorez +100 parfums authentiques disponibles à Dakar : SCENTLAB, TAKEOFF, Dubai Perfumes, Haqqi, Pocket. Commandez sur WhatsApp, livraison express Dakar.",
+          "Plus de 200 parfums à Dakar dès 4 000 F : Haqqi, SCENTLAB, Takeoff, Dubai Perfumes et parfums authentiques. Commande sur WhatsApp, livraison rapide à Dakar, 24 à 48h en régions.",
       },
     ],
     links: [{ rel: "canonical", href: "https://www.2mparfumeriedk.com/boutique" }],
@@ -139,7 +138,7 @@ function BoutiquePage() {
             La Boutique
           </h1>
           <p className="mt-4 text-muted-foreground">
-            +100 fragrances authentiques. Trouvez celle qui vous ressemble.
+            Plus de 200 parfums, dès 4 000 F. Nos créations inspirées des grands parfums et les originaux des grandes maisons.
           </p>
         </div>
       </section>
@@ -157,7 +156,7 @@ function BoutiquePage() {
             />
           </div>
           <p className="caption-luxe mb-3 text-center text-accent">Catégories</p>
-          <div className="flex flex-wrap justify-center gap-2 pb-1 md:gap-3">
+          <div className="-mx-4 flex snap-x gap-2 overflow-x-auto px-4 pb-2 [scrollbar-width:none] md:mx-0 md:flex-wrap md:justify-center md:gap-3 md:overflow-visible md:px-0">
             {collectionFilters.map((filter) => (
               <FilterLink
                 key={filter.value}
@@ -367,59 +366,5 @@ function CatalogCard({ product, index }: { product: BoutiqueProduct; index: numb
         />
       </div>
     </article>
-  );
-}
-
-function PocketShowcase() {
-  return (
-    <div className="space-y-8">
-      <div className="overflow-hidden rounded-lg border border-border bg-card shadow-card">
-        <video
-          src="/videos/pocket-perfumes.mp4"
-          autoPlay
-          loop
-          muted
-          playsInline
-          controls
-          className="h-full w-full object-cover"
-        />
-      </div>
-      <div className="grid gap-6 sm:grid-cols-2">
-        <div className="overflow-hidden rounded-lg border border-border bg-surface shadow-card">
-          <img
-            src={pocketHommeImage}
-            alt="Parfums de poches Homme — 2M Parfumerie"
-            className="h-full w-full object-contain p-6"
-            loading="lazy"
-          />
-        </div>
-        <div className="overflow-hidden rounded-lg border border-border bg-surface shadow-card">
-          <img
-            src={pocketFemmeImage}
-            alt="Parfums de poches Femme — 2M Parfumerie"
-            className="h-full w-full object-contain p-6"
-            loading="lazy"
-          />
-        </div>
-      </div>
-      <div className="rounded-lg border border-border bg-surface-alt px-6 py-10 text-center">
-        <p className="caption-luxe text-accent">Compose ton pack</p>
-        <h2 className="mt-2 font-display text-2xl text-foreground md:text-3xl">
-          Crée ton pack Parfums de poches ici
-        </h2>
-        <p className="mx-auto mt-3 max-w-xl text-sm text-muted-foreground">
-          Sélectionne 5 parfums de poches et compose ton pack signature.
-        </p>
-        <div className="mt-6 flex justify-center">
-          <Button
-            asChild
-            size="lg"
-            className="h-auto max-w-full whitespace-normal break-words bg-accent px-6 py-3 text-center text-primary-foreground shadow-elegant ring-2 ring-accent/40 ring-offset-2 ring-offset-surface-alt animate-pulse hover:bg-accent/90"
-          >
-            <Link to="/coffret-signature">Pack Parfums de poches (5 parfums) — 10 000 FCFA</Link>
-          </Button>
-        </div>
-      </div>
-    </div>
   );
 }

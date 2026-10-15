@@ -26,7 +26,7 @@ export const Route = createFileRoute("/trouve-ton-parfum")({
       {
         name: "description",
         content:
-          "Quiz gratuit : réponds à 4 questions et découvre 3 parfums faits pour toi, à partir de 2 500 F. Commande sur WhatsApp, livraison rapide à Dakar, 24 à 48h en régions.",
+          "Quiz gratuit : réponds à 4 questions et découvre 3 parfums faits pour toi, dès 4 000 F. Commande sur WhatsApp, livraison rapide à Dakar, 24 à 48h en régions.",
       },
     ],
     links: [{ rel: "canonical", href: "https://www.2mparfumeriedk.com/trouve-ton-parfum" }],

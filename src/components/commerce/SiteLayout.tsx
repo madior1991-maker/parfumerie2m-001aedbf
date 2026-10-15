@@ -1,5 +1,6 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import {
+  ChevronDown,
   Facebook,
   Instagram,
   Mail,
@@ -21,43 +22,59 @@ import { TikTokLogo } from "@/components/commerce/TikTokLogo";
 
 const navItems = [
   { label: "Boutique", to: "/boutique" },
-  { label: "Takeoff", to: "/collections/takeoff" },
   { label: "Compose ton pack", to: "/coffret-signature" },
   { label: "Quiz parfum", to: "/trouve-ton-parfum" },
-  { label: "Blog", to: "/blog" },
-  { label: "À Propos", to: "/a-propos" },
+  { label: "Livraison", to: "/livraison" },
   { label: "Contact", to: "/contact" },
 ] as const;
 
-const footerCollections = [
-  { label: "SCENTLAB", collection: "scentlab" },
-  { label: "TAKEOFF FRAGRANCE", collection: "takeoff" },
-  { label: "Dubai Perfumes", collection: "dubai" },
-  { label: "Parfums de poches", collection: "pocket" },
-  { label: "Parfums authentiques", collection: "authentic" },
-  { label: "Haqqi", collection: "haqqi" },
-  { label: "Collections privées", collection: "privees" },
-  { label: "Coffrets", collection: "coffrets" },
-  { label: "Fragrance library", collection: "library" },
+type SiteCollection = {
+  label: string;
+  price: string;
+  to:
+    | "/collections/haqqi"
+    | "/collections/scentlab"
+    | "/collections/takeoff"
+    | "/collections/parfums-de-poches"
+    | "/collections/collections-privees"
+    | "/collections/coffrets"
+    | "/collections/fragrance-library"
+    | "/boutique";
+  collection?: "dubai" | "authentic";
+};
+
+// Collections du menu, du menu mobile et du pied de page (une seule liste).
+const siteCollections: SiteCollection[] = [
+  { label: "Haqqi", price: "Dès 4 000 F", to: "/collections/haqqi" },
+  { label: "SCENTLAB", price: "6 000 F", to: "/collections/scentlab" },
+  { label: "Takeoff", price: "25 000 F", to: "/collections/takeoff" },
+  { label: "Parfums de poche", price: "Pack de 5 à 10 000 F", to: "/collections/parfums-de-poches" },
+  { label: "Dubai Perfumes", price: "Dès 20 000 F", to: "/boutique", collection: "dubai" },
+  { label: "Parfums authentiques", price: "Les originaux", to: "/boutique", collection: "authentic" },
+  { label: "Collections privées", price: "Éditions rares", to: "/collections/collections-privees" },
+  { label: "Coffrets", price: "Prêts à offrir", to: "/collections/coffrets" },
+];
+
+const footerPages = [
+  { label: "Boutique", to: "/boutique" },
+  { label: "Compose ton pack", to: "/coffret-signature" },
+  { label: "Quiz parfum", to: "/trouve-ton-parfum" },
+  { label: "Livraison", to: "/livraison" },
+  { label: "FAQ", to: "/faq" },
+  { label: "Conseils", to: "/conseils" },
+  { label: "Blog", to: "/blog" },
+  { label: "À propos", to: "/a-propos" },
+  { label: "Contact", to: "/contact" },
+  { label: "Mentions légales", to: "/mentions-legales" },
 ] as const;
 
-const boutiqueCategories = [
-  { label: "All scents", to: "/boutique" as const },
-  { label: "Collections privées", to: "/collections/collections-privees" as const },
-  { label: "Coffrets", to: "/collections/coffrets" as const },
-  { label: "Fragrance library", to: "/collections/fragrance-library" as const },
-  { label: "SCENTLAB", to: "/collections/scentlab" as const },
-  { label: "TAKEOFF FRAGRANCE", to: "/collections/takeoff" as const },
-  { label: "Dubai Perfumes", to: "/boutique" as const, collection: "dubai" },
-  { label: "Parfums de poches", to: "/boutique" as const, collection: "pocket" },
-  { label: "Parfums authentiques", to: "/boutique" as const, collection: "authentic" },
-  { label: "Haqqi", to: "/collections/haqqi" as const },
-] as const;
+const collectionSearch = (item: SiteCollection) => (item.collection ? { collection: item.collection } : {});
 
 const facebookUrl = "https://www.facebook.com/profile.php?id=61551806734713";
 
 export function SiteLayout({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
+  const [collectionsOpen, setCollectionsOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { itemCount } = useCart();
@@ -70,7 +87,24 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => setOpen(false), [location.pathname]);
+  useEffect(() => {
+    setOpen(false);
+    setCollectionsOpen(false);
+  }, [location.pathname, location.searchStr]);
+
+  useEffect(() => {
+    if (!collectionsOpen) return;
+    const onKey = (event: KeyboardEvent) => event.key === "Escape" && setCollectionsOpen(false);
+    const onClick = (event: MouseEvent) => {
+      if (!(event.target as HTMLElement).closest("[data-collections-menu]")) setCollectionsOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    window.addEventListener("click", onClick);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("click", onClick);
+    };
+  }, [collectionsOpen]);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -88,46 +122,69 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
           >
             2M Parfumerie
           </Link>
-          <div className="hidden items-center gap-8 md:flex">
-            {navItems.map((item) =>
-              item.to === "/boutique" ? (
-                <div key={item.to} className="group/boutique relative">
+          <div className="hidden items-center gap-7 md:flex">
+            <div
+              className="relative"
+              data-collections-menu
+              onMouseEnter={() => setCollectionsOpen(true)}
+              onMouseLeave={() => setCollectionsOpen(false)}
+            >
+              <button
+                type="button"
+                aria-expanded={collectionsOpen}
+                aria-controls="menu-collections"
+                onClick={() => setCollectionsOpen(true)}
+                className={cn(
+                  "nav-luxe inline-flex min-h-11 items-center gap-1 text-muted-foreground transition-colors hover:text-accent",
+                  (collectionsOpen || location.pathname.startsWith("/collections")) && "text-accent",
+                )}
+              >
+                Collections
+                <ChevronDown
+                  className={cn("size-4 transition-transform", collectionsOpen && "rotate-180")}
+                  aria-hidden="true"
+                />
+              </button>
+              <div
+                id="menu-collections"
+                className={cn(
+                  "absolute left-1/2 top-full z-50 w-[520px] -translate-x-1/2 pt-3 transition-all duration-200",
+                  collectionsOpen ? "visible opacity-100" : "invisible opacity-0",
+                )}
+              >
+                <div className="grid grid-cols-2 gap-1 rounded-lg border border-border bg-card p-3 shadow-elegant">
+                  {siteCollections.map((item) => (
+                    <Link
+                      key={item.label}
+                      to={item.to}
+                      search={collectionSearch(item)}
+                      className="rounded-md px-3 py-2 transition-colors hover:bg-surface-alt"
+                    >
+                      <span className="block text-sm font-medium text-foreground">{item.label}</span>
+                      <span className="block text-xs text-accent">{item.price}</span>
+                    </Link>
+                  ))}
                   <Link
-                    to={item.to}
-                    className="group nav-luxe relative min-h-11 content-center text-muted-foreground hover:text-accent transition-colors"
-                    activeProps={{ className: "text-accent" }}
+                    to="/boutique"
+                    search={{}}
+                    className="col-span-2 mt-1 rounded-md border-t border-border px-3 pt-3 text-sm font-semibold text-accent hover:underline"
                   >
-                    {item.label}
-                    <span className="absolute -bottom-1 left-0 h-1 w-0 bg-accent rounded-full transition-all duration-300 group-hover:w-full group-data-[status=active]:w-full" />
+                    Voir tous les parfums →
                   </Link>
-                  <div className="invisible absolute left-1/2 top-full z-50 w-64 -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-hover/boutique:visible group-hover/boutique:opacity-100">
-                    <div className="grid gap-1 rounded-lg border border-border bg-card p-3 shadow-elegant">
-                      {boutiqueCategories.map((category) => (
-                        <Link
-                          key={category.label}
-                          to={category.to}
-                          search={"collection" in category ? { collection: category.collection } : {}}
-                          className="rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-surface-alt hover:text-accent"
-                        >
-                          {category.label}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
                 </div>
-              ) : (
-                <Link
-                  key={item.to}
-                  to={item.to}
-                  activeOptions={{ exact: item.to === "/" }}
-                  className="group nav-luxe relative min-h-11 content-center text-muted-foreground hover:text-accent transition-colors"
-                  activeProps={{ className: "text-accent" }}
-                >
-                  {item.label}
-                  <span className="absolute -bottom-1 left-0 h-1 w-0 bg-accent rounded-full transition-all duration-300 group-hover:w-full group-data-[status=active]:w-full" />
-                </Link>
-              ),
-            )}
+              </div>
+            </div>
+            {navItems.map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                className="group nav-luxe relative min-h-11 content-center text-muted-foreground transition-colors hover:text-accent"
+                activeProps={{ className: "text-accent" }}
+              >
+                {item.label}
+                <span className="absolute -bottom-1 left-0 h-1 w-0 rounded-full bg-accent transition-all duration-300 group-hover:w-full group-data-[status=active]:w-full" />
+              </Link>
+            ))}
           </div>
           <button
             type="button"
@@ -175,30 +232,40 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
 
       <div
         className={cn(
-          "fixed inset-0 z-40 flex flex-col items-center justify-center bg-background px-6 transition-all duration-300 md:hidden",
+          "fixed inset-0 z-40 flex flex-col bg-background px-5 pt-20 transition-all duration-300 md:hidden",
           open ? "visible opacity-100" : "invisible opacity-0",
         )}
+        style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
       >
-        <div className="flex flex-col items-center gap-7">
-          {navItems.map((item, index) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              activeOptions={{ exact: item.to === "/" }}
-              className="font-display text-[28px] text-foreground transition-all"
-              activeProps={{ className: "text-accent underline underline-offset-8" }}
-              style={{ transitionDelay: `${index * 80}ms` }}
-            >
-              {item.label}
-            </Link>
-          ))}
+        <div className="flex-1 overflow-y-auto pb-4">
+          <p className="caption-luxe mb-2 text-accent">Collections</p>
+          <div className="grid grid-cols-2 gap-2">
+            {siteCollections.map((item) => (
+              <Link
+                key={item.label}
+                to={item.to}
+                search={collectionSearch(item)}
+                className="rounded-lg border border-border bg-card px-3 py-2.5"
+              >
+                <span className="block text-[15px] font-medium leading-tight text-foreground">{item.label}</span>
+                <span className="mt-0.5 block text-xs text-accent">{item.price}</span>
+              </Link>
+            ))}
+          </div>
+          <div className="mt-6 grid">
+            {[...navItems, { label: "À propos", to: "/a-propos" as const }, { label: "Blog", to: "/blog" as const }].map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                className="border-b border-border py-3 font-display text-[22px] text-foreground"
+                activeProps={{ className: "text-accent" }}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
         </div>
-        <Button
-          asChild
-          variant="whatsapp"
-          size="lg"
-          className="absolute bottom-6 left-4 right-4 h-[52px] md:bottom-8 md:left-6 md:right-6"
-        >
+        <Button asChild variant="whatsapp" size="lg" className="mb-4 h-[52px] w-full">
           <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
             <WhatsAppLogo tone="light" className="size-5" /> Commander sur WhatsApp
           </a>
@@ -213,7 +280,7 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
       </main>
       <SiteFooter />
       {/* Sur les fiches produits, le grand bouton WhatsApp suffit : la bulle le cachait sur mobile. */}
-      {!location.pathname.startsWith("/boutique/") && <FloatingWhatsApp />}
+      {!open && !cartOpen && !location.pathname.startsWith("/boutique/") && <FloatingWhatsApp />}
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
     </div>
   );
@@ -228,7 +295,7 @@ function SiteFooter() {
             2M Parfumerie
           </Link>
           <p className="mt-2 max-w-xs text-[13px] text-muted-foreground">
-            L'authenticité en flacon. Livraison partout au Sénégal.
+            Parfums dès 4 000 F. Livraison partout au Sénégal.
           </p>
           <div className="mt-6 flex gap-4">
             <a
@@ -272,26 +339,30 @@ function SiteFooter() {
             </a>
           </div>
         </div>
-        <FooterColumn title="Navigation">
-          {[...navItems, { label: "Mentions légales", to: "/mentions-legales" as const }].map(
-            (item) => (
-              <FooterLink key={item.to} to={item.to}>
-                {item.label}
-              </FooterLink>
-            ),
-          )}
+        <FooterColumn title="Pages">
+          {footerPages.map((item) => (
+            <FooterLink key={item.to} to={item.to}>
+              {item.label}
+            </FooterLink>
+          ))}
         </FooterColumn>
         <FooterColumn title="Collections">
-          {footerCollections.map((item) => (
+          {siteCollections.map((item) => (
             <Link
-              key={item.collection}
-              to="/boutique"
-              search={{ collection: item.collection }}
+              key={item.label}
+              to={item.to}
+              search={collectionSearch(item)}
               className="block min-h-9 py-1 text-[13px] text-muted-foreground hover:text-primary-foreground"
             >
               {item.label}
             </Link>
           ))}
+          <Link
+            to="/collections/fragrance-library"
+            className="block min-h-9 py-1 text-[13px] text-muted-foreground hover:text-primary-foreground"
+          >
+            Fragrance Library
+          </Link>
         </FooterColumn>
         <FooterColumn title="Contact" className="col-span-2 md:col-span-1">
           <a
@@ -364,16 +435,7 @@ function FooterLink({
   to,
   children,
 }: {
-  to:
-    | "/"
-    | "/boutique"
-    | "/trouve-ton-parfum"
-    | "/collections/takeoff"
-    | "/coffret-signature"
-    | "/blog"
-    | "/a-propos"
-    | "/contact"
-    | "/mentions-legales";
+  to: (typeof footerPages)[number]["to"];
   children: React.ReactNode;
 }) {
   return (

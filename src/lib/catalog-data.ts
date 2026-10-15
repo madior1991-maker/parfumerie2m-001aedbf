@@ -74,15 +74,15 @@ export type BoutiqueProduct = {
 
 export const collectionFilters: { label: string; value: Collection }[] = [
   { label: "Toutes", value: "all" },
-  { label: "SCENTLAB", value: "scentlab" },
-  { label: "TAKEOFF FRAGRANCE", value: "takeoff" },
-  { label: "Dubai Perfumes", value: "dubai" },
-  { label: "Parfums de poches", value: "pocket" },
-  { label: "Parfums authentiques", value: "authentic" },
   { label: "Haqqi", value: "haqqi" },
+  { label: "SCENTLAB", value: "scentlab" },
+  { label: "Takeoff", value: "takeoff" },
+  { label: "Parfums de poche", value: "pocket" },
+  { label: "Dubai Perfumes", value: "dubai" },
+  { label: "Parfums authentiques", value: "authentic" },
   { label: "Collections privées", value: "privees" },
   { label: "Coffrets", value: "coffrets" },
-  { label: "Fragrance library", value: "library" },
+  { label: "Fragrance Library", value: "library" },
 ];
 
 const collectionAliases: Record<string, Collection> = {
@@ -628,7 +628,7 @@ const pocketCatalog: BoutiqueProduct[] = pocketProducts.map((product) => ({
   family: product.family,
   concentration: "Eau de parfum",
   volume: "50 ml",
-  description: `${product.name} fait partie de la sélection Parfums de poches : un format 50 ml pratique, disponible à l'unité chez 2M Parfumerie ou dans le Pack de 5 Parfums de poches à composer.`,
+  description: `${product.name} fait partie des Parfums de poche 2M : un petit format pratique à glisser dans le sac. À choisir dans le pack de 5 parfums de poche à 10 000 FCFA.`,
 }));
 
 export const catalog: BoutiqueProduct[] = [...takeoffCatalog, ...scentlabCatalog, ...scentlabExtraCatalog, ...haqqiCatalog, ...pocketCatalog];

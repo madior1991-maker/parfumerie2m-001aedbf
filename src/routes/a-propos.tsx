@@ -1,13 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Gem, MapPin, Phone, Plus, Users } from "lucide-react";
-import { useState } from "react";
+import { Gem, MapPin, Users } from "lucide-react";
 
 import aboutHero from "@/assets/about-perfume-grid.webp";
 import brandLogo from "@/assets/2m-parfumerie-logo.webp";
-import { WhatsAppLogo } from "@/components/commerce/WhatsAppLogo";
-import { Button } from "@/components/ui/button";
+import { FaqAccordion, FaqContact } from "@/components/commerce/Faq";
 import { SiteLayout } from "@/components/commerce/SiteLayout";
-import { displayPhone, secondPhone, whatsappUrl } from "@/lib/perfume-data";
 
 export const Route = createFileRoute("/a-propos")({
   head: () => ({
@@ -16,74 +13,21 @@ export const Route = createFileRoute("/a-propos")({
       {
         name: "description",
         content:
-          "Découvrez l'histoire de 2M Parfumerie, votre parfumerie authentique à Dakar, et retrouvez les réponses à toutes vos questions sur la livraison, l'authenticité et la commande.",
+          "L'histoire de 2M Parfumerie, parfumerie en ligne à Dakar : créations inspirées dès 4 000 F et parfums originaux. Réponses sur la livraison, le paiement et la commande.",
       },
     ],
     links: [{ rel: "canonical", href: "https://www.2mparfumeriedk.com/a-propos" }],
-    scripts: [{ type: "application/ld+json", children: faqJsonLd }],
   }),
   component: AboutPage,
 });
 
-const faqs = [
-  {
-    question: "Les parfums sont-ils 100% authentiques ?",
-    answer:
-      "Absolument. Tous nos parfums sont sourcés directement auprès de distributeurs certifiés. Nous ne vendons aucune imitation ou contrefaçon. Si vous avez le moindre doute après réception, contactez-nous immédiatement sur WhatsApp.",
-  },
-  {
-    question: "Combien coûte la livraison et en combien de temps ?",
-    answer:
-      "Nous livrons partout au Sénégal : livraison rapide à Dakar (1 500 à 2 000 FCFA selon la zone) et en 24 à 48h dans les régions (2 000 FCFA). La livraison est offerte dès 75 000 FCFA d'achat, et pour 2 parfums Takeoff (50 000 FCFA).",
-  },
-  {
-    question: "Comment finaliser ma commande ?",
-    answer:
-      "Vous passez par WhatsApp ou téléphone, puis vous convenez directement avec le gérant du règlement et des détails de livraison. Vous payez par Wave, Orange Money ou en espèces. Il n'y a pas de paiement en ligne sur le site.",
-  },
-  {
-    question: "Puis-je retourner un produit si je ne suis pas satisfait(e) ?",
-    answer:
-      "Nous sommes fiers de la qualité de nos produits. Si un flacon arrive cassé, qu'il fuit ou qu'il ne correspond pas à votre commande, envoyez-nous une photo sur WhatsApp dans les 24h après réception. Nous vous l'échangeons, sans frais.",
-  },
-  {
-    question: "Comment savoir quel parfum me correspond ?",
-    answer:
-      "Faites le quiz « Trouve ton parfum » sur le site : 4 questions, 3 suggestions en 30 secondes. Vous pouvez aussi nous écrire sur WhatsApp en décrivant votre style, l'occasion pour laquelle vous cherchez un parfum, et votre budget — nous vous conseillerons personnellement sur 2-3 options parfaites pour vous.",
-  },
-  {
-    question: "Livrez-vous dans les régions du Sénégal ?",
-    answer:
-      "Oui, nous livrons partout dans les régions du Sénégal. Nous avons déjà des clients satisfaits de nos produits dans plusieurs régions ; contactez-nous sur WhatsApp ou par appel pour confirmer le délai et le mode de livraison adaptés à votre localité.",
-  },
-  {
-    question: "Quelle est la différence entre vos collections ?",
-    answer:
-      "Chaque collection a son univers :\n· SCENTLAB — fragrances contemporaines et épurées\n· TAKEOFF FRAGRANCE — signatures audacieuses et marquées\n· Dubai Perfumes — oud, rose, musc — l'Orient en flacon\n· Pocket Perfumes — formats voyage compacts\n· Authentic Perfumes — grandes maisons, originaux certifiés\n· Haqqi — sélection exclusive, qualité premium",
-  },
-  {
-    question: "Comment passer une commande ?",
-    answer:
-      "C'est simple : trouvez votre parfum dans la boutique, cliquez sur 'Commander', et vous serez redirigé(e) vers WhatsApp avec le produit déjà mentionné dans le message. Vous pouvez aussi nous appeler directement via nos deux numéros pour commander ou poser vos questions.",
-  },
-];
 
-// FAQ structured data for rich results
-const faqJsonLd = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqs.map((f) => ({
-    "@type": "Question",
-    name: f.question,
-    acceptedAnswer: { "@type": "Answer", text: f.answer },
-  })),
-});
 
 const values = [
   {
     icon: Gem,
-    title: "L'authenticité avant tout",
-    body: "Chaque flacon est sourcé directement. Nous ne faisons aucun compromis sur la qualité — c'est notre engagement fondateur.",
+    title: "La transparence avant tout",
+    body: "Chaque fiche dit ce que vous achetez : création inspirée ou parfum original. Chaque flacon est vérifié avant envoi.",
   },
   {
     icon: Users,
@@ -98,7 +42,6 @@ const values = [
 ];
 
 function AboutPage() {
-  const [openIndex, setOpenIndex] = useState(0);
 
   return (
     <SiteLayout>
@@ -112,7 +55,7 @@ function AboutPage() {
         <div className="section-shell relative mx-auto max-w-2xl text-center">
           <p className="caption-luxe text-accent">Notre histoire</p>
           <h1 className="mt-5 font-display text-4xl font-semibold leading-[1.1] text-foreground md:text-[64px]">
-            Le parfum pour tous. L'authenticité sans compromis.
+            Le parfum pour tous, au juste prix.
           </h1>
         </div>
       </section>
@@ -134,17 +77,18 @@ function AboutPage() {
             <div className="mt-6 space-y-6 text-base leading-[1.9] text-muted-foreground">
               <p>
                 À l'origine de 2M Parfumerie, il y a une conviction simple : le parfum de luxe ne
-                devrait pas être réservé à une élite. Chaque Sénégalais mérite de porter une
-                fragrance authentique — celle qui lui ressemble, celle qui laisse une trace dans une
+                devrait pas être réservé à une élite. Chaque Sénégalais mérite de porter un
+                parfum qui lui ressemble, celle qui laisse une trace dans une
                 pièce, celle dont on se souvient.
               </p>
               <p>
                 Nous avons commencé par une passion, une sélection rigoureuse, et l'obsession d'une
-                seule chose : vous livrer exactement ce que vous attendez. Pas des imitations. Pas
-                des approximations. Des parfums vrais.
+                seule chose : vous livrer exactement ce que vous attendez. Des créations inspirées des grands
+                parfums, présentées comme telles, et des originaux pour ceux qui veulent la grande
+                maison.
               </p>
               <p>
-                Aujourd'hui, nos collections couvrent six univers olfactifs — du SCENTLAB épuré aux
+                Aujourd'hui, nos huit collections couvrent tous les budgets — du SCENTLAB épuré aux
                 Dubai Perfumes orientaux — et notre équipe est disponible 7j/7 sur WhatsApp pour
                 vous guider vers votre signature personnelle.
               </p>
@@ -187,72 +131,8 @@ function AboutPage() {
 
       <section className="bg-background py-14 md:py-20">
         <div className="section-shell mx-auto max-w-3xl">
-          <div className="divide-y divide-border border-y border-border">
-            {faqs.map((faq, index) => {
-              const isOpen = openIndex === index;
-              return (
-                <div key={faq.question} className="py-5">
-                  <button
-                    type="button"
-                    className="flex min-h-11 w-full items-center justify-between gap-6 text-left text-[15px] font-semibold text-foreground hover:text-accent"
-                    aria-expanded={isOpen ? "true" : "false"}
-                    aria-controls={`faq-answer-${index}`}
-                    onClick={() => setOpenIndex(isOpen ? -1 : index)}
-                  >
-                    <span>{faq.question}</span>
-                    <Plus
-                      className={
-                        isOpen
-                          ? "size-5 shrink-0 rotate-45 text-accent transition-transform duration-300"
-                          : "size-5 shrink-0 text-accent transition-transform duration-300"
-                      }
-                      aria-hidden="true"
-                    />
-                  </button>
-                  <div
-                    id={`faq-answer-${index}`}
-                    className={
-                      isOpen
-                        ? "grid grid-rows-[1fr] opacity-100 transition-all duration-300"
-                        : "grid grid-rows-[0fr] opacity-0 transition-all duration-300"
-                    }
-                  >
-                    <div className="overflow-hidden">
-                      <p className="whitespace-pre-line pb-2 pt-4 text-sm leading-[1.8] text-muted-foreground">
-                        {faq.answer}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="mt-16 text-center">
-            <p className="caption-luxe text-accent">Autre question ?</p>
-            <h2 className="mt-3 font-display text-[32px] text-foreground">
-              On est sur WhatsApp et par téléphone.
-            </h2>
-            <Button asChild variant="whatsapp" size="lg" className="mt-6">
-              <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
-                <WhatsAppLogo tone="light" className="size-5" /> Nous écrire sur WhatsApp →
-              </a>
-            </Button>
-            <div className="mt-5 flex flex-col items-center justify-center gap-3 text-sm text-muted-foreground sm:flex-row">
-              <a
-                href="tel:+221761923441"
-                className="inline-flex min-h-11 items-center gap-2 hover:text-accent"
-              >
-                <Phone className="size-4" aria-hidden="true" /> {displayPhone}
-              </a>
-              <a
-                href="tel:+221781441766"
-                className="inline-flex min-h-11 items-center gap-2 hover:text-accent"
-              >
-                <Phone className="size-4" aria-hidden="true" /> {secondPhone}
-              </a>
-            </div>
-          </div>
+          <FaqAccordion />
+          <FaqContact />
         </div>
       </section>
     </SiteLayout>

@@ -23,8 +23,8 @@ function LegalPage() {
           <section>
             <h2 className="mb-3 font-display text-2xl text-foreground">Éditeur du site</h2>
             <p>
-              Le présent site est édité par 2M Parfumerie, parfumerie spécialisée dans la vente de
-              fragrances authentiques au Sénégal.
+              Le présent site est édité par 2M Parfumerie, parfumerie en ligne spécialisée dans la vente de
+              parfums au Sénégal : créations inspirées des grands parfums et parfums originaux.
             </p>
             <p className="mt-2">
               Contact : 2mparfumerie2025@gmail.com · Téléphone : +221 76 192 34 41 / +221 78 144 17
