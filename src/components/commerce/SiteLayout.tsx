@@ -22,13 +22,24 @@ import { TikTokLogo } from "@/components/commerce/TikTokLogo";
 import type { Collection } from "@/lib/catalog-data";
 import { useCustomCollections } from "@/lib/live-catalog";
 
+// Menu principal : l'essentiel pour acheter. Le reste passe dans « Aide ».
 const navItems = [
   { label: "Boutique", to: "/boutique" },
   { label: "Compose ton pack", to: "/coffret-signature" },
   { label: "Catalogues", to: "/catalogues" },
-  { label: "Quiz parfum", to: "/trouve-ton-parfum" },
-  { label: "Livraison", to: "/livraison" },
-  { label: "Contact", to: "/contact" },
+] as const;
+
+const helpItems = [
+  { label: "Quiz parfum", hint: "Trouve ton parfum en 1 minute", to: "/trouve-ton-parfum" },
+  { label: "Livraison", hint: "Tarifs, délais, paiement", to: "/livraison" },
+  { label: "FAQ", hint: "Les questions fréquentes", to: "/faq" },
+  { label: "Contact", hint: "WhatsApp, appel, e-mail", to: "/contact" },
+] as const;
+
+const moreItems = [
+  { label: "À propos", to: "/a-propos" },
+  { label: "Conseils", to: "/conseils" },
+  { label: "Blog", to: "/blog" },
 ] as const;
 
 type SiteCollection = {
@@ -98,6 +109,7 @@ const facebookUrl = "https://www.facebook.com/profile.php?id=61551806734713";
 export function SiteLayout({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   const [collectionsOpen, setCollectionsOpen] = useState(false);
+  const [helpOpen, setHelpOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { itemCount } = useCart();
@@ -114,13 +126,20 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     setOpen(false);
     setCollectionsOpen(false);
+    setHelpOpen(false);
   }, [location.pathname, location.searchStr]);
 
   useEffect(() => {
-    if (!collectionsOpen) return;
-    const onKey = (event: KeyboardEvent) => event.key === "Escape" && setCollectionsOpen(false);
+    if (!collectionsOpen && !helpOpen) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setCollectionsOpen(false);
+      setHelpOpen(false);
+    };
     const onClick = (event: MouseEvent) => {
-      if (!(event.target as HTMLElement).closest("[data-collections-menu]")) setCollectionsOpen(false);
+      const target = event.target as HTMLElement;
+      if (!target.closest("[data-collections-menu]")) setCollectionsOpen(false);
+      if (!target.closest("[data-help-menu]")) setHelpOpen(false);
     };
     window.addEventListener("keydown", onKey);
     window.addEventListener("click", onClick);
@@ -128,7 +147,7 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
       window.removeEventListener("keydown", onKey);
       window.removeEventListener("click", onClick);
     };
-  }, [collectionsOpen]);
+  }, [collectionsOpen, helpOpen]);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -195,6 +214,12 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
                   >
                     Voir tous les parfums →
                   </Link>
+                  <Link
+                    to="/catalogues"
+                    className="col-span-2 rounded-md px-3 pb-1 text-xs text-muted-foreground hover:text-accent hover:underline"
+                  >
+                    Télécharger les catalogues PDF
+                  </Link>
                 </div>
               </div>
             </div>
@@ -209,6 +234,42 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
                 <span className="absolute -bottom-1 left-0 h-1 w-0 rounded-full bg-accent transition-all duration-300 group-hover:w-full group-data-[status=active]:w-full" />
               </Link>
             ))}
+            <div
+              className="relative"
+              data-help-menu
+              onMouseEnter={() => setHelpOpen(true)}
+              onMouseLeave={() => setHelpOpen(false)}
+            >
+              <button
+                type="button"
+                aria-expanded={helpOpen}
+                aria-controls="menu-aide"
+                onClick={() => setHelpOpen(true)}
+                className={cn(
+                  "nav-luxe inline-flex min-h-11 items-center gap-1 text-muted-foreground transition-colors hover:text-accent",
+                  (helpOpen || helpItems.some((item) => location.pathname === item.to)) && "text-accent",
+                )}
+              >
+                Aide
+                <ChevronDown className={cn("size-4 transition-transform", helpOpen && "rotate-180")} aria-hidden="true" />
+              </button>
+              <div
+                id="menu-aide"
+                className={cn(
+                  "absolute right-0 top-full z-50 w-[280px] pt-3 transition-all duration-200",
+                  helpOpen ? "visible opacity-100" : "invisible opacity-0",
+                )}
+              >
+                <div className="grid gap-1 rounded-lg border border-border bg-card p-3 shadow-elegant">
+                  {helpItems.map((item) => (
+                    <Link key={item.to} to={item.to} className="rounded-md px-3 py-2 transition-colors hover:bg-surface-alt">
+                      <span className="block text-sm font-medium text-foreground">{item.label}</span>
+                      <span className="block text-xs text-muted-foreground">{item.hint}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
           <button
             type="button"
@@ -269,19 +330,32 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
                 key={item.label}
                 to={item.to}
                 search={collectionSearch(item)}
-                className="rounded-lg border border-border bg-card px-3 py-2.5"
+                className="rounded-lg border border-border bg-card px-3 py-2"
               >
-                <span className="block text-[15px] font-medium leading-tight text-foreground">{item.label}</span>
-                <span className="mt-0.5 block text-xs text-accent">{item.price}</span>
+                <span className="block truncate text-[14px] font-medium leading-tight text-foreground">{item.label}</span>
+                <span className="mt-0.5 block truncate text-[11px] text-accent">{item.price}</span>
               </Link>
             ))}
           </div>
           <div className="mt-6 grid">
-            {[...navItems, { label: "À propos", to: "/a-propos" as const }, { label: "Blog", to: "/blog" as const }].map((item) => (
+            {navItems.map((item) => (
               <Link
                 key={item.to}
                 to={item.to}
                 className="border-b border-border py-3 font-display text-[22px] text-foreground"
+                activeProps={{ className: "text-accent" }}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
+          <p className="caption-luxe mb-2 mt-6 text-accent">Aide</p>
+          <div className="grid grid-cols-2 gap-x-4">
+            {[...helpItems, ...moreItems].map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                className="border-b border-border py-2.5 text-[15px] text-muted-foreground"
                 activeProps={{ className: "text-accent" }}
               >
                 {item.label}
