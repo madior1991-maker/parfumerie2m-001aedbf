@@ -27,17 +27,6 @@ function validateBoutiqueSearch(search: Record<string, unknown>): { collection?:
   return { collection: value };
 }
 
-const mixedCollectionOrder: Collection[] = [
-  "takeoff",
-  "scentlab",
-  "dubai",
-  "pocket",
-  "authentic",
-  "haqqi",
-  "privees",
-  "coffrets",
-  "library",
-];
 
 const PAGE_SIZE = 25; // 5 rangées de 5 sur ordinateur
 
@@ -52,8 +41,10 @@ function shuffle<T>(items: T[]) {
 
 // Ordre aléatoire à chaque visite, en gardant les collections bien mélangées.
 function mixProductsByCollection(products: BoutiqueProduct[]) {
+  // Toutes les catégories présentes, y compris celles ajoutées plus tard.
+  const collections = Array.from(new Set(products.map((product) => product.collection)));
   const groupedProducts = shuffle(
-    mixedCollectionOrder.map((collection) =>
+    collections.map((collection) =>
       shuffle(products.filter((product) => product.collection === collection)),
     ),
   );
