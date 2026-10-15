@@ -1,0 +1,27 @@
+name: scentlab-extra-assets
+on:
+  push:
+    branches: [scentlab-extra-assets]
+permissions:
+  contents: write
+jobs:
+  fetch:
+    if: "!contains(github.event.head_commit.message, '[data]')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch images
+        run: |
+          set -e
+          mkdir -p scentlab-extra
+          curl -sfL "https://cdn.myikas.com/images/7396c860-0037-4efc-acfe-1579e7ceafb2/ba1c1e47-936d-4c2a-a6cc-28eb9355877f/1080/naughty-rose.jpg" -o scentlab-extra/naughty-rose.jpg
+          curl -sfL "https://cdn.myikas.com/images/7396c860-0037-4efc-acfe-1579e7ceafb2/f7f9dce7-e48a-46d1-9156-eeae512a7994/1080/flirty-caramel-sise.jpg" -o scentlab-extra/flirty-caramel.jpg
+          curl -sfL "https://cdn.myikas.com/images/7396c860-0037-4efc-acfe-1579e7ceafb2/943670a9-c4dd-4522-84af-735641a06ed9/1080/orange-blossom.jpg" -o scentlab-extra/orange-blossom.jpg
+          ls -la scentlab-extra
+      - name: Commit
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add scentlab-extra
+          git commit -m "scentlab extra [data]" || echo nothing
+          git push
