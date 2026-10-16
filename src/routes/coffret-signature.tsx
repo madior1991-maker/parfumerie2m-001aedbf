@@ -212,7 +212,12 @@ function CoffretSignaturePage() {
     .filter((option): option is CoffretOption => Boolean(option));
   const remaining = offer.requiredCount - selectedOptions.length;
   const canSend = remaining === 0;
-  const showGender = selectedCollection !== "pocket";
+  // Filtres Homme / Femme / Unisexe : seulement ceux présents dans le pack choisi.
+  const availableTabs = useMemo(
+    () => genderTabs.filter((tab) => tab === "Tous" || allOptions.some((option) => option.gender === tab)),
+    [allOptions],
+  );
+  const showGender = availableTabs.length > 2;
   // Les parfums de poche partagent la même photo : on les liste par leur nom.
   const showPhotos = selectedCollection !== "pocket";
 
@@ -319,8 +324,11 @@ function CoffretSignaturePage() {
               className="w-full rounded-full border border-border bg-card px-5 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30 md:max-w-sm"
             />
             {showGender && (
-              <div className="grid grid-cols-4 gap-1 rounded-full bg-surface-alt p-1 md:w-[420px]">
-                {genderTabs.map((tab) => (
+              <div
+                className="grid gap-1 rounded-full bg-surface-alt p-1 md:w-[420px]"
+                style={{ gridTemplateColumns: `repeat(${availableTabs.length}, minmax(0, 1fr))` }}
+              >
+                {availableTabs.map((tab) => (
                   <button
                     key={tab}
                     type="button"
@@ -426,14 +434,13 @@ function CoffretSignaturePage() {
                 </button>
               </span>
             ))}
-            {Array.from({ length: Math.max(0, remaining) }).map((_, index) => (
-              <span
-                key={index}
-                className="rounded-full border border-dashed border-white/40 px-3 py-1 text-[13px] text-white/70"
-              >
-                à choisir
+            {remaining > 0 && (
+              <span className="rounded-full border border-dashed border-white/40 px-3 py-1 text-[13px] text-white/70">
+                {selectedOptions.length === 0
+                  ? `Touche ${offer.requiredCount} parfums pour les ajouter`
+                  : `+ ${remaining} à choisir`}
               </span>
-            ))}
+            )}
           </div>
           <div className="flex items-center justify-between gap-3">
             <div className="min-w-0">
