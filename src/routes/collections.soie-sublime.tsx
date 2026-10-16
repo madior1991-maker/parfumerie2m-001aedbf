@@ -34,7 +34,7 @@ export const Route = createFileRoute("/collections/soie-sublime")({
       collection="soie-sublime"
       eyebrow="Soie Sublime Paris"
       h1="Soie Sublime Paris à Dakar"
-      intro="Alba, Encens et Somati : les extraits de parfum de la maison Soie Sublime Paris. 90&nbsp;000&nbsp;F au lieu de 120&nbsp;000&nbsp;F. Commande sur WhatsApp, livraison offerte partout au Sénégal."
+      intro="Alba, Encens et Somari : les extraits de parfum de la maison Soie Sublime Paris. 90&nbsp;000&nbsp;F au lieu de 120&nbsp;000&nbsp;F. Commande sur WhatsApp, livraison offerte partout au Sénégal."
     />
   ),
 });

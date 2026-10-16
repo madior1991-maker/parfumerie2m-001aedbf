@@ -3,6 +3,11 @@
   "outputDirectory": "dist",
   "redirects": [
     {
+      "source": "/boutique/somati-soie-sublime-paris",
+      "destination": "/boutique/somari-soie-sublime-paris",
+      "permanent": true
+    },
+    {
       "source": "/boutique/acqua-di-gio-inspiration-armani-acqua-di-gio",
       "destination": "/boutique/acqua-di-gio",
       "permanent": true
