@@ -154,6 +154,39 @@ async function main() {
   const existing = fs.existsSync(sitemapPath) ? [...fs.readFileSync(sitemapPath, "utf8").matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]) : [];
   const locs = new Set(existing.filter((loc) => !deleted.has(loc.split("/boutique/")[1])));
   for (const r of live) locs.add(`${SITE}/boutique/${r.slug}`);
+
+  // Articles du blog : une page lisible par Google pour chacun, et une place dans le plan du site.
+  try {
+    const res = await fetch(`${url}/rest/v1/blog_posts?select=slug,title,excerpt,content,is_published&is_published=eq.true`, {
+      headers: { apikey: key, Authorization: `Bearer ${key}` },
+      signal: AbortSignal.timeout(15000),
+    });
+    const posts = res.ok ? await res.json() : [];
+    for (const post of posts) {
+      const slug = clean(post.slug);
+      if (!slug) continue;
+      const pageUrl = `${SITE}/blog/${slug}`;
+      const title = `${post.title} | 2M Parfumerie Dakar`;
+      const desc = String(post.excerpt || post.content || "").replace(/\s+/g, " ").slice(0, 300);
+      let html = base.replace(/<title>[^<]*<\/title>/, `<title>${esc(title)}</title>`);
+      for (const [attr, k, v] of [["name", "description", desc], ["property", "og:title", title], ["property", "og:description", desc], ["property", "og:url", pageUrl], ["property", "og:type", "article"], ["name", "twitter:title", title], ["name", "twitter:description", desc]]) {
+        html = setMeta(html, attr, k, v);
+      }
+      html = injectHead(html, `<link rel="canonical" href="${pageUrl}" />${jsonLd({ "@context": "https://schema.org", "@type": "Article", headline: post.title, description: desc, mainEntityOfPage: pageUrl, publisher: { "@type": "Organization", name: "2M Parfumerie" } })}`);
+      html = injectBody(html, {
+        h1: post.title,
+        paragraphs: String(post.content || "").split(/\n+/).map((line) => line.trim()).filter(Boolean),
+        links: [["Toute la boutique", "/boutique"], ["Le blog", "/blog"]],
+      });
+      const out = path.join(dist, "blog", `${slug}.html`);
+      fs.mkdirSync(path.dirname(out), { recursive: true });
+      fs.writeFileSync(out, html);
+      locs.add(pageUrl);
+    }
+    console.log(`prerender-products: ${posts.length} articles de blog`);
+  } catch (error) {
+    console.log(`prerender-products: blog injoignable (${error.message})`);
+  }
   const now = new Date().toISOString();
   const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${[...locs].map((loc) => `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${now}</lastmod>\n  </url>`).join("\n")}\n</urlset>\n`;
   fs.writeFileSync(sitemapPath, xml);
