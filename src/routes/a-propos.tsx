@@ -87,7 +87,7 @@ function AboutPage() {
                 maison.
               </p>
               <p>
-                Aujourd'hui, nos dix collections couvrent tous les budgets — du SCENTLAB épuré aux
+                Aujourd'hui, nos onze collections couvrent tous les budgets — du SCENTLAB épuré aux
                 parfums Dubai orientaux — et notre équipe est disponible 7j/7 sur WhatsApp pour
                 vous guider vers votre signature personnelle.
               </p>

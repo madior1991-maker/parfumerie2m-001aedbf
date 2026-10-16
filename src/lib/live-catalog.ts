@@ -57,7 +57,7 @@ function productFromRow(product: ProductRow, fallback?: BoutiqueProduct): Boutiq
     image,
     imageUrls: product.image_urls?.length ? product.image_urls : image ? [image] : [],
     family: fallback?.family || collectionLabelFallback(collection),
-    concentration: fallback?.concentration || "Eau de parfum",
+    concentration: fallback?.concentration || (["soie-sublime", "callisto"].includes(collection) ? "Extrait de parfum" : "Eau de parfum"),
     volume: fallback?.volume || "100 ml",
     description: product.description || fallback?.description || buildDescription(product.name, collection, product),
     slug: product.slug,

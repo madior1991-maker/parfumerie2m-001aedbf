@@ -235,7 +235,7 @@ function HeroVideos() {
           preload="auto"
           onEnded={() => setIndex((value) => (value + 1) % heroVideos.length)}
           aria-label={current.label}
-          className="fade-up aspect-[9/16] w-[min(66vw,300px)] rounded-[22px] object-cover shadow-[0_18px_44px_rgba(14,59,44,0.22)] ring-1 ring-[#D4B26A]/70 md:h-[min(74svh,720px)] md:w-auto"
+          className="fade-up aspect-[9/16] w-[min(66vw,300px)] rounded-[22px] object-cover shadow-[0_18px_44px_rgba(14,59,44,0.22)] ring-1 ring-[#D4B26A]/70 lg:h-[min(74svh,720px)] lg:w-auto"
         />
         <div className="flex gap-2" role="tablist" aria-label="Vidéos">
           {heroVideos.map((video, i) => (
@@ -270,13 +270,13 @@ function Index() {
 
   return (
     <SiteLayout>
-      <section className="relative overflow-hidden bg-background pt-16 md:min-h-[100svh] md:pt-20">
+      <section className="relative overflow-hidden bg-background pt-16 lg:min-h-[100svh] md:pt-20">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,oklch(0.36_0.096_160/0.08),transparent_36%),radial-gradient(circle_at_bottom_left,oklch(0.87_0.045_160/0.05),transparent_40%)]" />
-        <div className="relative z-10 grid items-stretch md:min-h-[calc(100svh-5rem)] md:grid-cols-[55fr_45fr]">
-          <div className="section-shell z-10 order-1 flex items-center py-6 md:w-auto md:py-10 md:pl-[max(2rem,calc((100vw-1180px)/2))] md:pr-10">
+        <div className="relative z-10 grid items-stretch lg:min-h-[calc(100svh-5rem)] lg:grid-cols-[minmax(0,55fr)_minmax(0,45fr)]">
+          <div className="section-shell z-10 order-1 flex items-center py-6 md:py-10 lg:w-auto lg:pl-[max(2rem,calc((100vw-1180px)/2))] lg:pr-10">
             <div className="max-w-2xl">
               <h1
-                className="fade-up font-display text-4xl font-semibold leading-[1.1] text-foreground md:text-5xl lg:text-6xl"
+                className="fade-up font-display text-4xl font-semibold leading-[1.1] text-foreground md:text-5xl xl:text-6xl"
                 style={{ animationDelay: "120ms" }}
               >
                 Ton parfum dès 4 000 F, livré partout au Sénégal
@@ -304,7 +304,7 @@ function Index() {
                 ))}
               </div>
               <div
-                className="fade-up mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"
+                className="fade-up mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center"
                 style={{ animationDelay: "360ms" }}
               >
                 <Button asChild variant="whatsapp" size="lg" className="sm:whitespace-nowrap">

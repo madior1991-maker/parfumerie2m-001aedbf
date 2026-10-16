@@ -282,7 +282,7 @@ function ProductTemplate({ product, products }: { product: BoutiqueProduct; prod
                 {product.inspiration ? ` · ${product.inspiration}` : ""}
               </p>
             )}
-            <p className="mt-6 font-body text-[32px] font-bold text-accent">
+            <p className="mt-6 flex flex-wrap items-baseline gap-y-1 font-body text-[28px] font-bold text-accent sm:text-[32px]">
               <PriceTag product={product} />
             </p>
             <p className="mt-2 text-[13px] text-whatsapp">
@@ -338,15 +338,15 @@ function ProductTemplate({ product, products }: { product: BoutiqueProduct; prod
               ))}
             </div>
 
-            <div className="mt-8 grid grid-cols-1 gap-3 min-[380px]:grid-cols-3">
+            <div className="mt-8 grid grid-cols-1 gap-2 lg:grid-cols-3 lg:gap-3">
               {[
                 ["Contenance", product.volume],
                 ["Concentration", product.concentration],
                 ["Famille", product.family],
               ].map(([title, value]) => (
-                <div key={title} className="min-w-0 rounded-md bg-surface px-2 py-4 text-center">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground sm:text-[11px]">{title}</p>
-                  <p className="mt-2 text-sm text-foreground">{value}</p>
+                <div key={title} className="flex min-w-0 items-center justify-between gap-3 rounded-md bg-surface px-4 py-3 lg:block lg:px-2 lg:py-4 lg:text-center">
+                  <p className="shrink-0 text-[10px] font-semibold uppercase tracking-[0.1em] text-muted-foreground sm:text-[11px]">{title}</p>
+                  <p className="min-w-0 text-right text-sm text-foreground lg:mt-2 lg:text-center">{value}</p>
                 </div>
               ))}
             </div>
