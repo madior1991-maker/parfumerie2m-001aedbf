@@ -270,7 +270,7 @@ function CoffretSignaturePage() {
           </div>
 
           <StepTitle number={1}>Choisis ton pack</StepTitle>
-          <div className="grid grid-cols-3 gap-2 md:max-w-3xl md:gap-4">
+          <div className="grid grid-cols-3 gap-2 md:max-w-4xl md:gap-4">
             {collectionOrder.map((collection) => {
               const item = coffretOffers[collection];
               const active = collection === selectedCollection;
@@ -282,7 +282,7 @@ function CoffretSignaturePage() {
                   onClick={() => choosePack(collection)}
                   aria-pressed={active}
                   className={cn(
-                    "relative rounded-xl border-[1.5px] bg-card p-1.5 pb-2 text-center transition-all md:p-2.5",
+                    "relative rounded-xl border-[1.5px] bg-card p-1.5 pb-2 text-center transition-all md:flex md:items-center md:gap-4 md:p-3 md:text-left",
                     active
                       ? "border-accent bg-surface-alt ring-1 ring-accent"
                       : "border-border hover:border-accent",
@@ -293,13 +293,15 @@ function CoffretSignaturePage() {
                     alt=""
                     width={400}
                     height={400}
-                    className="aspect-square w-full rounded-lg object-cover"
+                    className="aspect-square w-full rounded-lg object-cover md:size-24 md:w-24 md:shrink-0"
                   />
-                  <span className="mt-1.5 block text-[15px] font-bold leading-tight text-foreground md:text-lg">
-                    {item.short}
-                  </span>
-                  <span className="block text-[13px] font-medium text-foreground/80 md:text-[15px]">
-                    {item.requiredCount} pour {formatShortPrice(item.price)}
+                  <span className="block min-w-0">
+                    <span className="mt-1.5 block text-[15px] font-bold leading-tight text-foreground md:mt-0 md:text-lg">
+                      {item.short}
+                    </span>
+                    <span className="block text-[13px] font-medium text-foreground/80 md:mt-1 md:text-[15px]">
+                      {item.requiredCount} pour {formatShortPrice(item.price)}
+                    </span>
                   </span>
                   {count > 0 && (
                     <span className="absolute right-2.5 top-2.5 rounded-full bg-accent px-2 py-0.5 text-[11px] font-bold text-primary-foreground">
@@ -415,9 +417,9 @@ function CoffretSignaturePage() {
         <TutoVideoSection />
       </div>
 
-      <div className="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-primary pb-[max(12px,env(safe-area-inset-bottom))] pt-2.5 text-primary-foreground shadow-[0_-10px_30px_rgba(0,0,0,0.18)]">
-        <div className="section-shell">
-          <div className="mb-2 flex min-h-[26px] flex-wrap gap-1.5">
+      <div className="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-primary pb-[max(12px,env(safe-area-inset-bottom))] pt-2.5 text-primary-foreground md:py-3 shadow-[0_-10px_30px_rgba(0,0,0,0.18)]">
+        <div className="section-shell md:flex md:items-center md:gap-6">
+          <div className="mb-2 flex min-h-[26px] flex-wrap gap-1.5 md:order-2 md:mb-0 md:flex-1 md:justify-center">
             {selectedOptions.map((option) => (
               <span
                 key={option.id}
@@ -443,8 +445,8 @@ function CoffretSignaturePage() {
               </span>
             ))}
           </div>
-          <div className="flex items-center justify-between gap-3">
-            <div className="min-w-0">
+          <div className="flex items-center justify-between gap-3 md:contents">
+            <div className="min-w-0 md:order-1 md:shrink-0">
               <p className="text-sm text-white/85">
                 {selectedOptions.length}/{offer.requiredCount} choisis · {offer.label}
               </p>
@@ -455,12 +457,12 @@ function CoffretSignaturePage() {
                 href={whatsappUrl(buildWhatsAppMessage(selectedCollection, selectedOptions))}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex shrink-0 items-center gap-2 rounded-full bg-whatsapp px-5 py-3 text-sm font-bold text-white shadow-card"
+                className="inline-flex shrink-0 items-center gap-2 rounded-full bg-whatsapp px-5 py-3 text-sm font-bold text-white shadow-card md:order-3"
               >
                 <WhatsAppLogo tone="light" className="size-5" /> Valider sur WhatsApp
               </a>
             ) : (
-              <span className="shrink-0 rounded-full bg-white/15 px-5 py-3 text-sm font-semibold text-white/80">
+              <span className="shrink-0 rounded-full bg-white/15 px-5 py-3 text-sm font-semibold text-white/80 md:order-3">
                 Choisis encore {remaining}
               </span>
             )}
