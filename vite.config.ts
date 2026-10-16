@@ -5,12 +5,13 @@ import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
-  plugins: [TanStackRouterVite({ target: "react", autoCodeSplitting: false }), react(), tailwindcss(), tsconfigPaths()],
+  plugins: [TanStackRouterVite({ target: "react", autoCodeSplitting: true }), react(), tailwindcss(), tsconfigPaths()],
   build: {
     rollupOptions: {
       output: {
         manualChunks(id) {
-          if (id.includes('node_modules')) {
+          // Base commune à toutes les pages ; le reste est chargé page par page.
+          if (/node_modules[\\/](react|react-dom|scheduler|@tanstack|@supabase)[\\/]/.test(id)) {
             return 'vendor';
           }
           if (id.includes('components/commerce/PageBlocks') || id.includes('components\\commerce\\PageBlocks')) {
