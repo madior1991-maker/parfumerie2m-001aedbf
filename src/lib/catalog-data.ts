@@ -736,12 +736,23 @@ export function optimizedProductImageBase(image: string) {
   return fileName.replace(/-w\d+\.[a-zA-Z]+$/, "");
 }
 
+// Photos envoyées depuis l'admin : compressées et redimensionnées par Vercel (WebP/AVIF).
+const REMOTE_IMAGE_PREFIX = "https://urquhrasvuexivrkevad.supabase.co/storage/v1/object/public/";
+const isRemoteProductImage = (image: string) => image.startsWith(REMOTE_IMAGE_PREFIX);
+const remoteImageUrl = (image: string, width: number) =>
+  `/_vercel/image?url=${encodeURIComponent(image)}&w=${width}&q=75`;
+
 export function optimizedProductImageUrl(image: string, width = 800) {
+  if (isRemoteProductImage(image)) return remoteImageUrl(image, width);
   const base = optimizedProductImageBase(image);
   return base ? `/images/optimized/${base}-w${width}.webp` : image;
 }
 
 export function optimizedProductImageSet(image: string) {
+  if (isRemoteProductImage(image)) {
+    const set = [1200, 800, 400].map((w) => `${remoteImageUrl(image, w)} ${w}w`).join(", ");
+    return { avif: "", webp: set };
+  }
   const base = optimizedProductImageBase(image);
   if (!base) return { avif: "", webp: "" };
   return {

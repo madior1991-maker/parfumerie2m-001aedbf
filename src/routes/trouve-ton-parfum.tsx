@@ -9,6 +9,7 @@ import { WhatsAppLogo } from "@/components/commerce/WhatsAppLogo";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { track } from "@/lib/analytics";
+import { optimizedProductImageUrl } from "@/lib/catalog-data";
 import {
   catalog,
   collectionLabel,
@@ -236,7 +237,7 @@ function PickCard({ product }: { product: BoutiqueProduct }) {
           {label}
         </span>
         <img
-          src={product.image}
+          src={optimizedProductImageUrl(product.image, 800)}
           alt={`${product.name} chez 2M Parfumerie`}
           className="h-full w-full object-contain p-2 sm:p-4"
           loading="lazy"
