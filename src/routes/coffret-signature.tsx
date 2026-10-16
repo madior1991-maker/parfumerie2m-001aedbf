@@ -248,14 +248,14 @@ function CoffretSignaturePage() {
         <div className="section-shell">
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
-              <p className="caption-luxe text-accent">3 parfums Haqqi ou SCENTLAB · 5 parfums de poche</p>
+              <p className="text-[15px] font-semibold text-accent md:text-base">3 parfums Haqqi ou SCENTLAB · 5 parfums de poche</p>
               <h1 className="mt-2 font-display text-[34px] font-semibold leading-[1.05] text-foreground md:text-5xl">
                 Compose ton pack
               </h1>
             </div>
             <a
               href="#tuto"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-accent hover:underline"
+              className="inline-flex items-center gap-2 text-[15px] font-semibold text-accent hover:underline"
             >
               <span className="grid size-7 place-items-center rounded-full border-[1.5px] border-accent">
                 <Play className="size-3 fill-current" aria-hidden="true" />
@@ -290,10 +290,10 @@ function CoffretSignaturePage() {
                     height={400}
                     className="aspect-square w-full rounded-lg object-cover"
                   />
-                  <span className="mt-1.5 block text-[13px] font-semibold leading-tight text-foreground md:text-base">
+                  <span className="mt-1.5 block text-[15px] font-bold leading-tight text-foreground md:text-lg">
                     {item.short}
                   </span>
-                  <span className="block text-[11px] text-muted-foreground md:text-sm">
+                  <span className="block text-[13px] font-medium text-foreground/80 md:text-[15px]">
                     {item.requiredCount} pour {formatShortPrice(item.price)}
                   </span>
                   {count > 0 && (
@@ -327,7 +327,7 @@ function CoffretSignaturePage() {
                     onClick={() => setGender(tab)}
                     aria-pressed={gender === tab}
                     className={cn(
-                      "rounded-full py-2 text-xs font-semibold transition-colors md:text-sm",
+                      "rounded-full py-2.5 text-sm font-semibold transition-colors md:text-base",
                       gender === tab ? "bg-accent text-primary-foreground" : "text-muted-foreground hover:text-foreground",
                     )}
                   >
@@ -378,7 +378,7 @@ function CoffretSignaturePage() {
                   <span
                     className={cn(
                       "line-clamp-2 block font-semibold leading-tight text-[#1F1A15]",
-                      showPhotos ? "mt-1 min-h-[2.5em] text-[11.5px] md:text-[13px]" : "px-2 py-2.5 pr-7 text-left text-[13px] md:text-sm",
+                      showPhotos ? "mt-1 min-h-[2.5em] text-[13px] md:text-[15px]" : "px-2 py-2.5 pr-7 text-left text-[15px] md:text-base",
                     )}
                   >
                     {option.title}
@@ -397,7 +397,7 @@ function CoffretSignaturePage() {
               Aucun parfum trouvé. Essaie un autre nom.
             </p>
           )}
-          <p className="mt-4 text-sm text-muted-foreground">
+          <p className="mt-4 text-[15px] text-foreground/80">
             Si un parfum n’est plus disponible, on te propose un remplacement proche avant de préparer ton pack.
           </p>
         </div>
@@ -413,7 +413,7 @@ function CoffretSignaturePage() {
             {selectedOptions.map((option) => (
               <span
                 key={option.id}
-                className="inline-flex items-center gap-1.5 rounded-full bg-white/15 py-1 pl-3 pr-1.5 text-xs"
+                className="inline-flex items-center gap-1.5 rounded-full bg-white/15 py-1 pl-3 pr-1.5 text-[13px]"
               >
                 {option.title}
                 <button
@@ -429,7 +429,7 @@ function CoffretSignaturePage() {
             {Array.from({ length: Math.max(0, remaining) }).map((_, index) => (
               <span
                 key={index}
-                className="rounded-full border border-dashed border-white/35 px-3 py-1 text-xs text-white/60"
+                className="rounded-full border border-dashed border-white/40 px-3 py-1 text-[13px] text-white/70"
               >
                 à choisir
               </span>
@@ -437,7 +437,7 @@ function CoffretSignaturePage() {
           </div>
           <div className="flex items-center justify-between gap-3">
             <div className="min-w-0">
-              <p className="text-xs text-white/75">
+              <p className="text-sm text-white/85">
                 {selectedOptions.length}/{offer.requiredCount} choisis · {offer.label}
               </p>
               <p className="font-display text-xl font-semibold leading-tight md:text-2xl">{formatShortPrice(offer.price)}</p>
@@ -465,8 +465,8 @@ function CoffretSignaturePage() {
 
 function StepTitle({ number, children }: { number: number; children: React.ReactNode }) {
   return (
-    <h2 className="mb-3 mt-7 flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.16em] text-accent md:mt-9 md:text-sm">
-      <span className="grid size-6 place-items-center rounded-full bg-primary text-[12px] tracking-normal text-primary-foreground">
+    <h2 className="mb-3 mt-8 flex items-center gap-3 font-body text-[19px] font-bold leading-tight text-foreground md:mt-10 md:text-2xl">
+      <span className="grid size-8 shrink-0 place-items-center rounded-full bg-primary text-base font-bold text-primary-foreground md:size-9 md:text-lg">
         {number}
       </span>
       {children}
