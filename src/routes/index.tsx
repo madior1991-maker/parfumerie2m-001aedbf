@@ -216,14 +216,6 @@ function HeroVideos() {
   const current = heroVideos[index];
   return (
     <>
-      {/* Fond : l’image de la vidéo, floutée, pour habiller le cadre sans rien couper. */}
-      <img
-        src={current.poster}
-        alt=""
-        aria-hidden="true"
-        className="absolute inset-0 h-full w-full scale-110 object-cover opacity-40 blur-2xl transition-opacity duration-700"
-      />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,transparent_0%,rgba(14,59,44,0.55)_70%)]" />
       <div className="relative flex flex-col items-center gap-4">
         {/* La vidéo verticale, affichée en entier comme une story. */}
         <video
@@ -236,7 +228,7 @@ function HeroVideos() {
           preload="auto"
           onEnded={() => setIndex((value) => (value + 1) % heroVideos.length)}
           aria-label={current.label}
-          className="fade-up aspect-[9/16] w-[min(66vw,300px)] rounded-[22px] object-cover shadow-[0_24px_60px_rgba(0,0,0,0.45)] ring-1 ring-[#D4B26A]/60 md:h-[min(74svh,720px)] md:w-auto"
+          className="fade-up aspect-[9/16] w-[min(66vw,300px)] rounded-[22px] object-cover shadow-[0_18px_44px_rgba(14,59,44,0.22)] ring-1 ring-[#D4B26A]/70 md:h-[min(74svh,720px)] md:w-auto"
         />
         <div className="flex gap-2" role="tablist" aria-label="Vidéos">
           {heroVideos.map((video, i) => (
@@ -247,7 +239,7 @@ function HeroVideos() {
               aria-selected={i === index}
               aria-label={video.label}
               onClick={() => setIndex(i)}
-              className={`h-2 rounded-full transition-all ${i === index ? "w-8 bg-[#D4B26A]" : "w-2 bg-[#F4EEE2]/50 hover:bg-[#F4EEE2]/80"}`}
+              className={`h-2 rounded-full transition-all ${i === index ? "w-8 bg-accent" : "w-2 bg-foreground/25 hover:bg-foreground/45"}`}
             />
           ))}
         </div>
@@ -333,7 +325,7 @@ function Index() {
               </div>
             </div>
           </div>
-            <div className="relative order-2 flex items-center justify-center overflow-hidden bg-[#0E3B2C] px-6 py-8 md:py-10">
+            <div className="relative order-2 flex items-center justify-center overflow-hidden px-6 py-8 md:py-10">
               <HeroVideos />
             </div>
         </div>
