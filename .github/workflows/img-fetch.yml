@@ -1,0 +1,25 @@
+name: img-fetch
+on:
+  push:
+    branches: [img-fetch]
+    paths: [imgfetch/urls.txt]
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: img-fetch }
+      - run: |
+          mkdir -p imgfetch/files
+          i=0
+          while read -r u; do
+            [ -z "$u" ] && continue
+            n=$(basename "${u%%\?*}")
+            curl -sSfL --retry 3 -o "imgfetch/files/$n" "$u" || echo "FAIL $u" >> imgfetch/failed.txt
+          done < imgfetch/urls.txt
+          ls imgfetch/files | wc -l
+      - run: |
+          git config user.name "img-fetch"; git config user.email "noreply@github.com"
+          git add imgfetch && git commit -m "photos récupérées [skip ci]" && git push
