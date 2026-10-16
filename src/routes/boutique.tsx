@@ -463,21 +463,6 @@ function CatalogCard({ product, index }: { product: BoutiqueProduct; index: numb
       style={{ animationDelay: `${index * 80}ms` }}
     >
       <div className="image-zoom relative aspect-square overflow-hidden bg-white">
-        <div className="absolute left-2 right-2 top-2 z-10 flex flex-col items-start gap-1 sm:left-3 sm:top-3">
-          <span className="max-w-full truncate rounded-full bg-surface px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
-            {label}
-          </span>
-          {isNewProduct(product) && (
-            <span className="rounded-full bg-accent px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-primary-foreground">
-              Nouveau
-            </span>
-          )}
-        </div>
-        {product.placeholder && (
-          <span className="absolute right-3 top-3 z-10 rounded-full bg-accent-muted px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-accent">
-            À renseigner
-          </span>
-        )}
         <Link
           to="/boutique/$productSlug"
           params={{ productSlug: slugifyProduct(product) }}
@@ -494,6 +479,21 @@ function CatalogCard({ product, index }: { product: BoutiqueProduct; index: numb
         </Link>
       </div>
       <div className="flex flex-1 flex-col p-3 sm:p-4">
+        <div className="mb-1.5 flex flex-wrap items-center gap-x-2 gap-y-1">
+          <span className="min-w-0 truncate text-[10px] font-semibold uppercase tracking-[0.1em] text-accent">
+            {label}
+          </span>
+          {isNewProduct(product) && (
+            <span className="rounded-full bg-accent px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.1em] text-primary-foreground">
+              Nouveau
+            </span>
+          )}
+          {product.placeholder && (
+            <span className="rounded-full bg-accent-muted px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.1em] text-accent">
+              À renseigner
+            </span>
+          )}
+        </div>
         {product.collection !== "dubai" && product.collection !== "authentic" && product.ref && (
           <p className="mb-1 hidden truncate text-[10px] uppercase tracking-[0.1em] text-muted-foreground sm:block">
             {product.ref}

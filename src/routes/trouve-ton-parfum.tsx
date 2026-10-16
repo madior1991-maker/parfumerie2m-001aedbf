@@ -233,9 +233,6 @@ function PickCard({ product }: { product: BoutiqueProduct }) {
         className="relative block aspect-square w-32 shrink-0 bg-surface sm:w-auto"
         aria-label={`Voir ${product.name}`}
       >
-        <span className="absolute left-3 top-3 z-10 hidden rounded-full bg-surface px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground sm:inline">
-          {label}
-        </span>
         <img
           src={optimizedProductImageUrl(product.image, 800)}
           alt={`${product.name} chez 2M Parfumerie`}
@@ -244,7 +241,7 @@ function PickCard({ product }: { product: BoutiqueProduct }) {
         />
       </Link>
       <div className="flex min-w-0 flex-1 flex-col p-4">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground sm:hidden">{label}</p>
+        <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">{label}</p>
         <Link
           to="/boutique/$productSlug"
           params={{ productSlug: slug }}
