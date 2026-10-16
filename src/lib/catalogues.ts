@@ -19,7 +19,7 @@ export const fullCatalogue = {
   title: "Le catalogue complet",
   summary: "Toutes nos collections réunies dans un seul fichier, avec les prix et les senteurs.",
   pages: 40,
-  size: "9,5 Mo",
+  size: "12 Mo",
 };
 
 export const catalogues: CatalogueEntry[] = [
