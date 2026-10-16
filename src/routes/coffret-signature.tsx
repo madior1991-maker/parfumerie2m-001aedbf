@@ -434,13 +434,14 @@ function CoffretSignaturePage() {
                 </button>
               </span>
             ))}
-            {remaining > 0 && (
-              <span className="rounded-full border border-dashed border-white/40 px-3 py-1 text-[13px] text-white/70">
-                {selectedOptions.length === 0
-                  ? `Touche ${offer.requiredCount} parfums pour les ajouter`
-                  : `+ ${remaining} à choisir`}
+            {Array.from({ length: Math.max(0, remaining) }).map((_, index) => (
+              <span
+                key={index}
+                className="rounded-full border border-dashed border-white/40 px-3 py-1 text-[13px] text-white/70"
+              >
+                à choisir
               </span>
-            )}
+            ))}
           </div>
           <div className="flex items-center justify-between gap-3">
             <div className="min-w-0">
