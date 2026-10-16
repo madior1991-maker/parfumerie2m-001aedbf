@@ -1,5 +1,6 @@
 import { Link, Outlet, createFileRoute, useLocation } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
+import { ChevronDown, LayoutGrid, Check, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { AddToCartButton } from "@/components/commerce/AddToCartButton";
@@ -132,6 +133,12 @@ function BoutiquePage() {
   // Catégories connues + catégories créées dans l'admin.
   const filters = useMemo(() => collectionFiltersFor(products), [products]);
 
+  const collectionCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const product of products) counts.set(product.collection, (counts.get(product.collection) ?? 0) + 1);
+    return counts;
+  }, [products]);
+
   const isPocketShowcase = collection === "pocket";
 
   if (location.pathname !== "/boutique") {
@@ -164,8 +171,14 @@ function BoutiquePage() {
               className="w-full rounded-full border border-border bg-surface px-5 py-3 text-sm text-foreground shadow-card placeholder:text-muted-foreground focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
             />
           </div>
-          <p className="caption-luxe mb-3 text-center text-accent">Catégories</p>
-          <div className="-mx-3 flex snap-x gap-2 overflow-x-auto px-3 pb-2 [scrollbar-width:none] md:mx-0 md:flex-wrap md:justify-center md:gap-3 md:overflow-visible md:px-0">
+          <p className="caption-luxe mb-3 hidden text-center text-accent md:block">Catégories</p>
+          <CategoryPicker
+            filters={filters}
+            active={collection}
+            counts={collectionCounts}
+            total={products.length}
+          />
+          <div className="hidden md:flex md:flex-wrap md:justify-center md:gap-3">
             {filters.map((filter) => (
               <FilterLink
                 key={filter.value}
@@ -273,7 +286,7 @@ function BoutiquePage() {
                 size="lg"
                 className="h-auto max-w-full whitespace-normal break-words bg-accent px-6 py-3 text-center text-primary-foreground shadow-elegant ring-2 ring-accent/40 ring-offset-2 ring-offset-surface-alt animate-pulse hover:bg-accent/90"
               >
-                <Link to="/coffret-signature">Pack Haqqi (3 parfums) — 10 000 FCFA</Link>
+                <Link to="/coffret-signature" search={{ pack: "haqqi" }}>Pack Haqqi (3 parfums) — 10 000 FCFA</Link>
               </Button>
             )}
             {collection === "scentlab" && (
@@ -282,7 +295,7 @@ function BoutiquePage() {
                 size="lg"
                 className="h-auto max-w-full whitespace-normal break-words bg-accent px-6 py-3 text-center text-primary-foreground shadow-elegant ring-2 ring-accent/40 ring-offset-2 ring-offset-surface-alt animate-pulse hover:bg-accent/90"
               >
-                <Link to="/coffret-signature">Pack SCENTLAB (3 parfums) — 15 000 FCFA</Link>
+                <Link to="/coffret-signature" search={{ pack: "scentlab" }}>Pack SCENTLAB (3 parfums) — 15 000 FCFA</Link>
               </Button>
             )}
           </div>
@@ -290,6 +303,145 @@ function BoutiquePage() {
       </section>
       )}
     </SiteLayout>
+  );
+}
+
+// Prix affichés à côté de chaque catégorie, dans la liste mobile.
+const categoryPriceHint: Record<string, string> = {
+  haqqi: "Dès 4 000 F",
+  scentlab: "6 000 F",
+  takeoff: "25 000 F",
+  pocket: "5 pour 10 000 F",
+  dubai: "Dès 12 000 F",
+  authentic: "Originaux",
+  callisto: "75 000 F",
+  privees: "Dès 25 000 F",
+  coffrets: "90 000 F",
+  library: "30 000 F",
+};
+
+const categoryImages = new Set(Object.keys(categoryPriceHint));
+
+// Sur téléphone : un bouton « Catégorie » qui ouvre la liste complète depuis le bas de l'écran.
+function CategoryPicker({
+  filters,
+  active,
+  counts,
+  total,
+}: {
+  filters: { label: string; value: Collection }[];
+  active: Collection;
+  counts: Map<string, number>;
+  total: number;
+}) {
+  const [open, setOpen] = useState(false);
+  const current = filters.find((filter) => filter.value === active);
+  const currentCount = active === "all" ? total : (counts.get(active) ?? 0);
+
+  useEffect(() => {
+    if (!open) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (event: KeyboardEvent) => event.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = previous;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  useEffect(() => setOpen(false), [active]);
+
+  return (
+    <div className="md:hidden">
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        aria-haspopup="dialog"
+        aria-expanded={open}
+        className="flex w-full items-center justify-between gap-3 rounded-xl border-[1.5px] border-accent bg-card px-3 py-2.5 text-left"
+      >
+        <span className="flex min-w-0 items-center gap-3">
+          <CategoryThumb value={active} />
+          <span className="min-w-0">
+            <span className="block text-[10px] font-bold uppercase tracking-[0.16em] text-accent">Catégorie</span>
+            <span className="block truncate text-[15px] font-semibold text-foreground">
+              {active === "all" ? "Toutes les collections" : (current?.label ?? "Catégorie")}
+              {total > 0 && <span className="font-normal text-muted-foreground"> · {currentCount} parfums</span>}
+            </span>
+          </span>
+        </span>
+        <ChevronDown className="size-5 shrink-0 text-accent" aria-hidden="true" />
+      </button>
+
+      <div
+        className={`fixed inset-0 z-[70] bg-black/40 transition-opacity duration-300 ${open ? "opacity-100" : "pointer-events-none opacity-0"}`}
+        onClick={() => setOpen(false)}
+        aria-hidden="true"
+      />
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Choisir une catégorie"
+        className={`fixed inset-x-0 bottom-0 z-[71] max-h-[85dvh] overflow-y-auto rounded-t-2xl bg-card px-4 pb-[max(16px,env(safe-area-inset-bottom))] pt-2 shadow-[0_-12px_40px_rgba(0,0,0,0.25)] transition-transform duration-300 ease-out ${open ? "translate-y-0" : "pointer-events-none translate-y-full"}`}
+      >
+        <div className="mx-auto mb-2 h-1 w-10 rounded-full bg-border" />
+        <div className="mb-1 flex items-center justify-between">
+          <p className="caption-luxe text-accent">Choisis une catégorie</p>
+          <button type="button" onClick={() => setOpen(false)} aria-label="Fermer" className="grid size-9 place-items-center rounded-full text-muted-foreground hover:bg-surface">
+            <X className="size-5" aria-hidden="true" />
+          </button>
+        </div>
+        <ul>
+          {filters.map((filter) => {
+            const selected = filter.value === active;
+            const count = filter.value === "all" ? total : (counts.get(filter.value) ?? 0);
+            return (
+              <li key={filter.value} className="border-b border-border/70 last:border-0">
+                <Link
+                  to="/boutique"
+                  search={{ collection: filter.value }}
+                  onClick={() => setOpen(false)}
+                  className="flex items-center gap-3 py-2.5"
+                >
+                  <CategoryThumb value={filter.value} />
+                  <span className="min-w-0 flex-1">
+                    <span className={`block text-[15px] font-semibold ${selected ? "text-accent" : "text-foreground"}`}>
+                      {filter.value === "all" ? "Toutes les collections" : filter.label}
+                    </span>
+                    {total > 0 && <span className="block text-xs text-muted-foreground">{count} parfums</span>}
+                  </span>
+                  {categoryPriceHint[filter.value] && (
+                    <span className="shrink-0 text-xs font-bold text-accent">{categoryPriceHint[filter.value]}</span>
+                  )}
+                  {selected && <Check className="size-5 shrink-0 text-accent" aria-hidden="true" />}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+function CategoryThumb({ value }: { value: Collection }) {
+  if (categoryImages.has(value)) {
+    return (
+      <img
+        src={`/images/categories/${value}.webp`}
+        alt=""
+        width={44}
+        height={44}
+        loading="lazy"
+        className="size-11 shrink-0 rounded-lg object-cover"
+      />
+    );
+  }
+  return (
+    <span className="grid size-11 shrink-0 place-items-center rounded-lg bg-primary text-primary-foreground">
+      <LayoutGrid className="size-5" aria-hidden="true" />
+    </span>
   );
 }
 

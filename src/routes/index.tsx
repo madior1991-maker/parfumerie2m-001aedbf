@@ -85,13 +85,14 @@ const homeCollections = [
 ] as const;
 
 const featuredPackCards = [
-  { title: "Pack Haqqi", subtitle: "3 parfums", price: "10 000 FCFA", imageBase: "haqqi-collection" },
-  { title: "Pack SCENTLAB", subtitle: "3 parfums", price: "15 000 FCFA", imageBase: "scentlab-boxes" },
+  { title: "Pack Haqqi", subtitle: "3 parfums", price: "10 000 FCFA", imageBase: "haqqi-collection", pack: "haqqi" as const },
+  { title: "Pack SCENTLAB", subtitle: "3 parfums", price: "15 000 FCFA", imageBase: "scentlab-boxes", pack: "scentlab" as const },
   {
     title: "Parfums de poche",
     subtitle: "5 parfums",
     price: "10 000 FCFA",
     imageBase: "pocket-perfumes-homme",
+    pack: "pocket" as const,
   },
 ] as const;
 
@@ -502,7 +503,7 @@ function Index() {
                       size="lg"
                       className="h-auto w-full justify-center rounded-full bg-accent px-5 py-3 text-primary-foreground shadow-elegant ring-2 ring-accent/40 ring-offset-2 ring-offset-surface-alt hover:bg-accent/90"
                     >
-                      <Link to="/coffret-signature">Choisir ce pack</Link>
+                      <Link to="/coffret-signature" search={{ pack: pack.pack }}>Choisir ce pack</Link>
                     </Button>
                   </div>
                 </div>

@@ -387,7 +387,7 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
       </main>
       <SiteFooter />
       {/* Sur les fiches produits, le grand bouton WhatsApp suffit : la bulle le cachait sur mobile. */}
-      {!open && !cartOpen && !location.pathname.startsWith("/boutique/") && <FloatingWhatsApp />}
+      {!open && !cartOpen && !location.pathname.startsWith("/boutique/") && location.pathname !== "/coffret-signature" && <FloatingWhatsApp />}
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
     </div>
   );

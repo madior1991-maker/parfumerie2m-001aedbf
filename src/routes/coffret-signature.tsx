@@ -1,65 +1,38 @@
-import { Link, createFileRoute } from "@tanstack/react-router";
-import { ArrowDown, Check, Sparkles, WandSparkles } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { createFileRoute } from "@tanstack/react-router";
+import { Play, X } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 
-import haqqiCollectionImage from "@/assets/haqqi-collection.webp";
-import scentlabBoxesImage from "@/assets/scentlab-boxes.webp";
-import pocketPerfumesHommeImage from "@/assets/pocket-perfumes-homme.webp";
-
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
 import { SiteLayout } from "@/components/commerce/SiteLayout";
 import { WhatsAppLogo } from "@/components/commerce/WhatsAppLogo";
 import { TutoVideoSection } from "@/components/commerce/TutoVideoSection";
-import { catalog, formatPrice, slugifyProduct, type BoutiqueProduct } from "@/lib/catalog-data";
+import {
+  catalog,
+  formatPrice,
+  optimizedProductImageUrl,
+  slugifyProduct,
+  type BoutiqueProduct,
+} from "@/lib/catalog-data";
 import { mergeLiveCatalog } from "@/lib/live-catalog";
 import { supabase } from "@/integrations/supabase/client";
 import { whatsappUrl } from "@/lib/perfume-data";
+import { cn } from "@/lib/utils";
 
 type CoffretCollection = "haqqi" | "scentlab" | "pocket";
 
 type CoffretOption = {
   id: string;
   title: string;
-  description: string;
-};
-
-type CoffretSection = {
-  title: string;
-  items: CoffretOption[];
+  image: string;
+  gender: Gender | "Nouveautés";
 };
 
 const coffretOffers: Record<
   CoffretCollection,
-  { label: string; price: number; subtitle: string; requiredCount: number }
+  { label: string; short: string; price: number; requiredCount: number; imageBase: string }
 > = {
-  haqqi: {
-    label: "Compose ton pack Haqqi",
-    price: 10000,
-    subtitle: "3 parfums à composer dans un esprit plus profond, chaud et élégant.",
-    requiredCount: 3,
-  },
-  scentlab: {
-    label: "Compose ton pack SCENTLAB",
-    price: 15000,
-    subtitle: "3 parfums à composer dans une lecture plus moderne, fraîche ou gourmande.",
-    requiredCount: 3,
-  },
-  pocket: {
-    label: "Compose ton pack Parfums de poche",
-    price: 10000,
-    subtitle: "5 parfums à composer dans un format pratique et facile à emporter.",
-    requiredCount: 5,
-  },
+  haqqi: { label: "Pack Haqqi", short: "Haqqi", price: 10000, requiredCount: 3, imageBase: "haqqi-collection" },
+  scentlab: { label: "Pack SCENTLAB", short: "SCENTLAB", price: 15000, requiredCount: 3, imageBase: "scentlab-boxes" },
+  pocket: { label: "Pack Parfums de poche", short: "Poche", price: 10000, requiredCount: 5, imageBase: "pocket-perfumes-homme" },
 };
 
 type Gender = "Homme" | "Unisex" | "Femme";
@@ -132,15 +105,8 @@ const scentlabGender: Record<string, Gender> = {
 };
 
 // Choix proposés dans les packs mais sans fiche produit sur le site.
-const packOnlyOptions: Record<CoffretCollection, (CoffretOption & { gender: Gender })[]> = {
-  haqqi: [
-    {
-      id: "haqqi-femme-gucci-bloom",
-      title: "Gucci Bloom",
-      description: "",
-      gender: "Femme",
-    },
-  ],
+const packOnlyOptions: Record<CoffretCollection, CoffretOption[]> = {
+  haqqi: [{ id: "haqqi-femme-gucci-bloom", title: "Gucci Bloom", image: "", gender: "Femme" }],
   scentlab: [],
   pocket: [],
 };
@@ -155,80 +121,77 @@ function genderOf(product: BoutiqueProduct): Gender | "Nouveautés" {
   return "Nouveautés";
 }
 
-function optionDescription(product: BoutiqueProduct) {
-  if (product.collection === "pocket" || product.collection === "haqqi") return "";
-  if (product.collection === "scentlab" && product.ref) return `Inspiré de ${product.ref}.`;
-  return product.notes;
-}
-
 // Les listes des packs viennent du catalogue (et des modifications faites dans l'admin).
-function buildPackSections(
-  products: BoutiqueProduct[],
-): Record<CoffretCollection, CoffretSection[]> {
-  const result = {} as Record<CoffretCollection, CoffretSection[]>;
-  for (const collection of ["haqqi", "scentlab", "pocket"] as CoffretCollection[]) {
-    const groups = new Map<string, CoffretOption[]>();
+function buildPackOptions(products: BoutiqueProduct[]): Record<CoffretCollection, CoffretOption[]> {
+  const result = {} as Record<CoffretCollection, CoffretOption[]>;
+  for (const collection of collectionOrder) {
     const seen = new Set<string>();
-    const push = (group: string, option: CoffretOption) => {
+    const list: CoffretOption[] = [];
+    const push = (option: CoffretOption) => {
       const key = option.title.toLowerCase();
       if (seen.has(key)) return;
       seen.add(key);
-      groups.set(group, [...(groups.get(group) ?? []), option]);
+      list.push(option);
     };
     for (const product of products) {
       if (product.collection !== collection) continue;
-      push(genderOf(product), {
+      push({
         id: slugifyProduct(product),
         title: product.name,
-        description: optionDescription(product),
+        image: product.image,
+        gender: genderOf(product),
       });
     }
-    for (const extra of packOnlyOptions[collection]) {
-      push(extra.gender, { id: extra.id, title: extra.title, description: extra.description });
-    }
-    result[collection] = [...genderOrder, "Nouveautés"]
-      .filter((title) => groups.has(title))
-      .map((title) => ({
-        title,
-        items: [...(groups.get(title) ?? [])].sort((x, y) => x.title.localeCompare(y.title, "fr")),
-      }));
+    packOnlyOptions[collection].forEach(push);
+    result[collection] = list.sort((x, y) => x.title.localeCompare(y.title, "fr"));
   }
   return result;
 }
 
-const staticPackSections = buildPackSections(catalog);
-
-const collectionShortLabel: Record<CoffretCollection, string> = {
-  haqqi: "Haqqi",
-  scentlab: "SCENTLAB",
-  pocket: "Parfums de poche",
-};
-
 const collectionOrder: CoffretCollection[] = ["haqqi", "scentlab", "pocket"];
+const staticPackOptions = buildPackOptions(catalog);
+const genderTabs = ["Tous", "Homme", "Femme", "Unisex"] as const;
+type GenderTab = (typeof genderTabs)[number];
+
+function validatePackSearch(search: Record<string, unknown>): { pack?: CoffretCollection } {
+  const pack = typeof search.pack === "string" ? search.pack.toLowerCase() : "";
+  return collectionOrder.includes(pack as CoffretCollection) ? { pack: pack as CoffretCollection } : {};
+}
 
 export const Route = createFileRoute("/coffret-signature")({
+  validateSearch: validatePackSearch,
   head: () => ({
     meta: [
       { title: "Compose ton pack — 2M Parfumerie Sénégal" },
       {
         name: "description",
         content:
-          "Composez votre pack chez 2M Parfumerie : 3 parfums Haqqi à 10 000 FCFA, 3 parfums SCENTLAB à 15 000 FCFA ou 5 parfums de poche à 10 000 FCFA, à sélectionner vous-même.",
+          "Composez votre pack chez 2M Parfumerie : 3 parfums Haqqi à 10 000 FCFA, 3 parfums SCENTLAB à 15 000 FCFA ou 5 parfums de poche à 10 000 FCFA, à choisir en photos.",
       },
     ],
   }),
   component: CoffretSignaturePage,
 });
 
+function packImage(base: string, width: 400 | 800 = 400) {
+  return `/images/optimized/${base}-w${width}.webp`;
+}
+
 function CoffretSignaturePage() {
-  const [selectedCollection, setSelectedCollection] = useState<CoffretCollection>("haqqi");
+  const search = Route.useSearch();
+  const [selectedCollection, setSelectedCollection] = useState<CoffretCollection>(search.pack ?? "haqqi");
   const [selections, setSelections] = useState<Record<CoffretCollection, string[]>>({
     haqqi: [],
     scentlab: [],
     pocket: [],
   });
+  const [packOptions, setPackOptions] = useState(staticPackOptions);
+  const [query, setQuery] = useState("");
+  const [gender, setGender] = useState<GenderTab>("Tous");
 
-  const [packSections, setPackSections] = useState(staticPackSections);
+  useEffect(() => {
+    if (search.pack) setSelectedCollection(search.pack);
+  }, [search.pack]);
 
   useEffect(() => {
     void (async () => {
@@ -236,410 +199,275 @@ function CoffretSignaturePage() {
       if (!data?.length) return;
       // Les parfums de poche sont masqués un par un dans l'admin (vente en pack seulement) :
       // leur liste reste celle du catalogue.
-      const live = buildPackSections(mergeLiveCatalog(data));
-      setPackSections({ ...live, pocket: staticPackSections.pocket });
+      const live = buildPackOptions(mergeLiveCatalog(data));
+      setPackOptions({ ...live, pocket: staticPackOptions.pocket });
     })();
   }, []);
 
-  const currentOffer = coffretOffers[selectedCollection];
-  const currentSections = packSections[selectedCollection];
-  const currentOptions = useMemo(
-    () => currentSections.flatMap((section) => section.items),
-    [currentSections],
-  );
+  const offer = coffretOffers[selectedCollection];
+  const allOptions = packOptions[selectedCollection];
   const selectedIds = selections[selectedCollection];
-  const selectedOptions = useMemo(
-    () => currentOptions.filter((option) => selectedIds.includes(option.id)),
-    [currentOptions, selectedIds],
-  );
-  const remaining = currentOffer.requiredCount - selectedOptions.length;
-  const canSend = selectedOptions.length === currentOffer.requiredCount;
-  const whatsappMessage = buildWhatsAppMessage(selectedCollection, selectedOptions);
-  const validateRef = useRef<HTMLAnchorElement | null>(null);
+  const selectedOptions = selectedIds
+    .map((id) => allOptions.find((option) => option.id === id))
+    .filter((option): option is CoffretOption => Boolean(option));
+  const remaining = offer.requiredCount - selectedOptions.length;
+  const canSend = remaining === 0;
+  const showGender = selectedCollection !== "pocket";
 
-  useEffect(() => {
-    if (!canSend) return;
-    const timer = window.setTimeout(() => {
-      validateRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-    }, 150);
-    return () => window.clearTimeout(timer);
-  }, [canSend, selectedCollection]);
+  const visibleOptions = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    return allOptions.filter(
+      (option) =>
+        (!showGender || gender === "Tous" || option.gender === gender) &&
+        (!q || option.title.toLowerCase().includes(q)),
+    );
+  }, [allOptions, gender, query, showGender]);
+
+  const choosePack = (collection: CoffretCollection) => {
+    setSelectedCollection(collection);
+    setGender("Tous");
+    setQuery("");
+  };
 
   const toggleOption = (optionId: string) => {
     setSelections((current) => {
-      const activeSelections = current[selectedCollection];
-      const alreadySelected = activeSelections.includes(optionId);
-
-      if (alreadySelected) {
-        return {
-          ...current,
-          [selectedCollection]: activeSelections.filter((id) => id !== optionId),
-        };
+      const active = current[selectedCollection];
+      if (active.includes(optionId)) {
+        return { ...current, [selectedCollection]: active.filter((id) => id !== optionId) };
       }
-
-      if (activeSelections.length >= currentOffer.requiredCount) {
-        return current;
-      }
-
-      return {
-        ...current,
-        [selectedCollection]: [...activeSelections, optionId],
-      };
+      if (active.length >= offer.requiredCount) return current;
+      return { ...current, [selectedCollection]: [...active, optionId] };
     });
   };
 
   return (
     <SiteLayout>
-      <section className="relative overflow-hidden border-b border-border bg-background pt-24 md:pt-32">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(27,94,63,0.12),transparent_36%),radial-gradient(circle_at_left,rgba(27,94,63,0.08),transparent_30%)]" />
-        <div className="section-shell relative grid gap-6 py-8 md:grid-cols-[1.1fr_0.9fr] md:py-12">
-          <div>
-            <Badge variant="outline" className="border-accent/30 bg-accent-muted text-accent">
-              Compose ton pack
-            </Badge>
-            <h1 className="mt-3 max-w-2xl font-display text-[34px] font-semibold leading-[1.1] text-foreground md:text-5xl">
-              Compose ton coffret, coche le bon nombre de parfums, on s’occupe du reste.
-            </h1>
-            <p className="mt-3 max-w-xl text-base leading-7 text-muted-foreground md:text-lg">
-              Une expérience simple et plus personnelle qu’un achat classique: tu choisis ton
-              univers, tu coches tes parfums (3 ou 5 selon le pack), et ton coffret est préparé pour
-              être offert ou porté tout de suite.
-            </p>
-            <div className="mt-4 flex flex-wrap gap-3">
-              <Badge className="bg-accent text-primary-foreground">
-                3 parfums Haqqi / SCENTLAB, 5 parfums de poche
-              </Badge>
-              <Badge variant="secondary">Coffret prêt à offrir</Badge>
-              <Badge variant="secondary">Validation rapide sur WhatsApp</Badge>
+      <section className="bg-background pt-20 pb-40 md:pt-28 md:pb-44">
+        <div className="section-shell">
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <p className="caption-luxe text-accent">3 parfums Haqqi ou SCENTLAB · 5 parfums de poche</p>
+              <h1 className="mt-2 font-display text-[34px] font-semibold leading-[1.05] text-foreground md:text-5xl">
+                Compose ton pack
+              </h1>
             </div>
-            <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-              <Button asChild variant="whatsapp" size="lg">
-                <a href="#compose">Composer mon coffret</a>
-              </Button>
-              <Button asChild variant="outline" size="lg">
-                <Link to="/boutique" search={{ collection: "all" }}>
-                  Voir la boutique
-                </Link>
-              </Button>
-            </div>
-            <div className="mt-4 flex items-center gap-3 text-accent md:mt-5">
-              <ArrowDown className="size-5 animate-bounce" aria-hidden="true" />
-              <p className="text-sm font-medium uppercase tracking-[0.14em]">
-                Choisis ton pack juste en dessous
-              </p>
-            </div>
+            <a
+              href="#tuto"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-accent hover:underline"
+            >
+              <span className="grid size-7 place-items-center rounded-full border-[1.5px] border-accent">
+                <Play className="size-3 fill-current" aria-hidden="true" />
+              </span>
+              Voir comment ça marche
+            </a>
           </div>
 
-          <div className="grid gap-2 md:justify-items-end">
+          <StepTitle number={1}>Choisis ton pack</StepTitle>
+          <div className="grid grid-cols-3 gap-2 md:max-w-3xl md:gap-4">
             {collectionOrder.map((collection) => {
-              const offer = coffretOffers[collection];
-              const active = selectedCollection === collection;
-              const imageBase =
-                collection === "haqqi"
-                  ? "haqqi-collection"
-                  : collection === "scentlab"
-                    ? "scentlab-boxes"
-                    : "pocket-perfumes-homme";
-
+              const item = coffretOffers[collection];
+              const active = collection === selectedCollection;
+              const count = selections[collection].length;
               return (
                 <button
                   key={collection}
                   type="button"
-                  onClick={() => setSelectedCollection(collection)}
-                  className={
+                  onClick={() => choosePack(collection)}
+                  aria-pressed={active}
+                  className={cn(
+                    "relative rounded-xl border-[1.5px] bg-card p-1.5 pb-2 text-center transition-all md:p-2.5",
                     active
-                      ? "w-full rounded-xl border border-accent bg-accent-muted p-3 text-left shadow-card transition-all md:max-w-sm"
-                      : "w-full rounded-xl border border-border bg-card p-3 text-left shadow-card transition-all hover:-translate-y-1 hover:border-accent md:max-w-sm"
-                  }
+                      ? "border-accent bg-surface-alt ring-1 ring-accent"
+                      : "border-border hover:border-accent",
+                  )}
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="shrink-0 overflow-hidden rounded-lg border border-border bg-background/60">
-                      <picture>
-                        <source
-                          type="image/avif"
-                          srcSet={`/images/optimized/${imageBase}-w1200.avif 1200w, /images/optimized/${imageBase}-w800.avif 800w, /images/optimized/${imageBase}-w400.avif 400w`}
-                          sizes="(min-width: 768px) 80px, 64px"
-                        />
-                        <source
-                          type="image/webp"
-                          srcSet={`/images/optimized/${imageBase}-w1200.webp 1200w, /images/optimized/${imageBase}-w800.webp 800w, /images/optimized/${imageBase}-w400.webp 400w`}
-                          sizes="(min-width: 768px) 80px, 64px"
-                        />
-                        <img
-                          src={`/images/optimized/${imageBase}-w800.webp`}
-                          alt={offer.label}
-                          loading="lazy"
-                          width={80}
-                          height={80}
-                          className="object-cover transition-transform duration-300 group-hover:scale-105"
-                        />
-                      </picture>
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <h2 className="mt-1 font-display text-base text-foreground">{offer.label}</h2>
-                    </div>
-                    <Badge variant={active ? "default" : "secondary"}>
-                      {formatPrice(offer.price)}
-                    </Badge>
-                  </div>
-                  <p className="mt-2 text-sm leading-5 text-muted-foreground">{offer.subtitle}</p>
+                  <img
+                    src={packImage(item.imageBase)}
+                    alt=""
+                    width={400}
+                    height={400}
+                    className="aspect-square w-full rounded-lg object-cover"
+                  />
+                  <span className="mt-1.5 block text-[13px] font-semibold leading-tight text-foreground md:text-base">
+                    {item.short}
+                  </span>
+                  <span className="block text-[11px] text-muted-foreground md:text-sm">
+                    {item.requiredCount} pour {formatShortPrice(item.price)}
+                  </span>
+                  {count > 0 && (
+                    <span className="absolute right-2.5 top-2.5 rounded-full bg-accent px-2 py-0.5 text-[11px] font-bold text-primary-foreground">
+                      {count}/{item.requiredCount}
+                    </span>
+                  )}
                 </button>
               );
             })}
           </div>
-        </div>
-      </section>
 
-      <TutoVideoSection />
-
-      <section id="compose" className="bg-surface py-16 md:py-24">
-        <div className="section-shell grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-          <Card className="border-border bg-card shadow-card">
-            <CardHeader>
-              <CardTitle className="font-display text-2xl leading-tight text-foreground md:text-[32px]">
-                Choisis ton univers, puis coche le bon nombre de parfums
-              </CardTitle>
-              <CardDescription className="mt-2 text-base text-muted-foreground">
-                Tu peux garder tes sélections Haqqi, SCENTLAB et Parfums de poche séparément. Une
-                fois que tu as le bon nombre de choix dans l’univers actif, tu peux valider
-                directement sur WhatsApp.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-5">
-              <div className="grid gap-3 sm:grid-cols-2">
-                {collectionOrder.map((collection) => {
-                  const offer = coffretOffers[collection];
-                  const count = selections[collection].length;
-                  const active = selectedCollection === collection;
-
-                  return (
-                    <button
-                      key={collection}
-                      type="button"
-                      onClick={() => setSelectedCollection(collection)}
-                      className={
-                        active
-                          ? "rounded-xl border border-accent bg-accent-muted px-4 py-4 text-left transition-all"
-                          : "rounded-xl border border-border bg-background px-4 py-4 text-left transition-all hover:border-accent"
-                      }
-                    >
-                      <div className="flex items-center justify-between gap-3">
-                        <div>
-                          <p className="text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
-                            {offer.label}
-                          </p>
-                          <p className="mt-1 font-semibold text-foreground">
-                            {count}/{offer.requiredCount} sélectionné{count > 1 ? "s" : ""}
-                          </p>
-                        </div>
-                        <Badge variant={active ? "default" : "secondary"}>
-                          {formatPrice(offer.price)}
-                        </Badge>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-
-              <div className="space-y-6">
-                {currentSections.map((section) => (
-                  <div key={section.title} className="space-y-3">
-                    <div className="flex items-center justify-between gap-3">
-                      <h3 className="font-display text-2xl text-foreground">{section.title}</h3>
-                      <Badge variant="secondary">{section.items.length} parfums</Badge>
-                    </div>
-                    <div className="grid gap-3 sm:grid-cols-2">
-                      {section.items.map((option) => {
-                        const checked = selectedIds.includes(option.id);
-                        const disabled =
-                          !checked && selectedOptions.length >= currentOffer.requiredCount;
-
-                        return (
-                          <label
-                            key={option.id}
-                            htmlFor={option.id}
-                            className={
-                              checked
-                                ? "group flex cursor-pointer items-start gap-3 rounded-xl border border-accent bg-accent-muted p-3 transition-all sm:p-4"
-                                : disabled
-                                  ? "group flex cursor-not-allowed items-start gap-3 rounded-xl border border-border bg-background p-3 opacity-50 sm:p-4"
-                                  : "group flex cursor-pointer items-start gap-3 rounded-xl border border-border bg-background p-3 transition-all hover:border-accent sm:p-4"
-                            }
-                          >
-                            <Checkbox
-                              id={option.id}
-                              checked={checked}
-                              disabled={disabled}
-                              onCheckedChange={() => toggleOption(option.id)}
-                              className="mt-1"
-                            />
-                            <div className="min-w-0 flex-1">
-                              <div className="flex items-start justify-between gap-3">
-                                <div className="min-w-0">
-                                  {selectedCollection !== "pocket" && (
-                                    <p className="text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
-                                      {collectionShortLabel[selectedCollection]} · {section.title}
-                                    </p>
-                                  )}
-                                  <h4 className="mt-1 font-display text-lg text-foreground sm:text-[22px]">
-                                    {option.title}
-                                  </h4>
-                                  {option.description && (
-                                    <p className="mt-1 text-sm text-muted-foreground">
-                                      {option.description}
-                                    </p>
-                                  )}
-                                </div>
-                                {checked && (
-                                  <Check
-                                    className="mt-1 size-5 shrink-0 text-accent"
-                                    aria-hidden="true"
-                                  />
-                                )}
-                              </div>
-                            </div>
-                          </label>
-                        );
-                      })}
-                    </div>
-                  </div>
+          <StepTitle number={2}>
+            Choisis {offer.requiredCount} parfums {offer.short}
+          </StepTitle>
+          <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-4">
+            <input
+              type="search"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Rechercher : Sauvage, Black Opium…"
+              aria-label="Rechercher un parfum du pack"
+              className="w-full rounded-full border border-border bg-card px-5 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30 md:max-w-sm"
+            />
+            {showGender && (
+              <div className="grid grid-cols-4 gap-1 rounded-full bg-surface-alt p-1 md:w-[420px]">
+                {genderTabs.map((tab) => (
+                  <button
+                    key={tab}
+                    type="button"
+                    onClick={() => setGender(tab)}
+                    aria-pressed={gender === tab}
+                    className={cn(
+                      "rounded-full py-2 text-xs font-semibold transition-colors md:text-sm",
+                      gender === tab ? "bg-accent text-primary-foreground" : "text-muted-foreground hover:text-foreground",
+                    )}
+                  >
+                    {tab === "Unisex" ? "Unisexe" : tab}
+                  </button>
                 ))}
               </div>
+            )}
+          </div>
 
-              <p className="text-sm text-muted-foreground">
-                Tu dois cocher exactement {currentOffer.requiredCount} parfums. Si un choix n’est
-                plus disponible, on te propose un remplacement proche avant validation.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="border-border bg-card shadow-card">
-            <CardHeader>
-              <CardTitle className="font-display text-2xl leading-tight text-foreground md:text-[28px]">
-                Ton coffret en cours
-              </CardTitle>
-              <CardDescription>Résumé rapide avant l’envoi du message.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="rounded-2xl bg-surface p-5">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <p className="caption-luxe text-accent">{currentOffer.label}</p>
-                    <p className="mt-2 text-sm text-muted-foreground">{currentOffer.subtitle}</p>
-                  </div>
-                  <Badge>{formatPrice(currentOffer.price)}</Badge>
-                </div>
-                <div className="mt-4 flex items-center gap-2 text-sm text-muted-foreground">
-                  <Sparkles className="size-4 text-accent" aria-hidden="true" />
-                  <span>
-                    {selectedOptions.length}/{currentOffer.requiredCount} parfums choisis
+          <div className="mt-3 grid grid-cols-3 gap-2 sm:grid-cols-4 md:gap-3 lg:grid-cols-6">
+            {visibleOptions.map((option) => {
+              const position = selectedIds.indexOf(option.id);
+              const checked = position >= 0;
+              const disabled = !checked && remaining === 0;
+              return (
+                <button
+                  key={option.id}
+                  type="button"
+                  onClick={() => toggleOption(option.id)}
+                  aria-pressed={checked}
+                  disabled={disabled}
+                  className={cn(
+                    "relative rounded-xl border-[1.5px] bg-white p-1.5 pb-2 text-center transition-all",
+                    checked ? "border-accent ring-1 ring-accent" : "border-border hover:border-accent",
+                    disabled && "cursor-not-allowed opacity-40",
+                  )}
+                >
+                  {option.image ? (
+                    <img
+                      src={optimizedProductImageUrl(option.image, 400)}
+                      alt=""
+                      loading="lazy"
+                      width={400}
+                      height={400}
+                      className="aspect-square w-full object-contain"
+                    />
+                  ) : (
+                    <span className="grid aspect-square w-full place-items-center rounded-lg bg-surface font-display text-2xl text-accent">
+                      {option.title.charAt(0)}
+                    </span>
+                  )}
+                  <span className="mt-1 line-clamp-2 block min-h-[2.5em] text-[11.5px] font-semibold leading-tight text-[#1F1A15] md:text-[13px]">
+                    {option.title}
                   </span>
-                </div>
-              </div>
-
-              <div className="rounded-2xl border border-border p-5">
-                <p className="caption-luxe text-muted-foreground">Mes choix</p>
-                {selectedOptions.length ? (
-                  <ul className="mt-4 space-y-3">
-                    {selectedOptions.map((option) => (
-                      <li
-                        key={option.id}
-                        className="flex items-start gap-3 text-sm text-foreground"
-                      >
-                        <Check className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden="true" />
-                        <span>{option.title}</span>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="mt-4 text-sm text-muted-foreground">
-                    Choisis {currentOffer.requiredCount} parfums pour voir ton coffret se construire
-                    ici.
-                  </p>
-                )}
-              </div>
-
-              <div className="rounded-2xl bg-accent-muted p-5">
-                <p className="caption-luxe text-accent">Prix du coffret</p>
-                <p className="mt-3 font-display text-4xl text-foreground">
-                  {formatPrice(currentOffer.price)}
-                </p>
-                <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                  {currentOffer.requiredCount} parfums, un seul coffret, et un échange humain pour
-                  finaliser la sélection.
-                </p>
-              </div>
-            </CardContent>
-            <CardFooter className="flex flex-col gap-3">
-              {canSend ? (
-                <Button asChild variant="whatsapp" size="lg" className="w-full">
-                  <a
-                    ref={validateRef}
-                    href={whatsappUrl(whatsappMessage)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <WhatsAppLogo tone="light" className="size-5" /> Valider mon coffret
-                  </a>
-                </Button>
-              ) : (
-                <Button type="button" variant="whatsapp" size="lg" className="w-full" disabled>
-                  Choisis encore {remaining} parfum{remaining > 1 ? "s" : ""}
-                </Button>
-              )}
-              <Button asChild variant="outline" size="lg" className="w-full">
-                <Link to="/contact">Parler à l’équipe</Link>
-              </Button>
-            </CardFooter>
-          </Card>
+                  {checked && (
+                    <span className="absolute right-2 top-2 grid size-6 place-items-center rounded-full bg-accent text-xs font-bold text-primary-foreground">
+                      {position + 1}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+          {visibleOptions.length === 0 && (
+            <p className="mt-6 rounded-xl border border-dashed border-border bg-surface px-4 py-8 text-center text-sm text-muted-foreground">
+              Aucun parfum trouvé. Essaie un autre nom.
+            </p>
+          )}
+          <p className="mt-4 text-sm text-muted-foreground">
+            Si un parfum n’est plus disponible, on te propose un remplacement proche avant de préparer ton pack.
+          </p>
         </div>
       </section>
 
-      <section className="bg-background py-16 md:py-24">
-        <div className="section-shell grid gap-4 md:grid-cols-3 md:gap-5">
-          {[
-            {
-              icon: WandSparkles,
-              title: "1. Tu choisis l’univers",
-              text: "Haqqi à 10 000 FCFA, SCENTLAB à 15 000 FCFA ou Parfums de poche à 10 000 FCFA selon le style recherché.",
-            },
-            {
-              icon: Check,
-              title: "2. Tu coches le bon nombre de parfums",
-              text: "3 parfums pour Haqqi ou SCENTLAB, 5 parfums pour les poches: la sélection se fait en quelques clics.",
-            },
-            {
-              icon: Sparkles,
-              title: "3. On prépare ton coffret",
-              text: "Tu valides sur WhatsApp et on finalise la commande avec toi.",
-            },
-          ].map(({ icon: Icon, title, text }) => (
-            <article
-              key={title}
-              className="rounded-2xl border border-border bg-card p-6 shadow-card"
-            >
-              <Icon className="mb-6 size-8 text-accent" aria-hidden="true" />
-              <h3 className="font-display text-2xl text-foreground">{title}</h3>
-              <p className="mt-3 text-sm leading-7 text-muted-foreground">{text}</p>
-            </article>
-          ))}
+      <div id="tuto" className="scroll-mt-20">
+        <TutoVideoSection />
+      </div>
+
+      <div className="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-primary pb-[max(12px,env(safe-area-inset-bottom))] pt-2.5 text-primary-foreground shadow-[0_-10px_30px_rgba(0,0,0,0.18)]">
+        <div className="section-shell">
+          <div className="mb-2 flex min-h-[26px] flex-wrap gap-1.5">
+            {selectedOptions.map((option) => (
+              <span
+                key={option.id}
+                className="inline-flex items-center gap-1.5 rounded-full bg-white/15 py-1 pl-3 pr-1.5 text-xs"
+              >
+                {option.title}
+                <button
+                  type="button"
+                  onClick={() => toggleOption(option.id)}
+                  aria-label={`Retirer ${option.title}`}
+                  className="grid size-5 place-items-center rounded-full text-[#E3C67F] hover:bg-white/15"
+                >
+                  <X className="size-3.5" aria-hidden="true" />
+                </button>
+              </span>
+            ))}
+            {Array.from({ length: Math.max(0, remaining) }).map((_, index) => (
+              <span
+                key={index}
+                className="rounded-full border border-dashed border-white/35 px-3 py-1 text-xs text-white/60"
+              >
+                à choisir
+              </span>
+            ))}
+          </div>
+          <div className="flex items-center justify-between gap-3">
+            <div className="min-w-0">
+              <p className="text-xs text-white/75">
+                {selectedOptions.length}/{offer.requiredCount} choisis · {offer.label}
+              </p>
+              <p className="font-display text-xl font-semibold leading-tight md:text-2xl">{formatShortPrice(offer.price)}</p>
+            </div>
+            {canSend ? (
+              <a
+                href={whatsappUrl(buildWhatsAppMessage(selectedCollection, selectedOptions))}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex shrink-0 items-center gap-2 rounded-full bg-whatsapp px-5 py-3 text-sm font-bold text-white shadow-card"
+              >
+                <WhatsAppLogo tone="light" className="size-5" /> Valider sur WhatsApp
+              </a>
+            ) : (
+              <span className="shrink-0 rounded-full bg-white/15 px-5 py-3 text-sm font-semibold text-white/80">
+                Choisis encore {remaining}
+              </span>
+            )}
+          </div>
         </div>
-      </section>
+      </div>
     </SiteLayout>
   );
 }
 
-function collectionOffersLabel(collection: CoffretCollection) {
-  return collection === "haqqi"
-    ? "Haqqi"
-    : collection === "scentlab"
-      ? "SCENTLAB"
-      : "Parfums de poche";
+function StepTitle({ number, children }: { number: number; children: React.ReactNode }) {
+  return (
+    <h2 className="mb-3 mt-7 flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.16em] text-accent md:mt-9 md:text-sm">
+      <span className="grid size-6 place-items-center rounded-full bg-primary text-[12px] tracking-normal text-primary-foreground">
+        {number}
+      </span>
+      {children}
+    </h2>
+  );
+}
+
+function formatShortPrice(price: number) {
+  return `${new Intl.NumberFormat("fr-FR").format(price)} F`;
 }
 
 function buildWhatsAppMessage(collection: CoffretCollection, options: CoffretOption[]) {
   const offer = coffretOffers[collection];
   const choiceLines = options.map((option) => `• ${option.title}`).join("\n");
-
-  return `Bonjour 2M Parfumerie 👋 Je veux un ${offer.label} à ${formatPrice(offer.price)}.\n\nMes ${offer.requiredCount} choix :\n${choiceLines}\n\nMerci de me préparer le coffret.`;
+  return `Bonjour 2M Parfumerie 👋 Je veux un ${offer.label} à ${formatPrice(offer.price)}.\n\nMes ${offer.requiredCount} choix :\n${choiceLines}\n\nMerci de me préparer le pack.`;
 }

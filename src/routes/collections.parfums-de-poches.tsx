@@ -86,7 +86,7 @@ function PocketPage() {
               size="lg"
               className="bg-accent text-primary-foreground hover:bg-accent/90"
             >
-              <Link to="/coffret-signature">Composer mon pack de 5</Link>
+              <Link to="/coffret-signature" search={{ pack: "pocket" }}>Composer mon pack de 5</Link>
             </Button>
             <Button asChild variant="outline" size="lg">
               <a
@@ -140,7 +140,7 @@ function PocketPage() {
               size="lg"
               className="h-auto max-w-full whitespace-normal py-3 bg-accent text-primary-foreground hover:bg-accent/90"
             >
-              <Link to="/coffret-signature">Composer mon pack de 5 — 10 000 F</Link>
+              <Link to="/coffret-signature" search={{ pack: "pocket" }}>Composer mon pack de 5 — 10 000 F</Link>
             </Button>
           </div>
         </div>
