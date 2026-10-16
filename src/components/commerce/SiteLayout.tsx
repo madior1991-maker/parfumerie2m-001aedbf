@@ -511,17 +511,7 @@ function SiteFooter() {
       </div>
       <div className="mx-auto mt-8 flex max-w-7xl flex-col justify-between gap-3 border-t border-foreground/5 px-4 pt-8 text-xs text-muted-foreground md:flex-row md:px-6">
         <p>© 2026 2M Parfumerie. Tous droits réservés.</p>
-        <p>
-          Fait avec ♥ à Dakar · Site by{" "}
-          <a
-            href="https://www.nextwavesn.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-medium text-accent hover:underline"
-          >
-            Nextwave
-          </a>
-        </p>
+        <p>Fait avec ♥ à Dakar</p>
       </div>
     </footer>
   );
