@@ -76,8 +76,8 @@ export function TutoVideoSection() {
             ))}
           </ol>
           <Button asChild variant="whatsapp" size="lg" className="mt-6">
-            <a href="#compose">
-              <WhatsAppLogo tone="light" className="size-5" /> Composer mon coffret
+            <a href="#pack">
+              <WhatsAppLogo tone="light" className="size-5" /> Composer mon pack
             </a>
           </Button>
         </div>

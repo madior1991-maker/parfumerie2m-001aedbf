@@ -244,7 +244,7 @@ function CoffretSignaturePage() {
 
   return (
     <SiteLayout>
-      <section className="bg-background pt-20 pb-40 md:pt-28 md:pb-44">
+      <section id="pack" className="scroll-mt-16 bg-background pt-20 pb-40 md:pt-28 md:pb-44">
         <div className="section-shell">
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>

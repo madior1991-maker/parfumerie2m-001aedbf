@@ -356,7 +356,7 @@ function CategoryPicker({
             <span className="block text-[10px] font-bold uppercase tracking-[0.16em] text-accent">Catégorie</span>
             <span className="block truncate text-[15px] font-semibold text-foreground">
               {active === "all" ? "Toutes les collections" : (current?.label ?? "Catégorie")}
-              {total > 0 && <span className="font-normal text-muted-foreground"> · {currentCount} parfums</span>}
+              {currentCount > 0 && <span className="font-normal text-muted-foreground"> · {currentCount} parfums</span>}
             </span>
           </span>
         </span>
@@ -398,7 +398,7 @@ function CategoryPicker({
                     <span className={`block text-[15px] font-semibold ${selected ? "text-accent" : "text-foreground"}`}>
                       {filter.value === "all" ? "Toutes les collections" : filter.label}
                     </span>
-                    {total > 0 && <span className="block text-xs text-muted-foreground">{count} parfums</span>}
+                    {count > 0 && <span className="block text-xs text-muted-foreground">{count} parfums</span>}
                   </span>
                   {categoryPriceHint[filter.value] && (
                     <span className="shrink-0 text-xs font-bold text-accent">{categoryPriceHint[filter.value]}</span>
