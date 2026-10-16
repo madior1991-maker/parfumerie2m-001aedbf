@@ -24,6 +24,7 @@ type CoffretOption = {
   title: string;
   image: string;
   gender: Gender | "Nouveautés";
+  inspiration?: string;
 };
 
 const coffretOffers: Record<
@@ -140,6 +141,7 @@ function buildPackOptions(products: BoutiqueProduct[]): Record<CoffretCollection
         title: product.name,
         image: product.image,
         gender: genderOf(product),
+        inspiration: collection === "scentlab" && product.ref && product.ref !== "Collection 2M" ? product.ref : undefined,
       });
     }
     packOnlyOptions[collection].forEach(push);
@@ -226,7 +228,7 @@ function CoffretSignaturePage() {
     return allOptions.filter(
       (option) =>
         (!showGender || gender === "Tous" || option.gender === gender) &&
-        (!q || option.title.toLowerCase().includes(q)),
+        (!q || option.title.toLowerCase().includes(q) || (option.inspiration ?? "").toLowerCase().includes(q)),
     );
   }, [allOptions, gender, query, showGender]);
 
@@ -393,6 +395,16 @@ function CoffretSignaturePage() {
                   >
                     {option.title}
                   </span>
+                  {option.inspiration && (
+                    <span
+                      className={cn(
+                        "block truncate text-[10px] leading-tight text-muted-foreground md:text-[11px]",
+                        showPhotos ? "-mt-0.5" : "-mt-1.5 px-2 pb-1.5 pr-7 text-left",
+                      )}
+                    >
+                      {option.inspiration}
+                    </span>
+                  )}
                   {checked && (
                     <span className="absolute right-2 top-2 grid size-6 place-items-center rounded-full bg-accent text-xs font-bold text-primary-foreground">
                       {position + 1}
