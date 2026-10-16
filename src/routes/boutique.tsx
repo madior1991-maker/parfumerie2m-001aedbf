@@ -463,14 +463,16 @@ function CatalogCard({ product, index }: { product: BoutiqueProduct; index: numb
       style={{ animationDelay: `${index * 80}ms` }}
     >
       <div className="image-zoom relative aspect-square overflow-hidden bg-white">
-        <span className="absolute left-3 top-3 z-10 rounded-full bg-surface px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
-          {label}
-        </span>
-        {isNewProduct(product) && (
-          <span className="absolute right-3 top-3 z-10 rounded-full bg-accent px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-primary-foreground">
-            Nouveau
+        <div className="absolute left-2 right-2 top-2 z-10 flex flex-col items-start gap-1 sm:left-3 sm:top-3">
+          <span className="max-w-full truncate rounded-full bg-surface px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
+            {label}
           </span>
-        )}
+          {isNewProduct(product) && (
+            <span className="rounded-full bg-accent px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-primary-foreground">
+              Nouveau
+            </span>
+          )}
+        </div>
         {product.placeholder && (
           <span className="absolute right-3 top-3 z-10 rounded-full bg-accent-muted px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-accent">
             À renseigner
