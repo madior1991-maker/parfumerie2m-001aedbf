@@ -81,7 +81,7 @@ export const collectionFilters: { label: string; value: KnownCollection }[] = [
   { label: "SCENTLAB", value: "scentlab" },
   { label: "Takeoff", value: "takeoff" },
   { label: "Parfums de poche", value: "pocket" },
-  { label: "Dubai Perfumes", value: "dubai" },
+  { label: "Parfums Dubai", value: "dubai" },
   { label: "Parfums authentiques", value: "authentic" },
   { label: "Callisto Paris", value: "callisto" },
   { label: "Collections privées", value: "privees" },

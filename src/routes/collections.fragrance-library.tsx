@@ -3,9 +3,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { CollectionPage } from "@/components/commerce/CollectionPage";
 
 const URL = "https://www.2mparfumeriedk.com/collections/fragrance-library";
-const TITLE = "Fragrance Library Dakar | 2M Parfumerie";
+const TITLE = "Fragrance Library à Dakar | Eaux de parfum 100 ml à 30 000 F — 2M Parfumerie";
 const DESC =
-  "Explorez la Fragrance Library de 2M Parfumerie : notre bibliothèque complète de parfums, livrée partout au Sénégal. Commandez sur WhatsApp.";
+  "Fragrance Library à Dakar : A Tale of Two Cities, The Golden Bowl, Sense and Sensibility, In Search of Lost Time, Heart of Darkness, The Magic Mountain. Eaux de parfum 100 ml à 30 000 F, livrées partout au Sénégal.";
 
 export const Route = createFileRoute("/collections/fragrance-library")({
   head: () => ({
@@ -33,8 +33,8 @@ export const Route = createFileRoute("/collections/fragrance-library")({
     <CollectionPage
       collection="library"
       eyebrow="Fragrance Library"
-      h1="Fragrance Library — Notre bibliothèque complète de parfums"
-      intro="La Fragrance Library de 2M Parfumerie réunit l'ensemble de nos références olfactives dans un même espace. Livraison partout au Sénégal, avec confirmation directe avec le gérant."
+      h1="Fragrance Library — Des parfums qui se lisent comme des romans"
+      intro="Chaque flacon porte le titre d'un grand roman : A Tale of Two Cities, The Golden Bowl, Sense and Sensibility, In Search of Lost Time… Eaux de parfum 100 ml, dans leur coffret d'origine, à 30 000 F. Livraison partout au Sénégal."
     />
   ),
 });

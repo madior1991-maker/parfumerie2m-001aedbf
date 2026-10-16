@@ -29,9 +29,9 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Parfums à Dakar dès 4 000 F : Haqqi, SCENTLAB, Takeoff, Dubai Perfumes et parfums authentiques. Commande sur WhatsApp, livraison rapide à Dakar, 24 à 48h en régions. Paiement Wave, Orange Money ou espèces.",
+          "Parfums à Dakar dès 4 000 F : Haqqi, SCENTLAB, Takeoff, Parfums Dubai et parfums authentiques. Commande sur WhatsApp, livraison rapide à Dakar, 24 à 48h en régions. Paiement Wave, Orange Money ou espèces.",
       },
-      { name: "ai:summary", content: "2M Parfumerie vend des parfums à Dakar (Haqqi, SCENTLAB, Takeoff, Dubai Perfumes, parfums authentiques), livraison partout au Sénégal." },
+      { name: "ai:summary", content: "2M Parfumerie vend des parfums à Dakar (Haqqi, SCENTLAB, Takeoff, Parfums Dubai, parfums authentiques), livraison partout au Sénégal." },
       { name: "keywords", content: "Haqqi, Scentlab, Takeoff Fragance, Parfums authentique, Parfums Dubai, Parfums de poches, Collections privées, Fragance Library" },
     ],
     links: [{ rel: "canonical", href: "https://www.2mparfumeriedk.com/" }],
@@ -79,7 +79,7 @@ const homeCollections = [
   { name: "Haqqi", price: "Dès 4 000 F", note: "Pack de 3 à 10 000 F", image: "/images/home/tuile-haqqi.webp", to: "/collections/haqqi" },
   { name: "SCENTLAB", price: "6 000 F", note: "Pack de 3 à 15 000 F", image: "/images/optimized/scentlab-boxes-w800.webp", to: "/collections/scentlab" },
   { name: "Takeoff", price: "25 000 F", note: "Les 2 à 50 000 F", image: takeoffParisImage, to: "/collections/takeoff" },
-  { name: "Dubai Perfumes", price: "Dès 12 000 F", note: "Parfums orientaux", image: "/images/home/tuile-dubai.webp", to: "/boutique", collection: "dubai" },
+  { name: "Parfums Dubai", price: "Dès 12 000 F", note: "Parfums orientaux", image: "/images/home/tuile-dubai.webp", to: "/boutique", collection: "dubai" },
   { name: "Parfums de poche", price: "Pack de 5", note: "10 000 F", image: "/images/optimized/pocket-perfumes-homme-w800.webp", to: "/collections/parfums-de-poches" },
   { name: "Parfums authentiques", price: "Originaux", note: "Grandes maisons", image: "/videos/authentic-poster.jpg", to: "/boutique", collection: "authentic" },
 ] as const;
@@ -285,7 +285,7 @@ function Index() {
                 className="fade-up mt-4 text-lg text-muted-foreground md:text-xl"
                 style={{ animationDelay: "240ms" }}
               >
-                Haqqi, SCENTLAB, Takeoff, Dubai Perfumes et parfums authentiques. Tu choisis, on te
+                Haqqi, SCENTLAB, Takeoff, Parfums Dubai et parfums authentiques. Tu choisis, on te
                 livre.
               </p>
               <div

@@ -64,7 +64,7 @@ export const Route = createFileRoute("/boutique")({
       {
         name: "description",
         content:
-          "Plus de 200 parfums à Dakar dès 4 000 F : Haqqi, SCENTLAB, Takeoff, Dubai Perfumes et parfums authentiques. Commande sur WhatsApp, livraison rapide à Dakar, 24 à 48h en régions.",
+          "Plus de 200 parfums à Dakar dès 4 000 F : Haqqi, SCENTLAB, Takeoff, Parfums Dubai et parfums authentiques. Commande sur WhatsApp, livraison rapide à Dakar, 24 à 48h en régions.",
       },
     ],
     links: [{ rel: "canonical", href: "https://www.2mparfumeriedk.com/boutique" }],
@@ -111,7 +111,7 @@ function BoutiquePage() {
   const filteredProducts = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
     return mixedProducts.filter((product) => {
-      const collectionMatch = collection === "all" || collection === "library" || product.collection === collection;
+      const collectionMatch = collection === "all" || product.collection === collection;
       if (!collectionMatch) return false;
       if (!query) return true;
       const haystack = [

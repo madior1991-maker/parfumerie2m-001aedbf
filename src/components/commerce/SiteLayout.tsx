@@ -64,11 +64,12 @@ const siteCollections: SiteCollection[] = [
   { label: "SCENTLAB", price: "6 000 F", to: "/collections/scentlab" },
   { label: "Takeoff", price: "25 000 F", to: "/collections/takeoff" },
   { label: "Parfums de poche", price: "Pack de 5 à 10 000 F", to: "/collections/parfums-de-poches" },
-  { label: "Dubai Perfumes", price: "Dès 12 000 F", to: "/boutique", collection: "dubai" },
+  { label: "Parfums Dubai", price: "Dès 12 000 F", to: "/boutique", collection: "dubai" },
   { label: "Parfums authentiques", price: "Les originaux", to: "/boutique", collection: "authentic" },
   { label: "Callisto Paris", price: "75 000 F", to: "/collections/callisto-paris" },
   { label: "Collections privées", price: "Éditions rares", to: "/collections/collections-privees" },
   { label: "Coffrets", price: "Prêts à offrir", to: "/collections/coffrets" },
+  { label: "Fragrance Library", price: "30 000 F", to: "/collections/fragrance-library" },
 ];
 
 const footerPages = [

@@ -60,7 +60,7 @@ export function Ticker() {
     "✦ Paiement Wave · Orange Money · espèces",
     "✦ Commande avec le gérant sur WhatsApp",
     "✦ Réponse WhatsApp en moins d'1h",
-    "✦ Dubai Perfumes · Parfums authentiques · Collections privées",
+    "✦ Parfums Dubai · Parfums authentiques · Collections privées",
   ];
   return (
     <div

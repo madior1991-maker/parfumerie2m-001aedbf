@@ -53,8 +53,7 @@ export function CollectionPage({
   }, []);
 
   const filtered = useMemo(
-    // La Fragrance Library regroupe toute la boutique.
-    () => (collection === "library" ? products : products.filter((p) => p.collection === collection)),
+    () => products.filter((p) => p.collection === collection),
     [products, collection],
   );
   const visible = filtered.slice(0, visibleCount);

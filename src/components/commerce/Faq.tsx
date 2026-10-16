@@ -45,7 +45,7 @@ export const faqs = [
   {
     question: "Quelle est la différence entre vos collections ?",
     answer:
-      "· Haqqi — eaux de parfum 40 ml inspirées des grands parfums, dès 4 000 F (pack de 3 à 10 000 F)\n· SCENTLAB — eaux de parfum 50 ml inspirées des grands parfums, 6 000 F (pack de 3 à 15 000 F)\n· Takeoff — eaux de parfum 100 ml inspirées des grands parfums, aux noms de grandes villes, 25 000 F (les 2 à 50 000 F)\n· Parfums de poche — 50 ml faciles à emporter, pack de 5 à 10 000 F\n· Dubai Perfumes — parfums orientaux : oud, rose, musc\n· Parfums authentiques — les originaux des grandes maisons\n· Callisto Paris — les parfums de la maison Callisto Paris, 75 000 F\n· Collections privées et coffrets — éditions rares et idées cadeaux",
+      "· Haqqi — eaux de parfum 40 ml inspirées des grands parfums, dès 4 000 F (pack de 3 à 10 000 F)\n· SCENTLAB — eaux de parfum 50 ml inspirées des grands parfums, 6 000 F (pack de 3 à 15 000 F)\n· Takeoff — eaux de parfum 100 ml inspirées des grands parfums, aux noms de grandes villes, 25 000 F (les 2 à 50 000 F)\n· Parfums de poche — 50 ml faciles à emporter, pack de 5 à 10 000 F\n· Parfums Dubai — parfums orientaux : oud, rose, musc\n· Parfums authentiques — les originaux des grandes maisons\n· Callisto Paris — les parfums de la maison Callisto Paris, 75 000 F\n· Collections privées et coffrets — éditions rares et idées cadeaux",
   },
 ];
 

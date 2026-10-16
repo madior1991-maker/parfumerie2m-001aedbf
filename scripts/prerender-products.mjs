@@ -18,7 +18,7 @@ function readEnv() {
   return env;
 }
 
-const LABELS = { scentlab: "SCENTLAB", takeoff: "Takeoff Fragrance", dubai: "Dubai Perfumes", pocket: "Parfums de poche", authentic: "Parfums authentiques", haqqi: "Haqqi", callisto: "Callisto Paris", privees: "Collections privées", coffrets: "Coffrets", library: "Fragrance Library" };
+const LABELS = { scentlab: "SCENTLAB", takeoff: "Takeoff Fragrance", dubai: "Parfums Dubai", pocket: "Parfums de poche", authentic: "Parfums authentiques", haqqi: "Haqqi", callisto: "Callisto Paris", privees: "Collections privées", coffrets: "Coffrets", library: "Fragrance Library" };
 const ALIASES = { "scent lab": "scentlab", "takeoff fragrance": "takeoff", "takeoff fragance": "takeoff", "dubai perfumes": "dubai", "pocket perfumes": "pocket", "authentic perfumes": "authentic", haqqui: "haqqi", "collections privees": "privees", "collections privées": "privees", "collection privee": "privees", "private collection": "privees", coffret: "coffrets", "fragrance library": "library" };
 const collectionOf0 = (v) => { const n = (v || "").trim().toLowerCase(); return LABELS[n] ? n : ALIASES[n] || "scentlab"; };
 const collectionOf = (v, name = "") => (/callisto/i.test(name) ? "callisto" : collectionOf0(v));
