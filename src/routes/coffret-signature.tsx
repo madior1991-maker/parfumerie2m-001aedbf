@@ -213,6 +213,8 @@ function CoffretSignaturePage() {
   const remaining = offer.requiredCount - selectedOptions.length;
   const canSend = remaining === 0;
   const showGender = selectedCollection !== "pocket";
+  // Les parfums de poche partagent la même photo : on les liste par leur nom.
+  const showPhotos = selectedCollection !== "pocket";
 
   const visibleOptions = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -336,7 +338,12 @@ function CoffretSignaturePage() {
             )}
           </div>
 
-          <div className="mt-3 grid grid-cols-3 gap-2 sm:grid-cols-4 md:gap-3 lg:grid-cols-6">
+          <div
+            className={cn(
+              "mt-3 grid gap-2 md:gap-3",
+              showPhotos ? "grid-cols-3 sm:grid-cols-4 lg:grid-cols-6" : "grid-cols-2 sm:grid-cols-3 lg:grid-cols-5",
+            )}
+          >
             {visibleOptions.map((option) => {
               const position = selectedIds.indexOf(option.id);
               const checked = position >= 0;
@@ -354,7 +361,7 @@ function CoffretSignaturePage() {
                     disabled && "cursor-not-allowed opacity-40",
                   )}
                 >
-                  {option.image ? (
+                  {!showPhotos ? null : option.image ? (
                     <img
                       src={optimizedProductImageUrl(option.image, 400)}
                       alt=""
@@ -368,7 +375,12 @@ function CoffretSignaturePage() {
                       {option.title.charAt(0)}
                     </span>
                   )}
-                  <span className="mt-1 line-clamp-2 block min-h-[2.5em] text-[11.5px] font-semibold leading-tight text-[#1F1A15] md:text-[13px]">
+                  <span
+                    className={cn(
+                      "line-clamp-2 block font-semibold leading-tight text-[#1F1A15]",
+                      showPhotos ? "mt-1 min-h-[2.5em] text-[11.5px] md:text-[13px]" : "px-2 py-2.5 pr-7 text-left text-[13px] md:text-sm",
+                    )}
+                  >
                     {option.title}
                   </span>
                   {checked && (

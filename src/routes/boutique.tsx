@@ -171,23 +171,12 @@ function BoutiquePage() {
               className="w-full rounded-full border border-border bg-surface px-5 py-3 text-sm text-foreground shadow-card placeholder:text-muted-foreground focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
             />
           </div>
-          <p className="caption-luxe mb-3 hidden text-center text-accent md:block">Catégories</p>
           <CategoryPicker
             filters={filters}
             active={collection}
             counts={collectionCounts}
             total={products.length}
           />
-          <div className="hidden md:flex md:flex-wrap md:justify-center md:gap-3">
-            {filters.map((filter) => (
-              <FilterLink
-                key={filter.value}
-                active={collection === filter.value}
-                search={{ collection: filter.value }}
-                label={filter.label}
-              />
-            ))}
-          </div>
         </div>
       </section>
 
@@ -322,7 +311,7 @@ const categoryPriceHint: Record<string, string> = {
 
 const categoryImages = new Set(Object.keys(categoryPriceHint));
 
-// Sur téléphone : un bouton « Catégorie » qui ouvre la liste complète depuis le bas de l'écran.
+// Un bouton « Catégorie » qui ouvre la liste complète (depuis le bas de l'écran sur téléphone).
 function CategoryPicker({
   filters,
   active,
@@ -353,7 +342,7 @@ function CategoryPicker({
   useEffect(() => setOpen(false), [active]);
 
   return (
-    <div className="md:hidden">
+    <div className="mx-auto max-w-xl">
       <button
         type="button"
         onClick={() => setOpen(true)}
@@ -383,9 +372,9 @@ function CategoryPicker({
         role="dialog"
         aria-modal="true"
         aria-label="Choisir une catégorie"
-        className={`fixed inset-x-0 bottom-0 z-[71] max-h-[85dvh] overflow-y-auto rounded-t-2xl bg-card px-4 pb-[max(16px,env(safe-area-inset-bottom))] pt-2 shadow-[0_-12px_40px_rgba(0,0,0,0.25)] transition-transform duration-300 ease-out ${open ? "translate-y-0" : "pointer-events-none translate-y-full"}`}
+        className={`fixed inset-x-0 bottom-0 z-[71] max-h-[85dvh] overflow-y-auto rounded-t-2xl bg-card px-4 pb-[max(16px,env(safe-area-inset-bottom))] pt-2 shadow-[0_-12px_40px_rgba(0,0,0,0.25)] transition-all duration-300 ease-out md:inset-x-auto md:bottom-auto md:left-1/2 md:top-1/2 md:w-[480px] md:-translate-x-1/2 md:-translate-y-1/2 md:rounded-2xl md:px-5 md:pb-4 ${open ? "translate-y-0 md:opacity-100" : "pointer-events-none translate-y-full md:scale-95 md:opacity-0"}`}
       >
-        <div className="mx-auto mb-2 h-1 w-10 rounded-full bg-border" />
+        <div className="mx-auto mb-2 h-1 w-10 rounded-full bg-border md:hidden" />
         <div className="mb-1 flex items-center justify-between">
           <p className="caption-luxe text-accent">Choisis une catégorie</p>
           <button type="button" onClick={() => setOpen(false)} aria-label="Fermer" className="grid size-9 place-items-center rounded-full text-muted-foreground hover:bg-surface">
@@ -442,30 +431,6 @@ function CategoryThumb({ value }: { value: Collection }) {
     <span className="grid size-11 shrink-0 place-items-center rounded-lg bg-primary text-primary-foreground">
       <LayoutGrid className="size-5" aria-hidden="true" />
     </span>
-  );
-}
-
-function FilterLink({
-  active,
-  search,
-  label,
-}: {
-  active: boolean;
-  search: { collection: Collection };
-  label: string;
-}) {
-  return (
-    <Link
-      to="/boutique"
-      search={search}
-      className={
-        active
-          ? "snap-start whitespace-nowrap rounded-full border border-accent bg-accent px-4 py-2 text-[13px] font-semibold text-primary-foreground"
-          : "snap-start whitespace-nowrap rounded-full border border-border bg-transparent px-4 py-2 text-[13px] text-muted-foreground hover:border-accent hover:text-foreground"
-      }
-    >
-      {label}
-    </Link>
   );
 }
 
