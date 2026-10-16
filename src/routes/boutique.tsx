@@ -111,7 +111,7 @@ function BoutiquePage() {
   const filteredProducts = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
     return mixedProducts.filter((product) => {
-      const collectionMatch = collection === "all" || product.collection === collection;
+      const collectionMatch = collection === "all" || collection === "library" || product.collection === collection;
       if (!collectionMatch) return false;
       if (!query) return true;
       const haystack = [

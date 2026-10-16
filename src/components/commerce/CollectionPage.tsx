@@ -41,17 +41,20 @@ export function CollectionPage({
   children,
 }: CollectionPageProps) {
   const [products, setProducts] = useState<BoutiqueProduct[]>([]);
+  const [loaded, setLoaded] = useState(false);
   const [visibleCount, setVisibleCount] = useState(25);
 
   useEffect(() => {
     void (async () => {
       const { data } = await supabase.from("products").select("*");
       setProducts(mergeLiveCatalog(data ?? []));
+      setLoaded(true);
     })();
   }, []);
 
   const filtered = useMemo(
-    () => products.filter((p) => p.collection === collection),
+    // La Fragrance Library regroupe toute la boutique.
+    () => (collection === "library" ? products : products.filter((p) => p.collection === collection)),
     [products, collection],
   );
   const visible = filtered.slice(0, visibleCount);
@@ -194,7 +197,7 @@ export function CollectionPage({
           </div>
           {visible.length === 0 && (
             <div className="rounded-lg border border-dashed border-border bg-surface px-6 py-12 text-center text-muted-foreground">
-              Catalogue en cours de chargement…
+              {loaded ? "Les parfums de cette collection arrivent bientôt. Écrivez-nous sur WhatsApp." : "Catalogue en cours de chargement…"}
             </div>
           )}
           {visibleCount < filtered.length && (

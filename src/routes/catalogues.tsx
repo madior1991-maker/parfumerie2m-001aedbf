@@ -16,9 +16,6 @@ export const Route = createFileRoute("/catalogues")({
     meta: [
       { title: TITLE },
       { name: "description", content: DESC },
-      { property: "og:title", content: TITLE },
-      { property: "og:description", content: DESC },
-      { property: "og:url", content: URL },
     ],
     links: [{ rel: "canonical", href: URL }],
   }),
