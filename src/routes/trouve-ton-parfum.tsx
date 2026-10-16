@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import { AddToCartButton } from "@/components/commerce/AddToCartButton";
 import { GuaranteeStrip } from "@/components/commerce/Guarantee";
+import { PriceTag } from "@/components/commerce/PriceTag";
 import { SiteLayout } from "@/components/commerce/SiteLayout";
 import { WhatsAppLogo } from "@/components/commerce/WhatsAppLogo";
 import { Button } from "@/components/ui/button";
@@ -251,7 +252,7 @@ function PickCard({ product }: { product: BoutiqueProduct }) {
           {product.name}
         </Link>
         <p className="mt-1 text-[13px] text-muted-foreground">{product.notes}</p>
-        <p className="mt-2 text-lg font-semibold text-accent sm:mt-3">{formatPrice(product.price)}</p>
+        <p className="mt-2 text-lg font-semibold text-accent sm:mt-3"><PriceTag product={product} /></p>
         <div className="mt-auto pt-3 sm:pt-4">
           <AddToCartButton
             item={{ id: slug, name: product.name, collection: label, price: product.price, imageUrl: product.image }}

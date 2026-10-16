@@ -47,6 +47,7 @@ export const collectionValues = [
   "privees",
   "coffrets",
   "library",
+  "soie-sublime",
 ] as const;
 export const priceValues = ["all", "under-10000", "10000-25000", "over-25000"] as const;
 
@@ -89,6 +90,7 @@ export const collectionFilters: { label: string; value: KnownCollection }[] = [
   { label: "Collections privées", value: "privees" },
   { label: "Coffrets", value: "coffrets" },
   { label: "Fragrance Library", value: "library" },
+  { label: "Soie Sublime Paris", value: "soie-sublime" },
 ];
 
 const collectionAliases: Record<string, KnownCollection> = {
@@ -117,6 +119,9 @@ const collectionAliases: Record<string, KnownCollection> = {
   coffret: "coffrets",
   library: "library",
   "fragrance library": "library",
+  "soie-sublime": "soie-sublime",
+  "soie sublime": "soie-sublime",
+  "soie sublime paris": "soie-sublime",
 };
 
 // Libellés des catégories créées dans l'admin (clé normalisée -> texte saisi).
@@ -761,6 +766,17 @@ export function optimizedProductImageSet(image: string) {
     avif: `/images/optimized/${base}-w1200.avif 1200w, /images/optimized/${base}-w800.avif 800w, /images/optimized/${base}-w400.avif 400w`,
     webp: `/images/optimized/${base}-w1200.webp 1200w, /images/optimized/${base}-w800.webp 800w, /images/optimized/${base}-w400.webp 400w`,
   };
+}
+
+// Prix barrés : ancien prix affiché à côté du prix actuel, par collection.
+const compareAtPrices: Record<string, number> = {
+  callisto: 80000,
+  "soie-sublime": 120000,
+};
+
+export function compareAtPrice(product: { collection: string; price: number }) {
+  const old = compareAtPrices[product.collection];
+  return old && old > product.price ? old : undefined;
 }
 
 export function formatPrice(price: number) {

@@ -9,7 +9,7 @@ import { displayPhone, secondPhone, whatsappUrl } from "@/lib/perfume-data";
 const URL = "https://www.2mparfumeriedk.com/catalogues";
 const TITLE = "Catalogues PDF à télécharger | 2M Parfumerie Dakar";
 const DESC =
-  "Téléchargez gratuitement les catalogues 2M Parfumerie : Haqqi, SCENTLAB, Takeoff, Parfums de poche, Parfums Dubai, parfums authentiques, Callisto Paris, collections privées, coffrets et Fragrance Library.";
+  "Téléchargez gratuitement les catalogues 2M Parfumerie : Haqqi, SCENTLAB, Takeoff, Parfums de poche, Parfums Dubai, parfums authentiques, Callisto Paris, collections privées, coffrets, Fragrance Library et Soie Sublime Paris.";
 
 export const Route = createFileRoute("/catalogues")({
   head: () => ({

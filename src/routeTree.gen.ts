@@ -23,6 +23,7 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AProposRouteImport } from './routes/a-propos'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CollectionsTakeoffRouteImport } from './routes/collections.takeoff'
+import { Route as CollectionsSoieSublimeRouteImport } from './routes/collections.soie-sublime'
 import { Route as CollectionsScentlabRouteImport } from './routes/collections.scentlab'
 import { Route as CollectionsParfumsDubaiRouteImport } from './routes/collections.parfums-dubai'
 import { Route as CollectionsParfumsDePochesRouteImport } from './routes/collections.parfums-de-poches'
@@ -103,6 +104,11 @@ const IndexRoute = IndexRouteImport.update({
 const CollectionsTakeoffRoute = CollectionsTakeoffRouteImport.update({
   id: '/collections/takeoff',
   path: '/collections/takeoff',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CollectionsSoieSublimeRoute = CollectionsSoieSublimeRouteImport.update({
+  id: '/collections/soie-sublime',
+  path: '/collections/soie-sublime',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CollectionsScentlabRoute = CollectionsScentlabRouteImport.update({
@@ -191,6 +197,7 @@ export interface FileRoutesByFullPath {
   '/collections/parfums-de-poches': typeof CollectionsParfumsDePochesRoute
   '/collections/parfums-dubai': typeof CollectionsParfumsDubaiRoute
   '/collections/scentlab': typeof CollectionsScentlabRoute
+  '/collections/soie-sublime': typeof CollectionsSoieSublimeRoute
   '/collections/takeoff': typeof CollectionsTakeoffRoute
 }
 export interface FileRoutesByTo {
@@ -218,6 +225,7 @@ export interface FileRoutesByTo {
   '/collections/parfums-de-poches': typeof CollectionsParfumsDePochesRoute
   '/collections/parfums-dubai': typeof CollectionsParfumsDubaiRoute
   '/collections/scentlab': typeof CollectionsScentlabRoute
+  '/collections/soie-sublime': typeof CollectionsSoieSublimeRoute
   '/collections/takeoff': typeof CollectionsTakeoffRoute
 }
 export interface FileRoutesById {
@@ -246,6 +254,7 @@ export interface FileRoutesById {
   '/collections/parfums-de-poches': typeof CollectionsParfumsDePochesRoute
   '/collections/parfums-dubai': typeof CollectionsParfumsDubaiRoute
   '/collections/scentlab': typeof CollectionsScentlabRoute
+  '/collections/soie-sublime': typeof CollectionsSoieSublimeRoute
   '/collections/takeoff': typeof CollectionsTakeoffRoute
 }
 export interface FileRouteTypes {
@@ -275,6 +284,7 @@ export interface FileRouteTypes {
     | '/collections/parfums-de-poches'
     | '/collections/parfums-dubai'
     | '/collections/scentlab'
+    | '/collections/soie-sublime'
     | '/collections/takeoff'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -302,6 +312,7 @@ export interface FileRouteTypes {
     | '/collections/parfums-de-poches'
     | '/collections/parfums-dubai'
     | '/collections/scentlab'
+    | '/collections/soie-sublime'
     | '/collections/takeoff'
   id:
     | '__root__'
@@ -329,6 +340,7 @@ export interface FileRouteTypes {
     | '/collections/parfums-de-poches'
     | '/collections/parfums-dubai'
     | '/collections/scentlab'
+    | '/collections/soie-sublime'
     | '/collections/takeoff'
   fileRoutesById: FileRoutesById
 }
@@ -355,6 +367,7 @@ export interface RootRouteChildren {
   CollectionsParfumsDePochesRoute: typeof CollectionsParfumsDePochesRoute
   CollectionsParfumsDubaiRoute: typeof CollectionsParfumsDubaiRoute
   CollectionsScentlabRoute: typeof CollectionsScentlabRoute
+  CollectionsSoieSublimeRoute: typeof CollectionsSoieSublimeRoute
   CollectionsTakeoffRoute: typeof CollectionsTakeoffRoute
 }
 
@@ -456,6 +469,13 @@ declare module '@tanstack/react-router' {
       path: '/collections/takeoff'
       fullPath: '/collections/takeoff'
       preLoaderRoute: typeof CollectionsTakeoffRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/collections/soie-sublime': {
+      id: '/collections/soie-sublime'
+      path: '/collections/soie-sublime'
+      fullPath: '/collections/soie-sublime'
+      preLoaderRoute: typeof CollectionsSoieSublimeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/collections/scentlab': {
@@ -583,6 +603,7 @@ const rootRouteChildren: RootRouteChildren = {
   CollectionsParfumsDePochesRoute: CollectionsParfumsDePochesRoute,
   CollectionsParfumsDubaiRoute: CollectionsParfumsDubaiRoute,
   CollectionsScentlabRoute: CollectionsScentlabRoute,
+  CollectionsSoieSublimeRoute: CollectionsSoieSublimeRoute,
   CollectionsTakeoffRoute: CollectionsTakeoffRoute,
 }
 export const routeTree = rootRouteImport

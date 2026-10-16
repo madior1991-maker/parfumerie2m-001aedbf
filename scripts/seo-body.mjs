@@ -58,4 +58,5 @@ export const COLLECTION_PATH = {
   privees: "/collections/collections-privees",
   coffrets: "/collections/coffrets",
   library: "/collections/fragrance-library",
+  "soie-sublime": "/collections/soie-sublime",
 };

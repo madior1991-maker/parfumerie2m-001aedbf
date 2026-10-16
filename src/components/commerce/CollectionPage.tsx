@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { AddToCartButton } from "@/components/commerce/AddToCartButton";
 import { CatalogueDownload } from "@/components/commerce/CatalogueDownload";
+import { PriceTag } from "@/components/commerce/PriceTag";
 import { SiteLayout } from "@/components/commerce/SiteLayout";
 import { SeoText } from "@/components/commerce/SeoText";
 import {
@@ -180,7 +181,7 @@ export function CollectionPage({
                     {product.name}
                   </Link>
                   <p className="mb-3 font-body text-sm font-semibold text-accent sm:text-base">
-                    {formatPrice(product.price)}
+                    <PriceTag product={product} />
                   </p>
                   <div className="mt-auto">
                     <AddToCartButton

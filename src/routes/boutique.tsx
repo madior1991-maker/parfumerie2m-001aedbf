@@ -5,6 +5,7 @@ import { ChevronDown, LayoutGrid, Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AddToCartButton } from "@/components/commerce/AddToCartButton";
 import { CatalogueDownload } from "@/components/commerce/CatalogueDownload";
+import { PriceTag } from "@/components/commerce/PriceTag";
 import { SiteLayout } from "@/components/commerce/SiteLayout";
 import {
   collectionFiltersFor,
@@ -327,6 +328,7 @@ const categoryPriceHint: Record<string, string> = {
   privees: "Dès 25 000 F",
   coffrets: "90 000 F",
   library: "30 000 F",
+  "soie-sublime": "90 000 F",
 };
 
 const categoryImages = new Set(Object.keys(categoryPriceHint));
@@ -462,6 +464,21 @@ function CatalogCard({ product, index }: { product: BoutiqueProduct; index: numb
       className="fade-up group flex flex-col overflow-hidden rounded-lg border border-border bg-card shadow-card transition-all hover:-translate-y-1.5 hover:border-accent"
       style={{ animationDelay: `${index * 80}ms` }}
     >
+      <div className="flex h-[58px] flex-col items-start justify-center gap-1 border-b border-border/60 bg-card px-2.5 sm:h-[40px] sm:flex-row sm:items-center sm:justify-between sm:gap-2 sm:px-3">
+        <span className="min-w-0 max-w-full truncate rounded-full bg-surface px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
+          {label}
+        </span>
+        {isNewProduct(product) && (
+          <span className="shrink-0 rounded-full bg-accent px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-primary-foreground">
+            Nouveau
+          </span>
+        )}
+        {product.placeholder && (
+          <span className="shrink-0 rounded-full bg-accent-muted px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-accent">
+            À renseigner
+          </span>
+        )}
+      </div>
       <div className="image-zoom relative aspect-square overflow-hidden bg-white">
         <Link
           to="/boutique/$productSlug"
@@ -479,21 +496,6 @@ function CatalogCard({ product, index }: { product: BoutiqueProduct; index: numb
         </Link>
       </div>
       <div className="flex flex-1 flex-col p-3 sm:p-4">
-        <div className="mb-1.5 flex flex-wrap items-center gap-x-2 gap-y-1">
-          <span className="min-w-0 truncate text-[10px] font-semibold uppercase tracking-[0.1em] text-accent">
-            {label}
-          </span>
-          {isNewProduct(product) && (
-            <span className="rounded-full bg-accent px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.1em] text-primary-foreground">
-              Nouveau
-            </span>
-          )}
-          {product.placeholder && (
-            <span className="rounded-full bg-accent-muted px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.1em] text-accent">
-              À renseigner
-            </span>
-          )}
-        </div>
         {product.collection !== "dubai" && product.collection !== "authentic" && product.ref && (
           <p className="mb-1 hidden truncate text-[10px] uppercase tracking-[0.1em] text-muted-foreground sm:block">
             {product.ref}
@@ -508,7 +510,7 @@ function CatalogCard({ product, index }: { product: BoutiqueProduct; index: numb
           {product.name}
         </Link>
         <p className="mb-3 font-body text-sm font-semibold text-accent sm:text-base">
-          {formatPrice(product.price)}
+          <PriceTag product={product} />
         </p>
         <div className="mt-auto">
         <AddToCartButton

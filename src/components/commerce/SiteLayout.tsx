@@ -56,6 +56,7 @@ type SiteCollection = {
     | "/collections/callisto-paris"
     | "/collections/coffrets"
     | "/collections/fragrance-library"
+    | "/collections/soie-sublime"
     | "/boutique";
   collection?: Collection;
 };
@@ -69,6 +70,7 @@ const siteCollections: SiteCollection[] = [
   { label: "Parfums Dubai", price: "Dès 12 000 F", to: "/collections/parfums-dubai" },
   { label: "Parfums authentiques", price: "Les originaux", to: "/collections/parfums-authentiques" },
   { label: "Callisto Paris", price: "75 000 F", to: "/collections/callisto-paris" },
+  { label: "Soie Sublime Paris", price: "90 000 F", to: "/collections/soie-sublime" },
   { label: "Collections privées", price: "Éditions rares", to: "/collections/collections-privees" },
   { label: "Coffrets", price: "Prêts à offrir", to: "/collections/coffrets" },
   { label: "Fragrance Library", price: "30 000 F", to: "/collections/fragrance-library" },

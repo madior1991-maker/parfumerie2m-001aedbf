@@ -27,6 +27,7 @@ const ROUTES = [
   "/collections/callisto-paris",
   "/collections/coffrets",
   "/collections/fragrance-library",
+  "/collections/soie-sublime",
   "/catalogues",
 ];
 

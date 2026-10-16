@@ -5,6 +5,7 @@ import React, { Suspense, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { AddToCartButton } from "@/components/commerce/AddToCartButton";
 const Ticker = React.lazy(() => import("@/components/commerce/PageBlocks").then((m) => ({ default: m.Ticker })));
+import { PriceTag } from "@/components/commerce/PriceTag";
 import { SiteLayout } from "@/components/commerce/SiteLayout";
 import { WhatsAppLogo } from "@/components/commerce/WhatsAppLogo";
 import homeHeroBottle from "@/assets/home-white-bottle.webp";
@@ -84,6 +85,7 @@ const homeCollections = [
   { name: "Parfums de poche", price: "Pack de 5", note: "10 000 F", image: "/images/optimized/pocket-perfumes-homme-w800.webp", to: "/collections/parfums-de-poches" },
   { name: "Parfums authentiques", price: "Originaux", note: "Grandes maisons", image: "/videos/authentic-poster.jpg", to: "/collections/parfums-authentiques" },
   { name: "Callisto Paris", price: "75 000 F", note: "Extraits de parfum", image: "/images/home/tuile-callisto.webp", to: "/collections/callisto-paris" },
+  { name: "Soie Sublime Paris", price: "90 000 F", note: "Au lieu de 120 000 F", image: "/images/home/tuile-soie-sublime.webp", to: "/collections/soie-sublime" },
   { name: "Collections privées", price: "Dès 25 000 F", note: "Éditions rares", image: "/images/home/tuile-privees.webp", to: "/collections/collections-privees" },
   { name: "Coffrets", price: "90 000 F", note: "Prêts à offrir", image: "/images/home/tuile-coffrets.webp", to: "/collections/coffrets" },
   { name: "Fragrance Library", price: "30 000 F", note: "Un roman par flacon", image: "/images/home/tuile-library.webp", to: "/collections/fragrance-library" },
@@ -348,11 +350,11 @@ function Index() {
               Un parfum pour chaque budget
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-sm text-muted-foreground">
-              Dix collections, de 4 000 F à 130 000 F : nos créations inspirées des grands parfums,
+              Onze collections, de 4 000 F à 130 000 F : nos créations inspirées des grands parfums,
               les parfums orientaux de Dubai et les originaux des grandes maisons.
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-5">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4">
             {homeCollections.map((item, index) => (
               <Link
                 key={item.name}
@@ -415,7 +417,7 @@ function Index() {
                     {product.name}
                   </h3>
                   <p className="mb-2 font-body text-base font-semibold text-accent sm:mb-3 sm:text-lg lg:text-base">
-                    {formatPrice(product.price)}
+                    <PriceTag product={product} />
                   </p>
                   <div className="mt-auto">
                   <AddToCartButton

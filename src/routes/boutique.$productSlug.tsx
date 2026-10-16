@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { AddToCartButton } from "@/components/commerce/AddToCartButton";
+import { PriceTag } from "@/components/commerce/PriceTag";
 import { SiteLayout } from "@/components/commerce/SiteLayout";
 import { WhatsAppLogo } from "@/components/commerce/WhatsAppLogo";
 import {
@@ -275,14 +276,14 @@ function ProductTemplate({ product, products }: { product: BoutiqueProduct; prod
             <h1 className="font-display text-4xl font-medium leading-tight text-foreground md:text-5xl">
               {product.name}
             </h1>
-            {product.collection !== "dubai" && product.collection !== "authentic" && product.ref && (
+            {!["dubai", "authentic", "callisto", "soie-sublime"].includes(product.collection) && product.ref && product.ref !== "Collection 2M" && (
               <p className="mt-3 text-sm italic text-muted-foreground">
                 Inspiré de {product.ref}
                 {product.inspiration ? ` · ${product.inspiration}` : ""}
               </p>
             )}
             <p className="mt-6 font-body text-[32px] font-bold text-accent">
-              {formatPrice(product.price)}
+              <PriceTag product={product} />
             </p>
             <p className="mt-2 text-[13px] text-whatsapp">
               ✓ En stock — Livraison rapide à Dakar, 24 à 48h en régions
@@ -411,7 +412,7 @@ function SimilarCard({ product }: { product: BoutiqueProduct }) {
         })()}
       </Link>
       <div className="flex flex-1 flex-col p-3 sm:p-5">
-        {product.collection !== "dubai" && product.collection !== "authentic" && product.ref && (
+        {!["dubai", "authentic", "callisto", "soie-sublime"].includes(product.collection) && product.ref && product.ref !== "Collection 2M" && (
           <p className="mb-1 hidden text-[11px] uppercase tracking-[0.1em] text-muted-foreground sm:block">
             {product.ref}
           </p>
@@ -425,7 +426,7 @@ function SimilarCard({ product }: { product: BoutiqueProduct }) {
           {product.name}
         </Link>
         <p className="mt-2 font-body text-base font-semibold text-accent sm:mt-3 sm:text-lg">
-          {formatPrice(product.price)}
+          <PriceTag product={product} />
         </p>
         <div className="mt-auto pt-4">
           <AddToCartButton
