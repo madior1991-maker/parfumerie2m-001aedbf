@@ -83,6 +83,10 @@ const homeCollections = [
   { name: "Parfums Dubai", price: "Dès 12 000 F", note: "Parfums orientaux", image: "/images/home/tuile-dubai.webp", to: "/collections/parfums-dubai" },
   { name: "Parfums de poche", price: "Pack de 5", note: "10 000 F", image: "/images/optimized/pocket-perfumes-homme-w800.webp", to: "/collections/parfums-de-poches" },
   { name: "Parfums authentiques", price: "Originaux", note: "Grandes maisons", image: "/videos/authentic-poster.jpg", to: "/collections/parfums-authentiques" },
+  { name: "Callisto Paris", price: "75 000 F", note: "Extraits de parfum", image: "/images/home/tuile-callisto.webp", to: "/collections/callisto-paris" },
+  { name: "Collections privées", price: "Dès 25 000 F", note: "Éditions rares", image: "/images/home/tuile-privees.webp", to: "/collections/collections-privees" },
+  { name: "Coffrets", price: "90 000 F", note: "Prêts à offrir", image: "/images/home/tuile-coffrets.webp", to: "/collections/coffrets" },
+  { name: "Fragrance Library", price: "30 000 F", note: "Un roman par flacon", image: "/images/home/tuile-library.webp", to: "/collections/fragrance-library" },
 ] as const;
 
 const featuredPackCards = [
@@ -344,11 +348,11 @@ function Index() {
               Un parfum pour chaque budget
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-sm text-muted-foreground">
-              Haqqi, SCENTLAB et Takeoff sont nos créations inspirées des grands parfums. Nos
-              parfums authentiques sont les originaux des grandes maisons.
+              Dix collections, de 4 000 F à 130 000 F : nos créations inspirées des grands parfums,
+              les parfums orientaux de Dubai et les originaux des grandes maisons.
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-6">
+          <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-5">
             {homeCollections.map((item, index) => (
               <Link
                 key={item.name}

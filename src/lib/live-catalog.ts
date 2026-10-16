@@ -44,6 +44,8 @@ function productFromRow(product: ProductRow, fallback?: BoutiqueProduct): Boutiq
   const notes = product.notes_top || fallback?.notes || "Notes à préciser";
 
   return {
+    createdAt: product.created_at ?? undefined,
+    isBestseller: Boolean(product.is_bestseller),
     name,
     ref: product.subtitle || fallback?.ref || "Collection 2M",
     notes,

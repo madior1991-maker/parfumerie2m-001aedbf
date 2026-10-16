@@ -31,6 +31,12 @@ function validateBoutiqueSearch(search: Record<string, unknown>): { collection?:
 }
 
 
+const NEW_DAYS = 14;
+function isNewProduct(product: BoutiqueProduct) {
+  if (!product.createdAt) return false;
+  return Date.now() - new Date(product.createdAt).getTime() < NEW_DAYS * 24 * 3600 * 1000;
+}
+
 const PAGE_SIZE = 25; // 5 rangées de 5 sur ordinateur
 
 function shuffle<T>(items: T[]) {
@@ -107,7 +113,20 @@ function BoutiquePage() {
     setProducts(mergeLiveCatalog(data ?? []));
   };
 
-  const mixedProducts = useMemo(() => mixProductsByCollection(products), [products]);
+  // Les nouveautés d'abord (ajoutées depuis 14 jours, les plus récentes en tête),
+  // puis les meilleures ventes, puis le reste mélangé.
+  const mixedProducts = useMemo(() => {
+    const isNew = (p: BoutiqueProduct) => isNewProduct(p);
+    const fresh = products
+      .filter(isNew)
+      .sort((a, b) => (b.createdAt ?? "").localeCompare(a.createdAt ?? ""));
+    const others = products.filter((p) => !isNew(p));
+    return [
+      ...fresh,
+      ...mixProductsByCollection(others.filter((p) => p.isBestseller)),
+      ...mixProductsByCollection(others.filter((p) => !p.isBestseller)),
+    ];
+  }, [products]);
 
   const filteredProducts = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
@@ -447,6 +466,11 @@ function CatalogCard({ product, index }: { product: BoutiqueProduct; index: numb
         <span className="absolute left-3 top-3 z-10 rounded-full bg-surface px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
           {label}
         </span>
+        {isNewProduct(product) && (
+          <span className="absolute right-3 top-3 z-10 rounded-full bg-accent px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-primary-foreground">
+            Nouveau
+          </span>
+        )}
         {product.placeholder && (
           <span className="absolute right-3 top-3 z-10 rounded-full bg-accent-muted px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-accent">
             À renseigner

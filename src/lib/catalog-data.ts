@@ -73,6 +73,8 @@ export type BoutiqueProduct = {
   description: string;
   slug?: string;
   placeholder?: boolean;
+  createdAt?: string;
+  isBestseller?: boolean;
 };
 
 export const collectionFilters: { label: string; value: KnownCollection }[] = [
