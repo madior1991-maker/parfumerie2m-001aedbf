@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { CollectionPage } from "@/components/commerce/CollectionPage";
+import { seoMeta } from "@/components/commerce/SeoText";
 
 const URL = "https://www.2mparfumeriedk.com/collections/scentlab";
-const TITLE = "SCENTLAB Dakar | Parfums de luxe livrés à Dakar — 2M Parfumerie";
-const DESC =
-  "Achetez SCENTLAB à Dakar chez 2M Parfumerie. Collection complète de parfums SCENTLAB disponibles à Dakar avec livraison express et confirmation directe avec le gérant.";
+const TITLE = seoMeta("/collections/scentlab").title;
+const DESC = seoMeta("/collections/scentlab").desc;
 
 export const Route = createFileRoute("/collections/scentlab")({
   head: () => ({

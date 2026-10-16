@@ -3,10 +3,11 @@
 // WhatsApp, Facebook et Google lisent ces balises sans exécuter le JavaScript.
 import fs from "node:fs";
 import path from "node:path";
+import { seoContent, injectBody, injectHead, jsonLd, STORE, stripSeo } from "./seo-body.mjs";
 
 const SITE = "https://www.2mparfumeriedk.com";
 const dist = path.join(process.cwd(), "dist");
-const base = fs.readFileSync(path.join(dist, "index.html"), "utf8");
+const base = stripSeo(fs.readFileSync(path.join(dist, "index.html"), "utf8"));
 
 const pages = [
   { path: "/boutique", title: "Boutique parfums Dakar | Plus de 200 parfums dès 4 000 F — 2M Parfumerie", desc: "Plus de 200 parfums à Dakar dès 4 000 F : Haqqi, SCENTLAB, Takeoff, Parfums Dubai, parfums authentiques et coffrets. Commande sur WhatsApp, livraison rapide à Dakar, 24 à 48h en régions.", image: "default" },
@@ -18,6 +19,8 @@ const pages = [
   { path: "/collections/collections-privees", title: "Collections privées Dakar | Parfums exclusifs — 2M Parfumerie", desc: "Une sélection exclusive de parfums rares à Dakar. Commande sur WhatsApp, livraison rapide à Dakar, 24 à 48h en régions.", image: "default" },
   { path: "/collections/callisto-paris", title: "Callisto Paris à Dakar | Parfums de la maison Callisto — 2M Parfumerie", desc: "Les parfums Callisto Paris à Dakar : African Gold, Oud Sable, Iris Absolu et plus. Commande sur WhatsApp, livraison rapide à Dakar, 24 à 48h en régions.", image: "default" },
   { path: "/collections/coffrets", title: "Coffrets parfums Dakar | Idées cadeaux — 2M Parfumerie", desc: "Coffrets de parfums prêts à offrir à Dakar. Commande sur WhatsApp, livraison rapide à Dakar, 24 à 48h en régions, offerte dès 75 000 FCFA.", image: "default" },
+  { path: "/collections/parfums-dubai", title: "", desc: "", image: "default" },
+  { path: "/collections/parfums-authentiques", title: "", desc: "", image: "default" },
   { path: "/catalogues", title: "Catalogues PDF à télécharger | 2M Parfumerie Dakar", desc: "Téléchargez gratuitement les catalogues 2M Parfumerie : Haqqi, SCENTLAB, Takeoff, Parfums de poche, Parfums Dubai, parfums authentiques, Callisto Paris, collections privées et coffrets.", image: "default" },
   { path: "/collections/fragrance-library", title: "Fragrance Library à Dakar | Eaux de parfum 100 ml à 30 000 F — 2M Parfumerie", desc: "Les eaux de parfum Fragrance Library à 30 000 F : A Tale of Two Cities, The Golden Bowl, Sense and Sensibility et plus. Commande sur WhatsApp, livraison partout au Sénégal.", image: "default" },
   { path: "/livraison", title: "Livraison rapide à Dakar, 24 à 48h en régions | 2M Parfumerie", desc: "Livraison rapide à Dakar (1 500 à 2 000 FCFA selon la zone), 24 à 48h en régions (2 000 FCFA), offerte dès 75 000 FCFA. Paiement Wave, Orange Money ou espèces.", image: "default" },
@@ -37,7 +40,9 @@ function setMeta(html, attr, key, value) {
   return re.test(html) ? html.replace(re, tag) : html.replace("</head>", `    ${tag}\n  </head>`);
 }
 
-for (const page of pages) {
+for (const page of [...pages, { path: "/", image: "default" }]) {
+  const seo = seoContent[page.path];
+  if (seo) { page.title = seo.title; page.desc = seo.desc; }
   const url = SITE + (page.path === "/" ? "/" : page.path);
   const img = `${SITE}/og/${page.image}.jpg`;
   let html = base.replace(/<title>[^<]*<\/title>/, `<title>${esc(page.title)}</title>`);
@@ -49,7 +54,8 @@ for (const page of pages) {
   html = setMeta(html, "name", "twitter:title", page.title);
   html = setMeta(html, "name", "twitter:description", page.desc);
   html = setMeta(html, "name", "twitter:image", img);
-  html = html.replace("</head>", `    <link rel="canonical" href="${url}" />\n  </head>`);
+  html = injectHead(html, `<link rel="canonical" href="${url}" />${page.path === "/" ? jsonLd(STORE) : ""}`);
+  if (seo) html = injectBody(html, seo);
   const out = page.path === "/" ? path.join(dist, "index.html") : path.join(dist, `${page.path.slice(1)}.html`);
   fs.mkdirSync(path.dirname(out), { recursive: true });
   fs.writeFileSync(out, html);

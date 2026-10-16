@@ -18,6 +18,8 @@ const ROUTES = [
   "/conseils",
   "/trouve-ton-parfum",
   "/collections/takeoff",
+  "/collections/parfums-dubai",
+  "/collections/parfums-authentiques",
   "/collections/haqqi",
   "/collections/scentlab",
   "/collections/parfums-de-poches",

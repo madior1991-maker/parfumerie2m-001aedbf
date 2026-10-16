@@ -2,6 +2,7 @@
 // et un plan du site à jour. Si la base ne répond pas, on ne change rien.
 import fs from "node:fs";
 import path from "node:path";
+import { injectBody, injectHead, jsonLd, stripSeo, COLLECTION_PATH } from "./seo-body.mjs";
 
 const SITE = "https://www.2mparfumeriedk.com";
 const dist = path.join(process.cwd(), "dist");
@@ -65,7 +66,41 @@ function writeProductPage(base, p0) {
     html = setMeta(html, attr, k, v);
   }
   html = html.replace(/<meta property="og:image:(width|height)" content="[^"]*" \/>\s*/g, "");
-  html = html.replace("</head>", `    <link rel="canonical" href="${pageUrl}" />\n  </head>`);
+  const coll = collectionOf(p0.collection, p0.name);
+  const collPath = COLLECTION_PATH[coll] || "/boutique";
+  const ld = [
+    jsonLd({
+      "@context": "https://schema.org",
+      "@type": "Product",
+      name: p.name,
+      image: [image],
+      description: desc,
+      brand: { "@type": "Brand", name: label },
+      category: label,
+      ...(p.price > 0 && coll !== "pocket"
+        ? { offers: { "@type": "Offer", url: pageUrl, priceCurrency: "XOF", price: p.price, availability: "https://schema.org/InStock", seller: { "@type": "Organization", name: "2M Parfumerie" } } }
+        : {}),
+    }),
+    jsonLd({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Accueil", item: `${SITE}/` },
+        { "@type": "ListItem", position: 2, name: label, item: `${SITE}${collPath}` },
+        { "@type": "ListItem", position: 3, name: p.name, item: pageUrl },
+      ],
+    }),
+  ].join("");
+  html = injectHead(html, `<link rel="canonical" href="${pageUrl}" />${ld}`);
+  html = injectBody(html, {
+    h1: `${p.name} – ${label}`,
+    paragraphs: [
+      coll === "pocket" ? `${p.name} fait partie des parfums de poche 2M, vendus en pack de 5 à 10 000 F.` : `${p.name}, ${label}, à ${price(p.price)} chez 2M Parfumerie à Dakar.`,
+      p.notes ? `Notes : ${p.notes}.` : "",
+      "Commande sur WhatsApp au 76 192 34 41. Livraison rapide à Dakar, 24 à 48h dans les régions du Sénégal. Paiement Wave, Orange Money ou espèces.",
+    ].filter(Boolean),
+    links: [[`Voir la collection ${label}`, collPath], ["Toute la boutique", "/boutique"]],
+  });
   const out = path.join(dist, "boutique", `${p.slug}.html`);
   fs.mkdirSync(path.dirname(out), { recursive: true });
   fs.writeFileSync(out, html);
@@ -83,7 +118,7 @@ async function main() {
   const env = readEnv();
   const url = env.VITE_SUPABASE_URL;
   const key = env.VITE_SUPABASE_PUBLISHABLE_KEY;
-  const baseHtml = fs.readFileSync(path.join(dist, "index.html"), "utf8");
+  const baseHtml = stripSeo(fs.readFileSync(path.join(dist, "index.html"), "utf8"));
   if (!url || !key) {
     const n = writeStaticProducts(baseHtml);
     return console.log(`prerender-products: pas d'accès à la base, ${n} fiches du catalogue local`);

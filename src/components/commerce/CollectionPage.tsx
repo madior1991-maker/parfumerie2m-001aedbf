@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { AddToCartButton } from "@/components/commerce/AddToCartButton";
 import { CatalogueDownload } from "@/components/commerce/CatalogueDownload";
 import { SiteLayout } from "@/components/commerce/SiteLayout";
+import { SeoText } from "@/components/commerce/SeoText";
 import {
   collectionLabel,
   formatPrice,
@@ -212,6 +213,7 @@ export function CollectionPage({
       </section>
 
       {children}
+      <SeoText />
     </SiteLayout>
   );
 }

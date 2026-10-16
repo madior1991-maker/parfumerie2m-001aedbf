@@ -1,4 +1,5 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
+import { SeoText, seoMeta } from "@/components/commerce/SeoText";
 import { useMemo } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -9,9 +10,8 @@ import { catalog } from "@/lib/catalog-data";
 import { whatsappUrl } from "@/lib/perfume-data";
 
 const URL = "https://www.2mparfumeriedk.com/collections/parfums-de-poches";
-const TITLE = "Parfums de poche Dakar | Pack de 5 à 10 000 F — 2M Parfumerie";
-const DESC =
-  "Parfums de poche chez 2M Parfumerie : compose ton pack de 5 parfums à 10 000 FCFA. Un format pratique à glisser dans le sac, livré partout au Sénégal.";
+const TITLE = seoMeta("/collections/parfums-de-poches").title;
+const DESC = seoMeta("/collections/parfums-de-poches").desc;
 
 const families = ["Homme", "Unisex", "Femme"] as const;
 
@@ -145,6 +145,7 @@ function PocketPage() {
           </div>
         </div>
       </section>
+      <SeoText />
     </SiteLayout>
   );
 }

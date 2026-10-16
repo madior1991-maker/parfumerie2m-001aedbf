@@ -20,19 +20,19 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { mergeLiveCatalog } from "@/lib/live-catalog";
 import { whatsappUrl } from "@/lib/perfume-data";
+import { SeoText, seoMeta } from "@/components/commerce/SeoText";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     // Les balises de partage (og:, twitter:) sont dans index.html, une seule fois.
     meta: [
-      { title: "2M Parfumerie Dakar | Parfums dès 4 000 F, livrés partout au Sénégal" },
+      { title: seoMeta("/").title },
       {
         name: "description",
-        content:
-          "Parfums à Dakar dès 4 000 F : Haqqi, SCENTLAB, Takeoff, Parfums Dubai et parfums authentiques. Commande sur WhatsApp, livraison rapide à Dakar, 24 à 48h en régions. Paiement Wave, Orange Money ou espèces.",
+        content: seoMeta("/").desc,
       },
       { name: "ai:summary", content: "2M Parfumerie vend des parfums à Dakar (Haqqi, SCENTLAB, Takeoff, Parfums Dubai, parfums authentiques), livraison partout au Sénégal." },
-      { name: "keywords", content: "Haqqi, Scentlab, Takeoff Fragance, Parfums authentique, Parfums Dubai, Parfums de poches, Collections privées, Fragance Library" },
+      { name: "keywords", content: "parfum Dakar, parfumerie Dakar, parfum Haqqi, parfum SCENTLAB, parfums authentiques Dakar, parfums Dubai, Takeoff Fragrance, parfum de poche, coffret parfum, Fragrance Library" },
     ],
     links: [{ rel: "canonical", href: "https://www.2mparfumeriedk.com/" }],
     scripts: [
@@ -40,14 +40,14 @@ export const Route = createFileRoute("/")({
         type: "application/ld+json",
         children: JSON.stringify({
           "@context": "https://schema.org",
-          "@type": "LocalBusiness",
+          "@type": "Store",
           name: "2M Parfumerie",
           description:
-            "2M Parfumerie est spécialisée dans la vente de parfums de qualité et propose une sélection variée de fragrances inspirées des grandes maisons, adaptées à tous les styles et à toutes les occasions. Nous vendons les parfums et collections suivants : Haqqi, Scentlab, Takeoff Fragance, Parfums authentique, Parfums Dubai, Parfums de poches, Collections privées, Fragance Library",
+            "2M Parfumerie est spécialisée dans la vente de parfums de qualité et propose une sélection variée de fragrances inspirées des grandes maisons, adaptées à tous les styles et à toutes les occasions. Nous vendons les parfums et collections suivants : parfum Dakar, parfumerie Dakar, parfum Haqqi, parfum SCENTLAB, parfums authentiques Dakar, parfums Dubai, Takeoff Fragrance, parfum de poche, coffret parfum, Fragrance Library",
           url: "https://www.2mparfumeriedk.com",
           telephone: "+221761923441",
           email: "2mparfumerie2025@gmail.com",
-          keywords: "Haqqi, Scentlab, Takeoff Fragance, Parfums authentique, Parfums Dubai, Parfums de poches, Collections privées, Fragance Library",
+          keywords: "parfum Dakar, parfumerie Dakar, parfum Haqqi, parfum SCENTLAB, parfums authentiques Dakar, parfums Dubai, Takeoff Fragrance, parfum de poche, coffret parfum, Fragrance Library",
           address: {
             "@type": "PostalAddress",
             addressCountry: "SN",
@@ -57,6 +57,7 @@ export const Route = createFileRoute("/")({
           sameAs: [
             "https://instagram.com/2mparfumeriesn",
             "https://www.facebook.com/profile.php?id=61551806734713",
+            "https://www.tiktok.com/@2mparfumerie",
           ],
         }),
       },
@@ -79,9 +80,9 @@ const homeCollections = [
   { name: "Haqqi", price: "Dès 4 000 F", note: "Pack de 3 à 10 000 F", image: "/images/home/tuile-haqqi.webp", to: "/collections/haqqi" },
   { name: "SCENTLAB", price: "6 000 F", note: "Pack de 3 à 15 000 F", image: "/images/optimized/scentlab-boxes-w800.webp", to: "/collections/scentlab" },
   { name: "Takeoff", price: "25 000 F", note: "Les 2 à 50 000 F", image: takeoffParisImage, to: "/collections/takeoff" },
-  { name: "Parfums Dubai", price: "Dès 12 000 F", note: "Parfums orientaux", image: "/images/home/tuile-dubai.webp", to: "/boutique", collection: "dubai" },
+  { name: "Parfums Dubai", price: "Dès 12 000 F", note: "Parfums orientaux", image: "/images/home/tuile-dubai.webp", to: "/collections/parfums-dubai" },
   { name: "Parfums de poche", price: "Pack de 5", note: "10 000 F", image: "/images/optimized/pocket-perfumes-homme-w800.webp", to: "/collections/parfums-de-poches" },
-  { name: "Parfums authentiques", price: "Originaux", note: "Grandes maisons", image: "/videos/authentic-poster.jpg", to: "/boutique", collection: "authentic" },
+  { name: "Parfums authentiques", price: "Originaux", note: "Grandes maisons", image: "/videos/authentic-poster.jpg", to: "/collections/parfums-authentiques" },
 ] as const;
 
 const featuredPackCards = [
@@ -611,6 +612,7 @@ function Index() {
         </div>
       </section>
 
+      <SeoText />
     </SiteLayout>
   );
 }

@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { CollectionPage } from "@/components/commerce/CollectionPage";
+import { seoMeta } from "@/components/commerce/SeoText";
 
 const URL = "https://www.2mparfumeriedk.com/collections/coffrets";
-const TITLE = "Coffrets parfums Dakar | 2M Parfumerie";
-const DESC =
-  "Découvrez les coffrets de 2M Parfumerie : des ensembles de parfums prêts à offrir, livrés partout au Sénégal. Commandez sur WhatsApp.";
+const TITLE = seoMeta("/collections/coffrets").title;
+const DESC = seoMeta("/collections/coffrets").desc;
 
 export const Route = createFileRoute("/collections/coffrets")({
   head: () => ({

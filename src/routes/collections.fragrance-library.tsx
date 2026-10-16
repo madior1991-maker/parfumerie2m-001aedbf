@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { CollectionPage } from "@/components/commerce/CollectionPage";
+import { seoMeta } from "@/components/commerce/SeoText";
 
 const URL = "https://www.2mparfumeriedk.com/collections/fragrance-library";
-const TITLE = "Fragrance Library à Dakar | Eaux de parfum 100 ml à 30 000 F — 2M Parfumerie";
-const DESC =
-  "Fragrance Library à Dakar : A Tale of Two Cities, The Golden Bowl, Sense and Sensibility, In Search of Lost Time, Heart of Darkness, The Magic Mountain. Eaux de parfum 100 ml à 30 000 F, livrées partout au Sénégal.";
+const TITLE = seoMeta("/collections/fragrance-library").title;
+const DESC = seoMeta("/collections/fragrance-library").desc;
 
 export const Route = createFileRoute("/collections/fragrance-library")({
   head: () => ({

@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { CollectionPage } from "@/components/commerce/CollectionPage";
+import { seoMeta } from "@/components/commerce/SeoText";
 
 const URL = "https://www.2mparfumeriedk.com/collections/callisto-paris";
-const TITLE = "Callisto Paris à Dakar | Parfums de la maison Callisto — 2M Parfumerie";
-const DESC =
-  "Les parfums Callisto Paris à Dakar : African Gold, Oud Sable, Iris Absolu, Iris Gourmand, Cœur de Patchouli. Commande sur WhatsApp, livraison partout au Sénégal.";
+const TITLE = seoMeta("/collections/callisto-paris").title;
+const DESC = seoMeta("/collections/callisto-paris").desc;
 
 export const Route = createFileRoute("/collections/callisto-paris")({
   head: () => ({

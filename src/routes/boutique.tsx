@@ -19,6 +19,7 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { mergeLiveCatalog } from "@/lib/live-catalog";
 import { PocketShowcase } from "@/components/commerce/PocketShowcase";
+import { SeoText, seoMeta } from "@/components/commerce/SeoText";
 
 function validateBoutiqueSearch(search: Record<string, unknown>): { collection?: Collection } {
   if (typeof search.collection !== "string" || !search.collection.trim()) {
@@ -61,11 +62,10 @@ export const Route = createFileRoute("/boutique")({
   validateSearch: validateBoutiqueSearch,
   head: () => ({
     meta: [
-      { title: "Boutique parfums Dakar | Plus de 200 parfums dès 4 000 F — 2M Parfumerie" },
+      { title: seoMeta("/boutique").title },
       {
         name: "description",
-        content:
-          "Plus de 200 parfums à Dakar dès 4 000 F : Haqqi, SCENTLAB, Takeoff, Parfums Dubai et parfums authentiques. Commande sur WhatsApp, livraison rapide à Dakar, 24 à 48h en régions.",
+        content: seoMeta("/boutique").desc,
       },
     ],
     links: [{ rel: "canonical", href: "https://www.2mparfumeriedk.com/boutique" }],
@@ -291,6 +291,7 @@ function BoutiquePage() {
         </div>
       </section>
       )}
+      <SeoText path="/boutique" />
     </SiteLayout>
   );
 }

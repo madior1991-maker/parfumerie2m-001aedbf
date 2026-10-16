@@ -49,6 +49,8 @@ type SiteCollection = {
     | "/collections/haqqi"
     | "/collections/scentlab"
     | "/collections/takeoff"
+    | "/collections/parfums-dubai"
+    | "/collections/parfums-authentiques"
     | "/collections/parfums-de-poches"
     | "/collections/collections-privees"
     | "/collections/callisto-paris"
@@ -64,8 +66,8 @@ const siteCollections: SiteCollection[] = [
   { label: "SCENTLAB", price: "6 000 F", to: "/collections/scentlab" },
   { label: "Takeoff", price: "25 000 F", to: "/collections/takeoff" },
   { label: "Parfums de poche", price: "Pack de 5 à 10 000 F", to: "/collections/parfums-de-poches" },
-  { label: "Parfums Dubai", price: "Dès 12 000 F", to: "/boutique", collection: "dubai" },
-  { label: "Parfums authentiques", price: "Les originaux", to: "/boutique", collection: "authentic" },
+  { label: "Parfums Dubai", price: "Dès 12 000 F", to: "/collections/parfums-dubai" },
+  { label: "Parfums authentiques", price: "Les originaux", to: "/collections/parfums-authentiques" },
   { label: "Callisto Paris", price: "75 000 F", to: "/collections/callisto-paris" },
   { label: "Collections privées", price: "Éditions rares", to: "/collections/collections-privees" },
   { label: "Coffrets", price: "Prêts à offrir", to: "/collections/coffrets" },
@@ -472,12 +474,6 @@ function SiteFooter() {
               {item.label}
             </Link>
           ))}
-          <Link
-            to="/collections/fragrance-library"
-            className="block min-h-9 py-1 text-[13px] text-muted-foreground hover:text-primary-foreground"
-          >
-            Fragrance Library
-          </Link>
         </FooterColumn>
         <FooterColumn title="Contact" className="col-span-2 lg:col-span-1">
           <a

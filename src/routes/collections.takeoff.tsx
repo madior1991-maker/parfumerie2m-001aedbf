@@ -3,14 +3,14 @@ import { createFileRoute } from "@tanstack/react-router";
 import takeoffPoster from "@/assets/poster takeoff.jpeg";
 import takeoffMoscow from "@/assets/takeoff-moscow.webp";
 import { CollectionPage } from "@/components/commerce/CollectionPage";
+import { seoMeta } from "@/components/commerce/SeoText";
 import { WhatsAppLogo } from "@/components/commerce/WhatsAppLogo";
 import { Button } from "@/components/ui/button";
 import { whatsappUrl } from "@/lib/perfume-data";
 
 const URL = "https://www.2mparfumeriedk.com/collections/takeoff";
-const TITLE = "Takeoff Fragrance Dakar — 25 000 F, les 2 à 50 000 F | 2M Parfumerie";
-const DESC =
-  "Takeoff Fragrance à Dakar : parfums inspirés des grandes villes du monde à 25 000 FCFA, les 2 à 50 000 FCFA avec livraison offerte. Livraison rapide à Dakar, 24 à 48h en régions.";
+const TITLE = seoMeta("/collections/takeoff").title;
+const DESC = seoMeta("/collections/takeoff").desc;
 
 export const Route = createFileRoute("/collections/takeoff")({
   head: () => ({

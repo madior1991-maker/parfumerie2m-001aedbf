@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { CollectionPage } from "@/components/commerce/CollectionPage";
+import { seoMeta } from "@/components/commerce/SeoText";
 
 const URL = "https://www.2mparfumeriedk.com/collections/haqqi";
-const TITLE = "Haqqi Parfums Dakar | Collection abordable — 2M Parfumerie Dakar";
-const DESC =
-  "Découvrez la collection Haqqi chez 2M Parfumerie. Parfums de qualité à partir de 4 000 FCFA, livrés partout au Sénégal. Commandez sur WhatsApp.";
+const TITLE = seoMeta("/collections/haqqi").title;
+const DESC = seoMeta("/collections/haqqi").desc;
 
 export const Route = createFileRoute("/collections/haqqi")({
   head: () => ({

@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { CollectionPage } from "@/components/commerce/CollectionPage";
+import { seoMeta } from "@/components/commerce/SeoText";
 
 const URL = "https://www.2mparfumeriedk.com/collections/collections-privees";
-const TITLE = "Collections privées Dakar | Parfums exclusifs — 2M Parfumerie";
-const DESC =
-  "Découvrez les Collections privées de 2M Parfumerie : une sélection exclusive de parfums rares, livrée partout au Sénégal. Commandez sur WhatsApp.";
+const TITLE = seoMeta("/collections/collections-privees").title;
+const DESC = seoMeta("/collections/collections-privees").desc;
 
 export const Route = createFileRoute("/collections/collections-privees")({
   head: () => ({
