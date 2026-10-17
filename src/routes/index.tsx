@@ -9,7 +9,6 @@ import { PriceTag } from "@/components/commerce/PriceTag";
 import { SiteLayout } from "@/components/commerce/SiteLayout";
 import { WhatsAppLogo } from "@/components/commerce/WhatsAppLogo";
 import homeHeroBottle from "@/assets/home-white-bottle.webp";
-import takeoffParisImage from "@/assets/takeoff-paris.webp";
 import {
   catalog,
   collectionLabel,
@@ -79,11 +78,11 @@ const heroPrices = [
 
 const homeCollections = [
   { name: "Haqqi", price: "Dès 4 000 F", note: "Pack de 3 à 10 000 F", image: "/images/home/tuile-haqqi.webp", to: "/collections/haqqi" },
-  { name: "SCENTLAB", price: "6 000 F", note: "Pack de 3 à 15 000 F", image: "/images/optimized/scentlab-boxes-w800.webp", to: "/collections/scentlab" },
-  { name: "Takeoff", price: "25 000 F", note: "Les 2 à 50 000 F", image: takeoffParisImage, to: "/collections/takeoff" },
+  { name: "SCENTLAB", price: "6 000 F", note: "Pack de 3 à 15 000 F", image: "/images/home/tuile-scentlab.webp", to: "/collections/scentlab" },
+  { name: "Takeoff", price: "25 000 F", note: "Les 2 à 50 000 F", image: "/images/home/tuile-takeoff.webp", to: "/collections/takeoff" },
   { name: "Parfums Dubai", price: "Dès 12 000 F", note: "Parfums orientaux", image: "/images/home/tuile-dubai.webp", to: "/collections/parfums-dubai" },
-  { name: "Parfums de poche", price: "Pack de 5", note: "10 000 F", image: "/images/optimized/pocket-perfumes-homme-w800.webp", to: "/collections/parfums-de-poches" },
-  { name: "Parfums authentiques", price: "Originaux", note: "Grandes maisons", image: "/videos/authentic-poster.jpg", to: "/collections/parfums-authentiques" },
+  { name: "Parfums de poche", price: "Pack de 5", note: "10 000 F", image: "/images/home/tuile-poche.webp", to: "/collections/parfums-de-poches" },
+  { name: "Parfums authentiques", price: "Originaux", note: "Grandes maisons", image: "/images/home/tuile-authentiques.webp", to: "/collections/parfums-authentiques" },
   { name: "Callisto Paris", price: "75 000 F", note: "Extraits de parfum", image: "/images/home/tuile-callisto.webp", to: "/collections/callisto-paris" },
   { name: "Soie Sublime Paris", price: "90 000 F", note: "Au lieu de 120 000 F", image: "/images/home/tuile-soie-sublime.webp", to: "/collections/soie-sublime" },
   { name: "Collections privées", price: "Dès 25 000 F", note: "Éditions rares", image: "/images/home/tuile-privees.webp", to: "/collections/collections-privees" },
