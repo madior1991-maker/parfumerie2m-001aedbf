@@ -87,7 +87,7 @@ const homeCollections = [
   { name: "Soie Sublime Paris", price: "90 000 F", note: "Au lieu de 120 000 F", image: "/images/home/tuile-soie-sublime.webp", to: "/collections/soie-sublime" },
   { name: "Collections privées", price: "Dès 25 000 F", note: "Éditions rares", image: "/images/home/tuile-privees.webp", to: "/collections/collections-privees" },
   { name: "Coffrets", price: "90 000 F", note: "Prêts à offrir", image: "/images/home/tuile-coffrets.webp", to: "/collections/coffrets" },
-  { name: "Fragrance Library", price: "30 000 F", note: "Un roman par flacon", image: "/images/home/tuile-library.webp", to: "/collections/fragrance-library" },
+  { name: "Fragrance Library", price: "35 000 F", note: "Un roman par flacon", image: "/images/home/tuile-library.webp", to: "/collections/fragrance-library" },
 ] as const;
 
 const featuredPackCards = [
