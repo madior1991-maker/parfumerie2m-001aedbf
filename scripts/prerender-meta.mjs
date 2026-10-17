@@ -55,8 +55,27 @@ for (const page of [...pages, { path: "/", image: "default" }]) {
   html = setMeta(html, "name", "twitter:title", page.title);
   html = setMeta(html, "name", "twitter:description", page.desc);
   html = setMeta(html, "name", "twitter:image", img);
-  html = injectHead(html, `<link rel="canonical" href="${url}" />${page.path === "/" ? jsonLd(STORE) : ""}`);
-  if (seo) html = injectBody(html, seo);
+  const ld = [];
+  if (page.path === "/") {
+    ld.push(STORE, { "@context": "https://schema.org", "@type": "WebSite", "@id": `${SITE}/#website`, name: "2M Parfumerie", url: `${SITE}/`, inLanguage: "fr-SN", publisher: { "@id": `${SITE}/#store` } });
+  } else {
+    const name = (seo?.h1 || page.title.split(/ [|:—–] /)[0]).trim();
+    const crumbs = [{ "@type": "ListItem", position: 1, name: "Accueil", item: `${SITE}/` }];
+    if (page.path.startsWith("/collections/")) crumbs.push({ "@type": "ListItem", position: 2, name: "Boutique", item: `${SITE}/boutique` });
+    crumbs.push({ "@type": "ListItem", position: crumbs.length + 1, name, item: url });
+    ld.push({ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: crumbs });
+    if (page.path.startsWith("/collections/")) ld.push({ "@context": "https://schema.org", "@type": "CollectionPage", name, description: page.desc, url, inLanguage: "fr-SN", isPartOf: { "@id": `${SITE}/#website` } });
+  }
+  let body = seo;
+  if (page.path === "/faq") {
+    const src = fs.readFileSync(path.join(process.cwd(), "src/components/commerce/Faq.tsx"), "utf8");
+    const faqs = [...src.matchAll(/question:\s*"([^"]+)",\s*answer:\s*"((?:[^"\\]|\\.)*)"/g)].map((m) => ({ q: m[1], a: m[2].replace(/\\n/g, " ") }));
+    ld.push({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) });
+    body = { h1: "Questions fréquentes", paragraphs: faqs.flatMap((f) => [f.q, f.a]), links: [["Livraison", "/livraison"], ["Contact", "/contact"], ["Boutique", "/boutique"]] };
+  }
+  if (page.path === "/contact") ld.push(STORE);
+  html = injectHead(html, `<link rel="canonical" href="${url}" />${ld.map(jsonLd).join("")}`);
+  if (body?.h1) html = injectBody(html, body);
   const out = page.path === "/" ? path.join(dist, "index.html") : path.join(dist, `${page.path.slice(1)}.html`);
   fs.mkdirSync(path.dirname(out), { recursive: true });
   fs.writeFileSync(out, html);

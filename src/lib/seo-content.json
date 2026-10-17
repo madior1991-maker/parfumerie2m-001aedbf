@@ -1,7 +1,7 @@
 {
   "/": {
     "title": "Parfum Dakar : parfumerie en ligne dès 4 000 F | 2M Parfumerie",
-    "desc": "Parfumerie en ligne à Dakar : parfums Haqqi dès 4 000 F, SCENTLAB 6 000 F, parfums authentiques, parfums Dubai et coffrets. Commande sur WhatsApp, livraison partout au Sénégal.",
+    "desc": "Parfumerie en ligne à Dakar : Haqqi dès 4 000 F, SCENTLAB 6 000 F, parfums Dubai, authentiques et coffrets. Commande sur WhatsApp, livraison partout au Sénégal.",
     "h1": "Parfum à Dakar dès 4 000 F, livré partout au Sénégal",
     "heading": "Votre parfumerie en ligne à Dakar",
     "paragraphs": [
@@ -37,8 +37,8 @@
     ]
   },
   "/boutique": {
-    "title": "Boutique parfum Dakar : plus de 200 parfums dès 4 000 F | 2M Parfumerie",
-    "desc": "Achetez votre parfum à Dakar : plus de 200 parfums homme et femme, Haqqi, SCENTLAB, Takeoff, parfums Dubai et parfums authentiques. Commande sur WhatsApp, livraison partout au Sénégal.",
+    "title": "Boutique parfum Dakar : 200+ parfums dès 4 000 F | 2M Parfumerie",
+    "desc": "Plus de 200 parfums à Dakar dès 4 000 F : Haqqi, SCENTLAB, Takeoff, Parfums Dubai, authentiques et coffrets. Commande sur WhatsApp, livraison partout au Sénégal.",
     "h1": "La Boutique : plus de 200 parfums à Dakar",
     "heading": "Acheter un parfum à Dakar, simplement",
     "paragraphs": [
@@ -121,7 +121,7 @@
     ]
   },
   "/collections/takeoff": {
-    "title": "Takeoff Fragrance Dakar : parfum 25 000 F, les 2 à 50 000 F | 2M Parfumerie",
+    "title": "Takeoff Fragrance Dakar : 25 000 F, les 2 à 50 000 F | 2M Parfumerie",
     "desc": "Takeoff Fragrance à Dakar : eaux de parfum inspirées des grandes villes du monde à 25 000 F, les 2 à 50 000 F avec livraison offerte. Commande sur WhatsApp.",
     "h1": "Takeoff Fragrance à Dakar",
     "heading": "Takeoff : un parfum, une ville",
@@ -193,8 +193,8 @@
     ]
   },
   "/collections/parfums-authentiques": {
-    "title": "Parfums authentiques à Dakar : originaux des grandes marques | 2M Parfumerie",
-    "desc": "Parfums authentiques à Dakar : Yves Saint Laurent, Hermès, Guerlain, Givenchy, Paco Rabanne et autres originaux. Commande sur WhatsApp, livraison partout au Sénégal.",
+    "title": "Parfums authentiques à Dakar : originaux des grandes marques | 2M",
+    "desc": "Parfums authentiques à Dakar : Yves Saint Laurent, Hermès, Guerlain, Givenchy, Rabanne… Originaux en flacon d'origine, livrés partout au Sénégal.",
     "h1": "Parfums authentiques à Dakar",
     "heading": "Les originaux des grandes maisons",
     "paragraphs": [
@@ -218,7 +218,7 @@
   },
   "/collections/callisto-paris": {
     "title": "Callisto Paris à Dakar : extraits de parfum à 75 000 F | 2M Parfumerie",
-    "desc": "Les extraits de parfum Callisto Paris à Dakar : African Gold, Oud Sable, Iris Absolu, Iris Gourmand, Cœur de Patchouli. Commande sur WhatsApp, livraison partout au Sénégal.",
+    "desc": "Extraits de parfum Callisto Paris à Dakar : African Gold, Oud Sable, Iris Absolu, Iris Gourmand, Cœur de Patchouli. 75 000 F, livraison offerte.",
     "h1": "Callisto Paris à Dakar",
     "heading": "La maison parisienne Callisto",
     "paragraphs": [
@@ -237,7 +237,7 @@
     ]
   },
   "/collections/collections-privees": {
-    "title": "Collections privées à Dakar : parfums rares dès 25 000 F | 2M Parfumerie",
+    "title": "Collections privées Dakar : parfums rares dès 25 000 F | 2M Parfumerie",
     "desc": "Parfums rares à Dakar : Collection Prestige Paris, Reef. Extraits de parfum dès 25 000 F, commande sur WhatsApp, livraison partout au Sénégal.",
     "h1": "Collections privées : des parfums rares à Dakar",
     "heading": "Des sillages qu'on ne croise pas partout",
@@ -281,8 +281,8 @@
     ]
   },
   "/collections/fragrance-library": {
-    "title": "Fragrance Library à Dakar : eaux de parfum 100 ml à 30 000 F | 2M Parfumerie",
-    "desc": "Les eaux de parfum Fragrance Library à 30 000 F : A Tale of Two Cities, The Golden Bowl, Sense and Sensibility et plus. Commande sur WhatsApp, livraison partout au Sénégal.",
+    "title": "Fragrance Library Dakar : eaux de parfum 100 ml à 30 000 F | 2M",
+    "desc": "Eaux de parfum Fragrance Library à 30 000 F à Dakar : A Tale of Two Cities, The Golden Bowl, Sense and Sensibility… Livraison partout au Sénégal.",
     "h1": "Fragrance Library : des parfums qui se lisent comme des romans",
     "heading": "Un parfum, un roman",
     "paragraphs": [
@@ -301,7 +301,7 @@
     ]
   },
   "/collections/soie-sublime": {
-    "title": "Soie Sublime Paris à Dakar : extraits de parfum à 90 000 F | 2M Parfumerie",
+    "title": "Soie Sublime Paris à Dakar : extraits de parfum à 90 000 F | 2M",
     "desc": "Soie Sublime Paris à Dakar : Alba, Encens et Somari, extraits de parfum à 90 000 F au lieu de 120 000 F. Commande sur WhatsApp, livraison partout au Sénégal.",
     "h1": "Soie Sublime Paris à Dakar",
     "heading": "La maison Soie Sublime Paris",
@@ -321,6 +321,280 @@
       [
         "Toute la boutique",
         "/boutique"
+      ]
+    ]
+  },
+  "/catalogues": {
+    "title": "Catalogues PDF parfums à télécharger | 2M Parfumerie Dakar",
+    "desc": "Télécharge gratuitement les catalogues PDF de 2M Parfumerie : les 11 collections avec senteurs et prix, ou le catalogue complet de 46 pages.",
+    "h1": "Catalogues PDF de 2M Parfumerie",
+    "heading": "Toutes nos collections, à garder ou à partager",
+    "paragraphs": [
+      "Chaque collection a son catalogue PDF, avec les senteurs et les prix : Haqqi, SCENTLAB, Takeoff, Parfums de poche, Parfums Dubai, parfums authentiques, Callisto Paris, collections privées, coffrets, Fragrance Library et Soie Sublime Paris.",
+      "Le catalogue complet rassemble les 11 collections en 46 pages. Envoie-le à tes proches, puis commande sur WhatsApp au 76 192 34 41.",
+      "Livraison rapide à Dakar (1 500 à 2 000 F selon la zone), 24 à 48h dans les régions (2 000 F), offerte dès 75 000 F d'achat."
+    ],
+    "links": [
+      [
+        "Haqqi, dès 4 000 F",
+        "/collections/haqqi"
+      ],
+      [
+        "SCENTLAB, 6 000 F",
+        "/collections/scentlab"
+      ],
+      [
+        "Takeoff, 25 000 F",
+        "/collections/takeoff"
+      ],
+      [
+        "Parfums de poche, 5 pour 10 000 F",
+        "/collections/parfums-de-poches"
+      ],
+      [
+        "Parfums Dubai, dès 12 000 F",
+        "/collections/parfums-dubai"
+      ],
+      [
+        "Parfums authentiques",
+        "/collections/parfums-authentiques"
+      ],
+      [
+        "Callisto Paris, 75 000 F",
+        "/collections/callisto-paris"
+      ],
+      [
+        "Soie Sublime Paris, 90 000 F",
+        "/collections/soie-sublime"
+      ],
+      [
+        "Collections privées, dès 25 000 F",
+        "/collections/collections-privees"
+      ],
+      [
+        "Coffrets, 90 000 F",
+        "/collections/coffrets"
+      ],
+      [
+        "Fragrance Library, 30 000 F",
+        "/collections/fragrance-library"
+      ]
+    ]
+  },
+  "/coffret-signature": {
+    "title": "Compose ton pack de parfums : 3 Haqqi à 10 000 F | 2M Parfumerie",
+    "desc": "Compose ton pack : 3 parfums Haqqi à 10 000 F, 3 SCENTLAB à 15 000 F ou 5 parfums de poche à 10 000 F. Choisis en photos, valide sur WhatsApp.",
+    "h1": "Compose ton pack de parfums",
+    "heading": "Trois packs, choisis tes senteurs en photos",
+    "paragraphs": [
+      "Pack Haqqi : 3 eaux de parfum de 40 ml au choix pour 10 000 F, parmi 60 senteurs inspirées des grands parfums.",
+      "Pack SCENTLAB : 3 eaux de parfum de 50 ml au choix pour 15 000 F, parmi 61 senteurs.",
+      "Pack parfums de poche : 5 parfums au choix pour 10 000 F, parmi 49 senteurs homme et femme.",
+      "Choisis tes parfums, puis valide ton pack sur WhatsApp. Livraison rapide à Dakar (1 500 à 2 000 F selon la zone), 24 à 48h dans les régions (2 000 F), offerte dès 75 000 F d'achat."
+    ],
+    "links": [
+      [
+        "Collection Haqqi",
+        "/collections/haqqi"
+      ],
+      [
+        "Collection SCENTLAB",
+        "/collections/scentlab"
+      ],
+      [
+        "Parfums de poche",
+        "/collections/parfums-de-poches"
+      ]
+    ]
+  },
+  "/contact": {
+    "title": "Contact 2M Parfumerie Dakar : WhatsApp 76 192 34 41",
+    "desc": "Contacte 2M Parfumerie : WhatsApp et appels au 76 192 34 41, second numéro 78 144 17 66, email 2mparfumerie2025@gmail.com. Livraison partout au Sénégal.",
+    "h1": "Contacter 2M Parfumerie",
+    "heading": "WhatsApp, téléphone et réseaux",
+    "paragraphs": [
+      "WhatsApp et appels : +221 76 192 34 41. Second numéro : +221 78 144 17 66. Email : 2mparfumerie2025@gmail.com.",
+      "Instagram @2mparfumeriesn, TikTok @2mparfumerie, Facebook 2MPARFUMERIE-Dk.",
+      "Horaires : lundi au vendredi de 8h à 20h, samedi de 9h à 20h, dimanche de 10h à 18h.",
+      "Livraison rapide à Dakar (1 500 à 2 000 F selon la zone), 24 à 48h dans les régions (2 000 F), offerte dès 75 000 F d'achat."
+    ],
+    "links": [
+      [
+        "Livraison",
+        "/livraison"
+      ],
+      [
+        "Questions fréquentes",
+        "/faq"
+      ],
+      [
+        "Boutique",
+        "/boutique"
+      ]
+    ]
+  },
+  "/livraison": {
+    "title": "Livraison parfum à Dakar et au Sénégal | 2M Parfumerie",
+    "desc": "Livraison rapide à Dakar (1 500 à 2 000 F), 24 à 48h en régions (2 000 F), offerte dès 75 000 F. Paiement Wave, Orange Money ou espèces.",
+    "h1": "Livraison à Dakar et partout au Sénégal",
+    "heading": "Tarifs et délais",
+    "paragraphs": [
+      "Livraison rapide à Dakar (1 500 à 2 000 F selon la zone), 24 à 48h dans les régions (2 000 F), offerte dès 75 000 F d'achat.",
+      "La livraison est aussi offerte pour 2 parfums Takeoff (50 000 F).",
+      "Paiement à la réception par Wave, Orange Money ou en espèces. Chaque commande est confirmée sur WhatsApp avant l'envoi.",
+      "Flacon abîmé ou erreur de commande : envoie une photo sur WhatsApp dans les 24h après réception, on te l'échange sans frais."
+    ],
+    "links": [
+      [
+        "Contact",
+        "/contact"
+      ],
+      [
+        "Questions fréquentes",
+        "/faq"
+      ],
+      [
+        "Boutique",
+        "/boutique"
+      ]
+    ]
+  },
+  "/a-propos": {
+    "title": "À propos de 2M Parfumerie, parfumerie en ligne à Dakar",
+    "desc": "2M Parfumerie, parfumerie en ligne à Dakar : 11 collections de 4 000 F à 130 000 F, créations inspirées et originaux des grandes maisons, livrés partout au Sénégal.",
+    "h1": "À propos de 2M Parfumerie",
+    "heading": "Le parfum pour tous, au juste prix",
+    "paragraphs": [
+      "2M Parfumerie est une parfumerie en ligne basée à Dakar. Onze collections couvrent tous les budgets, de 4 000 F à 130 000 F : des créations inspirées des grands parfums, présentées comme telles, et les originaux des grandes maisons.",
+      "Chaque fiche indique clairement s'il s'agit d'un original ou d'une création inspirée. Les commandes se font sur WhatsApp, avec un conseil personnalisé.",
+      "Livraison rapide à Dakar (1 500 à 2 000 F selon la zone), 24 à 48h dans les régions (2 000 F), offerte dès 75 000 F d'achat."
+    ],
+    "links": [
+      [
+        "Haqqi, dès 4 000 F",
+        "/collections/haqqi"
+      ],
+      [
+        "SCENTLAB, 6 000 F",
+        "/collections/scentlab"
+      ],
+      [
+        "Takeoff, 25 000 F",
+        "/collections/takeoff"
+      ],
+      [
+        "Parfums de poche, 5 pour 10 000 F",
+        "/collections/parfums-de-poches"
+      ],
+      [
+        "Parfums Dubai, dès 12 000 F",
+        "/collections/parfums-dubai"
+      ],
+      [
+        "Parfums authentiques",
+        "/collections/parfums-authentiques"
+      ]
+    ]
+  },
+  "/faq": {
+    "title": "FAQ 2M Parfumerie : livraison, paiement, authenticité",
+    "desc": "Questions fréquentes : parfums originaux ou inspirés, livraison à Dakar et en régions, paiement Wave, Orange Money ou espèces, échanges."
+  },
+  "/conseils": {
+    "title": "Conseils parfum : choisir, porter, faire durer | 2M Parfumerie",
+    "desc": "Conseils pour choisir un parfum selon le moment et la chaleur du Sénégal : parfum de jour, parfum du soir et astuces pour qu'il tienne plus longtemps.",
+    "h1": "Conseils parfum",
+    "heading": "Choisir un parfum, c'est choisir une manière d'entrer",
+    "paragraphs": [
+      "Pour la journée : privilégiez les muscs propres, les agrumes et les fruités lumineux qui restent élégants sous la chaleur.",
+      "Pour le soir : osez l'ambre, le cuir, la tonka ou l'oud lorsque vous cherchez une présence plus sensuelle.",
+      "Pour durer : vaporisez sur peau hydratée, textile léger et points de chaleur, sans saturer votre entourage."
+    ],
+    "links": [
+      [
+        "Trouve ton parfum en 4 questions",
+        "/trouve-ton-parfum"
+      ],
+      [
+        "Blog parfum",
+        "/blog"
+      ],
+      [
+        "Boutique",
+        "/boutique"
+      ]
+    ]
+  },
+  "/trouve-ton-parfum": {
+    "title": "Quiz parfum : trouve ton parfum en 4 questions | 2M Parfumerie",
+    "desc": "Quiz gratuit : 4 questions, 3 parfums faits pour toi, dès 4 000 F. Commande sur WhatsApp, livraison rapide à Dakar, 24 à 48h en régions.",
+    "h1": "Trouve ton parfum en 4 questions",
+    "paragraphs": [
+      "Réponds à 4 questions simples (pour qui, quel moment, quelle ambiance, quel budget) et reçois 3 suggestions de parfums en 30 secondes, sans inscription.",
+      "Les suggestions viennent de nos collections Haqqi, SCENTLAB, Takeoff, Parfums Dubai et parfums authentiques."
+    ],
+    "links": [
+      [
+        "Boutique",
+        "/boutique"
+      ],
+      [
+        "Compose ton pack",
+        "/coffret-signature"
+      ]
+    ]
+  },
+  "/blog": {
+    "title": "Blog parfum Sénégal : conseils et prix à Dakar | 2M Parfumerie",
+    "desc": "Conseils parfum, prix à Dakar et comparatifs : Haqqi, SCENTLAB, parfums orientaux, idées cadeaux et parfums qui tiennent malgré la chaleur.",
+    "h1": "Le blog parfum de 2M Parfumerie",
+    "paragraphs": [
+      "Des conseils pour bien choisir son parfum à Dakar, des comparatifs de prix et des idées cadeaux."
+    ],
+    "links": [
+      [
+        "Parfum oriental à Dakar : oud, ambre et musc, comment choisir",
+        "/blog/parfum-oriental-dakar"
+      ],
+      [
+        "Idée cadeau parfum à Dakar : quoi offrir selon votre budget",
+        "/blog/idee-cadeau-parfum-dakar"
+      ],
+      [
+        "Parfum homme pas cher à Dakar : nos meilleurs choix dès 4 000 F",
+        "/blog/parfum-homme-pas-cher-dakar"
+      ],
+      [
+        "Où acheter du parfum à Dakar ? Prix et conseils",
+        "/blog/acheter-parfum-dakar"
+      ],
+      [
+        "SCENTLAB à Dakar : comment choisir",
+        "/blog/scentlab-dakar-comment-choisir"
+      ],
+      [
+        "Parfum Haqqi à Dakar : prix, senteurs et pack de 3",
+        "/blog/parfum-haqqi-dakar-prix"
+      ],
+      [
+        "Takeoff Fragrance : le parfum de 13 villes du monde à 25 000 F",
+        "/blog/takeoff-fragrance-le-parfum-de-12-villes-du-monde-a-25-000-f"
+      ],
+      [
+        "Parfum qui tient longtemps à Dakar : 6 conseils contre la chaleur",
+        "/blog/parfum-qui-tient-longtemps-a-dakar-6-conseils-contre-la-chaleur"
+      ],
+      [
+        "Quel parfum choisir pour la chaleur au Sénégal ?",
+        "/blog/parfum-chaleur-senegal"
+      ],
+      [
+        "Les parfums les plus demandés à Dakar cette saison",
+        "/blog/parfums-demandes-dakar"
+      ],
+      [
+        "Comment reconnaître un parfum authentique",
+        "/blog/authenticite-parfum"
       ]
     ]
   }

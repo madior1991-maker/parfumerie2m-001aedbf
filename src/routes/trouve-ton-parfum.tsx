@@ -1,3 +1,4 @@
+import { seoMeta } from "@/components/commerce/SeoText";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { ArrowLeft, Gift, RotateCcw } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
@@ -24,11 +25,11 @@ import { questions, quizWhatsappUrl, recommend, type Answers } from "@/lib/quiz"
 export const Route = createFileRoute("/trouve-ton-parfum")({
   head: () => ({
     meta: [
-      { title: "Trouve ton parfum en 4 questions | 2M Parfumerie Dakar" },
+      { title: seoMeta("/trouve-ton-parfum").title },
       {
         name: "description",
         content:
-          "Quiz gratuit : réponds à 4 questions et découvre 3 parfums faits pour toi, dès 4 000 F. Commande sur WhatsApp, livraison rapide à Dakar, 24 à 48h en régions.",
+          seoMeta("/trouve-ton-parfum").desc,
       },
     ],
     links: [{ rel: "canonical", href: "https://www.2mparfumeriedk.com/trouve-ton-parfum" }],

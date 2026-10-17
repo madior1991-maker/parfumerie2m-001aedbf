@@ -1,3 +1,4 @@
+import { seoMeta } from "@/components/commerce/SeoText";
 import { createFileRoute } from "@tanstack/react-router";
 import { Droplets, Moon, Sun } from "lucide-react";
 
@@ -10,11 +11,11 @@ import { SiteLayout } from "@/components/commerce/SiteLayout";
 export const Route = createFileRoute("/conseils")({
   head: () => ({
     meta: [
-      { title: "Conseils parfum | 2M Parfumerie" },
+      { title: seoMeta("/conseils").title },
       {
         name: "description",
         content:
-          "Conseils pour choisir un parfum selon votre style, votre moment et votre sillage au Sénégal.",
+          seoMeta("/conseils").desc,
       },
     ],
   }),
@@ -45,6 +46,7 @@ function AdvicePage() {
         <div className="section-shell space-y-10 md:space-y-12">
           <SectionHeader
             eyebrow="Conseils"
+            as="h1"
             title="Choisir un parfum, c’est choisir une manière d’entrer."
             text="Quelques repères simples pour trouver un sillage qui correspond à votre rythme et à votre présence."
           />

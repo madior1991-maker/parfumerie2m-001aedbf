@@ -1,3 +1,4 @@
+import { seoMeta } from "@/components/commerce/SeoText";
 import { Outlet, createFileRoute, Link, useLocation } from "@tanstack/react-router";
 import { ArrowRight, CalendarDays, MessageCircle, Search, Sparkles, Tag } from "lucide-react";
 import React, { Suspense } from "react";
@@ -41,11 +42,11 @@ export const Route = createFileRoute("/blog")({
 
     return {
       meta: [
-        { title: "Blog parfum Sénégal | 2M Parfumerie" },
+        { title: seoMeta("/blog").title },
         {
           name: "description",
           content:
-            "Blog 2M Parfumerie: guides parfum, tendances à Dakar et conseils d'achat pour découvrir les meilleures signatures olfactives.",
+            seoMeta("/blog").desc,
         },
       ],
       links: [{ rel: "canonical", href: "https://www.2mparfumeriedk.com/blog" }],

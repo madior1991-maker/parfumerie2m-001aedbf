@@ -1,3 +1,4 @@
+import { seoMeta } from "@/components/commerce/SeoText";
 import { createFileRoute } from "@tanstack/react-router";
 import { Download } from "lucide-react";
 
@@ -14,8 +15,8 @@ const DESC =
 export const Route = createFileRoute("/catalogues")({
   head: () => ({
     meta: [
-      { title: TITLE },
-      { name: "description", content: DESC },
+      { title: seoMeta("/catalogues").title },
+      { name: "description", content: seoMeta("/catalogues").desc },
     ],
     links: [{ rel: "canonical", href: URL }],
   }),

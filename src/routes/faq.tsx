@@ -1,3 +1,4 @@
+import { seoMeta } from "@/components/commerce/SeoText";
 import { Link, createFileRoute } from "@tanstack/react-router";
 
 import { FaqAccordion, FaqContact, faqJsonLd } from "@/components/commerce/Faq";
@@ -6,11 +7,11 @@ import { SiteLayout } from "@/components/commerce/SiteLayout";
 export const Route = createFileRoute("/faq")({
   head: () => ({
     meta: [
-      { title: "FAQ | 2M Parfumerie Dakar" },
+      { title: seoMeta("/faq").title },
       {
         name: "description",
         content:
-          "Questions fréquentes 2M Parfumerie : parfums originaux ou inspirés, livraison à Dakar et en régions, paiement Wave, Orange Money ou espèces, échanges.",
+          seoMeta("/faq").desc,
       },
     ],
     links: [{ rel: "canonical", href: "https://www.2mparfumeriedk.com/faq" }],

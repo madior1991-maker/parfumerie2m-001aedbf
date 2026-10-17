@@ -1,3 +1,4 @@
+import { seoMeta } from "@/components/commerce/SeoText";
 import { createFileRoute } from "@tanstack/react-router";
 import { Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
 
@@ -9,11 +10,11 @@ import { TikTokLogo } from "@/components/commerce/TikTokLogo";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — 2M Parfumerie Dakar | WhatsApp & Téléphone" },
+      { title: seoMeta("/contact").title },
       {
         name: "description",
         content:
-          "Contactez 2M Parfumerie à Dakar. WhatsApp et appels disponibles 7j/7. Livraison partout au Sénégal. 2mparfumerie2025@gmail.com",
+          seoMeta("/contact").desc,
       },
       { name: "keywords", content: "Haqqi, Scentlab, Takeoff Fragance, Parfums authentique, Parfums Dubai, Parfums de poches" },
     ],

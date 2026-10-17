@@ -1,3 +1,4 @@
+import { seoMeta } from "@/components/commerce/SeoText";
 import { createFileRoute } from "@tanstack/react-router";
 import { Play, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
@@ -164,11 +165,11 @@ export const Route = createFileRoute("/coffret-signature")({
   validateSearch: validatePackSearch,
   head: () => ({
     meta: [
-      { title: "Compose ton pack — 2M Parfumerie Sénégal" },
+      { title: seoMeta("/coffret-signature").title },
       {
         name: "description",
         content:
-          "Composez votre pack chez 2M Parfumerie : 3 parfums Haqqi à 10 000 FCFA, 3 parfums SCENTLAB à 15 000 FCFA ou 5 parfums de poche à 10 000 FCFA, à choisir en photos.",
+          seoMeta("/coffret-signature").desc,
       },
     ],
   }),

@@ -1,3 +1,4 @@
+import { seoMeta } from "@/components/commerce/SeoText";
 import { createFileRoute } from "@tanstack/react-router";
 import { Clock, MapPinned } from "lucide-react";
 
@@ -11,11 +12,11 @@ import { GuaranteeSection } from "@/components/commerce/Guarantee";
 export const Route = createFileRoute("/livraison")({
   head: () => ({
     meta: [
-      { title: "Livraison | 2M Parfumerie Dakar" },
+      { title: seoMeta("/livraison").title },
       {
         name: "description",
         content:
-          "Livraison 2M Parfumerie : rapide à Dakar (1 500 à 2 000 FCFA selon la zone), 24 à 48h en régions (2 000 FCFA), offerte dès 75 000 FCFA. Paiement Wave, Orange Money ou espèces.",
+          seoMeta("/livraison").desc,
       },
     ],
   }),
@@ -51,6 +52,7 @@ function DeliveryPage() {
         <div className="section-shell space-y-10 md:space-y-12">
           <SectionHeader
             eyebrow="Livraison"
+            as="h1"
             title="Une commande simple, suivie et humaine."
             text="Chaque détail est confirmé sur WhatsApp pour éviter les surprises et garder l’expérience fluide."
           />

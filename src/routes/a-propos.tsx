@@ -1,3 +1,4 @@
+import { seoMeta } from "@/components/commerce/SeoText";
 import { createFileRoute } from "@tanstack/react-router";
 import { Gem, MapPin, Users } from "lucide-react";
 
@@ -8,11 +9,11 @@ import { SiteLayout } from "@/components/commerce/SiteLayout";
 export const Route = createFileRoute("/a-propos")({
   head: () => ({
     meta: [
-      { title: "À Propos & FAQ | 2M Parfumerie Sénégal" },
+      { title: seoMeta("/a-propos").title },
       {
         name: "description",
         content:
-          "L'histoire de 2M Parfumerie, parfumerie en ligne à Dakar : créations inspirées dès 4 000 F et parfums originaux. Réponses sur la livraison, le paiement et la commande.",
+          seoMeta("/a-propos").desc,
       },
     ],
     links: [{ rel: "canonical", href: "https://www.2mparfumeriedk.com/a-propos" }],

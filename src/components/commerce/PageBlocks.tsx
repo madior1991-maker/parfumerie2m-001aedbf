@@ -22,17 +22,19 @@ export function SectionHeader({
   eyebrow,
   title,
   text,
+  as: Heading = "h2",
 }: {
   eyebrow: string;
   title: string;
   text?: string;
+  as?: "h1" | "h2";
 }) {
   return (
     <div className="fade-up mx-auto max-w-3xl text-center">
       <p className="caption-luxe text-accent">{eyebrow}</p>
-      <h2 className="mt-3 font-display text-[32px] font-medium leading-[1.2] text-foreground md:text-5xl">
+      <Heading className="mt-3 font-display text-[32px] font-medium leading-[1.2] text-foreground md:text-5xl">
         {title}
-      </h2>
+      </Heading>
       {text && <p className="mt-5 text-muted-foreground">{text}</p>}
     </div>
   );
