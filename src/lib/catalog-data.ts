@@ -709,7 +709,7 @@ const pocketCatalog: BoutiqueProduct[] = pocketProducts.map((product) => ({
 // Fragrance Library : 38 eaux de parfum 100 ml à 35 000 F, un titre de roman par flacon.
 // ref = parfum d'inspiration (vide pour Old Book, création de la maison).
 // Les 6 fiches déjà créées dans l'admin gardent leurs données (même adresse = même fiche).
-const libraryProducts: { name: string; ref: string; notes: string; family: string; head?: string; heart?: string; base?: string }[] = [
+const libraryProducts: { name: string; ref: string; notes: string; family: string; head?: string; heart?: string; base?: string; concentration?: string }[] = [
   { name: "The Gambler", ref: "Xerjoff Lira", notes: "Lavande · Caramel · Vanille", family: "Gourmand ambré" },
   { name: "Crime and Punishment", ref: "MFK Baccarat Rouge 540", notes: "Safran · Jasmin · Ambre gris", family: "Ambré floral" },
   { name: "War and Peace", ref: "Frédéric Malle Portrait of a Lady", notes: "Rose · Patchouli · Encens", family: "Floral oriental" },
@@ -729,7 +729,7 @@ const libraryProducts: { name: string; ref: string; notes: string; family: strin
   { name: "The Stranger", ref: "Dior Oud Ispahan", notes: "Rose · Oud · Patchouli", family: "Oriental floral" },
   { name: "Heart of Darkness", ref: "MFK Oud Satin Mood", notes: "Rose · Oud · Vanille", family: "Oriental boisé" },
   { name: "The Alchemist", ref: "Sultan", notes: "", family: "Fragrance Library" },
-  { name: "Hard Times", ref: "Montale Arabians Tonka", notes: "Safran · Oud · Fève tonka", family: "Oriental boisé" },
+  { name: "Hard Times", ref: "Montale Arabians Tonka", notes: "Safran · Oud · Fève tonka", family: "Oriental boisé", concentration: "Extrait de parfum" },
   { name: "Great Expectations", ref: "Escentric Molecules Escentric 02", notes: "Ambroxan · Bois · Musc", family: "Boisé musqué" },
   { name: "1984", ref: "Ex Nihilo Fleur Narcotique", notes: "Pêche · Fleurs blanches · Musc", family: "Floral fruité" },
   { name: "The Magic Mountain", ref: "Creed Silver Mountain Water", notes: "Bergamote · Thé vert · Cassis", family: "Frais aromatique" },
@@ -755,6 +755,7 @@ const libraryCatalog: BoutiqueProduct[] = libraryProducts.map((product) => {
   const notes = product.notes || "Notes à préciser";
   const inspiration = product.ref ? ` Inspiration : ${product.ref}.` : " Une création originale de la maison Fragrance Library.";
   const sillage = product.notes ? ` aux notes ${product.notes.toLowerCase()},` : "";
+  const concentration = product.concentration ?? "Eau de parfum";
   return {
     slug,
     name: product.name,
@@ -767,9 +768,9 @@ const libraryCatalog: BoutiqueProduct[] = libraryProducts.map((product) => {
     collection: "library",
     image: `/images/optimized/library-${slug}-w800.webp`,
     family: product.family,
-    concentration: "Eau de parfum",
+    concentration,
     volume: "100 ml",
-    description: `${product.name}, de la collection Fragrance Library : une eau de parfum de 100 ml${sillage} présentée dans son coffret d'origine.${inspiration} Disponible chez 2M Parfumerie à 35 000 F, livraison partout au Sénégal.`,
+    description: `${product.name}, de la collection Fragrance Library : ${concentration === "Eau de parfum" ? "une eau de parfum" : "un extrait de parfum"} de 100 ml${sillage} présentée dans son coffret d'origine.${inspiration} Disponible chez 2M Parfumerie à 35 000 F, livraison partout au Sénégal.`,
   };
 });
 

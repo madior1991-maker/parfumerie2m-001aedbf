@@ -29,6 +29,8 @@ export type CollectionPageProps = {
   ctaPack?: "haqqi" | "scentlab" | "pocket";
   heroImage?: string;
   heroImageAlt?: string;
+  // Bannière : quelques visuels d'ambiance affichés sous l'en-tête (coffrets, mises en scène).
+  banner?: { src: string; avif?: string; alt: string }[];
   children?: React.ReactNode;
 };
 
@@ -42,6 +44,7 @@ export function CollectionPage({
   ctaPack,
   heroImage,
   heroImageAlt,
+  banner,
   children,
 }: CollectionPageProps) {
   const [products, setProducts] = useState<BoutiqueProduct[]>([]);
@@ -120,6 +123,19 @@ export function CollectionPage({
           </div>
         )}
       </section>
+
+      {banner?.length ? (
+        <section aria-label="Coffrets de la collection" className="bg-surface pb-10">
+          <div className="section-shell grid grid-cols-3 gap-3 md:gap-6">
+            {banner.map((item) => (
+              <picture key={item.src} className="block overflow-hidden rounded-xl border border-border shadow-card">
+                {item.avif && <source type="image/avif" srcSet={item.avif} />}
+                <img src={item.src} alt={item.alt} className="aspect-square h-full w-full object-cover" loading="lazy" />
+              </picture>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <section className="bg-background py-8 md:py-12">
         <div className="mx-auto max-w-7xl px-3 md:px-6">
