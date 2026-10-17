@@ -327,7 +327,7 @@ const categoryPriceHint: Record<string, string> = {
   callisto: "75 000 F",
   privees: "Dès 25 000 F",
   coffrets: "90 000 F",
-  library: "30 000 F",
+  library: "35 000 F",
   "soie-sublime": "90 000 F",
 };
 

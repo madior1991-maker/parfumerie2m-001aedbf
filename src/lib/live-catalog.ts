@@ -36,11 +36,35 @@ export function mergeLiveCatalog(productRows: ProductRow[]) {
 const CALLISTO = /callisto/i;
 const CALLISTO_SUFFIX = /\s*[(\-–]\s*callisto paris\s*\)?\s*$/i;
 
+// Photos HD détourées des flacons Haqqi (shooting du 17/10/2026) : elles passent en image principale.
+const HAQQI_HD_PHOTOS: Record<string, string> = {
+  "terre-d-hermes": "haqqi-terre-d-hermes-photo",
+  duetto: "haqqi-duetto",
+  "la-vie-est-belle": "haqqi-la-vie-est-belle",
+  "man-in-black": "haqqi-man-in-black",
+  "baccarat-rouge-540": "haqqi-baccarat-rouge-540-photo",
+  "baccarat-rouge-540-extrait": "haqqi-baccarat-rouge-540-extrait-photo",
+  sauvage: "haqqi-sauvage-photo",
+  "bleu-de-chanel": "haqqi-bleu-de-chanel",
+  "more-than-words": "haqqi-more-than-words-photo",
+  manifesto: "haqqi-manifesto",
+  "oud-satin-mood": "haqqi-oud-satin-mood-photo",
+  "coco-mademoiselle": "haqqi-coco-mademoiselle",
+  "stronger-with-you": "haqqi-stronger-with-you",
+  invictus: "haqqi-invictus-photo",
+  "hypnotic-poison": "haqqi-hypnotic-poison-photo",
+  "bois-d-argent": "haqqi-bois-d-argent",
+  "creed-aventus": "haqqi-creed-aventus-photo",
+  pegasus: "haqqi-pegasus-photo",
+  kirke: "haqqi-kirke-photo",
+};
+
 function productFromRow(product: ProductRow, fallback?: BoutiqueProduct): BoutiqueProduct {
   const isCallisto = CALLISTO.test(product.name) || CALLISTO.test(product.subtitle ?? "");
   const collection = isCallisto ? "callisto" : normalizeCollectionValue(product.collection);
   const name = isCallisto ? product.name.replace(CALLISTO_SUFFIX, "").trim() || product.name : product.name;
-  const image = product.image_url || product.image_urls?.[0] || fallback?.image || "";
+  const hdPhoto = collection === "haqqi" && HAQQI_HD_PHOTOS[product.slug] ? `/images/optimized/${HAQQI_HD_PHOTOS[product.slug]}-w800.webp` : "";
+  const image = hdPhoto || product.image_url || product.image_urls?.[0] || fallback?.image || "";
   const notes = product.notes_top || fallback?.notes || "Notes à préciser";
 
   return {
@@ -56,10 +80,11 @@ function productFromRow(product: ProductRow, fallback?: BoutiqueProduct): Boutiq
     headNotes: product.notes_top || fallback?.headNotes || notes,
     heartNotes: product.notes_heart || fallback?.heartNotes || "Notes à préciser",
     baseNotes: product.notes_base || fallback?.baseNotes || "Notes à préciser",
-    price: product.price,
+    // Fragrance Library passée de 30 000 à 35 000 F : les anciennes fiches admin à 30 000 F prennent le nouveau prix.
+    price: collection === "library" && product.price === 30000 ? 35000 : product.price,
     collection,
     image,
-    imageUrls: product.image_urls?.length ? product.image_urls : image ? [image] : [],
+    imageUrls: hdPhoto ? [hdPhoto] : product.image_urls?.length ? product.image_urls : image ? [image] : [],
     family: fallback?.family || collectionLabelFallback(collection),
     concentration: fallback?.concentration || (["soie-sublime", "callisto"].includes(collection) ? "Extrait de parfum" : "Eau de parfum"),
     volume: fallback?.volume || "100 ml",

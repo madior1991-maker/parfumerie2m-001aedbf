@@ -706,10 +706,10 @@ const pocketCatalog: BoutiqueProduct[] = pocketProducts.map((product) => ({
   description: `${product.name} fait partie des Parfums de poche 2M : un petit format pratique à glisser dans le sac. À choisir dans le pack de 5 parfums de poche à 10 000 FCFA.`,
 }));
 
-// Fragrance Library : 38 eaux de parfum 100 ml à 30 000 F, un titre de roman par flacon.
+// Fragrance Library : 38 eaux de parfum 100 ml à 35 000 F, un titre de roman par flacon.
 // ref = parfum d'inspiration (vide pour Old Book, création de la maison).
 // Les 6 fiches déjà créées dans l'admin gardent leurs données (même adresse = même fiche).
-const libraryProducts: { name: string; ref: string; notes: string; family: string }[] = [
+const libraryProducts: { name: string; ref: string; notes: string; family: string; head?: string; heart?: string; base?: string }[] = [
   { name: "The Gambler", ref: "Xerjoff Lira", notes: "Lavande · Caramel · Vanille", family: "Gourmand ambré" },
   { name: "Crime and Punishment", ref: "MFK Baccarat Rouge 540", notes: "Safran · Jasmin · Ambre gris", family: "Ambré floral" },
   { name: "War and Peace", ref: "Frédéric Malle Portrait of a Lady", notes: "Rose · Patchouli · Encens", family: "Floral oriental" },
@@ -735,7 +735,7 @@ const libraryProducts: { name: string; ref: string; notes: string; family: strin
   { name: "The Magic Mountain", ref: "Creed Silver Mountain Water", notes: "Bergamote · Thé vert · Cassis", family: "Frais aromatique" },
   { name: "The Great Gatsby", ref: "Creed Aventus", notes: "Ananas · Bergamote · Bouleau fumé", family: "Chypré fruité" },
   { name: "Anna Karenina", ref: "Kilian Good Girl Gone Bad", notes: "Tubéreuse · Jasmin · Rose", family: "Floral blanc" },
-  { name: "The Call of the Wild", ref: "Amouage Honour Man", notes: "Poivre noir · Encens · Fève tonka", family: "Boisé épicé" },
+  { name: "The Call of the Wild", ref: "Amouage Honour Man", notes: "Poivre · Encens · Fève tonka", family: "Boisé épicé", head: "Poivre rose · Poivre", heart: "Géranium · Élémi · Muscade", base: "Encens · Vétiver · Cèdre de Virginie · Musc · Fève tonka · Patchouli" },
   { name: "One Hundred Years of Solitude", ref: "Le Labo Santal 33", notes: "Santal · Cuir · Cardamome", family: "Boisé cuiré" },
   { name: "Sense and Sensibility", ref: "Vertus Paçuli", notes: "", family: "Fragrance Library" },
   { name: "Emma", ref: "Parfums de Marly Delina", notes: "Litchi · Rose · Vanille", family: "Floral fruité" },
@@ -760,16 +760,16 @@ const libraryCatalog: BoutiqueProduct[] = libraryProducts.map((product) => {
     name: product.name,
     ref: product.ref,
     notes,
-    headNotes: notes,
-    heartNotes: "Notes à préciser",
-    baseNotes: "Notes à préciser",
-    price: 30000,
+    headNotes: product.head || notes,
+    heartNotes: product.heart || "Notes à préciser",
+    baseNotes: product.base || "Notes à préciser",
+    price: 35000,
     collection: "library",
     image: `/images/optimized/library-${slug}-w800.webp`,
     family: product.family,
     concentration: "Eau de parfum",
     volume: "100 ml",
-    description: `${product.name}, de la collection Fragrance Library : une eau de parfum de 100 ml${sillage} présentée dans son coffret d'origine.${inspiration} Disponible chez 2M Parfumerie à 30 000 F, livraison partout au Sénégal.`,
+    description: `${product.name}, de la collection Fragrance Library : une eau de parfum de 100 ml${sillage} présentée dans son coffret d'origine.${inspiration} Disponible chez 2M Parfumerie à 35 000 F, livraison partout au Sénégal.`,
   };
 });
 
