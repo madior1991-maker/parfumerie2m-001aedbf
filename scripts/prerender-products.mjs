@@ -144,9 +144,14 @@ async function main() {
 
   // Fiches du catalogue local (sauf celles gérées ou supprimées dans la base), puis fiches de la base.
   const staticCount = writeStaticProducts(base, new Set([...live.map((r) => r.slug), ...deleted]));
+  // Mêmes corrections que sur le site (src/lib/live-catalog.ts) : nouveau prix Library, photos HD Haqqi.
+  const hdPhotos = JSON.parse(fs.readFileSync(path.join(process.cwd(), "src", "lib", "haqqi-hd-photos.json"), "utf8"));
   for (const r of live) {
     const notes = [r.notes_top, r.notes_heart, r.notes_base].filter(Boolean).join(", ");
-    writeProductPage(base, { slug: r.slug, name: r.name, collection: r.collection, price: r.price, notes, image: r.image_url || (r.image_urls && r.image_urls[0]) });
+    const coll = collectionOf0(r.collection);
+    const price = coll === "library" && r.price === 30000 ? 35000 : r.price;
+    const hd = coll === "haqqi" && hdPhotos[r.slug] ? `/images/optimized/${hdPhotos[r.slug]}-w800.webp` : "";
+    writeProductPage(base, { slug: r.slug, name: r.name, collection: r.collection, price, notes, image: hd || r.image_url || (r.image_urls && r.image_urls[0]) });
   }
 
   // Plan du site : pages existantes + produits de la base, sans les produits supprimés.

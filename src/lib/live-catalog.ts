@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import haqqiHdPhotos from "@/lib/haqqi-hd-photos.json";
 import type { Database } from "@/integrations/supabase/types";
 import {
   catalog,
@@ -37,27 +38,7 @@ const CALLISTO = /callisto/i;
 const CALLISTO_SUFFIX = /\s*[(\-–]\s*callisto paris\s*\)?\s*$/i;
 
 // Photos HD détourées des flacons Haqqi (shooting du 17/10/2026) : elles passent en image principale.
-const HAQQI_HD_PHOTOS: Record<string, string> = {
-  "terre-d-hermes": "haqqi-terre-d-hermes-photo",
-  duetto: "haqqi-duetto",
-  "la-vie-est-belle": "haqqi-la-vie-est-belle",
-  "man-in-black": "haqqi-man-in-black",
-  "baccarat-rouge-540": "haqqi-baccarat-rouge-540-photo",
-  "baccarat-rouge-540-extrait": "haqqi-baccarat-rouge-540-extrait-photo",
-  sauvage: "haqqi-sauvage-photo",
-  "bleu-de-chanel": "haqqi-bleu-de-chanel",
-  "more-than-words": "haqqi-more-than-words-photo",
-  manifesto: "haqqi-manifesto",
-  "oud-satin-mood": "haqqi-oud-satin-mood-photo",
-  "coco-mademoiselle": "haqqi-coco-mademoiselle",
-  "stronger-with-you": "haqqi-stronger-with-you",
-  invictus: "haqqi-invictus-photo",
-  "hypnotic-poison": "haqqi-hypnotic-poison-photo",
-  "bois-d-argent": "haqqi-bois-d-argent",
-  "creed-aventus": "haqqi-creed-aventus-photo",
-  pegasus: "haqqi-pegasus-photo",
-  kirke: "haqqi-kirke-photo",
-};
+const HAQQI_HD_PHOTOS: Record<string, string> = haqqiHdPhotos;
 
 function productFromRow(product: ProductRow, fallback?: BoutiqueProduct): BoutiqueProduct {
   const isCallisto = CALLISTO.test(product.name) || CALLISTO.test(product.subtitle ?? "");
