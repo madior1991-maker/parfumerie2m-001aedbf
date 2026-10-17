@@ -47,7 +47,11 @@ function productFromRow(product: ProductRow, fallback?: BoutiqueProduct): Boutiq
     createdAt: product.created_at ?? undefined,
     isBestseller: Boolean(product.is_bestseller),
     name,
-    ref: product.subtitle || fallback?.ref || "Collection 2M",
+    // Les fiches Library de l'admin ont « Fragrance Library » en sous-titre : on reprend l'inspiration du catalogue.
+    ref:
+      collection === "library" && /^fragrance library$/i.test(product.subtitle?.trim() ?? "") && fallback
+        ? fallback.ref
+        : product.subtitle || fallback?.ref || "Collection 2M",
     notes,
     headNotes: product.notes_top || fallback?.headNotes || notes,
     heartNotes: product.notes_heart || fallback?.heartNotes || "Notes à préciser",

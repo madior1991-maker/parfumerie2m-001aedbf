@@ -706,7 +706,74 @@ const pocketCatalog: BoutiqueProduct[] = pocketProducts.map((product) => ({
   description: `${product.name} fait partie des Parfums de poche 2M : un petit format pratique à glisser dans le sac. À choisir dans le pack de 5 parfums de poche à 10 000 FCFA.`,
 }));
 
-export const catalog: BoutiqueProduct[] = [...takeoffCatalog, ...scentlabCatalog, ...scentlabExtraCatalog, ...haqqiCatalog, ...pocketCatalog];
+// Fragrance Library : 38 eaux de parfum 100 ml à 30 000 F, un titre de roman par flacon.
+// ref = parfum d'inspiration (vide pour Old Book, création de la maison).
+// Les 6 fiches déjà créées dans l'admin gardent leurs données (même adresse = même fiche).
+const libraryProducts: { name: string; ref: string; notes: string; family: string }[] = [
+  { name: "The Gambler", ref: "Xerjoff Lira", notes: "Lavande · Caramel · Vanille", family: "Gourmand ambré" },
+  { name: "Crime and Punishment", ref: "MFK Baccarat Rouge 540", notes: "Safran · Jasmin · Ambre gris", family: "Ambré floral" },
+  { name: "War and Peace", ref: "Frédéric Malle Portrait of a Lady", notes: "Rose · Patchouli · Encens", family: "Floral oriental" },
+  { name: "The Golden Bowl", ref: "Tiziana Terenzi Kirke", notes: "Fruit de la passion · Pêche · Musc", family: "Fruité musqué" },
+  { name: "The Red and the Black", ref: "Bond No. 9 New York Amber", notes: "", family: "Ambré" },
+  { name: "The Secret Garden", ref: "Sospiro Erba Pura", notes: "Agrumes · Fruits · Musc blanc", family: "Fruité musqué" },
+  { name: "The Age of Innocence", ref: "Montale Roses Musk", notes: "Rose · Jasmin · Musc", family: "Floral musqué" },
+  { name: "The Grapes of Wrath", ref: "Initio Baraka", notes: "", family: "Fragrance Library" },
+  { name: "Republic", ref: "MFK Silk Mood", notes: "", family: "Fragrance Library" },
+  { name: "Notes from Underground", ref: "Nasomatto Black Afgano", notes: "Encens · Oud · Tabac", family: "Boisé fumé" },
+  { name: "The Brothers Karamazov", ref: "Nasomatto Duro", notes: "", family: "Boisé" },
+  { name: "The Trial", ref: "Tom Ford Tobacco Vanille", notes: "Tabac · Vanille · Fève tonka", family: "Oriental épicé" },
+  { name: "Things Fall Apart", ref: "Kilian Black Aphrodisiac", notes: "", family: "Fragrance Library" },
+  { name: "Hamlet", ref: "Tom Ford Oud Wood", notes: "Oud · Santal · Cardamome", family: "Boisé" },
+  { name: "The Sun Also Rises", ref: "Nasomatto Baraonda", notes: "Whisky · Rose · Bois", family: "Boisé ambré" },
+  { name: "Under the Volcano", ref: "Hervé Gambs Ombre Sauvage", notes: "", family: "Fragrance Library" },
+  { name: "The Stranger", ref: "Dior Oud Ispahan", notes: "Rose · Oud · Patchouli", family: "Oriental floral" },
+  { name: "Heart of Darkness", ref: "MFK Oud Satin Mood", notes: "Rose · Oud · Vanille", family: "Oriental boisé" },
+  { name: "The Alchemist", ref: "Sultan", notes: "", family: "Fragrance Library" },
+  { name: "Hard Times", ref: "Montale Arabians Tonka", notes: "Safran · Oud · Fève tonka", family: "Oriental boisé" },
+  { name: "Great Expectations", ref: "Escentric Molecules Escentric 02", notes: "Ambroxan · Bois · Musc", family: "Boisé musqué" },
+  { name: "1984", ref: "Ex Nihilo Fleur Narcotique", notes: "Pêche · Fleurs blanches · Musc", family: "Floral fruité" },
+  { name: "The Magic Mountain", ref: "Creed Silver Mountain Water", notes: "Bergamote · Thé vert · Cassis", family: "Frais aromatique" },
+  { name: "The Great Gatsby", ref: "Creed Aventus", notes: "Ananas · Bergamote · Bouleau fumé", family: "Chypré fruité" },
+  { name: "Anna Karenina", ref: "Kilian Good Girl Gone Bad", notes: "Tubéreuse · Jasmin · Rose", family: "Floral blanc" },
+  { name: "The Call of the Wild", ref: "Amouage Honour Man", notes: "Poivre noir · Encens · Fève tonka", family: "Boisé épicé" },
+  { name: "One Hundred Years of Solitude", ref: "Le Labo Santal 33", notes: "Santal · Cuir · Cardamome", family: "Boisé cuiré" },
+  { name: "Sense and Sensibility", ref: "Vertus Paçuli", notes: "", family: "Fragrance Library" },
+  { name: "Emma", ref: "Parfums de Marly Delina", notes: "Litchi · Rose · Vanille", family: "Floral fruité" },
+  { name: "Lost Illusions", ref: "Initio Side Effect", notes: "Rhum · Tabac · Vanille", family: "Oriental épicé" },
+  { name: "In Search of Lost Time", ref: "Xerjoff More Than Words", notes: "Oud · Rose · Patchouli", family: "Oriental boisé" },
+  { name: "To the Lighthouse", ref: "Xerjoff 1861 Naxos", notes: "Miel · Tabac · Lavande", family: "Gourmand tabac" },
+  { name: "The Overcoat", ref: "Amouage Interlude Man", notes: "Encens · Oud · Ambre", family: "Boisé fumé" },
+  { name: "The Castle", ref: "Initio Oud for Greatness", notes: "Oud · Safran · Lavande", family: "Oriental boisé" },
+  { name: "Vanity Fair", ref: "Xerjoff Alexandria II", notes: "Rose · Oud · Ambre", family: "Oriental boisé" },
+  { name: "A Tale of Two Cities", ref: "MFK Gentle Fluidity", notes: "Genièvre · Muscade · Vanille", family: "Aromatique musqué" },
+  { name: "Utopia", ref: "Marc-Antoine Barrois Ganymede", notes: "Mandarine · Musc · Bois minéraux", family: "Boisé musqué" },
+  { name: "Old Book", ref: "", notes: "", family: "Création Fragrance Library" },
+];
+
+const libraryCatalog: BoutiqueProduct[] = libraryProducts.map((product) => {
+  const slug = cleanSlug(product.name);
+  const notes = product.notes || "Notes à préciser";
+  const inspiration = product.ref ? ` Inspiration : ${product.ref}.` : " Une création originale de la maison Fragrance Library.";
+  const sillage = product.notes ? ` aux notes ${product.notes.toLowerCase()},` : "";
+  return {
+    slug,
+    name: product.name,
+    ref: product.ref,
+    notes,
+    headNotes: notes,
+    heartNotes: "Notes à préciser",
+    baseNotes: "Notes à préciser",
+    price: 30000,
+    collection: "library",
+    image: `/images/optimized/library-${slug}-w800.webp`,
+    family: product.family,
+    concentration: "Eau de parfum",
+    volume: "100 ml",
+    description: `${product.name}, de la collection Fragrance Library : une eau de parfum de 100 ml${sillage} présentée dans son coffret d'origine.${inspiration} Disponible chez 2M Parfumerie à 30 000 F, livraison partout au Sénégal.`,
+  };
+});
+
+export const catalog: BoutiqueProduct[] = [...takeoffCatalog, ...scentlabCatalog, ...scentlabExtraCatalog, ...haqqiCatalog, ...pocketCatalog, ...libraryCatalog];
 
 // Adresse propre : minuscules, sans accents, mots séparés par des tirets.
 export function cleanSlug(value: string) {

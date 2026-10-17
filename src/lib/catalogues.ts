@@ -33,7 +33,7 @@ export const catalogues: CatalogueEntry[] = [
   { slug: "07-callisto-paris", title: "Callisto Paris", summary: "5 parfums de la maison Callisto Paris.", pages: 3, size: "0,5 Mo", collection: "callisto" },
   { slug: "08-collections-privees", title: "Collections privées", summary: "Prestige Paris et Reef : éditions rares.", pages: 4, size: "1,3 Mo", collection: "privees" },
   { slug: "09-coffrets", title: "Coffrets", summary: "Coffrets cadeaux des grandes maisons.", pages: 3, size: "0,7 Mo", collection: "coffrets" },
-  { slug: "10-fragrance-library", title: "Fragrance Library", summary: "6 eaux de parfum 100 ml à 30 000 F, un roman par flacon.", pages: 3, size: "0,7 Mo", collection: "library" },
+  { slug: "10-fragrance-library", title: "Fragrance Library", summary: "38 eaux de parfum 100 ml à 30 000 F, un roman par flacon.", pages: 3, size: "0,7 Mo", collection: "library" },
   { slug: "11-soie-sublime", title: "Soie Sublime Paris", summary: "Alba, Encens, Somari : 90 000 F au lieu de 120 000 F.", pages: 3, size: "0,5 Mo", collection: "soie-sublime" },
 ];
 
