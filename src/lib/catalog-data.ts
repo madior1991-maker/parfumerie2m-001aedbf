@@ -774,7 +774,41 @@ const libraryCatalog: BoutiqueProduct[] = libraryProducts.map((product) => {
   };
 });
 
-export const catalog: BoutiqueProduct[] = [...takeoffCatalog, ...scentlabCatalog, ...scentlabExtraCatalog, ...haqqiCatalog, ...pocketCatalog, ...libraryCatalog];
+// Coffrets de grandes marques : tous à 90 000 F. Photos tirées du stock réel (recadrées sur fond blanc).
+const coffretProducts: { slug: string; name: string; brand: string; contents: string; family: "Femme" | "Homme"; notes: string }[] = [
+  { slug: "chloe-signature", name: "Coffret Chloé Signature", brand: "Chloé", contents: "eau de parfum, lait pour le corps et miniature", family: "Femme", notes: "Rose · Pivoine · Musc" },
+  { slug: "chloe-nomade", name: "Coffret Chloé Nomade", brand: "Chloé", contents: "eau de parfum et lait pour le corps", family: "Femme", notes: "Mirabelle · Freesia · Mousse de chêne" },
+  { slug: "lancome-la-vie-est-belle", name: "Coffret Lancôme La Vie est Belle", brand: "Lancôme", contents: "eau de parfum, lait pour le corps 50 ml et vaporisateur de voyage", family: "Femme", notes: "Iris · Praliné · Vanille" },
+  { slug: "boucheron-quatre", name: "Coffret Boucheron Quatre", brand: "Boucheron", contents: "eau de parfum, lait parfumé pour le corps et gel douche parfumé", family: "Femme", notes: "Floral · Ambré · Musc" },
+  { slug: "gaultier-divine", name: "Coffret Gaultier Divine Le Parfum", brand: "Jean Paul Gaultier", contents: "Le Parfum et lait pour le corps", family: "Femme", notes: "Fleurs blanches · Ambre · Gourmand" },
+  { slug: "million-gold-for-her", name: "Coffret Rabanne Million Gold For Her", brand: "Rabanne", contents: "parfum et vaporisateur de voyage", family: "Femme", notes: "Floral · Doré · Ambré" },
+  { slug: "rabanne-1-million", name: "Coffret Rabanne 1 Million", brand: "Rabanne", contents: "eau de toilette, déodorant spray et vaporisateur de voyage", family: "Homme", notes: "Mandarine · Cannelle · Cuir" },
+  { slug: "montblanc-explorer-platinum", name: "Coffret Montblanc Explorer Platinum", brand: "Montblanc", contents: "eau de parfum, gel douche et vaporisateur de voyage", family: "Homme", notes: "Boisé · Aromatique · Frais" },
+  { slug: "terre-d-hermes", name: "Coffret Terre d'Hermès", brand: "Hermès", contents: "flacon 75 ml, vaporisateur de voyage 15 ml et 40 ml", family: "Homme", notes: "Orange · Poivre · Vétiver" },
+  { slug: "cerruti-1881", name: "Coffret Cerruti 1881 Pour Homme", brand: "Cerruti", contents: "eau de toilette 100 ml et déodorant spray 150 ml", family: "Homme", notes: "Frais · Aromatique · Boisé" },
+  { slug: "bad-boy", name: "Coffret Carolina Herrera Bad Boy", brand: "Carolina Herrera", contents: "eau de toilette et ses produits assortis", family: "Homme", notes: "Poivre · Sauge · Cacao" },
+  { slug: "dolce-gabbana", name: "Coffret Dolce&Gabbana", brand: "Dolce&Gabbana", contents: "parfum et produits assortis", family: "Homme", notes: "Notes à préciser" },
+  { slug: "givenchy", name: "Coffret Givenchy", brand: "Givenchy", contents: "parfum et produits assortis", family: "Homme", notes: "Notes à préciser" },
+];
+
+const coffretCatalog: BoutiqueProduct[] = coffretProducts.map((product) => ({
+  slug: `coffret-${product.slug}`,
+  name: product.name,
+  ref: product.brand,
+  notes: product.notes,
+  headNotes: product.notes,
+  heartNotes: "Notes à préciser",
+  baseNotes: "Notes à préciser",
+  price: 90000,
+  collection: "coffrets",
+  image: `/images/optimized/coffret-${product.slug}-w800.webp`,
+  family: product.family,
+  concentration: "Coffret",
+  volume: "Coffret",
+  description: `${product.name} : un coffret cadeau original ${product.brand} avec ${product.contents}. Prêt à offrir, disponible chez 2M Parfumerie à 90 000 F, livraison offerte partout au Sénégal.`,
+}));
+
+export const catalog: BoutiqueProduct[] = [...takeoffCatalog, ...scentlabCatalog, ...scentlabExtraCatalog, ...haqqiCatalog, ...pocketCatalog, ...libraryCatalog, ...coffretCatalog];
 
 // Adresse propre : minuscules, sans accents, mots séparés par des tirets.
 export function cleanSlug(value: string) {
