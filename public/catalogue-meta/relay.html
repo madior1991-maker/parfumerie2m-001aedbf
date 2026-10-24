@@ -1,0 +1,7 @@
+<!doctype html><meta charset="utf-8"><title>relay</title>
+<script>
+const f = new URLSearchParams(location.search).get('f') || '';
+if (/^[a-z0-9-]+\.jpg$/.test(f)) {
+  fetch('/catalogue-meta/' + f).then(r => r.arrayBuffer()).then(b => parent.postMessage({ k: '2m', name: f, buf: b }, '*'));
+}
+</script>
