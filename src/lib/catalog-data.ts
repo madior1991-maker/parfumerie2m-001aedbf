@@ -811,16 +811,16 @@ const coffretCatalog: BoutiqueProduct[] = coffretProducts.map((product) => ({
   description: `${product.name} : un coffret cadeau original ${product.brand} avec ${product.contents}. Prêt à offrir, disponible chez 2M Parfumerie à 90 000 F, livraison offerte partout au Sénégal.`,
 }));
 
-// Parfums Dubai ajoutés le 27/10/2026 (Maison Asrar, Gulf Orchid) : prix fournisseur + 7 000 F.
+// Parfums Dubai ajoutés le 27/10/2026 (Maison Asrar, Gulf Orchid) : prix fournisseur + 7 000 F, arrondi au millier supérieur.
 const dubaiProducts: { slug: string; name: string; brand: string; price: number; volume: string; concentration: string; family: string; contents?: string }[] = [
-  { slug: "vanilla-aura", name: "Vanilla Aura", brand: "Maison Asrar", price: 25500, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
-  { slug: "vanilla-seduction", name: "Vanilla Seduction", brand: "Maison Asrar", price: 25500, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
-  { slug: "nada", name: "Nada", brand: "Maison Asrar", price: 24500, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
-  { slug: "soiree", name: "Soirée", brand: "Maison Asrar", price: 24500, volume: "110 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
+  { slug: "vanilla-aura", name: "Vanilla Aura", brand: "Maison Asrar", price: 26000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
+  { slug: "vanilla-seduction", name: "Vanilla Seduction", brand: "Maison Asrar", price: 26000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
+  { slug: "nada", name: "Nada", brand: "Maison Asrar", price: 25000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
+  { slug: "soiree", name: "Soirée", brand: "Maison Asrar", price: 25000, volume: "110 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
   { slug: "legacy-royal-collection", name: "Legacy Royal Collection", brand: "Maison Asrar", price: 30000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
-  { slug: "heavenly-lychee", name: "Heavenly Lychee", brand: "Gulf Orchid", price: 19500, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
+  { slug: "heavenly-lychee", name: "Heavenly Lychee", brand: "Gulf Orchid", price: 20000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
   { slug: "naughty-vanilla", name: "Naughty Vanilla", brand: "Gulf Orchid", price: 24000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
-  { slug: "vanilla-addiction", name: "Vanilla Addiction", brand: "Gulf Orchid", price: 19500, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
+  { slug: "vanilla-addiction", name: "Vanilla Addiction", brand: "Gulf Orchid", price: 20000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
   { slug: "gulf-orchid-gift-set", name: "Coffret Gulf Orchid 4 parfums", brand: "Gulf Orchid", price: 29000, volume: "4 x 30 ml", concentration: "Eau de parfum", family: "Coffret Dubai", contents: "4 eaux de parfum de 30 ml : Sweet Cherry Kiss, Sweet Like Candy, Vanilla Addiction et Pink Marshmallow" },
   { slug: "musk-collection-pomegranate", name: "Coffret Musk Collection Pomegranate", brand: "Gulf Orchid", price: 27000, volume: "Coffret", concentration: "Coffret", family: "Coffret Dubai", contents: "une brume pour le corps, une eau de parfum et une huile parfumée Musk Collection Pomegranate" },
 ];
