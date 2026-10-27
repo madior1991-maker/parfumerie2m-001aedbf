@@ -728,7 +728,7 @@ const libraryProducts: { name: string; ref: string; notes: string; family: strin
   { name: "Under the Volcano", ref: "Hervé Gambs Ombre Sauvage", notes: "", family: "Fragrance Library" },
   { name: "The Stranger", ref: "Dior Oud Ispahan", notes: "Rose · Oud · Patchouli", family: "Oriental floral" },
   { name: "Heart of Darkness", ref: "MFK Oud Satin Mood", notes: "Rose · Oud · Vanille", family: "Oriental boisé" },
-  { name: "The Alchemist", ref: "Sultan", notes: "", family: "Fragrance Library" },
+  { name: "The Alchemist", ref: "Sultan", notes: "", family: "Fragrance Library", concentration: "Extrait de parfum" },
   { name: "Hard Times", ref: "Montale Arabians Tonka", notes: "Safran · Oud · Fève tonka", family: "Oriental boisé", concentration: "Extrait de parfum" },
   { name: "Great Expectations", ref: "Escentric Molecules Escentric 02", notes: "Ambroxan · Bois · Musc", family: "Boisé musqué" },
   { name: "1984", ref: "Ex Nihilo Fleur Narcotique", notes: "Pêche · Fleurs blanches · Musc", family: "Floral fruité" },
