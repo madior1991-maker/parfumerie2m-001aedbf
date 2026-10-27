@@ -821,6 +821,20 @@ const dubaiProducts: { slug: string; name: string; brand: string; price: number;
   { slug: "heavenly-lychee", name: "Heavenly Lychee", brand: "Gulf Orchid", price: 20000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
   { slug: "naughty-vanilla", name: "Naughty Vanilla", brand: "Gulf Orchid", price: 24000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
   { slug: "vanilla-addiction", name: "Vanilla Addiction", brand: "Gulf Orchid", price: 20000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
+  { slug: "oud-pour-klassik", name: "Oud pour Klassik", brand: "Khadlaj", price: 30000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
+  { slug: "vanilla-latte", name: "Vanilla Latte", brand: "Gulf Orchid", price: 20000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
+  { slug: "rose-maison-asrar", name: "Rosé", brand: "Maison Asrar", price: 25000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
+  { slug: "9pm-rebel", name: "9pm Rebel", brand: "Afnan", price: 31000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
+  { slug: "kiaana-vibes", name: "Kiaana Vibes", brand: "Afnan", price: 33000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
+  { slug: "al-barari-coral", name: "Al Barari Coral", brand: "Zimaya", price: 24000, volume: "", concentration: "Parfum", family: "Parfum Dubai" },
+  { slug: "kashmir-musk", name: "Kashmir Musk", brand: "Arabian Oud", price: 85000, volume: "", concentration: "Parfum", family: "Parfum Dubai" },
+  { slug: "rayhaan-pacific-aloha", name: "Rayhaan Pacific Aloha", brand: "Rayhaan", price: 23000, volume: "", concentration: "Parfum", family: "Parfum Dubai" },
+  { slug: "rayhaan-aquatica", name: "Rayhaan Aquatica", brand: "Rayhaan", price: 23000, volume: "", concentration: "Parfum", family: "Parfum Dubai" },
+  { slug: "rayhaan-jungle-vibe", name: "Rayhaan Jungle Vibe", brand: "Rayhaan", price: 23000, volume: "", concentration: "Parfum", family: "Parfum Dubai" },
+  { slug: "rayhaan-terra", name: "Rayhaan Terra", brand: "Rayhaan", price: 23000, volume: "", concentration: "Parfum", family: "Parfum Dubai" },
+  { slug: "belgravia-royal-collection", name: "Belgravia Royal Collection", brand: "Maison Asrar", price: 33000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
+  { slug: "regent-royal-collection", name: "Regent Royal Collection", brand: "Maison Asrar", price: 30000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
+  { slug: "vanguard-royal-collection", name: "Vanguard Royal Collection", brand: "Maison Asrar", price: 30000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
   { slug: "gulf-orchid-gift-set", name: "Coffret Gulf Orchid 4 parfums", brand: "Gulf Orchid", price: 29000, volume: "4 x 30 ml", concentration: "Eau de parfum", family: "Coffret Dubai", contents: "4 eaux de parfum de 30 ml : Sweet Cherry Kiss, Sweet Like Candy, Vanilla Addiction et Pink Marshmallow" },
   { slug: "musk-collection-pomegranate", name: "Coffret Musk Collection Pomegranate", brand: "Gulf Orchid", price: 27000, volume: "Coffret", concentration: "Coffret", family: "Coffret Dubai", contents: "une brume pour le corps, une eau de parfum et une huile parfumée Musk Collection Pomegranate" },
 ];
@@ -838,10 +852,10 @@ const dubaiCatalog: BoutiqueProduct[] = dubaiProducts.map((product) => ({
   image: `/images/optimized/dubai-${product.slug}-w800.webp`,
   family: product.family,
   concentration: product.concentration,
-  volume: product.volume,
+  volume: product.volume || "Flacon",
   description: product.contents
     ? `${product.name} de ${product.brand} : ${product.contents}. Présenté dans sa boîte d'origine, disponible chez 2M Parfumerie, livraison partout au Sénégal.`
-    : `${product.name} de ${product.brand}, ${product.concentration.toLowerCase()} ${product.volume} dans sa boîte d'origine. Disponible chez 2M Parfumerie, livraison partout au Sénégal.`,
+    : `${product.name} de ${product.brand}, ${product.concentration.toLowerCase()}${product.volume ? ` ${product.volume}` : ""} dans sa boîte d'origine. Disponible chez 2M Parfumerie, livraison partout au Sénégal.`,
 }));
 
 export const catalog: BoutiqueProduct[] = [...takeoffCatalog, ...scentlabCatalog, ...scentlabExtraCatalog, ...haqqiCatalog, ...pocketCatalog, ...libraryCatalog, ...coffretCatalog, ...dubaiCatalog];
