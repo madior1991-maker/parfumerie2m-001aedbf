@@ -858,7 +858,10 @@ const dubaiCatalog: BoutiqueProduct[] = dubaiProducts.map((product) => ({
     : `${product.name} de ${product.brand}, ${product.concentration.toLowerCase()}${product.volume ? ` ${product.volume}` : ""} dans sa boîte d'origine. Disponible chez 2M Parfumerie, livraison partout au Sénégal.`,
 }));
 
-export const catalog: BoutiqueProduct[] = [...takeoffCatalog, ...scentlabCatalog, ...scentlabExtraCatalog, ...haqqiCatalog, ...pocketCatalog, ...libraryCatalog, ...coffretCatalog, ...dubaiCatalog];
+// Rupture de stock : masqués partout sur le site. Retirer le slug pour remettre le produit en ligne.
+export const outOfStockSlugs = new Set(["seoul", "seoul-louis-vuitton-imagination"]);
+
+export const catalog: BoutiqueProduct[] = [...takeoffCatalog, ...scentlabCatalog, ...scentlabExtraCatalog, ...haqqiCatalog, ...pocketCatalog, ...libraryCatalog, ...coffretCatalog, ...dubaiCatalog].filter((product) => !outOfStockSlugs.has(slugifyProduct(product)));
 
 // Adresse propre : minuscules, sans accents, mots séparés par des tirets.
 export function cleanSlug(value: string) {

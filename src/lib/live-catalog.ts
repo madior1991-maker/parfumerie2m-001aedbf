@@ -6,6 +6,7 @@ import {
   collectionLabel,
   collectionValues,
   normalizeCollectionValue,
+  outOfStockSlugs,
   slugifyProduct,
   type BoutiqueProduct,
   type Collection,
@@ -21,12 +22,12 @@ export function mergeLiveCatalog(productRows: ProductRow[]) {
   const mergedCatalog = catalog.flatMap((product) => {
     const slug = slugifyProduct(product);
     const savedProduct = databaseBySlug.get(slug);
-    if (savedProduct?.description === DELETED_PRODUCT_MARKER) return [];
+    if (outOfStockSlugs.has(slug) || savedProduct?.description === DELETED_PRODUCT_MARKER) return [];
     if (savedProduct) return [productFromRow(savedProduct, product)];
     return [product];
   });
   const extraProducts = productRows
-    .filter((product) => !catalogSlugs.has(product.slug) && product.description !== DELETED_PRODUCT_MARKER)
+    .filter((product) => !catalogSlugs.has(product.slug) && !outOfStockSlugs.has(product.slug) && product.description !== DELETED_PRODUCT_MARKER)
     .map((product) => productFromRow(product));
 
   return [...mergedCatalog, ...extraProducts];
