@@ -800,6 +800,11 @@ const coffretProducts: { slug: string; name: string; brand: string; contents: st
   { slug: "bad-boy", name: "Coffret Carolina Herrera Bad Boy", brand: "Carolina Herrera", contents: "eau de toilette et ses produits assortis", family: "Homme", notes: "Poivre · Sauge · Cacao" },
   { slug: "dolce-gabbana", name: "Coffret Dolce&Gabbana", brand: "Dolce&Gabbana", contents: "parfum et produits assortis", family: "Homme", notes: "Notes à préciser" },
   { slug: "givenchy", name: "Coffret Givenchy", brand: "Givenchy", contents: "parfum et produits assortis", family: "Homme", notes: "Notes à préciser" },
+  { slug: "gaultier-le-male-elixir", name: "Coffret Jean Paul Gaultier Le Male Elixir", brand: "Jean Paul Gaultier", contents: "Le Male Elixir et gel douche corps et cheveux", family: "Homme", notes: "Lavande · Miel · Fève tonka" },
+  { slug: "gaultier-scandal", name: "Coffret Jean Paul Gaultier Scandal", brand: "Jean Paul Gaultier", contents: "eau de parfum, lait parfumé pour le corps et vaporisateur de voyage", family: "Femme", notes: "Miel · Gardénia · Patchouli" },
+  { slug: "lancome-la-vie-est-belle-mascara", name: "Coffret Lancôme La Vie est Belle (édition rouge)", brand: "Lancôme", contents: "eau de parfum, lait parfumé pour le corps 50 ml et mascara", family: "Femme", notes: "Iris · Praliné · Vanille" },
+  { slug: "lancome-la-vie-est-belle-rose", name: "Coffret Lancôme La Vie est Belle (édition rose)", brand: "Lancôme", contents: "eau de parfum, lait parfumé pour le corps 50 ml et mascara", family: "Femme", notes: "Iris · Praliné · Vanille" },
+  { slug: "narciso-rodriguez-for-her", name: "Coffret Narciso Rodriguez For Her", brand: "Narciso Rodriguez", contents: "eau de toilette, vaporisateur de voyage et lait pour le corps", family: "Femme", notes: "Musc · Osmanthus · Fleur d'oranger" },
 ];
 
 const coffretCatalog: BoutiqueProduct[] = coffretProducts.map((product) => ({
