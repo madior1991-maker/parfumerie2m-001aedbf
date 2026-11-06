@@ -825,7 +825,7 @@ const coffretCatalog: BoutiqueProduct[] = coffretProducts.map((product) => ({
 }));
 
 // Parfums Dubai ajoutés le 27/10/2026 (Maison Asrar, Gulf Orchid) : prix fournisseur + 7 000 F, arrondi au millier supérieur.
-const dubaiProducts: { slug: string; name: string; brand: string; price: number; volume: string; concentration: string; family: string; contents?: string }[] = [
+const dubaiProducts: { slug: string; name: string; brand: string; price: number; volume: string; concentration: string; family: string; contents?: string; notes?: string; head?: string; heart?: string; base?: string; text?: string }[] = [
   { slug: "vanilla-aura", name: "Vanilla Aura", brand: "Maison Asrar", price: 26000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
   { slug: "vanilla-seduction", name: "Vanilla Seduction", brand: "Maison Asrar", price: 26000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
   { slug: "nada", name: "Nada", brand: "Maison Asrar", price: 25000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
@@ -850,23 +850,38 @@ const dubaiProducts: { slug: string; name: string; brand: string; price: number;
   { slug: "vanguard-royal-collection", name: "Vanguard Royal Collection", brand: "Maison Asrar", price: 30000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
   { slug: "gulf-orchid-gift-set", name: "Coffret Gulf Orchid 4 parfums", brand: "Gulf Orchid", price: 29000, volume: "4 x 30 ml", concentration: "Eau de parfum", family: "Coffret Dubai", contents: "4 eaux de parfum de 30 ml : Sweet Cherry Kiss, Sweet Like Candy, Vanilla Addiction et Pink Marshmallow" },
   { slug: "musk-collection-pomegranate", name: "Coffret Musk Collection Pomegranate", brand: "Gulf Orchid", price: 27000, volume: "Coffret", concentration: "Coffret", family: "Coffret Dubai", contents: "une brume pour le corps, une eau de parfum et une huile parfumée Musk Collection Pomegranate" },
+  // Ajoutés le 06/11/2026. Notes : fiches des marques et revendeurs (Fragrantica pour Cloud 9, Heidy et Apex Power).
+  { slug: "zodiac-apex-power", name: "Zodiac Apex Power", brand: "Zodiac", price: 40000, volume: "60 ml", concentration: "Extrait de parfum", family: "Boisé épicé · Mixte", notes: "Akigalawood · Vétiver · Basilic · Poivre de Timur · Patchouli · Ambroxan", text: "Un boisé fumé et épicé, taillé pour le soir. L'akigalawood et le vétiver donnent la profondeur, le basilic et le poivre de Timur réveillent le tout. Extrait de parfum : il tient longtemps. Livré dans son coffret rouge d'origine." },
+  { slug: "mfa-vision", name: "MFA Vision", brand: "MFA Perfumes", price: 40000, volume: "100 ml", concentration: "Extrait de parfum", family: "Ambré épicé · Mixte", notes: "Dans l'esprit de Decision d'Amouage : cardamome, encens, myrrhe, vanille", text: "Vision de MFA Perfumes s'inspire de Decision d'Amouage : un sillage ambré, épicé et encensé, chic sans en faire trop. Flacon sculpté, bouchon en cristal, extrait de parfum 100 ml." },
+  { slug: "oud-couture-ahmed-al-maghribi", name: "Oud Couture", brand: "Ahmed Al Maghribi", price: 18000, volume: "", concentration: "Parfum", family: "Fruité floral boisé", notes: "Pêche · Fleurs blanches · Rose · Miel · Mousse · Santal", text: "Oud Couture d'Ahmed Al Maghribi : la pêche et le miel adoucissent un cœur de rose et de fleurs blanches, posé sur le santal. Doux, chaleureux, facile à porter tous les jours." },
+  { slug: "cloud-9-gulf-orchid", name: "Cloud 9", brand: "Gulf Orchid", price: 28000, volume: "100 ml", concentration: "Eau de parfum", family: "Floral musqué · Mixte", notes: "Aldéhydes · Bergamote · Fleur d'oranger · Muguet · Musc · Cèdre", text: "Cloud 9 de Gulf Orchid sent le propre et le linge frais : aldéhydes, fleur d'oranger et musc blanc. Un parfum lumineux au sillage généreux, pour elle comme pour lui." },
+  { slug: "heidy-samam", name: "Heidy", brand: "Samam", price: 40000, volume: "", concentration: "Parfum", family: "Floral poudré · Femme", notes: "Jasmin · Tubéreuse · Notes poudrées · Notes fruitées · Bergamote · Cuir", text: "Heidy de Samam est un floral blanc poudré : jasmin et tubéreuse, une touche fruitée, puis un fond de cuir doux. Féminin, élégant, avec un sillage qui se remarque." },
+  { slug: "hersh-55", name: "Hersh 55° Celsius", brand: "Al Ezz Oud", price: 45000, volume: "100 ml", concentration: "Eau de parfum", family: "Agrumes ambré · Mixte", notes: "Agrumes · Ambre · Bois", text: "Hersh 55° d'Al Ezz Oud : des agrumes vifs sur un fond ambré et boisé. Frais mais présent, il tient bien sous la chaleur. Flacon turquoise couronné, 100 ml." },
+  { slug: "rayhaan-nava-sol", name: "Rayhaan Nava Sol", brand: "Rayhaan", price: 25000, volume: "100 ml", concentration: "Eau de parfum", family: "Floral boisé musqué", head: "Poire · Ambrette", heart: "Magnolia · Jasmin · Santal", base: "Cèdre · Musc · Ambre", text: "Nava Sol de Rayhaan s'ouvre sur une poire juteuse et l'ambrette, puis le magnolia et le jasmin prennent le relais sur un fond de cèdre et de musc. Lumineux et doux, parfait pour la journée." },
+  { slug: "rayhaan-cedrus-blanc", name: "Rayhaan Cedrus Blanc", brand: "Rayhaan", price: 25000, volume: "100 ml", concentration: "Eau de parfum", family: "Boisé musqué propre", head: "Aldéhydes · Bergamote", heart: "Fleur d'oranger", base: "Musc blanc · Vanille · Cèdre", text: "Cedrus Blanc de Rayhaan, c'est le luxe discret : bergamote et aldéhydes pétillants, cœur de fleur d'oranger, puis musc blanc, vanille et cèdre. Propre, chic, pour tous les jours." },
+  { slug: "arabiyat-marwa", name: "Arabiyat Marwa", brand: "Arabiyat Prestige", price: 33000, volume: "100 ml", concentration: "Eau de parfum", family: "Hespéridé épicé boisé", head: "Bergamote · Citron · Orange de Sicile", heart: "Néroli · Gingembre · Cannelle", base: "Thé noir · Encens · Ambroxan · Bois de gaïac", text: "Marwa d'Arabiyat Prestige est de retour : agrumes frais, gingembre et cannelle, puis un fond fumé de thé noir et d'encens. Flacon argenté taillé comme une pierre, dans son grand coffret." },
+  { slug: "arabiyat-mahd-al-dhahab", name: "Arabiyat Mahd Al Dhahab", brand: "Arabiyat Prestige", price: 33000, volume: "100 ml", concentration: "Eau de parfum", family: "Oriental boisé · Mixte", head: "Bergamote · Citron · Épices", heart: "Ambre · Oud · Patchouli", base: "Musc blanc · Vanille · Santal", text: "Mahd Al Dhahab, « le berceau d'or » : un oriental généreux où l'oud et l'ambre rencontrent la vanille et le santal. Chaleureux et riche, flacon doré taillé comme une pierre." },
+  { slug: "mfa-pure-50", name: "MFA Pure 50", brand: "MFA Perfumes", price: 40000, volume: "100 ml", concentration: "Parfum", family: "Boisé épicé", head: "Bergamote · Poivre rose · Encens · Piment", heart: "Rose · Vétiver · Santal · Papyrus", base: "Safran · Daim · Akigalawood · Vanille", text: "Pure 50 de MFA Perfumes, inspiré de Purpose 50 d'Amouage : boisé et épicé, avec l'encens, la rose et le safran sur un fond de daim et de vanille. Élégant, sophistiqué. Flacon vert sculpté." },
+  { slug: "rayhaan-vantage", name: "Rayhaan Vantage", brand: "Rayhaan", price: 30000, volume: "100 ml", concentration: "Eau de parfum", family: "Ambré épicé · Mixte", head: "Cardamome · Poivre rose · Bergamote", heart: "Encens · Myrrhe · Baies de genièvre", base: "Cèdre · Patchouli", text: "Vantage de Rayhaan : cardamome et poivre rose, cœur d'encens et de myrrhe, fond de cèdre et de patchouli. Un ambré épicé raffiné, dans un flacon cuivré ciselé de motifs arabes." },
 ];
 
 const dubaiCatalog: BoutiqueProduct[] = dubaiProducts.map((product) => ({
   slug: product.slug,
   name: product.name,
   ref: product.brand,
-  notes: "Notes à préciser",
-  headNotes: "Notes à préciser",
-  heartNotes: "Notes à préciser",
-  baseNotes: "Notes à préciser",
+  notes: product.notes || (product.head ? [product.head, product.heart, product.base].join(" · ") : "Notes à préciser"),
+  headNotes: product.head || "Notes à préciser",
+  heartNotes: product.heart || "Notes à préciser",
+  baseNotes: product.base || "Notes à préciser",
   price: product.price,
   collection: "dubai",
   image: `/images/optimized/dubai-${product.slug}-w800.webp`,
   family: product.family,
   concentration: product.concentration,
   volume: product.volume || "Flacon",
-  description: product.contents
+  description: product.text
+    ? `${product.text} Disponible chez 2M Parfumerie, livraison partout au Sénégal.`
+    : product.contents
     ? `${product.name} de ${product.brand} : ${product.contents}. Présenté dans sa boîte d'origine, disponible chez 2M Parfumerie, livraison partout au Sénégal.`
     : `${product.name} de ${product.brand}, ${product.concentration.toLowerCase()}${product.volume ? ` ${product.volume}` : ""} dans sa boîte d'origine. Disponible chez 2M Parfumerie, livraison partout au Sénégal.`,
 }));

@@ -323,6 +323,9 @@ function ProductTemplate({ product, products }: { product: BoutiqueProduct; prod
                 ["🌸", "Notes de tête", product.headNotes],
                 ["💐", "Notes de cœur", product.heartNotes],
                 ["🌿", "Notes de fond", product.baseNotes],
+                ...([product.headNotes, product.heartNotes, product.baseNotes].every((n) => !n || /notes à préciser/i.test(n))
+                  ? [["✨", "Notes principales", product.notes]]
+                  : []),
               ]
                 .filter(([, , notes]) => notes && !/notes à préciser/i.test(notes))
                 .map(([icon, title, notes]) => (
