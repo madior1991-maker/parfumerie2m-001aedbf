@@ -892,7 +892,8 @@ const dubaiCatalog: BoutiqueProduct[] = dubaiProducts.map((product) => ({
 }));
 
 // Rupture de stock : masqués partout sur le site. Retirer le slug pour remettre le produit en ligne.
-export const outOfStockSlugs = new Set(["seoul", "seoul-louis-vuitton-imagination"]);
+// Masqués : ruptures (Seoul) et doublons (rayhaan-nova-sol = ancienne fiche de Rayhaan Nava Sol).
+export const outOfStockSlugs = new Set(["seoul", "seoul-louis-vuitton-imagination", "rayhaan-nova-sol"]);
 
 export const catalog: BoutiqueProduct[] = [...takeoffCatalog, ...scentlabCatalog, ...scentlabExtraCatalog, ...haqqiCatalog, ...pocketCatalog, ...libraryCatalog, ...coffretCatalog, ...dubaiCatalog].filter((product) => !outOfStockSlugs.has(slugifyProduct(product)));
 
