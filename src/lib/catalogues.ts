@@ -19,7 +19,7 @@ export const fullCatalogue = {
   title: "Le catalogue complet",
   summary: "Toutes nos collections réunies dans un seul fichier, avec les prix et les senteurs.",
   pages: 58,
-  size: "15,4 Mo",
+  size: "15,5 Mo",
 };
 
 export const catalogues: CatalogueEntry[] = [
@@ -28,7 +28,7 @@ export const catalogues: CatalogueEntry[] = [
   { slug: "02-scentlab", title: "SCENTLAB", summary: "61 senteurs, 6 000 F, pack de 3 à 15 000 F.", pages: 6, size: "1,3 Mo", collection: "scentlab" },
   { slug: "03-parfums-de-poche", title: "Parfums de poche", summary: "49 senteurs, pack de 5 à 10 000 F.", pages: 3, size: "0,4 Mo", collection: "pocket" },
   { slug: "04-takeoff", title: "Takeoff", summary: "12 escales, 25 000 F, les 2 à 50 000 F.", pages: 4, size: "1,2 Mo", collection: "takeoff" },
-  { slug: "05-dubai-perfumes", title: "Parfums Dubai", summary: "64 parfums orientaux dès 12 000 F, dont 15 nouveautés.", pages: 10, size: "2,5 Mo", collection: "dubai" },
+  { slug: "05-dubai-perfumes", title: "Parfums Dubai", summary: "68 parfums orientaux dès 12 000 F, dont 19 nouveautés.", pages: 10, size: "2,7 Mo", collection: "dubai" },
   { slug: "06-parfums-authentiques", title: "Parfums authentiques", summary: "Les originaux des grandes maisons.", pages: 5, size: "1,8 Mo", collection: "authentic" },
   { slug: "07-callisto-paris", title: "Callisto Paris", summary: "5 parfums de la maison Callisto Paris.", pages: 3, size: "0,5 Mo", collection: "callisto" },
   { slug: "08-collections-privees", title: "Collections privées", summary: "Prestige Paris et Reef : éditions rares.", pages: 4, size: "1,3 Mo", collection: "privees" },
