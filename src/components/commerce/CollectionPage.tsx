@@ -162,7 +162,7 @@ export function CollectionPage({
                       const sources = optimizedProductImageSet(product.image);
                       const fallback = optimizedProductImageUrl(product.image, 800);
                       return (
-                        <picture>
+                        <picture className="block h-full w-full">
                           <source
                             type="image/avif"
                             srcSet={sources.avif}

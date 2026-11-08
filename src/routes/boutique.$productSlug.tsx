@@ -224,7 +224,7 @@ function ProductTemplate({ product, products }: { product: BoutiqueProduct; prod
                         const sources = optimizedProductImageSet(image);
                         const fallback = optimizedProductImageUrl(image, 400);
                         return (
-                          <picture>
+                          <picture className="block h-full w-full">
                             <source type="image/avif" srcSet={sources.avif} sizes="80px" />
                             <source type="image/webp" srcSet={sources.webp} sizes="80px" />
                             <img
@@ -252,7 +252,7 @@ function ProductTemplate({ product, products }: { product: BoutiqueProduct; prod
                 const sources = optimizedProductImageSet(selectedImage);
                 const fallback = optimizedProductImageUrl(selectedImage, 1200);
                 return (
-                  <picture>
+                  <picture className="block h-full w-full">
                     <source type="image/avif" srcSet={sources.avif} sizes="(min-width: 1024px) 600px, 90vw" />
                     <source type="image/webp" srcSet={sources.webp} sizes="(min-width: 1024px) 600px, 90vw" />
                     <img
@@ -398,7 +398,7 @@ function SimilarCard({ product }: { product: BoutiqueProduct }) {
           const sources = optimizedProductImageSet(product.image);
           const fallback = optimizedProductImageUrl(product.image, 800);
           return (
-            <picture>
+            <picture className="block h-full w-full">
               <source type="image/avif" srcSet={sources.avif} sizes="(min-width: 1024px) 25vw, 50vw" />
               <source type="image/webp" srcSet={sources.webp} sizes="(min-width: 1024px) 25vw, 50vw" />
               <img

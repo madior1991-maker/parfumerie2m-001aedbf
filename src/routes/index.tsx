@@ -463,7 +463,7 @@ function Index() {
                 className="group mx-auto flex h-full w-full max-w-sm flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-card transition-all hover:-translate-y-1 hover:border-accent"
               >
                 <div className="relative h-40 overflow-hidden bg-surface md:h-44">
-                  <picture>
+                  <picture className="block h-full w-full">
                     <source
                       type="image/avif"
                       srcSet={`/images/optimized/${pack.imageBase}-w800.avif 800w, /images/optimized/${pack.imageBase}-w1200.avif 1200w`}
