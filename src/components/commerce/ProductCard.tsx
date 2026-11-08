@@ -13,7 +13,7 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
           const sources = optimizedProductImageSet(product.image);
           const fallback = optimizedProductImageUrl(product.image, 800);
           return (
-            <picture>
+            <picture className="block h-full w-full">
               <source type="image/avif" srcSet={sources.avif} sizes="(min-width: 1024px) 25vw, 50vw" />
               <source type="image/webp" srcSet={sources.webp} sizes="(min-width: 1024px) 25vw, 50vw" />
               <img
