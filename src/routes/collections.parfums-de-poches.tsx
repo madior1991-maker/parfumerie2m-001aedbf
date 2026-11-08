@@ -1,9 +1,10 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { SeoText, seoMeta } from "@/components/commerce/SeoText";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { SiteLayout } from "@/components/commerce/SiteLayout";
+import { CollectionSearch, matchesSearch } from "@/components/commerce/CollectionSearch";
 import { PocketShowcase } from "@/components/commerce/PocketShowcase";
 import { CatalogueDownload } from "@/components/commerce/CatalogueDownload";
 import { catalog } from "@/lib/catalog-data";
@@ -52,7 +53,9 @@ function PocketPage() {
   // la liste vient du catalogue.
   const products = catalog;
 
-  const groups = useMemo(() => {
+  const [query, setQuery] = useState("");
+
+  const allGroups = useMemo(() => {
     const pocket = products.filter((product) => product.collection === "pocket");
     return families
       .map((family) => ({
@@ -65,7 +68,21 @@ function PocketPage() {
       .filter((group) => group.names.length > 0);
   }, [products]);
 
-  const total = groups.reduce((sum, group) => sum + group.names.length, 0);
+  const total = allGroups.reduce((sum, group) => sum + group.names.length, 0);
+
+  const groups = useMemo(() => {
+    if (!query.trim()) return allGroups;
+    const pocket = products.filter((product) => product.collection === "pocket");
+    return allGroups
+      .map((group) => ({
+        ...group,
+        names: group.names.filter((name) =>
+          pocket.some((p) => p.name === name && p.family === group.family && matchesSearch(p, query)),
+        ),
+      }))
+      .filter((group) => group.names.length > 0);
+  }, [allGroups, products, query]);
+  const found = groups.reduce((sum, group) => sum + group.names.length, 0);
 
   return (
     <SiteLayout>
@@ -118,6 +135,19 @@ function PocketPage() {
           <p className="mt-2 text-sm text-muted-foreground">
             Choisis-en 5. Mélange Homme et Femme comme tu veux.
           </p>
+          <CollectionSearch
+            value={query}
+            onChange={setQuery}
+            placeholder="Rechercher un parfum de poche…"
+            className="mt-6 md:mx-0"
+          />
+          {query.trim() && (
+            <p className="mt-3 text-sm text-muted-foreground">
+              {found > 0
+                ? `${found} résultat${found > 1 ? "s" : ""} sur ${total} parfums de poche`
+                : `Aucun parfum de poche ne correspond à « ${query.trim()} ».`}
+            </p>
+          )}
           <div className="mt-8 grid gap-8 md:grid-cols-3">
             {groups.map((group) => (
               <div key={group.family}>

@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { AddToCartButton } from "@/components/commerce/AddToCartButton";
 import { CatalogueDownload } from "@/components/commerce/CatalogueDownload";
+import { CollectionSearch, matchesSearch } from "@/components/commerce/CollectionSearch";
 import { PriceTag } from "@/components/commerce/PriceTag";
 import { SiteLayout } from "@/components/commerce/SiteLayout";
 import { SeoText } from "@/components/commerce/SeoText";
@@ -50,6 +51,7 @@ export function CollectionPage({
   const [products, setProducts] = useState<BoutiqueProduct[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [visibleCount, setVisibleCount] = useState(25);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     void (async () => {
@@ -63,7 +65,16 @@ export function CollectionPage({
     () => products.filter((p) => p.collection === collection),
     [products, collection],
   );
-  const visible = filtered.slice(0, visibleCount);
+  const results = useMemo(
+    () => filtered.filter((p) => matchesSearch(p, query)),
+    [filtered, query],
+  );
+  const searching = query.trim().length > 0;
+  const visible = results.slice(0, visibleCount);
+
+  useEffect(() => {
+    setVisibleCount(25);
+  }, [query]);
   const label = collectionLabel(collection);
 
   return (
@@ -139,9 +150,14 @@ export function CollectionPage({
 
       <section className="bg-background py-8 md:py-12">
         <div className="mx-auto max-w-7xl px-3 md:px-6">
-          <CatalogueDownload collection={collection} className="mb-8" />
+          {filtered.length > 0 && (
+            <CollectionSearch value={query} onChange={setQuery} className="mb-5" />
+          )}
+          {!searching && <CatalogueDownload collection={collection} className="mb-8" />}
           <p className="mb-4 text-sm text-muted-foreground">
-            {filtered.length} parfum{filtered.length > 1 ? "s" : ""} {label}
+            {searching
+              ? `${results.length} résultat${results.length > 1 ? "s" : ""} sur ${filtered.length} parfums ${label}`
+              : `${filtered.length} parfum${filtered.length > 1 ? "s" : ""} ${label}`}
           </p>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4 xl:grid-cols-5">
             {visible.map((product, index) => (
@@ -214,12 +230,27 @@ export function CollectionPage({
               </article>
             ))}
           </div>
-          {visible.length === 0 && (
+          {searching && results.length === 0 && filtered.length > 0 && (
+            <div className="rounded-lg border border-dashed border-border bg-surface px-6 py-12 text-center text-muted-foreground">
+              <p>Aucun parfum ne correspond à « {query.trim()} » dans cette collection.</p>
+              <div className="mt-4 flex flex-wrap justify-center gap-3">
+                <Button variant="outline" onClick={() => setQuery("")}>
+                  Effacer la recherche
+                </Button>
+                <Button asChild variant="outline">
+                  <Link to="/boutique" search={{}}>
+                    Chercher dans toute la boutique
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          )}
+          {!searching && visible.length === 0 && (
             <div className="rounded-lg border border-dashed border-border bg-surface px-6 py-12 text-center text-muted-foreground">
               {loaded ? "Les parfums de cette collection arrivent bientôt. Écrivez-nous sur WhatsApp." : "Catalogue en cours de chargement…"}
             </div>
           )}
-          {visibleCount < filtered.length && (
+          {visibleCount < results.length && (
             <div className="mt-12 text-center">
               <Button variant="outline" size="lg" onClick={() => setVisibleCount((c) => c + 25)}>
                 Voir plus
