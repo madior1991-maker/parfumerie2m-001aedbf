@@ -233,8 +233,11 @@ function CoffretSignaturePage() {
     );
   }, [allOptions, gender, query, showGender]);
 
+  const navigate = Route.useNavigate();
   const choosePack = (collection: CoffretCollection) => {
     setSelectedCollection(collection);
+    // L'adresse suit le pack choisi (?pack=haqqi…), pour pouvoir copier et partager le lien du pack.
+    void navigate({ search: { pack: collection }, replace: true, resetScroll: false });
     setGender("Tous");
     setQuery("");
   };
