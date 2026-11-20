@@ -156,20 +156,26 @@ const staticPackOptions = buildPackOptions(catalog);
 const genderTabs = ["Tous", "Homme", "Femme", "Unisex"] as const;
 type GenderTab = (typeof genderTabs)[number];
 
-function validatePackSearch(search: Record<string, unknown>): { pack?: CoffretCollection } {
-  const pack = typeof search.pack === "string" ? search.pack.toLowerCase() : "";
-  return collectionOrder.includes(pack as CoffretCollection) ? { pack: pack as CoffretCollection } : {};
+type PackParam = "haqqi" | "scentlab" | "poche";
+const toPackParam = (c: CoffretCollection): PackParam => (c === "pocket" ? "poche" : c);
+const fromPackParam = (p: PackParam): CoffretCollection => (p === "poche" ? "pocket" : p);
+
+// Dans l'adresse : ?pack=haqqi, ?pack=scentlab ou ?pack=poche (« pocket » reste accepté pour les anciens liens).
+function validatePackSearch(search: Record<string, unknown>): { pack?: PackParam } {
+  const raw = typeof search.pack === "string" ? search.pack.toLowerCase() : "";
+  const pack = raw === "pocket" ? "poche" : raw;
+  return pack === "haqqi" || pack === "scentlab" || pack === "poche" ? { pack } : {};
 }
 
-export const Route = createFileRoute("/coffret-signature")({
+export const Route = createFileRoute("/nos-packs")({
   validateSearch: validatePackSearch,
   head: () => ({
     meta: [
-      { title: seoMeta("/coffret-signature").title },
+      { title: seoMeta("/nos-packs").title },
       {
         name: "description",
         content:
-          seoMeta("/coffret-signature").desc,
+          seoMeta("/nos-packs").desc,
       },
     ],
   }),
@@ -182,7 +188,7 @@ function packImage(base: string, width: 400 | 800 = 400) {
 
 function CoffretSignaturePage() {
   const search = Route.useSearch();
-  const [selectedCollection, setSelectedCollection] = useState<CoffretCollection>(search.pack ?? "haqqi");
+  const [selectedCollection, setSelectedCollection] = useState<CoffretCollection>(search.pack ? fromPackParam(search.pack) : "haqqi");
   const [selections, setSelections] = useState<Record<CoffretCollection, string[]>>({
     haqqi: [],
     scentlab: [],
@@ -193,7 +199,7 @@ function CoffretSignaturePage() {
   const [gender, setGender] = useState<GenderTab>("Tous");
 
   useEffect(() => {
-    if (search.pack) setSelectedCollection(search.pack);
+    if (search.pack) setSelectedCollection(fromPackParam(search.pack));
   }, [search.pack]);
 
   useEffect(() => {
@@ -236,8 +242,8 @@ function CoffretSignaturePage() {
   const navigate = Route.useNavigate();
   const choosePack = (collection: CoffretCollection) => {
     setSelectedCollection(collection);
-    // L'adresse suit le pack choisi (?pack=haqqi…), pour pouvoir copier et partager le lien du pack.
-    void navigate({ search: { pack: collection }, replace: true, resetScroll: false });
+    // L'adresse suit le pack choisi (?pack=haqqi, scentlab ou poche), pour pouvoir copier et partager le lien du pack.
+    void navigate({ search: { pack: toPackParam(collection) }, replace: true, resetScroll: false });
     setGender("Tous");
     setQuery("");
   };

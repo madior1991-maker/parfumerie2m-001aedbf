@@ -219,11 +219,11 @@ function BlogArticlePage() {
                     Boutique
                   </Link>
                   <Link
-                    to="/coffret-signature"
+                    to="/nos-packs"
                     search={{}}
                     className="rounded-2xl border border-border px-4 py-3 text-sm text-foreground transition-colors hover:border-accent hover:text-accent"
                   >
-                    Coffret signature
+                    Nos packs
                   </Link>
                   <Link
                     to="/conseils"

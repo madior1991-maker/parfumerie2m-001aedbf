@@ -26,7 +26,7 @@ export type CollectionPageProps = {
   eyebrow: string;
   intro: string;
   ctaLabel?: string;
-  ctaHref?: "/coffret-signature";
+  ctaHref?: "/nos-packs";
   ctaPack?: "haqqi" | "scentlab" | "pocket";
   heroImage?: string;
   heroImageAlt?: string;
@@ -96,7 +96,7 @@ export function CollectionPage({
                 </Button>
                 {ctaLabel && ctaHref && (
                   <Button asChild className="bg-accent text-primary-foreground hover:bg-accent/90">
-                    <Link to={ctaHref} search={ctaPack ? { pack: ctaPack } : {}}>{ctaLabel}</Link>
+                    <Link to={ctaHref} search={ctaPack ? { pack: ctaPack === "pocket" ? "poche" : ctaPack } : {}}>{ctaLabel}</Link>
                   </Button>
                 )}
               </div>
@@ -127,7 +127,7 @@ export function CollectionPage({
               </Button>
               {ctaLabel && ctaHref && (
                 <Button asChild className="bg-accent text-primary-foreground hover:bg-accent/90">
-                  <Link to={ctaHref} search={ctaPack ? { pack: ctaPack } : {}}>{ctaLabel}</Link>
+                  <Link to={ctaHref} search={ctaPack ? { pack: ctaPack === "pocket" ? "poche" : ctaPack } : {}}>{ctaLabel}</Link>
                 </Button>
               )}
             </div>

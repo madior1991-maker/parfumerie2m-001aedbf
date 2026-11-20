@@ -3,6 +3,11 @@
   "outputDirectory": "dist",
   "redirects": [
     {
+      "source": "/coffret-signature",
+      "destination": "/nos-packs",
+      "permanent": true
+    },
+    {
       "source": "/boutique/somati-soie-sublime-paris",
       "destination": "/boutique/somari-soie-sublime-paris",
       "permanent": true

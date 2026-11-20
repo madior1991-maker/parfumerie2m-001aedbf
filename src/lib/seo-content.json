@@ -32,7 +32,7 @@
       ],
       [
         "Compose ton pack",
-        "/coffret-signature"
+        "/nos-packs"
       ]
     ]
   },
@@ -84,7 +84,7 @@
     "links": [
       [
         "Composer mon pack Haqqi",
-        "/coffret-signature?pack=haqqi"
+        "/nos-packs?pack=haqqi"
       ],
       [
         "Parfums SCENTLAB",
@@ -108,7 +108,7 @@
     "links": [
       [
         "Composer mon pack SCENTLAB",
-        "/coffret-signature?pack=scentlab"
+        "/nos-packs?pack=scentlab"
       ],
       [
         "Parfums Haqqi",
@@ -156,7 +156,7 @@
     "links": [
       [
         "Composer mon pack de 5",
-        "/coffret-signature?pack=pocket"
+        "/nos-packs?pack=poche"
       ],
       [
         "Parfums Haqqi",
@@ -276,7 +276,7 @@
       ],
       [
         "Compose ton pack",
-        "/coffret-signature"
+        "/nos-packs"
       ]
     ]
   },
@@ -381,7 +381,7 @@
       ]
     ]
   },
-  "/coffret-signature": {
+  "/nos-packs": {
     "title": "Compose ton pack de parfums : 3 Haqqi à 10 000 F | 2M Parfumerie",
     "desc": "Compose ton pack : 3 parfums Haqqi à 10 000 F, 3 SCENTLAB à 15 000 F ou 5 parfums de poche à 10 000 F. Choisis en photos, valide sur WhatsApp.",
     "h1": "Compose ton pack de parfums",
@@ -540,7 +540,7 @@
       ],
       [
         "Compose ton pack",
-        "/coffret-signature"
+        "/nos-packs"
       ]
     ]
   },

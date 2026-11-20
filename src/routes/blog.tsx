@@ -23,7 +23,7 @@ const topicPillars = [
 const quickLinks = [
   { label: "Conseils parfum", to: "/conseils" },
   { label: "Boutique", to: "/boutique" },
-  { label: "Coffret signature", to: "/coffret-signature" },
+  { label: "Nos packs", to: "/nos-packs" },
 ] as const;
 
 export const Route = createFileRoute("/blog")({

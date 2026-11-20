@@ -25,7 +25,7 @@ import { useCustomCollections } from "@/lib/live-catalog";
 // Menu principal : l'essentiel pour acheter. Le reste passe dans « Aide ».
 const navItems = [
   { label: "Boutique", to: "/boutique" },
-  { label: "Compose ton pack", to: "/coffret-signature" },
+  { label: "Nos packs", to: "/nos-packs" },
   { label: "Catalogues", to: "/catalogues" },
 ] as const;
 
@@ -78,7 +78,7 @@ const siteCollections: SiteCollection[] = [
 
 const footerPages = [
   { label: "Boutique", to: "/boutique" },
-  { label: "Compose ton pack", to: "/coffret-signature" },
+  { label: "Nos packs", to: "/nos-packs" },
   { label: "Catalogues PDF", to: "/catalogues" },
   { label: "Quiz parfum", to: "/trouve-ton-parfum" },
   { label: "Livraison", to: "/livraison" },
@@ -391,7 +391,7 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
       </main>
       <SiteFooter />
       {/* Sur les fiches produits, le grand bouton WhatsApp suffit : la bulle le cachait sur mobile. */}
-      {!open && !cartOpen && !location.pathname.startsWith("/boutique/") && location.pathname !== "/coffret-signature" && <FloatingWhatsApp />}
+      {!open && !cartOpen && !location.pathname.startsWith("/boutique/") && location.pathname !== "/nos-packs" && <FloatingWhatsApp />}
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
     </div>
   );

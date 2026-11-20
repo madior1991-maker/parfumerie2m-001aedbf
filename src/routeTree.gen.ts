@@ -10,12 +10,12 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TrouveTonParfumRouteImport } from './routes/trouve-ton-parfum'
+import { Route as NosPacksRouteImport } from './routes/nos-packs'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as LivraisonRouteImport } from './routes/livraison'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ConseilsRouteImport } from './routes/conseils'
-import { Route as CoffretSignatureRouteImport } from './routes/coffret-signature'
 import { Route as CataloguesRouteImport } from './routes/catalogues'
 import { Route as BoutiqueRouteImport } from './routes/boutique'
 import { Route as BlogRouteImport } from './routes/blog'
@@ -41,6 +41,11 @@ const TrouveTonParfumRoute = TrouveTonParfumRouteImport.update({
   path: '/trouve-ton-parfum',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NosPacksRoute = NosPacksRouteImport.update({
+  id: '/nos-packs',
+  path: '/nos-packs',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MentionsLegalesRoute = MentionsLegalesRouteImport.update({
   id: '/mentions-legales',
   path: '/mentions-legales',
@@ -64,11 +69,6 @@ const ContactRoute = ContactRouteImport.update({
 const ConseilsRoute = ConseilsRouteImport.update({
   id: '/conseils',
   path: '/conseils',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CoffretSignatureRoute = CoffretSignatureRouteImport.update({
-  id: '/coffret-signature',
-  path: '/coffret-signature',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CataloguesRoute = CataloguesRouteImport.update({
@@ -179,12 +179,12 @@ export interface FileRoutesByFullPath {
   '/blog': typeof BlogRouteWithChildren
   '/boutique': typeof BoutiqueRouteWithChildren
   '/catalogues': typeof CataloguesRoute
-  '/coffret-signature': typeof CoffretSignatureRoute
   '/conseils': typeof ConseilsRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/livraison': typeof LivraisonRoute
   '/mentions-legales': typeof MentionsLegalesRoute
+  '/nos-packs': typeof NosPacksRoute
   '/trouve-ton-parfum': typeof TrouveTonParfumRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/boutique/$productSlug': typeof BoutiqueProductSlugRoute
@@ -207,12 +207,12 @@ export interface FileRoutesByTo {
   '/blog': typeof BlogRouteWithChildren
   '/boutique': typeof BoutiqueRouteWithChildren
   '/catalogues': typeof CataloguesRoute
-  '/coffret-signature': typeof CoffretSignatureRoute
   '/conseils': typeof ConseilsRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/livraison': typeof LivraisonRoute
   '/mentions-legales': typeof MentionsLegalesRoute
+  '/nos-packs': typeof NosPacksRoute
   '/trouve-ton-parfum': typeof TrouveTonParfumRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/boutique/$productSlug': typeof BoutiqueProductSlugRoute
@@ -236,12 +236,12 @@ export interface FileRoutesById {
   '/blog': typeof BlogRouteWithChildren
   '/boutique': typeof BoutiqueRouteWithChildren
   '/catalogues': typeof CataloguesRoute
-  '/coffret-signature': typeof CoffretSignatureRoute
   '/conseils': typeof ConseilsRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/livraison': typeof LivraisonRoute
   '/mentions-legales': typeof MentionsLegalesRoute
+  '/nos-packs': typeof NosPacksRoute
   '/trouve-ton-parfum': typeof TrouveTonParfumRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/boutique/$productSlug': typeof BoutiqueProductSlugRoute
@@ -266,12 +266,12 @@ export interface FileRouteTypes {
     | '/blog'
     | '/boutique'
     | '/catalogues'
-    | '/coffret-signature'
     | '/conseils'
     | '/contact'
     | '/faq'
     | '/livraison'
     | '/mentions-legales'
+    | '/nos-packs'
     | '/trouve-ton-parfum'
     | '/blog/$slug'
     | '/boutique/$productSlug'
@@ -294,12 +294,12 @@ export interface FileRouteTypes {
     | '/blog'
     | '/boutique'
     | '/catalogues'
-    | '/coffret-signature'
     | '/conseils'
     | '/contact'
     | '/faq'
     | '/livraison'
     | '/mentions-legales'
+    | '/nos-packs'
     | '/trouve-ton-parfum'
     | '/blog/$slug'
     | '/boutique/$productSlug'
@@ -322,12 +322,12 @@ export interface FileRouteTypes {
     | '/blog'
     | '/boutique'
     | '/catalogues'
-    | '/coffret-signature'
     | '/conseils'
     | '/contact'
     | '/faq'
     | '/livraison'
     | '/mentions-legales'
+    | '/nos-packs'
     | '/trouve-ton-parfum'
     | '/blog/$slug'
     | '/boutique/$productSlug'
@@ -351,12 +351,12 @@ export interface RootRouteChildren {
   BlogRoute: typeof BlogRouteWithChildren
   BoutiqueRoute: typeof BoutiqueRouteWithChildren
   CataloguesRoute: typeof CataloguesRoute
-  CoffretSignatureRoute: typeof CoffretSignatureRoute
   ConseilsRoute: typeof ConseilsRoute
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
   LivraisonRoute: typeof LivraisonRoute
   MentionsLegalesRoute: typeof MentionsLegalesRoute
+  NosPacksRoute: typeof NosPacksRoute
   TrouveTonParfumRoute: typeof TrouveTonParfumRoute
   CollectionsCallistoParisRoute: typeof CollectionsCallistoParisRoute
   CollectionsCoffretsRoute: typeof CollectionsCoffretsRoute
@@ -378,6 +378,13 @@ declare module '@tanstack/react-router' {
       path: '/trouve-ton-parfum'
       fullPath: '/trouve-ton-parfum'
       preLoaderRoute: typeof TrouveTonParfumRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/nos-packs': {
+      id: '/nos-packs'
+      path: '/nos-packs'
+      fullPath: '/nos-packs'
+      preLoaderRoute: typeof NosPacksRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mentions-legales': {
@@ -413,13 +420,6 @@ declare module '@tanstack/react-router' {
       path: '/conseils'
       fullPath: '/conseils'
       preLoaderRoute: typeof ConseilsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/coffret-signature': {
-      id: '/coffret-signature'
-      path: '/coffret-signature'
-      fullPath: '/coffret-signature'
-      preLoaderRoute: typeof CoffretSignatureRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/catalogues': {
@@ -587,12 +587,12 @@ const rootRouteChildren: RootRouteChildren = {
   BlogRoute: BlogRouteWithChildren,
   BoutiqueRoute: BoutiqueRouteWithChildren,
   CataloguesRoute: CataloguesRoute,
-  CoffretSignatureRoute: CoffretSignatureRoute,
   ConseilsRoute: ConseilsRoute,
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
   LivraisonRoute: LivraisonRoute,
   MentionsLegalesRoute: MentionsLegalesRoute,
+  NosPacksRoute: NosPacksRoute,
   TrouveTonParfumRoute: TrouveTonParfumRoute,
   CollectionsCallistoParisRoute: CollectionsCallistoParisRoute,
   CollectionsCoffretsRoute: CollectionsCoffretsRoute,

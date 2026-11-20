@@ -192,7 +192,7 @@ function Results({
 
       {answers.moment === "cadeau" && (
         <Link
-          to="/coffret-signature"
+          to="/nos-packs"
           className="mt-6 flex items-center gap-4 rounded-lg border border-accent/30 bg-accent-muted p-5 hover:border-accent"
         >
           <Gift className="size-8 shrink-0 text-accent" aria-hidden="true" />

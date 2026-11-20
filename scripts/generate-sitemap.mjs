@@ -11,7 +11,7 @@ const ROUTES = [
   "/contact",
   "/faq",
   "/blog",
-  "/coffret-signature",
+  "/nos-packs",
   "/a-propos",
   "/mentions-legales",
   "/livraison",

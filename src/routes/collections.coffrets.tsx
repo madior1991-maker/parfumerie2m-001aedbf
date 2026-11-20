@@ -36,7 +36,7 @@ export const Route = createFileRoute("/collections/coffrets")({
       h1="Coffrets — Des ensembles de parfums prêts à offrir"
       intro="Les Coffrets 2M Parfumerie rassemblent plusieurs parfums dans un même ensemble, parfaits pour offrir ou pour se faire plaisir. Livraison partout au Sénégal, avec confirmation directe avec le gérant."
       ctaLabel="Composer mon pack"
-      ctaHref="/coffret-signature"
+      ctaHref="/nos-packs"
     />
   ),
 });

@@ -501,7 +501,7 @@ function Index() {
                       size="lg"
                       className="h-auto w-full justify-center rounded-full bg-accent px-5 py-3 text-primary-foreground shadow-elegant ring-2 ring-accent/40 ring-offset-2 ring-offset-surface-alt hover:bg-accent/90"
                     >
-                      <Link to="/coffret-signature" search={{ pack: pack.pack }}>Choisir ce pack</Link>
+                      <Link to="/nos-packs" search={{ pack: pack.pack === "pocket" ? "poche" : pack.pack }}>Choisir ce pack</Link>
                     </Button>
                   </div>
                 </div>
