@@ -47,7 +47,7 @@ async function main() {
     fs.mkdirSync(cacheDir, { recursive: true });
     const products = catalog
       .filter((p) => !p.placeholder)
-      .map((p) => ({ slug: slugifyProduct(p), name: p.name, collection: p.collection, price: p.price, notes: p.notes, image: p.image }));
+      .map((p) => ({ slug: slugifyProduct(p), name: p.name, collection: p.collection, price: p.price, notes: p.notes, image: p.image, ref: p.ref }));
     fs.writeFileSync(path.join(cacheDir, "static-products.json"), JSON.stringify(products));
     console.log(`generate-sitemap: ${locs.length} adresses (${slugs.length} produits)`);
   } finally {

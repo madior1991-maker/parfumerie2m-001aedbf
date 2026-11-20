@@ -25,6 +25,20 @@ import { supabase } from "@/integrations/supabase/client";
 import { mergeLiveCatalog } from "@/lib/live-catalog";
 import { displayPhone } from "@/lib/perfume-data";
 
+const SEO_KEYWORDS: Record<string, string> = {
+  scentlab: "Parfum SCENTLAB",
+  takeoff: "Parfum Takeoff",
+  dubai: "Parfum Dubaï",
+  pocket: "Parfum de poche",
+  authentic: "Parfum original",
+  haqqi: "Parfum Haqqi",
+  callisto: "Extrait Callisto Paris",
+  privees: "Parfum de niche",
+  coffrets: "Coffret parfum",
+  library: "Parfum Fragrance Library",
+  "soie-sublime": "Extrait Soie Sublime Paris",
+};
+
 export const Route = createFileRoute("/boutique/$productSlug")({
   head: ({ params }) => {
     const product = findProductBySlug(params.productSlug);
@@ -35,11 +49,24 @@ export const Route = createFileRoute("/boutique/$productSlug")({
       .filter(Boolean)
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
+    // Mots-clés recherchés à Dakar ; la marque n'est montrée que pour les parfums Dubai (ailleurs, ref = inspiration).
+    const keyword = product ? SEO_KEYWORDS[product.collection] ?? "Parfum" : "Parfum";
+    const brand =
+      product && product.collection === "dubai" && product.ref && !product.name.toLowerCase().startsWith(product.ref.toLowerCase())
+        ? product.ref
+        : "";
+    const priceText = product
+      ? product.collection === "pocket"
+        ? "pack de 5 à 10 000 F"
+        : product.price > 0
+          ? formatPrice(product.price)
+          : ""
+      : "";
     const title = product
-      ? `${product.name} – ${collectionLabel(product.collection)} | 2M Parfumerie Dakar`
+      ? `${product.name}${brand ? ` ${brand}` : ""} – ${keyword} à Dakar${priceText && product.collection !== "pocket" ? `, ${priceText}` : ""} | 2M Parfumerie`
       : `${slugName} | 2M Parfumerie Dakar`;
     const description = product
-      ? `${product.name} par ${collectionLabel(product.collection)} : notes de ${product.notes}. ${formatPrice(product.price)}. Livraison rapide à Dakar. Commandez sur WhatsApp chez 2M Parfumerie.`
+      ? `${product.name}${brand ? ` ${/^[aeiouyh]/i.test(brand) ? "d’" : "de "}${brand}` : ""} : ${keyword.charAt(0).toLowerCase() + keyword.slice(1)}${priceText ? ` à ${priceText}` : ""} chez 2M Parfumerie à Dakar. Notes : ${product.notes}. Livraison partout au Sénégal, paiement à la livraison (Wave, Orange Money). WhatsApp 76 192 34 41.`
       : `${slugName} chez 2M Parfumerie. Commande sur WhatsApp, livraison rapide à Dakar, 24 à 48h en régions. Paiement Wave, Orange Money ou espèces.`;
     const rawHeadImage = product?.image ? optimizedProductImageUrl(product.image, 1200) : undefined;
     // Les balises de partage (og:, twitter:) sont écrites dans la page HTML au build.
@@ -71,7 +98,7 @@ export const Route = createFileRoute("/boutique/$productSlug")({
           name: product.name,
           description: product.description,
           image: image,
-          brand: { "@type": "Brand", name: collectionLabel(product.collection) },
+          brand: { "@type": "Brand", name: product.collection === "dubai" && product.ref ? product.ref : collectionLabel(product.collection) },
           offers: {
             "@type": "Offer",
             price: product.price,
@@ -171,7 +198,7 @@ function ProductJsonLd({ product, slug }: { product: BoutiqueProduct; slug: stri
     name: product.name,
     description: product.description,
     image,
-    brand: { "@type": "Brand", name: collectionLabel(product.collection) },
+    brand: { "@type": "Brand", name: product.collection === "dubai" && product.ref ? product.ref : collectionLabel(product.collection) },
     offers: {
       "@type": "Offer",
       price: product.price,

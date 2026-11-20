@@ -23,6 +23,8 @@ const LABELS = { scentlab: "SCENTLAB", takeoff: "Takeoff Fragrance", dubai: "Par
 const ALIASES = { "scent lab": "scentlab", "takeoff fragrance": "takeoff", "takeoff fragance": "takeoff", "dubai perfumes": "dubai", "pocket perfumes": "pocket", "authentic perfumes": "authentic", haqqui: "haqqi", "collections privees": "privees", "collections privées": "privees", "collection privee": "privees", "private collection": "privees", coffret: "coffrets", "fragrance library": "library", "soie sublime": "soie-sublime", "soie sublime paris": "soie-sublime" };
 const collectionOf0 = (v) => { const n = (v || "").trim().toLowerCase(); return LABELS[n] ? n : ALIASES[n] || "scentlab"; };
 const collectionOf = (v, name = "") => (/callisto/i.test(name) ? "callisto" : collectionOf0(v));
+// Mots-clés recherchés à Dakar, par collection (titre et description des fiches).
+const KEYWORDS = { scentlab: "Parfum SCENTLAB", takeoff: "Parfum Takeoff", dubai: "Parfum Dubaï", pocket: "Parfum de poche", authentic: "Parfum original", haqqi: "Parfum Haqqi", callisto: "Extrait Callisto Paris", privees: "Parfum de niche", coffrets: "Coffret parfum", library: "Parfum Fragrance Library", "soie-sublime": "Extrait Soie Sublime Paris" };
 const price = (n) => `${new Intl.NumberFormat("fr-FR").format(n).replace(/ | /g, " ")} FCFA`;
 const clean = (v) => {
   let t = String(v || "");
@@ -58,8 +60,13 @@ function writeProductPage(base, p0) {
   const p = { ...p0, name: String(p0.name || "").replace(/\s*[(\-–]\s*callisto paris\s*\)?\s*$/i, "").trim() || p0.name };
   const label = LABELS[collectionOf(p0.collection, p0.name)];
   const pageUrl = `${SITE}/boutique/${p.slug}`;
-  const title = `${p.name} – ${label} | 2M Parfumerie Dakar`;
-  const desc = `${p.name} (${label}) à ${price(p.price)}${p.notes ? `. Notes : ${p.notes}` : ""}. Commande sur WhatsApp, livraison rapide à Dakar, 24 à 48h en régions.`.slice(0, 300);
+  const coll0 = collectionOf(p0.collection, p0.name);
+  const kw = KEYWORDS[coll0] || "Parfum";
+  // Marque réelle seulement pour les parfums Dubai (ailleurs, ref = inspiration, jamais affichée comme marque).
+  const brand = coll0 === "dubai" && p0.ref && !p.name.toLowerCase().startsWith(String(p0.ref).toLowerCase()) ? p0.ref : "";
+  const priceText = coll0 === "pocket" ? "pack de 5 à 10 000 F" : p.price > 0 ? price(p.price) : "";
+  const title = `${p.name}${brand ? ` ${brand}` : ""} – ${kw} à Dakar${priceText && coll0 !== "pocket" ? `, ${priceText.replace(" FCFA", " F")}` : ""} | 2M Parfumerie`;
+  const desc = `${p.name}${brand ? ` ${/^[aeiouyh]/i.test(brand) ? "d’" : "de "}${brand}` : ""} : ${kw.charAt(0).toLowerCase() + kw.slice(1)} ${priceText ? `à ${priceText} ` : ""}chez 2M Parfumerie à Dakar.${p.notes ? ` Notes : ${p.notes}.` : ""} Livraison partout au Sénégal, paiement à la livraison (Wave, Orange Money). WhatsApp 76 192 34 41.`.slice(0, 320);
   const image = resolveImage(p.image);
   let html = base.replace(/<title>[^<]*<\/title>/, `<title>${esc(title)}</title>`);
   for (const [attr, k, v] of [["name", "description", desc], ["property", "og:title", title], ["property", "og:description", desc], ["property", "og:image", image], ["property", "og:url", pageUrl], ["property", "og:type", "product"], ["name", "twitter:title", title], ["name", "twitter:description", desc], ["name", "twitter:image", image]]) {
@@ -75,7 +82,7 @@ function writeProductPage(base, p0) {
       name: p.name,
       image: [image],
       description: desc,
-      brand: { "@type": "Brand", name: label },
+      brand: { "@type": "Brand", name: coll0 === "dubai" && p0.ref ? p0.ref : label },
       category: label,
       ...(p.price > 0 && coll !== "pocket"
         ? { offers: { "@type": "Offer", url: pageUrl, priceCurrency: "XOF", price: p.price, availability: "https://schema.org/InStock", seller: { "@type": "Organization", name: "2M Parfumerie" } } }
