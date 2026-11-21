@@ -1,0 +1,14 @@
+name: fetch-media
+on: { push: { branches: [media-tmp] } }
+permissions: { contents: write }
+jobs:
+  f:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          curl -sSL -o rider.png "$U"
+          git config user.name bot && git config user.email bot@users.noreply.github.com
+          git add rider.png && git commit -m media && git push
+        env:
+          U: "https://export-download.canva.com/h61Go/DAHbkXh61Go/-1/0/0001-1081386804841744360.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAQYCGKMUH4R7NKVBA%2F20261120%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20261120T181648Z&X-Amz-Expires=88187&X-Amz-Signature=221e58def8f256ff1cf6cb28ce9a62afb9151353ae7a07f0c86f9286bdf5e0de&X-Amz-SignedHeaders=host%3Bx-amz-expected-bucket-owner&response-expires=Sat%2C%2021%20Nov%202026%2018%3A46%3A35%20GMT"
