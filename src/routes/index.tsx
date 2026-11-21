@@ -91,8 +91,8 @@ const homeCollections = [
 ] as const;
 
 const featuredPackCards = [
-  { title: "Pack Haqqi", subtitle: "3 parfums", price: "10 000 FCFA", imageBase: "haqqi-collection", pack: "haqqi" as const },
-  { title: "Pack SCENTLAB", subtitle: "3 parfums", price: "15 000 FCFA", imageBase: "scentlab-boxes", pack: "scentlab" as const },
+  { title: "Pack Haqqi", subtitle: "3 parfums", price: "10 000 FCFA", imageBase: "pack-haqqi-3-wide", pack: "haqqi" as const },
+  { title: "Pack SCENTLAB", subtitle: "3 parfums", price: "15 000 FCFA", imageBase: "pack-scentlab-3-wide", pack: "scentlab" as const },
   {
     title: "Parfums de poche",
     subtitle: "5 parfums",

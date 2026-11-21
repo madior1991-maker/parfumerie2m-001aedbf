@@ -32,8 +32,8 @@ const coffretOffers: Record<
   CoffretCollection,
   { label: string; short: string; price: number; requiredCount: number; imageBase: string }
 > = {
-  haqqi: { label: "Pack Haqqi", short: "Haqqi", price: 10000, requiredCount: 3, imageBase: "haqqi-collection" },
-  scentlab: { label: "Pack SCENTLAB", short: "SCENTLAB", price: 15000, requiredCount: 3, imageBase: "scentlab-boxes" },
+  haqqi: { label: "Pack Haqqi", short: "Haqqi", price: 10000, requiredCount: 3, imageBase: "pack-haqqi-3" },
+  scentlab: { label: "Pack SCENTLAB", short: "SCENTLAB", price: 15000, requiredCount: 3, imageBase: "pack-scentlab-3" },
   pocket: { label: "Pack Parfums de poche", short: "Poche", price: 10000, requiredCount: 5, imageBase: "pocket-perfumes-homme" },
 };
 
