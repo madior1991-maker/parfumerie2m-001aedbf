@@ -1,0 +1,41 @@
+import type { Collection } from "@/lib/catalog-data";
+
+export type CatalogueEntry = {
+  slug: string;
+  title: string;
+  summary: string;
+  pages: number;
+  size: string;
+  collection?: Collection;
+};
+
+const BASE = "/catalogues";
+
+export const catalogueFile = (slug: string) => `${BASE}/2m-parfumerie-catalogue-${slug}.pdf`;
+export const catalogueCover = (slug: string) => `${BASE}/couvertures/${slug}.webp`;
+
+export const fullCatalogue = {
+  slug: "complet",
+  title: "Le catalogue complet",
+  summary: "Toutes nos collections réunies dans un seul fichier, avec les prix et les senteurs.",
+  pages: 61,
+  size: "17 Mo",
+};
+
+export const catalogues: CatalogueEntry[] = [
+  { slug: "00-nos-collections", title: "Nos collections", summary: "L'aperçu des 11 collections et des prix.", pages: 2, size: "0,3 Mo" },
+  { slug: "01-haqqi", title: "Haqqi", summary: "60 senteurs, pack de 3 à 10 000 F.", pages: 5, size: "1,3 Mo", collection: "haqqi" },
+  { slug: "02-scentlab", title: "SCENTLAB", summary: "61 senteurs, 6 000 F, pack de 3 à 15 000 F.", pages: 6, size: "1,3 Mo", collection: "scentlab" },
+  { slug: "03-parfums-de-poche", title: "Parfums de poche", summary: "49 senteurs, pack de 5 à 10 000 F.", pages: 3, size: "0,4 Mo", collection: "pocket" },
+  { slug: "04-takeoff", title: "Takeoff", summary: "12 escales, 25 000 F, les 2 à 50 000 F.", pages: 4, size: "1,2 Mo", collection: "takeoff" },
+  { slug: "05-dubai-perfumes", title: "Parfums Dubai", summary: "96 parfums orientaux dès 12 000 F, dont 47 nouveautés.", pages: 13, size: "4 Mo", collection: "dubai" },
+  { slug: "06-parfums-authentiques", title: "Parfums authentiques", summary: "Les originaux des grandes maisons.", pages: 5, size: "1,8 Mo", collection: "authentic" },
+  { slug: "07-callisto-paris", title: "Callisto Paris", summary: "5 parfums de la maison Callisto Paris.", pages: 3, size: "0,5 Mo", collection: "callisto" },
+  { slug: "08-collections-privees", title: "Collections privées", summary: "Prestige Paris et Reef : éditions rares.", pages: 4, size: "1,3 Mo", collection: "privees" },
+  { slug: "09-coffrets", title: "Coffrets", summary: "30 coffrets des grandes maisons, 90 000 F.", pages: 6, size: "2,2 Mo", collection: "coffrets" },
+  { slug: "10-fragrance-library", title: "Fragrance Library", summary: "38 parfums 100 ml à 35 000 F, un roman par flacon.", pages: 7, size: "1,8 Mo", collection: "library" },
+  { slug: "11-soie-sublime", title: "Soie Sublime Paris", summary: "Alba, Encens, Somari : 90 000 F au lieu de 120 000 F.", pages: 3, size: "0,5 Mo", collection: "soie-sublime" },
+];
+
+export const catalogueForCollection = (collection: Collection) =>
+  catalogues.find((item) => item.collection === collection);

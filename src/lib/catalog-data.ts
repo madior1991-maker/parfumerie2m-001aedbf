@@ -1,0 +1,1081 @@
+import losAngelesImage from "@/assets/takeoff-los-angeles.webp";
+import amsterdamImage from "@/assets/takeoff-amsterdam.webp";
+import zurichImage from "@/assets/takeoff-zurich.webp";
+import berlinImage from "@/assets/takeoff-berlin.webp";
+import dubaiImage from "@/assets/takeoff-dubai.webp";
+import riyadhImage from "@/assets/takeoff-riyadh.webp";
+import viennaImage from "@/assets/takeoff-vienna.webp";
+import lisbonImage from "@/assets/hero-lisbon.jpg";
+import capriImage from "@/assets/takeoff-capri.webp";
+import seoulImage from "@/assets/takeoff-seoul.webp";
+import romeImage from "@/assets/takeoff-rome.webp";
+import istanbulImage from "@/assets/takeoff-istanbul.webp";
+import monacoImage from "@/assets/takeoff-monaco.webp";
+import newYorkImage from "@/assets/takeoff-new-york.webp";
+import moscowImage from "@/assets/takeoff-moscow.webp";
+import milanImage from "@/assets/takeoff-milan.webp";
+import budapestImage from "@/assets/takeoff-budapest.webp";
+import parisImage from "@/assets/takeoff-paris.webp";
+// Use optimized public images for large assets to reduce bundle size
+const creamyAlmondImage = "/images/optimized/scentlab-creamy-almond-upload-w800.webp";
+import brightMandarinImage from "@/assets/scentlab-bright-mandarin.webp";
+import caramelCitrusImage from "@/assets/scentlab-caramel-citrus.webp";
+import fruityGourmandImage from "@/assets/scentlab-fruity-gourmand-upload.webp";
+const fruityVanillaImage = "/images/optimized/scentlab-fruity-vanilla-w800.webp";
+import leatherVioletImage from "@/assets/scentlab-leather-violet.webp";
+import spicyCaramelImage from "@/assets/scentlab-spicy-caramel-upload.webp";
+import spicyLeatherImage from "@/assets/scentlab-spicy-leather-upload.webp";
+import rosyHazelnutImage from "@/assets/scentlab-rosy-hazelnut-upload.webp";
+import orientalOudImage from "@/assets/scentlab-oriental-oud-upload.webp";
+import vanillaDreamImage from "@/assets/scentlab-vanilla-dream-upload.webp";
+import savannaVetiverImage from "@/assets/scentlab-savanna-vetiver-upload.webp";
+import cognacWhisperImage from "@/assets/scentlab-cognac-whisper-upload.webp";
+import rosyGlowImage from "@/assets/scentlab-rosy-glow-upload.png";
+const haqqiCollectionImage = "/images/optimized/haqqi-collection-w800.webp";
+const pocketHommeImage = "/images/optimized/pocket-perfumes-homme-w800.webp";
+const pocketFemmeImage = "/images/optimized/pocket-perfumes-femme-w800.webp";
+
+export const collectionValues = [
+  "all",
+  "scentlab",
+  "takeoff",
+  "dubai",
+  "pocket",
+  "authentic",
+  "callisto",
+  "haqqi",
+  "privees",
+  "coffrets",
+  "library",
+  "soie-sublime",
+] as const;
+export const priceValues = ["all", "under-10000", "10000-25000", "over-25000"] as const;
+
+export type KnownCollection = (typeof collectionValues)[number];
+// Une catégorie créée depuis l'admin est un texte libre (ex. « musc-blanc »).
+export type Collection = KnownCollection | (string & {});
+export type PriceRange = (typeof priceValues)[number];
+
+export type BoutiqueProduct = {
+  name: string;
+  ref: string;
+  inspiration?: string;
+  notes: string;
+  headNotes: string;
+  heartNotes: string;
+  baseNotes: string;
+  price: number;
+  collection: Collection;
+  image: string;
+  imageUrls?: string[];
+  family: string;
+  concentration: string;
+  volume: string;
+  description: string;
+  slug?: string;
+  placeholder?: boolean;
+  createdAt?: string;
+  isBestseller?: boolean;
+};
+
+export const collectionFilters: { label: string; value: KnownCollection }[] = [
+  { label: "Toutes", value: "all" },
+  { label: "Haqqi", value: "haqqi" },
+  { label: "SCENTLAB", value: "scentlab" },
+  { label: "Takeoff", value: "takeoff" },
+  { label: "Parfums de poche", value: "pocket" },
+  { label: "Parfums Dubai", value: "dubai" },
+  { label: "Parfums authentiques", value: "authentic" },
+  { label: "Callisto Paris", value: "callisto" },
+  { label: "Collections privées", value: "privees" },
+  { label: "Coffrets", value: "coffrets" },
+  { label: "Fragrance Library", value: "library" },
+  { label: "Soie Sublime Paris", value: "soie-sublime" },
+];
+
+const collectionAliases: Record<string, KnownCollection> = {
+  all: "all",
+  scentlab: "scentlab",
+  "scent lab": "scentlab",
+  takeoff: "takeoff",
+  "takeoff fragrance": "takeoff",
+  "takeoff fragance": "takeoff",
+  dubai: "dubai",
+  "dubai perfumes": "dubai",
+  pocket: "pocket",
+  "pocket perfumes": "pocket",
+  authentic: "authentic",
+  "authentic perfumes": "authentic",
+  haqqi: "haqqi",
+  haqqui: "haqqi",
+  callisto: "callisto",
+  "callisto paris": "callisto",
+  privees: "privees",
+  "collections privees": "privees",
+  "collections privées": "privees",
+  "collection privee": "privees",
+  "private collection": "privees",
+  coffrets: "coffrets",
+  coffret: "coffrets",
+  library: "library",
+  "fragrance library": "library",
+  "soie-sublime": "soie-sublime",
+  "soie sublime": "soie-sublime",
+  "soie sublime paris": "soie-sublime",
+};
+
+// Libellés des catégories créées dans l'admin (clé normalisée -> texte saisi).
+const customCollectionLabels = new Map<string, string>();
+
+export function slugifyCollection(value: string) {
+  return value
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+export function isKnownCollection(value: string): value is KnownCollection {
+  return (collectionValues as readonly string[]).includes(value);
+}
+
+export function normalizeCollectionValue(value: string | null | undefined): Collection {
+  if (!value || !value.trim()) return "scentlab";
+  const normalized = value.trim().toLowerCase();
+  const known =
+    collectionAliases[normalized] ?? (isKnownCollection(normalized) ? normalized : undefined);
+  if (known) return known;
+  const slug = slugifyCollection(value);
+  if (!slug) return "scentlab";
+  // Le texte saisi dans l'admin sert de libellé ; une valeur d'URL (« musc-blanc ») ne l'écrase pas.
+  const existing = customCollectionLabels.get(slug);
+  if (!existing || (existing === slug && value.trim() !== slug)) {
+    customCollectionLabels.set(slug, value.trim());
+  }
+  return slug;
+}
+
+export const priceFilters: { label: string; value: PriceRange }[] = [
+  { label: "Tous les prix", value: "all" },
+  { label: "< 10 000 FCFA", value: "under-10000" },
+  { label: "10 000 – 25 000 FCFA", value: "10000-25000" },
+  { label: "> 25 000 FCFA", value: "over-25000" },
+];
+
+const takeoffProducts = [
+  {
+    name: "Los Angeles",
+    ref: "Kilian Love Don’t Be Shy",
+    price: 25000,
+    image: losAngelesImage,
+    notes: "Ambre · Fruits rouges · Musc",
+    family: "Ambré fruité",
+  },
+  {
+    name: "Amsterdam",
+    ref: "Initio Side Effect",
+    price: 25000,
+    image: amsterdamImage,
+    notes: "Violette · Bois doux · Musc",
+    family: "Floral boisé",
+  },
+  {
+    name: "Zurich",
+    ref: "MFK Oud Satin Mood",
+    price: 25000,
+    image: zurichImage,
+    notes: "Bois frais · Ambre · Épices",
+    family: "Boisé ambré",
+  },
+  {
+    name: "Berlin",
+    ref: "Xerjoff Naxos 1861",
+    price: 25000,
+    image: berlinImage,
+    notes: "Vanille · Musc · Fleurs blanches",
+    family: "Musqué doux",
+  },
+  {
+    name: "Dubai",
+    ref: "Montale Arabian Tonka",
+    price: 25000,
+    image: dubaiImage,
+    notes: "Oud · Ambre · Épices",
+    family: "Oriental boisé",
+  },
+  {
+    name: "Riyadh",
+    ref: "Louis Vuitton Ombre Nomade",
+    price: 25000,
+    image: riyadhImage,
+    notes: "Résines · Safran · Bois chauds",
+    family: "Oriental ambré",
+  },
+  {
+    name: "Vienna",
+    ref: "Delina Parfums de Marly",
+    price: 25000,
+    image: viennaImage,
+    notes: "Rose · Musc · Fruits tendres",
+    family: "Floral musqué",
+  },
+  {
+    name: "Lisbon",
+    ref: "Xerjoff Sospiro Erba Pura",
+    price: 25000,
+    image: lisbonImage,
+    notes: "Agrumes · Musc propre · Bois clair",
+    family: "Frais musqué",
+  },
+  {
+    name: "Capri",
+    ref: "Tiziani Terenzi Kirke",
+    price: 25000,
+    image: capriImage,
+    notes: "Marine · Agrumes · Ambre gris",
+    family: "Frais aromatique",
+  },
+  {
+    name: "Seoul",
+    ref: "Louis Vuitton Imagination",
+    price: 25000,
+    image: seoulImage,
+    notes: "Musc bleu · Agrumes · Bois propres",
+    family: "Frais boisé",
+  },
+  {
+    name: "Rome",
+    ref: "Xerjoff Accento",
+    price: 25000,
+    image: romeImage,
+    notes: "Violette · Ambre doux · Musc",
+    family: "Floral ambré",
+  },
+  {
+    name: "Istanbul",
+    ref: "Nishane Hacivat",
+    price: 25000,
+    image: istanbulImage,
+    notes: "Musc blanc · Fleurs propres · Bois doux",
+    family: "Musqué floral",
+  },
+  {
+    name: "Monaco",
+    ref: "Xerjoff 40 Knots",
+    price: 25000,
+    image: monacoImage,
+    notes: "Accord marin · Agrumes · Ambre clair",
+    family: "Aromatique frais",
+  },
+  {
+    name: "New York",
+    ref: "Dior Sauvage Elixir",
+    price: 25000,
+    image: newYorkImage,
+    notes: "Bois urbains · Ambre · Épices fraîches",
+    family: "Boisé épicé",
+  },
+  {
+    name: "Moscow",
+    ref: "Xerjoff La Capitale",
+    price: 25000,
+    image: moscowImage,
+    notes: "Vanille claire · Ambre · Musc",
+    family: "Ambré doux",
+  },
+  {
+    name: "Milan",
+    ref: "Xerjoff Torino 21",
+    price: 25000,
+    image: milanImage,
+    notes: "Bergamote · Musc · Bois élégants",
+    family: "Chypré frais",
+  },
+  {
+    name: "Budapest",
+    ref: "MFK Grand Soir",
+    price: 25000,
+    image: budapestImage,
+    notes: "Ambre doré · Musc · Bois blonds",
+    family: "Ambré musqué",
+  },
+  {
+    name: "Paris",
+    ref: "MFK Baccarat Rouge",
+    price: 25000,
+    image: parisImage,
+    notes: "Rose rouge · Ambre · Musc",
+    family: "Floral ambré",
+  },
+] as const;
+
+const scentlabProducts = [
+  {
+    name: "Creamy Almond",
+    ref: "Hypnotic Poison",
+    image: creamyAlmondImage,
+    notes: "Amande crémeuse · Vanille · Musc",
+    family: "Gourmand crémeux",
+  },
+  {
+    name: "Bright Mandarin",
+    ref: "Louis Vuitton Imagination",
+    image: brightMandarinImage,
+    notes: "Mandarine · Agrumes · Musc propre",
+    family: "Hespéridé frais",
+  },
+  {
+    name: "Citrus Caramel",
+    ref: "Xerjoff Casamorati Lira",
+    image: caramelCitrusImage,
+    notes: "Caramel · Agrumes · Ambre",
+    family: "Gourmand hespéridé",
+  },
+  {
+    name: "Fruity Gourmand",
+    ref: "La Vie Est Belle",
+    image: fruityGourmandImage,
+    notes: "Fruits doux · Praline · Musc",
+    family: "Fruité gourmand",
+  },
+  {
+    name: "Fruity Vanilla",
+    ref: "Xerjoff Erba Pura",
+    image: fruityVanillaImage,
+    notes: "Fruits rouges · Vanille · Musc",
+    family: "Vanillé fruité",
+  },
+  {
+    name: "Leather Violet",
+    ref: "Dior Fahrenheit",
+    image: leatherVioletImage,
+    notes: "Cuir · Violette · Ambre",
+    family: "Cuir floral",
+  },
+  {
+    name: "Spicy Caramel",
+    ref: "Scandal Man JPG",
+    image: spicyCaramelImage,
+    notes: "Caramel · Épices · Bois ambrés",
+    family: "Gourmand épicé",
+  },
+  {
+    name: "Spicy Leather Exclusive",
+    ref: "One Million Lucky",
+    // Adresse d'origine conservée
+    slug: "spicy-leather-one-million-lucky",
+    image: spicyLeatherImage,
+    notes: "Cuir · Épices · Résines",
+    family: "Cuir épicé",
+  },
+  {
+    name: "Rosy Hazelnut",
+    ref: "Amouage Guidance",
+    image: rosyHazelnutImage,
+    notes: "Rose · Noisette · Ambre",
+    family: "Floral ambré",
+  },
+  {
+    name: "Oriental Oud",
+    ref: "Oud For Greatness",
+    image: orientalOudImage,
+    notes: "Oud · Résines · Ambre",
+    family: "Oriental boisé",
+  },
+  {
+    name: "Vanilla Dream",
+    ref: "Burberry Goddess",
+    image: vanillaDreamImage,
+    notes: "Vanille · Ambre · Musc",
+    family: "Vanillé ambré",
+  },
+  {
+    name: "Savanna Vetiver",
+    ref: "Bal d’Afrique",
+    image: savannaVetiverImage,
+    notes: "Vétiver · Agrumes · Bois secs",
+    family: "Boisé frais",
+  },
+  {
+    name: "Cognac Whisper",
+    ref: "Kilian Angels’ Share",
+    image: cognacWhisperImage,
+    notes: "Cognac · Bois · Épices",
+    family: "Ambré boisé",
+  },
+  {
+    name: "Rosy Glow",
+    ref: "Lancôme Idole",
+    image: rosyGlowImage,
+    notes: "Rose · Musc · Fruits doux",
+    family: "Floral musqué",
+  },
+] as const;
+
+const takeoffCatalog: BoutiqueProduct[] = takeoffProducts.map((product) => ({
+  name: product.name,
+  ref: product.ref,
+  notes: product.notes,
+  headNotes: product.notes,
+  heartNotes: "Notes à préciser",
+  baseNotes: "Notes à préciser",
+  price: product.price,
+  collection: "takeoff",
+  image: product.image,
+  family: product.family,
+  concentration: "Eau de parfum",
+  volume: "100 ml",
+  description: `${product.name} par TAKEOFF Fragrance est une eau de parfum 100 ml de la collection Scent of Journey, disponible chez 2M Parfumerie à Dakar.`,
+}));
+
+
+// SCENTLAB ajoutés depuis la liste du fournisseur (photos scentlabfragrance.com).
+const scentlabExtraProducts: {
+  name: string;
+  ref: string;
+  slug: string;
+  notes: string;
+  family: string;
+  concentration?: string;
+}[] = [
+  { name: "Warm Spicy", ref: "Armani Stronger With You", slug: "warm-spicy", notes: "Châtaigne · Épices chaudes · Vanille", family: "Ambré épicé" },
+  { name: "Woody Bergamot", ref: "Dior Sauvage", slug: "woody-bergamot", notes: "Bergamote · Poivre · Ambroxan", family: "Aromatique frais" },
+  { name: "Fresh Grapefruit", ref: "Paco Rabanne Invictus", slug: "fresh-grapefruit", notes: "Pamplemousse · Notes marines · Bois", family: "Frais aquatique" },
+  { name: "Aquatic Jasmine", ref: "Armani Acqua di Giò", slug: "aquatic-jasmine", notes: "Notes marines · Jasmin · Bois", family: "Aquatique floral" },
+  { name: "Minty Cedar", ref: "Bleu de Chanel", slug: "minty-cedar", notes: "Agrumes · Menthe · Cèdre", family: "Boisé aromatique" },
+  { name: "Cool Mint", ref: "Chanel Allure Homme Sport", slug: "cool-mint", notes: "Menthe · Agrumes · Musc", family: "Frais aromatique" },
+  { name: "Spicy Leather", ref: "Paco Rabanne 1 Million", slug: "spicy-leather", notes: "Cannelle · Cuir · Ambre", family: "Cuir épicé" },
+  { name: "Earthy Vetiver", ref: "Terre d'Hermès", slug: "earthy-vetiver", notes: "Orange · Vétiver · Bois", family: "Boisé terreux" },
+  { name: "Minty Vanilla", ref: "Versace Eros", slug: "minty-vanilla", notes: "Menthe · Pomme verte · Vanille", family: "Fougère vanillée" },
+  { name: "Minty Lavender", ref: "Jean Paul Gaultier Le Male", slug: "minty-lavender", notes: "Menthe · Lavande · Vanille", family: "Fougère orientale" },
+  { name: "Iris Cedar", ref: "Dior Homme Intense", slug: "iris-cedar", notes: "Iris · Cèdre · Vétiver", family: "Boisé poudré" },
+  { name: "Dark Leather", ref: "Tom Ford Ombré Leather", slug: "dark-leather", notes: "Cuir · Épices · Patchouli", family: "Cuir boisé" },
+  { name: "Exotic Vanilla", ref: "Armani My Way", slug: "exotic-vanilla", notes: "Fleur d'oranger · Tubéreuse · Vanille", family: "Floral vanillé" },
+  { name: "Gardenia Jam", ref: "Jean Paul Gaultier Scandal", slug: "gardenia-jam", notes: "Miel · Gardénia · Patchouli", family: "Floral gourmand" },
+  { name: "Spicy Citrus", ref: "Chanel Chance", slug: "spicy-citrus", notes: "Agrumes · Poivre rose · Jasmin", family: "Floral hespéridé" },
+  { name: "Floral Musk", ref: "Coco Mademoiselle", slug: "floral-musk", notes: "Orange · Rose · Patchouli", family: "Floral chypré" },
+  { name: "Golden Floral", ref: "Dior J'adore", slug: "golden-floral", notes: "Ylang-ylang · Rose · Jasmin", family: "Floral bouquet" },
+  { name: "Mystic Jasmine", ref: "Mugler Alien", slug: "mystic-jasmine", notes: "Jasmin · Bois · Ambre", family: "Floral boisé" },
+  { name: "Fruity Chypre", ref: "Armani Sì", slug: "fruity-chypre", notes: "Cassis · Rose · Vanille", family: "Chypré fruité" },
+  { name: "Lush Gardenia", ref: "Gucci Bloom", slug: "lush-gardenia", notes: "Tubéreuse · Jasmin · Gardénia", family: "Floral blanc" },
+  { name: "Ambery Vanilla", ref: "YSL Black Opium", slug: "ambery-vanilla", notes: "Café · Fleur blanche · Vanille", family: "Oriental vanillé" },
+  { name: "Jasmine Cedar", ref: "Amouage Reflection", slug: "jasmine-cedar", notes: "Jasmin · Néroli · Cèdre", family: "Floral boisé" },
+  { name: "Pineapple Bergamot", ref: "Creed Aventus", slug: "pineapple-bergamot", notes: "Ananas · Bergamote · Bouleau fumé", family: "Chypré fruité" },
+  { name: "Addictive Peach", ref: "Ex Nihilo Fleur Narcotique", slug: "addictive-peach", notes: "Pêche · Fleurs blanches · Musc", family: "Floral fruité" },
+  { name: "Caramel Orange", ref: "Kilian Love Don't Be Shy", slug: "caramel-orange", notes: "Orange · Caramel · Fleur d'oranger", family: "Gourmand fleuri" },
+  { name: "Sandalwood Leather", ref: "Le Labo Santal 33", slug: "sandalwood-leather", notes: "Santal · Cuir · Cardamome", family: "Boisé cuiré" },
+  { name: "Smoky Oud", ref: "Louis Vuitton Ombre Nomade", slug: "smoky-oud", notes: "Oud · Framboise · Encens", family: "Oriental boisé" },
+  { name: "Galactic Musk", ref: "Marc-Antoine Barrois Ganymede", slug: "galactic-musk", notes: "Mandarine · Musc · Bois minéraux", family: "Boisé musqué" },
+  { name: "Dreamy Bloom", ref: "Memo Marfa", slug: "dreamy-bloom", notes: "Tubéreuse · Fleur d'oranger · Musc", family: "Floral blanc" },
+  { name: "Sweet Saffron Extrait", ref: "MFK Baccarat Rouge 540 Extrait", slug: "sweet-saffron-extrait", notes: "Safran · Amandes amères · Ambre", family: "Ambré boisé", concentration: "Extrait de parfum" },
+  { name: "Sweet Saffron", ref: "MFK Baccarat Rouge 540", slug: "sweet-saffron", notes: "Safran · Jasmin · Ambre", family: "Ambré floral" },
+  { name: "Glow Amber", ref: "MFK Grand Soir", slug: "glow-amber", notes: "Ambre · Vanille · Benjoin", family: "Ambré oriental" },
+  { name: "Satin Rose", ref: "MFK Oud Satin Mood", slug: "satin-rose", notes: "Rose · Oud · Vanille", family: "Oriental floral" },
+  { name: "Oriental Tonka", ref: "Montale Arabians Tonka", slug: "oriental-tonka", notes: "Fève tonka · Rose · Ambre", family: "Oriental gourmand" },
+  { name: "Marine Citrus", ref: "Orto Parisi Megamare", slug: "marine-citrus", notes: "Notes marines · Agrumes · Algues", family: "Aquatique hespéridé" },
+  { name: "Pink Peony", ref: "Parfums de Marly Delina", slug: "pink-peony", notes: "Litchi · Pivoine · Rose", family: "Floral fruité" },
+  { name: "Woody Bergamot Exclusive", ref: "Dior Sauvage Elixir", slug: "woody-bergamot-exclusive", notes: "Épices · Bergamote · Bois de réglisse", family: "Aromatique boisé" },
+  { name: "Naughty Rose Exclusive", ref: "", slug: "naughty-rose-exclusive", notes: "Osmanthus · Pêche · Tubéreuse · Rose · Ambre", family: "Floral fruité" },
+  { name: "Flirty Caramel", ref: "Carolina Herrera Good Girl", slug: "flirty-caramel", notes: "Amande · Café · Tubéreuse · Fève tonka · Cacao", family: "Floral gourmand" },
+  { name: "Orange Blossom", ref: "YSL Libre", slug: "orange-blossom", notes: "Lavande · Mandarine · Fleur d'oranger · Jasmin · Vanille", family: "Floral aromatique" },
+  { name: "Fruity Passion", ref: "Tiziana Terenzi Kirke", slug: "fruity-passion", notes: "Fruits rouges · Fruit de la passion · Vanille", family: "Fruité gourmand" },
+  { name: "Ambery Orchid", ref: "Tom Ford Black Orchid", slug: "ambery-orchid", notes: "Truffe noire · Orchidée · Patchouli", family: "Oriental floral" },
+  { name: "Cherry Almond", ref: "Tom Ford Lost Cherry", slug: "cherry-almond", notes: "Cerise · Amande amère · Tonka", family: "Gourmand fruité" },
+  { name: "Woody Oud", ref: "Tom Ford Oud Wood", slug: "woody-oud", notes: "Oud · Bois de rose · Cardamome", family: "Boisé oriental" },
+  { name: "Spicy Vanilla", ref: "Tom Ford Tobacco Vanille", slug: "spicy-vanilla", notes: "Tabac · Épices · Vanille", family: "Oriental épicé" },
+  { name: "Poetic Amber", ref: "Xerjoff More Than Words", slug: "poetic-amber", notes: "Iris · Vanille · Bois", family: "Ambré poudré" },
+  { name: "Sweet Tobacco", ref: "Xerjoff Naxos", slug: "sweet-tobacco", notes: "Lavande · Miel · Tabac", family: "Oriental aromatique" },
+];
+
+const scentlabCatalog: BoutiqueProduct[] = scentlabProducts.map((product) => ({
+  ...("slug" in product ? { slug: product.slug } : {}),
+  name: product.name,
+  ref: product.ref,
+  notes: product.notes,
+  headNotes: product.notes,
+  heartNotes: "Notes à préciser",
+  baseNotes: "Notes à préciser",
+  price: 6000,
+  collection: "scentlab",
+  image: product.image,
+  family: product.family,
+  concentration: "Eau de parfum",
+  volume: "50 ml",
+  description: `${product.name} par SCENTLAB est une eau de parfum sélectionnée par 2M Parfumerie pour un sillage moderne et facile à porter à Dakar.`,
+}));
+
+const scentlabExtraCatalog: BoutiqueProduct[] = scentlabExtraProducts.map((product) => ({
+  name: product.name,
+  ref: product.ref,
+  notes: product.notes,
+  headNotes: product.notes,
+  heartNotes: "Notes à préciser",
+  baseNotes: "Notes à préciser",
+  price: 6000,
+  collection: "scentlab",
+  image: `/images/optimized/scentlab-${product.slug}-w800.webp`,
+  family: product.family,
+  concentration: product.concentration ?? "Eau de parfum",
+  volume: "50 ml",
+  description: `${product.name} par SCENTLAB est une ${(product.concentration ?? "Eau de parfum").toLowerCase()} de 50 ml, aux notes ${product.notes.toLowerCase()}, disponible chez 2M Parfumerie à Dakar.`,
+}));
+
+const haqqiProducts: { name: string; ref: string; family: string; notes: string }[] = [
+  // Homme
+  { name: "Sauvage", ref: "Inspiration Dior Sauvage", family: "Homme", notes: "Frais · Épicé · Iconique" },
+  { name: "Sauvage Élixir", ref: "Inspiration Dior Sauvage Élixir", family: "Homme", notes: "Concentré · Épicé · Intense" },
+  { name: "Bleu de Chanel", ref: "Inspiration Chanel Bleu de Chanel", family: "Homme", notes: "Boisé · Aromatique · Élégant" },
+  { name: "Invictus", ref: "Inspiration Paco Rabanne Invictus", family: "Homme", notes: "Frais · Marin · Énergique" },
+  { name: "One Million", ref: "Inspiration Paco Rabanne One Million", family: "Homme", notes: "Épicé · Cuir · Affirmé" },
+  { name: "Bois d'Argent", ref: "Inspiration Dior Bois d'Argent", family: "Homme", notes: "Boisé · Noble · Raffiné" },
+  { name: "Allure Homme Sport", ref: "Inspiration Chanel Allure Homme Sport", family: "Homme", notes: "Frais · Sportif · Lumineux" },
+  { name: "Le Mâle", ref: "Inspiration Jean Paul Gaultier Le Mâle", family: "Homme", notes: "Aromatique · Vanillé · Iconique" },
+  { name: "Acqua di Giò", ref: "Inspiration Armani Acqua di Giò", family: "Homme", notes: "Marin · Frais · Solaire" },
+  { name: "Stronger With You", ref: "Inspiration Emporio Armani Stronger With You", family: "Homme", notes: "Sucré · Épicé · Chaleureux" },
+  { name: "Lacoste Noir L12", ref: "Inspiration Lacoste L12.12 Noir", family: "Homme", notes: "Propre · Élégant · Quotidien" },
+  { name: "La Nuit de l'Homme", ref: "Inspiration YSL La Nuit de l'Homme", family: "Homme", notes: "Sombre · Chic · Présent" },
+  { name: "Desert Oud", ref: "Inspiration Desert Oud", family: "Homme", notes: "Oud sec · Profond · Signature" },
+  { name: "Oud Noir", ref: "Inspiration Oud Noir", family: "Homme", notes: "Boisé · Intense · Enveloppant" },
+  { name: "Imagination", ref: "Inspiration Louis Vuitton Imagination", family: "Homme", notes: "Frais · Lumineux · Moderne" },
+  { name: "Terre d'Hermès", ref: "Inspiration Hermès Terre d'Hermès", family: "Homme", notes: "Boisé minéral · Sec · Raffiné" },
+  { name: "CK Euphoria", ref: "Inspiration Calvin Klein Euphoria", family: "Homme", notes: "Rond · Propre · Facile" },
+  { name: "Kouros", ref: "Inspiration YSL Kouros", family: "Homme", notes: "Direct · Expressif · Sans détour" },
+  { name: "Burberry Classic", ref: "Inspiration Burberry Classic", family: "Homme", notes: "Classique · Doux · Élégant" },
+  { name: "Pegasus", ref: "Inspiration Parfums de Marly Pegasus", family: "Homme", notes: "Crémeux · Élégant · Distinctif" },
+  { name: "Creed Aventus", ref: "Inspiration Creed Aventus", family: "Homme", notes: "Frais · Noble · Signature" },
+  { name: "African Leather", ref: "Inspiration Memo African Leather", family: "Homme", notes: "Cuir chaud · Sec · Racé" },
+  { name: "Encre Noire", ref: "Inspiration Lalique Encre Noire", family: "Homme", notes: "Sombre · Boisé · Texturé" },
+  { name: "Black Code", ref: "Inspiration Armani Code", family: "Homme", notes: "Nocturne · Élégant · Subtil" },
+  { name: "Man in Black", ref: "Inspiration Bvlgari Man in Black", family: "Homme", notes: "Ambré · Intense · Profond" },
+  { name: "Cartier Déclaration", ref: "Inspiration Cartier Déclaration", family: "Homme", notes: "Boisé épicé · Classique · Net" },
+  { name: "Dolce Gabbana The One", ref: "Inspiration D&G The One", family: "Homme", notes: "Chaud · Suave · Séduisant" },
+  { name: "Valentino Uomo", ref: "Inspiration Valentino Uomo", family: "Homme", notes: "Doux · Ambré · Raffiné" },
+  { name: "Scandal Man", ref: "Inspiration Jean Paul Gaultier Scandal Pour Homme", family: "Homme", notes: "Charismatique · Affirmé · Présent" },
+  // Unisex
+  { name: "Kirke", ref: "Inspiration Tiziana Terenzi Kirke", family: "Unisex", notes: "Fruité · Solaire · Expressif" },
+  { name: "Duetto", ref: "Inspiration Duetto", family: "Unisex", notes: "Équilibré · Net · Facile à porter" },
+  { name: "Baccarat Rouge 540", ref: "Inspiration MFK Baccarat Rouge 540", family: "Unisex", notes: "Ambré · Lumineux · Reconnaissable" },
+  { name: "More Than Words", ref: "Inspiration Xerjoff More Than Words", family: "Unisex", notes: "Élégant · Poétique · Boisé" },
+  { name: "Baccarat Rouge 540 Extrait", ref: "Inspiration MFK Baccarat Rouge Extrait", family: "Unisex", notes: "Profond · Dense · Luxueux" },
+  { name: "Oud Satin Mood", ref: "Inspiration MFK Oud Satin Mood", family: "Unisex", notes: "Velouté · Oriental · Raffiné" },
+  { name: "Tom Ford Tobacco Vanille", ref: "Inspiration Tom Ford Tobacco Vanille", family: "Unisex", notes: "Tabac · Vanille · Gourmand" },
+  { name: "Tom Ford Neroli Portofino", ref: "Inspiration Tom Ford Neroli Portofino", family: "Unisex", notes: "Agrumes · Lumineux · Frais" },
+  { name: "Tom Ford White Patchouli", ref: "Inspiration Tom Ford White Patchouli", family: "Unisex", notes: "Chic · Blanc · Boisé" },
+  { name: "Tom Ford Soleil Blanc", ref: "Inspiration Tom Ford Soleil Blanc", family: "Unisex", notes: "Solaire · Doux · Élégant" },
+  { name: "Tom Ford Ombré Leather", ref: "Inspiration Tom Ford Ombré Leather", family: "Unisex", notes: "Cuir profond · Sombre · Sophistiqué" },
+  // Femme
+  { name: "My Way", ref: "Inspiration Armani My Way", family: "Femme", notes: "Floral · Lumineux · Moderne" },
+  { name: "Hypnotic Poison", ref: "Inspiration Dior Hypnotic Poison", family: "Femme", notes: "Vanille · Amande · Envoûtant" },
+  { name: "Narciso Pink for Her", ref: "Inspiration Narciso Rodriguez For Her", family: "Femme", notes: "Musqué · Floral · Sensuel" },
+  { name: "Black Opium", ref: "Inspiration YSL Black Opium", family: "Femme", notes: "Café · Vanille · Addictif" },
+  { name: "Coco Mademoiselle", ref: "Inspiration Chanel Coco Mademoiselle", family: "Femme", notes: "Chypré · Élégant · Iconique" },
+  { name: "Scandal", ref: "Inspiration JPG Scandal", family: "Femme", notes: "Miel · Gourmand · Affirmé" },
+  { name: "So Scandal", ref: "Inspiration JPG So Scandal", family: "Femme", notes: "Floral · Sucré · Pétillant" },
+  { name: "La Nuit Trésor", ref: "Inspiration Lancôme La Nuit Trésor", family: "Femme", notes: "Gourmand · Velouté · Féminin" },
+  { name: "Suprême Bouquet", ref: "Inspiration Suprême Bouquet", family: "Femme", notes: "Floral riche · Lumineux · Généreux" },
+  { name: "Guidance", ref: "Inspiration Amouage Guidance", family: "Femme", notes: "Floral · Crémeux · Élégant" },
+  { name: "Chanel Chance", ref: "Inspiration Chanel Chance", family: "Femme", notes: "Doux · Pétillant · Intemporel" },
+  { name: "Euphoria Femme", ref: "Inspiration Calvin Klein Euphoria", family: "Femme", notes: "Fruité · Sensuel · Aimable" },
+  { name: "La Vie Est Belle", ref: "Inspiration Lancôme La Vie Est Belle", family: "Femme", notes: "Gourmand · Lumineux · Réconfortant" },
+  { name: "YSL Cinéma", ref: "Inspiration YSL Cinéma", family: "Femme", notes: "Chaleureux · Glamour · Assumé" },
+  { name: "Manifesto", ref: "Inspiration YSL Manifesto", family: "Femme", notes: "Moderne · Doux · Affirmé" },
+  { name: "Bright Crystal", ref: "Inspiration Versace Bright Crystal", family: "Femme", notes: "Aérien · Propre · Lumineux" },
+  { name: "Lolita Lempicka", ref: "Inspiration Lolita Lempicka", family: "Femme", notes: "Sucré · Original · Féminin" },
+  { name: "Dior Addict", ref: "Inspiration Dior Addict", family: "Femme", notes: "Profond · Sensuel · Marqué" },
+  { name: "Diesel Fuel for Life", ref: "Inspiration Diesel Fuel for Life", family: "Femme", notes: "Audacieux · Doux · Présent" },
+  { name: "Si Passione", ref: "Inspiration Armani Si Passione", family: "Femme", notes: "Rouge · Fruité · Intensément féminin" },
+];
+
+// Photos réelles des flacons Haqqi (fond détouré). Les autres gardent la photo de la collection.
+const haqqiPhotos: Record<string, string> = {
+  "Scandal Man": "scandal-man",
+  "Baccarat Rouge 540": "baccarat-rouge-540",
+  "My Way": "my-way",
+  "Dolce Gabbana The One": "dolce-gabbana-the-one",
+  "YSL Cinéma": "ysl-cinema",
+  "Acqua di Giò": "acqua-di-gio",
+  "Sauvage": "sauvage",
+  "Oud Satin Mood": "oud-satin-mood",
+  "Tom Ford Neroli Portofino": "tom-ford-neroli-portofino",
+  "Tom Ford Soleil Blanc": "tom-ford-soleil-blanc",
+  "Le Mâle": "le-male",
+  "More Than Words": "more-than-words",
+  "Tom Ford Ombré Leather": "tom-ford-ombre-leather",
+  "Cartier Déclaration": "cartier-declaration",
+  "Desert Oud": "desert-oud",
+  "Baccarat Rouge 540 Extrait": "baccarat-rouge-540-extrait",
+  "Hypnotic Poison": "hypnotic-poison",
+  "Terre d'Hermès": "terre-d-hermes",
+  "Pegasus": "pegasus",
+  "Creed Aventus": "creed-aventus",
+  "Valentino Uomo": "valentino-uomo",
+  "Tom Ford White Patchouli": "tom-ford-white-patchouli",
+  "Kirke": "kirke",
+  "Black Opium": "black-opium",
+  "Invictus": "invictus",
+  "Allure Homme Sport": "allure-homme-sport",
+};
+
+const haqqiCatalog: BoutiqueProduct[] = haqqiProducts.map((product) => ({
+  name: product.name,
+  ref: "",
+  notes: product.notes,
+  headNotes: product.notes,
+  heartNotes: "Notes à préciser",
+  baseNotes: "Notes à préciser",
+  price: 4000,
+  collection: "haqqi",
+  image: haqqiPhotos[product.name]
+    ? `/images/optimized/haqqi-${haqqiPhotos[product.name]}-w800.webp`
+    : haqqiCollectionImage,
+  family: product.family,
+  concentration: "Eau de parfum",
+  volume: "40 ml",
+  description: `${product.name} de la collection Haqqi : une eau de parfum de 40 ml (${product.notes.toLowerCase()}), disponible à l'unité chez 2M Parfumerie ou dans le Pack de 3 Haqqi à composer.`,
+}));
+
+const pocketProducts: { name: string; ref: string; family: "Homme" | "Unisex" | "Femme"; notes: string; image: string }[] = [
+  // Homme
+  { name: "Le Mâle", ref: "Inspiration JPG Le Mâle", family: "Homme", notes: "Frais lavandé · Sucré", image: pocketHommeImage },
+  { name: "One Million", ref: "Inspiration Paco Rabanne One Million", family: "Homme", notes: "Épicé · Doré", image: pocketHommeImage },
+  { name: "Zara Tobacco Collection", ref: "Inspiration Zara Tobacco", family: "Homme", notes: "Tabac chaleureux", image: pocketHommeImage },
+  { name: "CK Eternity", ref: "Inspiration Calvin Klein Eternity", family: "Homme", notes: "Frais · Boisé classique", image: pocketHommeImage },
+  { name: "Killian Back to Black", ref: "Inspiration Killian Back to Black", family: "Homme", notes: "Tabac · Miel sensuel", image: pocketHommeImage },
+  { name: "Killian Intoxicated", ref: "Inspiration Killian Intoxicated", family: "Homme", notes: "Café · Cardamome", image: pocketHommeImage },
+  { name: "Killian Amber Oud", ref: "Inspiration Killian Amber Oud", family: "Homme", notes: "Oud · Ambré profond", image: pocketHommeImage },
+  { name: "Killian Straight to Heaven", ref: "Inspiration Killian Straight to Heaven", family: "Homme", notes: "Rhum · Boisé", image: pocketHommeImage },
+  { name: "Killian Good Girl Gone Bad (H)", ref: "Inspiration Killian Good Girl Gone Bad", family: "Homme", notes: "Floral · Fruité magnétique", image: pocketHommeImage },
+  { name: "Tom Ford Tuscan Leather", ref: "Inspiration Tom Ford Tuscan Leather", family: "Homme", notes: "Cuir · Framboise", image: pocketHommeImage },
+  { name: "Tom Ford Tobacco Oud", ref: "Inspiration Tom Ford Tobacco Oud", family: "Homme", notes: "Tabac · Oud épicé", image: pocketHommeImage },
+  { name: "Tom Ford Noir Extrême", ref: "Inspiration Tom Ford Noir Extrême", family: "Homme", notes: "Gourmand · Boisé chaud", image: pocketHommeImage },
+  { name: "Parfums de Marly Pegasus", ref: "Inspiration Parfums de Marly Pegasus", family: "Homme", notes: "Amande · Vanille élégant", image: pocketHommeImage },
+  { name: "Creed Aventus", ref: "Inspiration Creed Aventus", family: "Homme", notes: "Ananas · Fumé iconique", image: pocketHommeImage },
+  { name: "Nasomatto Black Afgano", ref: "Inspiration Nasomatto Black Afgano", family: "Homme", notes: "Boisé · Résineux intense", image: pocketHommeImage },
+  { name: "Amouage Interlude", ref: "Inspiration Amouage Interlude", family: "Homme", notes: "Encens · Ambre puissant", image: pocketHommeImage },
+  { name: "Amouage Reflection", ref: "Inspiration Amouage Reflection", family: "Homme", notes: "Floral vert raffiné", image: pocketHommeImage },
+  { name: "Amouage Opus", ref: "Inspiration Amouage Opus", family: "Homme", notes: "Boisé oriental noble", image: pocketHommeImage },
+  { name: "Mousuf", ref: "Inspiration Mousuf", family: "Homme", notes: "Oriental signature", image: pocketHommeImage },
+  { name: "Byredo Mojave Ghost", ref: "Inspiration Byredo Mojave Ghost", family: "Homme", notes: "Boisé minéral aérien", image: pocketHommeImage },
+  { name: "Byredo Bal d’Afrique", ref: "Inspiration Byredo Bal d’Afrique", family: "Homme", notes: "Vétiver · Agrumes solaire", image: pocketHommeImage },
+  { name: "Killian Black Phantom", ref: "Inspiration Killian Black Phantom", family: "Homme", notes: "Café · Rhum gourmand", image: pocketHommeImage },
+  { name: "Dsquared2 Wood", ref: "Inspiration Dsquared2 Wood", family: "Homme", notes: "Boisé moderne dynamique", image: pocketHommeImage },
+  { name: "Baccarat Rouge 540", ref: "Inspiration MFK Baccarat Rouge 540", family: "Homme", notes: "Ambré · Safrané iconique", image: pocketHommeImage },
+  { name: "Kirke", ref: "Inspiration Tiziana Terenzi Kirke", family: "Homme", notes: "Fruité solaire", image: pocketHommeImage },
+  // Femme
+  { name: "Zara Oriental", ref: "Inspiration Zara Oriental", family: "Femme", notes: "Ambre · Vanille chaleureux", image: pocketFemmeImage },
+  { name: "Zara Orchid", ref: "Inspiration Zara Orchid", family: "Femme", notes: "Floral oriental vibrant", image: pocketFemmeImage },
+  { name: "Ex Nihilo Fleur Narcotique", ref: "Inspiration Ex Nihilo Fleur Narcotique", family: "Femme", notes: "Floral fruité poudré", image: pocketFemmeImage },
+  { name: "Nasomatto Narcotique", ref: "Inspiration Nasomatto Narcotique", family: "Femme", notes: "Floral envoûtant intense", image: pocketFemmeImage },
+  { name: "La Vie Est Belle", ref: "Inspiration Lancôme La Vie Est Belle", family: "Femme", notes: "Gourmand iris", image: pocketFemmeImage },
+  { name: "La Vie Est Belle Floral", ref: "Inspiration Lancôme La Vie Est Belle Florale", family: "Femme", notes: "Florale lumineuse", image: pocketFemmeImage },
+  { name: "Gucci Bloom", ref: "Inspiration Gucci Bloom", family: "Femme", notes: "Tubéreuse · Jasmin", image: pocketFemmeImage },
+  { name: "Coco Mademoiselle", ref: "Inspiration Chanel Coco Mademoiselle", family: "Femme", notes: "Patchouli · Rose chypré", image: pocketFemmeImage },
+  { name: "Chanel Chance", ref: "Inspiration Chanel Chance", family: "Femme", notes: "Floral pétillant", image: pocketFemmeImage },
+  { name: "Chanel Chance Eau Tendre", ref: "Inspiration Chanel Chance Eau Tendre", family: "Femme", notes: "Floral fruité doux", image: pocketFemmeImage },
+  { name: "Armani Si", ref: "Inspiration Armani Si", family: "Femme", notes: "Cassis · Ambré sensuel", image: pocketFemmeImage },
+  { name: "CK Euphoria", ref: "Inspiration Calvin Klein Euphoria", family: "Femme", notes: "Orchidée noire envoûtant", image: pocketFemmeImage },
+  { name: "Creed Aventus for Her", ref: "Inspiration Creed Aventus for Her", family: "Femme", notes: "Floral fruité chic", image: pocketFemmeImage },
+  { name: "212 Sexy Women", ref: "Inspiration Carolina Herrera 212 Sexy", family: "Femme", notes: "Vanille · Fleurs piquantes", image: pocketFemmeImage },
+  { name: "212 VIP Women", ref: "Inspiration Carolina Herrera 212 VIP", family: "Femme", notes: "Rhum · Musc festif", image: pocketFemmeImage },
+  { name: "Hermès Jour", ref: "Inspiration Hermès Jour d’Hermès", family: "Femme", notes: "Floral lumineux frais", image: pocketFemmeImage },
+  { name: "Dior J’adore", ref: "Inspiration Dior J’adore", family: "Femme", notes: "Bouquet floral solaire", image: pocketFemmeImage },
+  { name: "Calvin Klein Eternity Femme", ref: "Inspiration Calvin Klein Eternity", family: "Femme", notes: "Floral blanc romantique", image: pocketFemmeImage },
+  { name: "Alien", ref: "Inspiration Mugler Alien", family: "Femme", notes: "Jasmin · Ambré hypnotique", image: pocketFemmeImage },
+  { name: "Killian Good Girl Gone Bad (F)", ref: "Inspiration Killian Good Girl Gone Bad", family: "Femme", notes: "Tubéreuse · Rose magnétique", image: pocketFemmeImage },
+  { name: "Killian Liaisons Dangereuses", ref: "Inspiration Killian Liaisons Dangereuses", family: "Femme", notes: "Rose · Prune sensuelle", image: pocketFemmeImage },
+  { name: "Versace Crystal Noir", ref: "Inspiration Versace Crystal Noir", family: "Femme", notes: "Gardénia · Ambré mystérieux", image: pocketFemmeImage },
+  { name: "DKNY Be Delicious", ref: "Inspiration DKNY Be Delicious", family: "Femme", notes: "Pomme verte pétillante", image: pocketFemmeImage },
+  { name: "Bulgari Omnia", ref: "Inspiration Bvlgari Omnia", family: "Femme", notes: "Épices · Musc raffiné", image: pocketFemmeImage },
+];
+
+const pocketCatalog: BoutiqueProduct[] = pocketProducts.map((product) => ({
+  name: product.name,
+  ref: product.ref,
+  notes: product.notes,
+  headNotes: product.notes,
+  heartNotes: "Notes à préciser",
+  baseNotes: "Notes à préciser",
+  price: 2500,
+  collection: "pocket",
+  image: product.image,
+  family: product.family,
+  concentration: "Eau de parfum",
+  volume: "50 ml",
+  description: `${product.name} fait partie des Parfums de poche 2M : un petit format pratique à glisser dans le sac. À choisir dans le pack de 5 parfums de poche à 10 000 FCFA.`,
+}));
+
+// Fragrance Library : 38 eaux de parfum 100 ml à 35 000 F, un titre de roman par flacon.
+// ref = parfum d'inspiration (vide pour Old Book, création de la maison).
+// Les 6 fiches déjà créées dans l'admin gardent leurs données (même adresse = même fiche).
+const libraryProducts: { name: string; ref: string; notes: string; family: string; head?: string; heart?: string; base?: string; concentration?: string }[] = [
+  { name: "The Gambler", ref: "Xerjoff Lira", notes: "Lavande · Caramel · Vanille", family: "Gourmand ambré" },
+  { name: "Crime and Punishment", ref: "MFK Baccarat Rouge 540", notes: "Safran · Jasmin · Ambre gris", family: "Ambré floral" },
+  { name: "War and Peace", ref: "Frédéric Malle Portrait of a Lady", notes: "Rose · Patchouli · Encens", family: "Floral oriental" },
+  { name: "The Golden Bowl", ref: "Tiziana Terenzi Kirke", notes: "Fruit de la passion · Pêche · Musc", family: "Fruité musqué" },
+  { name: "The Red and the Black", ref: "Bond No. 9 New York Amber", notes: "", family: "Ambré" },
+  { name: "The Secret Garden", ref: "Sospiro Erba Pura", notes: "Agrumes · Fruits · Musc blanc", family: "Fruité musqué" },
+  { name: "The Age of Innocence", ref: "Montale Roses Musk", notes: "Rose · Jasmin · Musc", family: "Floral musqué" },
+  { name: "The Grapes of Wrath", ref: "Initio Baraka", notes: "", family: "Fragrance Library" },
+  { name: "Republic", ref: "MFK Silk Mood", notes: "", family: "Fragrance Library" },
+  { name: "Notes from Underground", ref: "Nasomatto Black Afgano", notes: "Encens · Oud · Tabac", family: "Boisé fumé" },
+  { name: "The Brothers Karamazov", ref: "Nasomatto Duro", notes: "", family: "Boisé" },
+  { name: "The Trial", ref: "Tom Ford Tobacco Vanille", notes: "Tabac · Vanille · Fève tonka", family: "Oriental épicé" },
+  { name: "Things Fall Apart", ref: "Kilian Black Aphrodisiac", notes: "", family: "Fragrance Library" },
+  { name: "Hamlet", ref: "Tom Ford Oud Wood", notes: "Oud · Santal · Cardamome", family: "Boisé" },
+  { name: "The Sun Also Rises", ref: "Nasomatto Baraonda", notes: "Whisky · Rose · Bois", family: "Boisé ambré" },
+  { name: "Under the Volcano", ref: "Hervé Gambs Ombre Sauvage", notes: "", family: "Fragrance Library" },
+  { name: "The Stranger", ref: "Dior Oud Ispahan", notes: "Rose · Oud · Patchouli", family: "Oriental floral" },
+  { name: "Heart of Darkness", ref: "MFK Oud Satin Mood", notes: "Rose · Oud · Vanille", family: "Oriental boisé" },
+  { name: "The Alchemist", ref: "Sultan", notes: "", family: "Fragrance Library", concentration: "Extrait de parfum" },
+  { name: "Hard Times", ref: "Montale Arabians Tonka", notes: "Safran · Oud · Fève tonka", family: "Oriental boisé", concentration: "Extrait de parfum" },
+  { name: "Great Expectations", ref: "Escentric Molecules Escentric 02", notes: "Ambroxan · Bois · Musc", family: "Boisé musqué" },
+  { name: "1984", ref: "Ex Nihilo Fleur Narcotique", notes: "Pêche · Fleurs blanches · Musc", family: "Floral fruité" },
+  { name: "The Magic Mountain", ref: "Creed Silver Mountain Water", notes: "Bergamote · Thé vert · Cassis", family: "Frais aromatique" },
+  { name: "The Great Gatsby", ref: "Creed Aventus", notes: "Ananas · Bergamote · Bouleau fumé", family: "Chypré fruité" },
+  { name: "Anna Karenina", ref: "Kilian Good Girl Gone Bad", notes: "Tubéreuse · Jasmin · Rose", family: "Floral blanc" },
+  { name: "The Call of the Wild", ref: "Amouage Honour Man", notes: "Poivre · Encens · Fève tonka", family: "Boisé épicé", head: "Poivre rose · Poivre", heart: "Géranium · Élémi · Muscade", base: "Encens · Vétiver · Cèdre de Virginie · Musc · Fève tonka · Patchouli" },
+  { name: "One Hundred Years of Solitude", ref: "Le Labo Santal 33", notes: "Santal · Cuir · Cardamome", family: "Boisé cuiré" },
+  { name: "Sense and Sensibility", ref: "Vertus Paçuli", notes: "", family: "Fragrance Library" },
+  { name: "Emma", ref: "Parfums de Marly Delina", notes: "Litchi · Rose · Vanille", family: "Floral fruité" },
+  { name: "Lost Illusions", ref: "Initio Side Effect", notes: "Rhum · Tabac · Vanille", family: "Oriental épicé" },
+  { name: "In Search of Lost Time", ref: "Xerjoff More Than Words", notes: "Oud · Rose · Patchouli", family: "Oriental boisé" },
+  { name: "To the Lighthouse", ref: "Xerjoff 1861 Naxos", notes: "Miel · Tabac · Lavande", family: "Gourmand tabac" },
+  { name: "The Overcoat", ref: "Amouage Interlude Man", notes: "Encens · Oud · Ambre", family: "Boisé fumé" },
+  { name: "The Castle", ref: "Initio Oud for Greatness", notes: "Oud · Safran · Lavande", family: "Oriental boisé" },
+  { name: "Vanity Fair", ref: "Xerjoff Alexandria II", notes: "Rose · Oud · Ambre", family: "Oriental boisé" },
+  { name: "A Tale of Two Cities", ref: "MFK Gentle Fluidity", notes: "Genièvre · Muscade · Vanille", family: "Aromatique musqué" },
+  { name: "Utopia", ref: "Marc-Antoine Barrois Ganymede", notes: "Mandarine · Musc · Bois minéraux", family: "Boisé musqué" },
+  { name: "Old Book", ref: "", notes: "", family: "Création Fragrance Library" },
+];
+
+const libraryCatalog: BoutiqueProduct[] = libraryProducts.map((product) => {
+  const slug = cleanSlug(product.name);
+  const notes = product.notes || "Notes à préciser";
+  const inspiration = product.ref ? ` Inspiration : ${product.ref}.` : " Une création originale de la maison Fragrance Library.";
+  const sillage = product.notes ? ` aux notes ${product.notes.toLowerCase()},` : "";
+  const concentration = product.concentration ?? "Eau de parfum";
+  return {
+    slug,
+    name: product.name,
+    ref: product.ref,
+    notes,
+    headNotes: product.head || notes,
+    heartNotes: product.heart || "Notes à préciser",
+    baseNotes: product.base || "Notes à préciser",
+    price: 35000,
+    collection: "library",
+    image: `/images/optimized/library-${slug}-w800.webp`,
+    family: product.family,
+    concentration,
+    volume: "100 ml",
+    description: `${product.name}, de la collection Fragrance Library : ${concentration === "Eau de parfum" ? "une eau de parfum" : "un extrait de parfum"} de 100 ml${sillage} présentée dans son coffret d'origine.${inspiration} Disponible chez 2M Parfumerie à 35 000 F, livraison partout au Sénégal.`,
+  };
+});
+
+// Coffrets de grandes marques : tous à 90 000 F. Photos tirées du stock réel (recadrées sur fond blanc).
+const coffretProducts: { slug: string; name: string; brand: string; contents: string; family: "Femme" | "Homme"; notes: string }[] = [
+  { slug: "chloe-signature", name: "Coffret Chloé Signature", brand: "Chloé", contents: "eau de parfum, lait pour le corps et miniature", family: "Femme", notes: "Rose · Pivoine · Musc" },
+  { slug: "chloe-nomade", name: "Coffret Chloé Nomade", brand: "Chloé", contents: "eau de parfum et lait pour le corps", family: "Femme", notes: "Mirabelle · Freesia · Mousse de chêne" },
+  { slug: "lancome-la-vie-est-belle", name: "Coffret Lancôme La Vie est Belle", brand: "Lancôme", contents: "eau de parfum, lait pour le corps 50 ml et vaporisateur de voyage", family: "Femme", notes: "Iris · Praliné · Vanille" },
+  { slug: "boucheron-quatre", name: "Coffret Boucheron Quatre", brand: "Boucheron", contents: "eau de parfum, lait parfumé pour le corps et gel douche parfumé", family: "Femme", notes: "Floral · Ambré · Musc" },
+  { slug: "gaultier-divine", name: "Coffret Gaultier Divine Le Parfum", brand: "Jean Paul Gaultier", contents: "Le Parfum et lait pour le corps", family: "Femme", notes: "Fleurs blanches · Ambre · Gourmand" },
+  { slug: "million-gold-for-her", name: "Coffret Rabanne Million Gold For Her", brand: "Rabanne", contents: "parfum et vaporisateur de voyage", family: "Femme", notes: "Floral · Doré · Ambré" },
+  { slug: "burberry-goddess", name: "Coffret Burberry Goddess", brand: "Burberry", contents: "eau de parfum, lait pour le corps et vaporisateur de voyage", family: "Femme", notes: "Vanille · Lavande · Cacao" },
+  { slug: "cerruti-1881-femme", name: "Coffret Cerruti 1881 Pour Femme", brand: "Cerruti", contents: "eau de toilette et lait parfumé pour le corps 75 ml", family: "Femme", notes: "Floral · Frais · Musc" },
+  { slug: "mon-guerlain", name: "Coffret Mon Guerlain", brand: "Guerlain", contents: "eau de parfum, miniature et lait parfumé pour le corps", family: "Femme", notes: "Lavande · Jasmin · Vanille" },
+  { slug: "carolina-herrera-good-girl", name: "Coffret Carolina Herrera Good Girl", brand: "Carolina Herrera", contents: "eau de parfum, vaporisateur de voyage et soin pour le corps", family: "Femme", notes: "Amande · Tubéreuse · Cacao" },
+  { slug: "hugo-man", name: "Coffret Hugo Man", brand: "Hugo Boss", contents: "eau de toilette et déodorant spray 150 ml", family: "Homme", notes: "Pomme verte · Sauge · Sapin" },
+  { slug: "rabanne-1-million",name: "Coffret Rabanne 1 Million", brand: "Rabanne", contents: "eau de toilette, déodorant spray et vaporisateur de voyage", family: "Homme", notes: "Mandarine · Cannelle · Cuir" },
+  { slug: "montblanc-explorer-platinum", name: "Coffret Montblanc Explorer Platinum", brand: "Montblanc", contents: "eau de parfum, gel douche et vaporisateur de voyage", family: "Homme", notes: "Boisé · Aromatique · Frais" },
+  { slug: "terre-d-hermes", name: "Coffret Terre d'Hermès", brand: "Hermès", contents: "flacon 75 ml, vaporisateur de voyage 15 ml et 40 ml", family: "Homme", notes: "Orange · Poivre · Vétiver" },
+  { slug: "cerruti-1881", name: "Coffret Cerruti 1881 Pour Homme", brand: "Cerruti", contents: "eau de toilette 100 ml et déodorant spray 150 ml", family: "Homme", notes: "Frais · Aromatique · Boisé" },
+  { slug: "rabanne-phantom", name: "Coffret Rabanne Phantom Parfum", brand: "Rabanne", contents: "parfum, déodorant spray 150 ml et vaporisateur de voyage", family: "Homme", notes: "Citron · Lavande · Vanille" },
+  { slug: "212-men-heroes", name: "Coffret Carolina Herrera 212 Men Heroes", brand: "Carolina Herrera", contents: "eau de toilette et gel bain et douche", family: "Homme", notes: "Notes à préciser" },
+  { slug: "ysl-y", name: "Coffret Yves Saint Laurent Y", brand: "Yves Saint Laurent", contents: "eau de parfum, vaporisateur de voyage et gel douche intégral", family: "Homme", notes: "Pomme · Sauge · Bois ambré" },
+  { slug: "cartier-declaration", name: "Coffret Cartier Déclaration", brand: "Cartier", contents: "eau de toilette et gel douche parfumé", family: "Homme", notes: "Cardamome · Cumin · Cèdre" },
+  { slug: "givenchy-gentleman-society", name: "Coffret Givenchy Gentleman Society", brand: "Givenchy", contents: "eau de parfum, gel douche corps et cheveux et vaporisateur de voyage", family: "Homme", notes: "Sauge · Narcisse · Vétiver" },
+  { slug: "givenchy-gentleman", name: "Coffret Givenchy Gentleman (flacon ambré)", brand: "Givenchy", contents: "eau de parfum, gel douche corps et cheveux et vaporisateur de voyage", family: "Homme", notes: "Notes à préciser" },
+  { slug: "bad-boy", name: "Coffret Carolina Herrera Bad Boy", brand: "Carolina Herrera", contents: "eau de toilette et ses produits assortis", family: "Homme", notes: "Poivre · Sauge · Cacao" },
+  { slug: "dolce-gabbana", name: "Coffret Dolce&Gabbana", brand: "Dolce&Gabbana", contents: "parfum et produits assortis", family: "Homme", notes: "Notes à préciser" },
+  { slug: "givenchy", name: "Coffret Givenchy", brand: "Givenchy", contents: "parfum et produits assortis", family: "Homme", notes: "Notes à préciser" },
+  { slug: "gaultier-le-male-elixir", name: "Coffret Jean Paul Gaultier Le Male Elixir", brand: "Jean Paul Gaultier", contents: "Le Male Elixir et gel douche corps et cheveux", family: "Homme", notes: "Lavande · Miel · Fève tonka" },
+  { slug: "gaultier-scandal", name: "Coffret Jean Paul Gaultier Scandal", brand: "Jean Paul Gaultier", contents: "eau de parfum, lait parfumé pour le corps et vaporisateur de voyage", family: "Femme", notes: "Miel · Gardénia · Patchouli" },
+  { slug: "lancome-la-vie-est-belle-mascara", name: "Coffret Lancôme La Vie est Belle (édition rouge)", brand: "Lancôme", contents: "eau de parfum, lait parfumé pour le corps 50 ml et mascara", family: "Femme", notes: "Iris · Praliné · Vanille" },
+  { slug: "lancome-la-vie-est-belle-rose", name: "Coffret Lancôme La Vie est Belle (édition rose)", brand: "Lancôme", contents: "eau de parfum, lait parfumé pour le corps 50 ml et mascara", family: "Femme", notes: "Iris · Praliné · Vanille" },
+  { slug: "narciso-rodriguez-for-her", name: "Coffret Narciso Rodriguez For Her", brand: "Narciso Rodriguez", contents: "eau de toilette, vaporisateur de voyage et lait pour le corps", family: "Femme", notes: "Musc · Osmanthus · Fleur d'oranger" },
+];
+
+const coffretCatalog: BoutiqueProduct[] = coffretProducts.map((product) => ({
+  slug: `coffret-${product.slug}`,
+  name: product.name,
+  ref: product.brand,
+  notes: product.notes,
+  headNotes: product.notes,
+  heartNotes: "Notes à préciser",
+  baseNotes: "Notes à préciser",
+  price: 90000,
+  collection: "coffrets",
+  image: `/images/optimized/coffret-${product.slug}-w800.webp`,
+  family: product.family,
+  concentration: "Coffret",
+  volume: "Coffret",
+  description: `${product.name} : un coffret cadeau original ${product.brand} avec ${product.contents}. Prêt à offrir, disponible chez 2M Parfumerie à 90 000 F, livraison offerte partout au Sénégal.`,
+}));
+
+// Parfums Dubai ajoutés le 27/10/2026 (Maison Asrar, Gulf Orchid) : prix fournisseur + 7 000 F, arrondi au millier supérieur.
+const dubaiProducts: { slug: string; name: string; brand: string; price: number; volume: string; concentration: string; family: string; contents?: string; notes?: string; head?: string; heart?: string; base?: string; text?: string }[] = [
+  { slug: "vanilla-aura", name: "Vanilla Aura", brand: "Maison Asrar", price: 26000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
+  { slug: "vanilla-seduction", name: "Vanilla Seduction", brand: "Maison Asrar", price: 26000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
+  { slug: "nada", name: "Nada", brand: "Maison Asrar", price: 25000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
+  { slug: "soiree", name: "Soirée", brand: "Maison Asrar", price: 25000, volume: "110 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
+  { slug: "legacy-royal-collection", name: "Legacy Royal Collection", brand: "Maison Asrar", price: 30000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
+  { slug: "heavenly-lychee", name: "Heavenly Lychee", brand: "Gulf Orchid", price: 20000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
+  { slug: "naughty-vanilla", name: "Naughty Vanilla", brand: "Gulf Orchid", price: 24000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
+  { slug: "vanilla-addiction", name: "Vanilla Addiction", brand: "Gulf Orchid", price: 20000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
+  { slug: "oud-pour-klassik", name: "Oud pour Klassik", brand: "Khadlaj", price: 30000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
+  { slug: "vanilla-latte", name: "Vanilla Latte", brand: "Gulf Orchid", price: 20000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
+  { slug: "rose-maison-asrar", name: "Rosé", brand: "Maison Asrar", price: 25000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
+  { slug: "9pm-rebel", name: "9pm Rebel", brand: "Afnan", price: 31000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
+  { slug: "kiaana-vibes", name: "Kiaana Vibes", brand: "Afnan", price: 33000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
+  { slug: "al-barari-coral", name: "Al Barari Coral", brand: "Zimaya", price: 24000, volume: "", concentration: "Parfum", family: "Parfum Dubai" },
+  { slug: "kashmir-musk", name: "Kashmir Musk", brand: "Arabian Oud", price: 85000, volume: "", concentration: "Parfum", family: "Parfum Dubai" },
+  { slug: "rayhaan-pacific-aloha", name: "Rayhaan Pacific Aloha", brand: "Rayhaan", price: 23000, volume: "", concentration: "Parfum", family: "Parfum Dubai" },
+  { slug: "rayhaan-aquatica", name: "Rayhaan Aquatica", brand: "Rayhaan", price: 23000, volume: "", concentration: "Parfum", family: "Parfum Dubai" },
+  { slug: "rayhaan-jungle-vibe", name: "Rayhaan Jungle Vibe", brand: "Rayhaan", price: 23000, volume: "", concentration: "Parfum", family: "Parfum Dubai" },
+  { slug: "rayhaan-terra", name: "Rayhaan Terra", brand: "Rayhaan", price: 23000, volume: "", concentration: "Parfum", family: "Parfum Dubai" },
+  { slug: "belgravia-royal-collection", name: "Belgravia Royal Collection", brand: "Maison Asrar", price: 33000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
+  { slug: "regent-royal-collection", name: "Regent Royal Collection", brand: "Maison Asrar", price: 30000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
+  { slug: "vanguard-royal-collection", name: "Vanguard Royal Collection", brand: "Maison Asrar", price: 30000, volume: "100 ml", concentration: "Eau de parfum", family: "Parfum Dubai" },
+  { slug: "gulf-orchid-gift-set", name: "Coffret Gulf Orchid 4 parfums", brand: "Gulf Orchid", price: 29000, volume: "4 x 30 ml", concentration: "Eau de parfum", family: "Coffret Dubai", contents: "4 eaux de parfum de 30 ml : Sweet Cherry Kiss, Sweet Like Candy, Vanilla Addiction et Pink Marshmallow" },
+  { slug: "musk-collection-pomegranate", name: "Coffret Musk Collection Pomegranate", brand: "Gulf Orchid", price: 27000, volume: "Coffret", concentration: "Coffret", family: "Coffret Dubai", contents: "une brume pour le corps, une eau de parfum et une huile parfumée Musk Collection Pomegranate" },
+  // Ajoutés le 06/11/2026. Notes : fiches des marques et revendeurs (Fragrantica pour Cloud 9, Heidy et Apex Power).
+  { slug: "zodiac-apex-power", name: "Zodiac Apex Power", brand: "Zodiac", price: 40000, volume: "60 ml", concentration: "Extrait de parfum", family: "Boisé épicé · Mixte", notes: "Akigalawood · Vétiver · Basilic · Poivre de Timur · Patchouli · Ambroxan", text: "Un boisé fumé et épicé, taillé pour le soir. L'akigalawood et le vétiver donnent la profondeur, le basilic et le poivre de Timur réveillent le tout. Extrait de parfum : il tient longtemps. Livré dans son coffret rouge d'origine." },
+  { slug: "mfa-vision", name: "MFA Vision", brand: "MFA Perfumes", price: 40000, volume: "100 ml", concentration: "Extrait de parfum", family: "Ambré épicé · Mixte", notes: "Dans l'esprit de Decision d'Amouage : cardamome, encens, myrrhe, vanille", text: "Vision de MFA Perfumes s'inspire de Decision d'Amouage : un sillage ambré, épicé et encensé, chic sans en faire trop. Flacon sculpté, bouchon en cristal, extrait de parfum 100 ml." },
+  { slug: "oud-couture-ahmed-al-maghribi", name: "Oud Couture", brand: "Ahmed Al Maghribi", price: 18000, volume: "", concentration: "Parfum", family: "Fruité floral boisé", notes: "Pêche · Fleurs blanches · Rose · Miel · Mousse · Santal", text: "Oud Couture d'Ahmed Al Maghribi : la pêche et le miel adoucissent un cœur de rose et de fleurs blanches, posé sur le santal. Doux, chaleureux, facile à porter tous les jours." },
+  { slug: "cloud-9-gulf-orchid", name: "Cloud 9", brand: "Gulf Orchid", price: 28000, volume: "100 ml", concentration: "Eau de parfum", family: "Floral musqué · Mixte", notes: "Aldéhydes · Bergamote · Fleur d'oranger · Muguet · Musc · Cèdre", text: "Cloud 9 de Gulf Orchid sent le propre et le linge frais : aldéhydes, fleur d'oranger et musc blanc. Un parfum lumineux au sillage généreux, pour elle comme pour lui." },
+  { slug: "heidy-samam", name: "Heidy", brand: "Samam", price: 40000, volume: "", concentration: "Parfum", family: "Floral poudré · Femme", notes: "Jasmin · Tubéreuse · Notes poudrées · Notes fruitées · Bergamote · Cuir", text: "Heidy de Samam est un floral blanc poudré : jasmin et tubéreuse, une touche fruitée, puis un fond de cuir doux. Féminin, élégant, avec un sillage qui se remarque." },
+  { slug: "hersh-55", name: "Hersh 55° Celsius", brand: "Al Ezz Oud", price: 45000, volume: "100 ml", concentration: "Eau de parfum", family: "Agrumes ambré · Mixte", notes: "Agrumes · Ambre · Bois", text: "Hersh 55° d'Al Ezz Oud : des agrumes vifs sur un fond ambré et boisé. Frais mais présent, il tient bien sous la chaleur. Flacon turquoise couronné, 100 ml." },
+  { slug: "rayhaan-nava-sol", name: "Rayhaan Nava Sol", brand: "Rayhaan", price: 25000, volume: "100 ml", concentration: "Eau de parfum", family: "Floral boisé musqué", head: "Poire · Ambrette", heart: "Magnolia · Jasmin · Santal", base: "Cèdre · Musc · Ambre", text: "Nava Sol de Rayhaan s'ouvre sur une poire juteuse et l'ambrette, puis le magnolia et le jasmin prennent le relais sur un fond de cèdre et de musc. Lumineux et doux, parfait pour la journée." },
+  { slug: "rayhaan-cedrus-blanc", name: "Rayhaan Cedrus Blanc", brand: "Rayhaan", price: 25000, volume: "100 ml", concentration: "Eau de parfum", family: "Boisé musqué propre", head: "Aldéhydes · Bergamote", heart: "Fleur d'oranger", base: "Musc blanc · Vanille · Cèdre", text: "Cedrus Blanc de Rayhaan, c'est le luxe discret : bergamote et aldéhydes pétillants, cœur de fleur d'oranger, puis musc blanc, vanille et cèdre. Propre, chic, pour tous les jours." },
+  { slug: "arabiyat-marwa", name: "Arabiyat Marwa", brand: "Arabiyat Prestige", price: 33000, volume: "100 ml", concentration: "Eau de parfum", family: "Hespéridé épicé boisé", head: "Bergamote · Citron · Orange de Sicile", heart: "Néroli · Gingembre · Cannelle", base: "Thé noir · Encens · Ambroxan · Bois de gaïac", text: "Marwa d'Arabiyat Prestige est de retour : agrumes frais, gingembre et cannelle, puis un fond fumé de thé noir et d'encens. Flacon argenté taillé comme une pierre, dans son grand coffret." },
+  { slug: "arabiyat-mahd-al-dhahab", name: "Arabiyat Mahd Al Dhahab", brand: "Arabiyat Prestige", price: 33000, volume: "100 ml", concentration: "Eau de parfum", family: "Oriental boisé · Mixte", head: "Bergamote · Citron · Épices", heart: "Ambre · Oud · Patchouli", base: "Musc blanc · Vanille · Santal", text: "Mahd Al Dhahab, « le berceau d'or » : un oriental généreux où l'oud et l'ambre rencontrent la vanille et le santal. Chaleureux et riche, flacon doré taillé comme une pierre." },
+  { slug: "mfa-pure-50", name: "MFA Pure 50", brand: "MFA Perfumes", price: 40000, volume: "100 ml", concentration: "Parfum", family: "Boisé épicé", head: "Bergamote · Poivre rose · Encens · Piment", heart: "Rose · Vétiver · Santal · Papyrus", base: "Safran · Daim · Akigalawood · Vanille", text: "Pure 50 de MFA Perfumes, inspiré de Purpose 50 d'Amouage : boisé et épicé, avec l'encens, la rose et le safran sur un fond de daim et de vanille. Élégant, sophistiqué. Flacon vert sculpté." },
+  { slug: "rayhaan-vantage", name: "Rayhaan Vantage", brand: "Rayhaan", price: 30000, volume: "100 ml", concentration: "Eau de parfum", family: "Ambré épicé · Mixte", head: "Cardamome · Poivre rose · Bergamote", heart: "Encens · Myrrhe · Baies de genièvre", base: "Cèdre · Patchouli", text: "Vantage de Rayhaan : cardamome et poivre rose, cœur d'encens et de myrrhe, fond de cèdre et de patchouli. Un ambré épicé raffiné, dans un flacon cuivré ciselé de motifs arabes." },
+  // Ajoutés le 11/11/2026. Notes : sites des marques / Fragrantica / revendeurs.
+  { slug: "reef-aurum", name: "Reef Aurum", brand: "Reef", price: 50000, volume: "150 ml", concentration: "Parfum", family: "Fruité gourmand · Mixte", head: "Ananas · Pomme · Fraise", heart: "Jasmin · Caramel", base: "Cèdre · Musc · Ambre", text: "Aurum de Reef : ananas, pomme et fraise en ouverture, un cœur de jasmin et de caramel, puis le cèdre, le musc et l'ambre. Fruité, doré, gourmand, avec un beau sillage. Grand flacon de 150 ml couleur or, coffret peint à la main." },
+  { slug: "reef-violet-musk", name: "Reef Violet Musk", brand: "Reef", price: 45000, volume: "100 ml", concentration: "Parfum", family: "Musqué boisé · Mixte", head: "Cashmeran", heart: "Notes boisées", base: "Ambroxan · Musc", text: "Violet Musk de Reef : un cashmeran doux et velouté, un cœur boisé chaleureux, puis l'ambroxan et un musc propre. Moderne, élégant, facile à porter tous les jours. Flacon lilas pailleté." },
+  { slug: "reef-zahwah", name: "Reef Zahwah", brand: "Reef", price: 45000, volume: "100 ml", concentration: "Eau de parfum", family: "Floral épicé · Mixte", head: "Lavande · Noisette · Élémi · Safran", heart: "Rose de Bulgarie · Encens · Jasmin sambac", base: "Vanille de Madagascar", text: "Zahwah de Reef : lavande, noisette et safran en ouverture, un cœur de rose de Bulgarie, d'encens et de jasmin, puis la vanille de Madagascar. Floral, chaud, raffiné. Flacon rose en mosaïque." },
+  { slug: "reef-sea-or", name: "Reef Sea Or", brand: "Reef", price: 45000, volume: "100 ml", concentration: "Parfum", family: "Floral amandé · Mixte", head: "Amande · Bergamote · Lavande", heart: "Fleurs poudrées · Jasmin blanc · Fleur d'oranger", base: "Musc", text: "Sea Or de Reef, inspiré des hippocampes de la mer d'Arabie : amande, bergamote et lavande, un cœur de fleur d'oranger et de jasmin blanc, puis un musc doux. Lumineux, poudré, élégant. Flacon clair orné d'hippocampes dorés." },
+  { slug: "al-haramain-musk-al-ghazal", name: "Al Haramain Musk Al Ghazal", brand: "Al Haramain", price: 23000, volume: "30 ml", concentration: "Huile de parfum concentrée", family: "Musc épicé boisé · Mixte", notes: "Musc · Carvi · Anis · Vanille · Chocolat noir · Notes boisées", text: "Musk Al Ghazal d'Al Haramain, huile de parfum concentrée sans alcool : un musc chaud relevé de carvi et d'anis, adouci par la vanille et le chocolat noir, sur un fond boisé. Quelques gouttes suffisent et ça tient toute la journée. Flacon ciselé façon lanterne." },
+  { slug: "alezz-oud-hersh-x", name: "Hersh X", brand: "Al Ezz Oud", price: 40000, volume: "100 ml", concentration: "Eau de parfum", family: "Frais épicé boisé · Mixte", head: "Bergamote · Pomme · Lavande", heart: "Jasmin · Violette · Épices chaudes", base: "Vanille · Santal · Cardamome · Bois", text: "Hersh X d'Al Ezz Oud : bergamote, pomme et lavande en ouverture, un cœur de jasmin et de violette épicé, puis la vanille, le santal et la cardamome. Frais, chic, très complimenté. Flacon taillé, bouchon doré et cordon vert." },
+  { slug: "ibraq-diamond-collection-coffret-nude-coral", name: "Ibraq Diamond Collection – Coffret Nude Coral, White Regent, Emerald Soul", brand: "Ibraq", price: 65000, volume: "3 flacons", concentration: "Eau de parfum", family: "Coffret 3 parfums · Mixte", notes: "Nude Coral Diamond · White Regent Diamond · Emerald Soul Diamond", text: "Le coffret Diamond Collection d'Ibraq réunit trois parfums : Nude Coral Diamond, White Regent Diamond et Emerald Soul Diamond. Flacons gravés façon diamant, présentés dans un coffret blanc. Idéal à offrir ou pour changer de parfum selon l'humeur." },
+  { slug: "ibraq-diamond-collection-coffret-balas-rose", name: "Ibraq Diamond Collection – Coffret Balas Rose, Pink Diamond Sakura, Purple Heart", brand: "Ibraq", price: 65000, volume: "3 flacons", concentration: "Eau de parfum", family: "Coffret 3 parfums · Femme", notes: "Balas Rose · Pink Diamond Sakura · Purple Heart Diamond", text: "Le coffret Diamond Collection d'Ibraq réunit trois parfums : Balas Rose, Pink Diamond Sakura et Purple Heart Diamond. Flacons rouge, rose et prune gravés façon diamant, dans un coffret bordeaux. Un cadeau qui fait son effet." },
+  { slug: "lattafa-beyond-precious", name: "Lattafa Beyond Precious", brand: "Lattafa", price: 37000, volume: "100 ml", concentration: "Eau de parfum", family: "Floral fruité ambré · Femme", head: "Poire · Bergamote · Néroli", heart: "Angélique · Jasmin · Fleur d'oranger", base: "Vanille · Tonka · Immortelle", text: "Beyond Precious de Lattafa : poire, bergamote et néroli en ouverture, un cœur d'angélique, de jasmin et de fleur d'oranger, puis la vanille, la tonka et l'immortelle. Floral, lumineux, élégant. Flacon miroir au bouchon sphère ciselée." },
+  // Ajoutés le 09/11/2026. Notes : Fragrantica / Armaf / Afnan / Lattafa / Olfastory.
+  { slug: "armaf-club-de-nuit-intenso-fuego", name: "Armaf Club de Nuit Intenso Fuego", brand: "Armaf", price: 45000, volume: "", concentration: "Eau de parfum", family: "Boisé frais fruité · Mixte", head: "Ananas grillé · Pamplemousse · Mandarine · Cassis · Bergamote · Prune · Poivre rose", heart: "Fleurs solaires · Lavande · Géranium", base: "Cèdre · Musc blanc · Vanille · Tonka · Patchouli · Miel", text: "Club de Nuit Intenso Fuego d'Armaf, la nouvelle flamme de la gamme : ananas grillé, pamplemousse et cassis éclatent en ouverture, un cœur de lavande et de fleurs solaires, puis le cèdre, la vanille, la tonka et le miel. Frais, boisé, légèrement sucré, avec du sillage. Flacon orange feu au médaillon noir." },
+  { slug: "armaf-club-de-nuit-urban-man-elixir", name: "Armaf Club de Nuit Urban Man Elixir", brand: "Armaf", price: 33000, volume: "105 ml", concentration: "Eau de parfum", family: "Aromatique ambré · Homme", head: "Bergamote · Poivre rose · Fleur d'oranger · Jasmin", heart: "Lavande · Élémi · Géranium · Vétiver · Safran", base: "Ambroxan · Ambre · Cèdre · Patchouli · Labdanum", text: "Club de Nuit Urban Man Elixir d'Armaf : bergamote et poivre rose en ouverture, un cœur de lavande et de safran, puis l'ambroxan et l'ambre. Frais, épicé, très performant, dans l'esprit des grands boisés ambrés. Flacon noir fumé au médaillon gravé." },
+  { slug: "lattafa-dynasty", name: "Lattafa Dynasty", brand: "Lattafa", price: 30000, volume: "100 ml", concentration: "Eau de parfum", family: "Boisé épicé thé · Mixte", head: "Bergamote · Gingembre · Sauge sclarée · Framboise · Muscade", heart: "Thé rooibos · Daim", base: "Cèdre · Cashmeran · Bois ambré", text: "Dynasty de Lattafa : bergamote, gingembre et framboise en ouverture, un cœur de thé rooibos et de daim, puis le cèdre et le bois ambré. Épicé, élégant, original. Flacon coiffé d'une couronne argentée, coffret framboise." },
+  { slug: "afnan-lynked-forever", name: "Afnan Lynked Forever", brand: "Afnan", price: 37000, volume: "100 ml", concentration: "Eau de parfum", family: "Floral blanc solaire · Femme", head: "Mandarine · Baies", heart: "Gardénia · Tubéreuse · Ylang-ylang", base: "Noix de coco · Santal · Musc · Bois sec", text: "Lynked Forever d'Afnan : mandarine et baies juteuses, un bouquet de gardénia, tubéreuse et ylang-ylang, puis la noix de coco, le santal et le musc. Floral, crémeux, ensoleillé. Flacon au bouchon chaîne doré, coffret rose poudré." },
+  { slug: "rayhaan-equinox", name: "Rayhaan Equinox", brand: "Rayhaan", price: 25000, volume: "100 ml", concentration: "Eau de parfum", family: "Floral thé frais · Mixte", head: "Fleur d'oranger · Pamplemousse", heart: "Thé blanc · Jasmin sambac", base: "Vanille · Santal", text: "Equinox de Rayhaan : fleur d'oranger et pamplemousse pétillant, un cœur de thé blanc et de jasmin, puis la vanille et le santal crémeux. Frais, lumineux, raffiné. Flacon vert sauge à la plaque dorée." },
+  { slug: "rayhaan-vanilla-vibe", name: "Rayhaan Vanilla Vibe", brand: "Rayhaan", price: 25000, volume: "100 ml", concentration: "Eau de parfum", family: "Ambré vanillé · Mixte", head: "Prune · Freesia", heart: "Vanille de Madagascar · Tubéreuse", base: "Ambre · Bois de cachemire · Oud · Labdanum", text: "Vanilla Vibe de Rayhaan : prune et freesia en ouverture, un cœur de vanille de Madagascar et de tubéreuse, puis l'ambre, le bois de cachemire et une touche d'oud. Une vanille riche et profonde, jamais écœurante. Flacon dégradé crème et caramel." },
+  { slug: "rayhaan-amazonica", name: "Rayhaan Amazonica", brand: "Rayhaan", price: 25000, volume: "100 ml", concentration: "Eau de parfum", family: "Hespéridé boisé · Mixte", head: "Pamplemousse · Bergamote", heart: "Gingembre · Patchouli", base: "Ambroxan · Vétiver · Ambre · Musc", text: "Amazonica de Rayhaan : pamplemousse et bergamote éclatants, un cœur de gingembre et de patchouli, puis l'ambroxan, le vétiver et le musc. Frais, vert, énergique, parfait sous notre chaleur. Flacon dégradé vert émeraude et jaune." },
+  // Ajoutés le 08/11/2026. Notes : Fragrantica / Lattafa.
+  { slug: "lattafa-fakhar-black", name: "Lattafa Fakhar Black", brand: "Lattafa", price: 18000, volume: "100 ml", concentration: "Eau de parfum", family: "Aromatique fougère · Homme", head: "Pomme · Bergamote · Gingembre", heart: "Lavande · Sauge · Baies de genièvre · Géranium", base: "Tonka · Cèdre · Amberwood · Vétiver", text: "Fakhar Black de Lattafa, « la fierté » : pomme, bergamote et gingembre, un cœur aromatique de lavande et de sauge, puis la tonka et le cèdre. Frais, élégant, pour tous les jours. Flacon argenté rond, dans son coffret ciselé." },
+  { slug: "lattafa-fakhar-femme", name: "Lattafa Fakhar pour femme", brand: "Lattafa", price: 18000, volume: "100 ml", concentration: "Eau de parfum", family: "Floral fruité boisé · Femme", head: "Orange · Pêche · Poire · Pomme · Cassis", heart: "Jasmin sambac · Fleur d'oranger · Rose", base: "Patchouli · Santal · Musc · Vanille", text: "Fakhar pour femme de Lattafa : un bouquet de fruits (pêche, poire, cassis), un cœur de jasmin, de fleur d'oranger et de rose, puis le santal, le musc et la vanille. Féminin, élégant, raffiné. Flacon blanc et or rose." },
+  { slug: "lattafa-opulent-dubai", name: "Lattafa Opulent Dubai", brand: "Lattafa", price: 15000, volume: "100 ml", concentration: "Eau de parfum", family: "Oriental floral · Mixte", head: "Mangue · Pamplemousse · Citron · Gingembre", heart: "Jasmin · Cèdre · Violette", base: "Notes boisées · Ambre gris · Mousse de chêne · Benjoin", text: "Opulent Dubai de Lattafa : mangue, pamplemousse et gingembre en ouverture, un cœur de jasmin et de violette, puis l'ambre gris et le benjoin. Frais et lumineux, avec du fond. Flacon bleu pâle au médaillon doré." },
+  { slug: "lattafa-ana-abiyedh-scarlet", name: "Lattafa Ana Abiyedh Scarlet", brand: "Lattafa", price: 15000, volume: "60 ml", concentration: "Eau de parfum", family: "Fruité gourmand · Femme", head: "Cerise noire · Poivre rose", heart: "Rose blanche · Pivoine · Muscade · Tonka", base: "Patchouli · Vanille · Sucre · Caramel", text: "Ana Abiyedh Scarlet de Lattafa : cerise noire et poivre rose, un cœur de rose blanche et de pivoine, puis la vanille et le caramel. Gourmand, séduisant, féminin." },
+  { slug: "lattafa-asad", name: "Lattafa Asad", brand: "Lattafa", price: 18000, volume: "100 ml", concentration: "Eau de parfum", family: "Ambré épicé · Homme", head: "Poivre noir · Tabac · Ananas", heart: "Patchouli · Café · Iris", base: "Vanille · Ambre · Bois sec · Benjoin · Labdanum", text: "Asad, « le lion » de Lattafa : poivre noir, tabac et ananas, un cœur de café et d'iris, puis la vanille et l'ambre. Chaud, épicé, viril. Le best-seller de la gamme Asad." },
+  { slug: "lattafa-asad-zanzibar", name: "Lattafa Asad Zanzibar", brand: "Lattafa", price: 18000, volume: "100 ml", concentration: "Eau de parfum", family: "Aromatique marin · Homme", head: "Notes marines · Lavande · Poivre rose", heart: "Savon · Cashmeran · Cannelle", base: "Ambre · Santal · Cèdre · Tonka", text: "Asad Zanzibar, édition limitée : notes marines et lavande, un cœur propre de savon et de cashmeran, puis l'ambre, le santal et la tonka. Frais, propre, parfait sous la chaleur." },
+  { slug: "lattafa-asad-bourbon", name: "Lattafa Asad Bourbon", brand: "Lattafa", price: 18000, volume: "100 ml", concentration: "Eau de parfum", family: "Ambré gourmand · Homme", head: "Lavande · Mirabelle · Poivre rose", heart: "Cacao · Muscade · Davana", base: "Vanille bourbon · Ambre · Vétiver", text: "Asad Bourbon de Lattafa : lavande et mirabelle juteuse, un cœur de cacao et de muscade, puis la vanille bourbon et l'ambre. Gourmand et viril, pour le soir." },
+  { slug: "lattafa-ameer-al-oudh-intense-oud", name: "Lattafa Ameer Al Oudh Intense Oud", brand: "Lattafa", price: 16000, volume: "100 ml", concentration: "Eau de parfum", family: "Oud gourmand boisé · Mixte", head: "Notes boisées · Oud", heart: "Sucre · Vanille", base: "Oud · Santal · Notes herbacées", text: "Ameer Al Oudh Intense Oud de Lattafa, « le prince de l'oud » : un oud boisé adouci par le sucre et la vanille, posé sur le santal. Riche, chaud, au sillage puissant. Un best-seller à petit prix." },
+  { slug: "ard-al-zaafaran-desert-sultan-sapphire", name: "Desert Sultan Sapphire", brand: "Ard Al Zaafaran", price: 14000, volume: "100 ml", concentration: "Eau de parfum", family: "Boisé ambré · Homme", head: "Géranium · Notes métalliques", heart: "", base: "Ambre · Encens · Gaïac · Musc · Oud", text: "Desert Sultan Sapphire d'Ard Al Zaafaran : une ouverture de géranium, puis un fond profond d'ambre, d'encens, de gaïac et d'oud. Flacon bleu nuit sculpté, coffret velours. Un vrai parfum Dubaï à 14 000 F." },
+  { slug: "lattafa-qaed-al-fursan", name: "Lattafa Qaed Al Fursan", brand: "Lattafa", price: 14000, volume: "90 ml", concentration: "Eau de parfum", family: "Oriental boisé · Mixte", head: "Ananas · Safran", heart: "Sapin baumier · Jasmin", base: "Cèdre · Ambre · Oud", text: "Qaed Al Fursan, « le chef des cavaliers » : un ananas juteux relevé de safran, un cœur de jasmin et de sapin, puis le cèdre, l'ambre et l'oud. Un classique de Lattafa, puissant et à petit prix." },
+  { slug: "lattafa-hayaati-florence", name: "Lattafa Hayaati Florence", brand: "Lattafa", price: 15000, volume: "100 ml", concentration: "Eau de parfum", family: "Fruité gourmand · Femme", head: "Litchi · Pamplemousse · Groseille", heart: "Rose · Pêche · Cèdre", base: "Vanille · Praliné · Ambre", text: "Hayaati Florence de Lattafa, « ma vie » : litchi et pamplemousse pétillants, un cœur de rose et de pêche, puis la vanille et le praliné. Doux, féminin, gourmand, à petit prix." },
+  { slug: "ahmed-al-maghribi-ignite-oud", name: "Ahmed Al Maghribi Ignite Oud", brand: "Ahmed Al Maghribi", price: 30000, volume: "", concentration: "Eau de parfum", family: "Boisé cuiré · Mixte", head: "Cuir · Géranium", heart: "Patchouli · Cèdre", base: "Ambre · Santal · Musc · Mousse", text: "Ignite Oud d'Ahmed Al Maghribi : le cuir et le géranium allument la flamme, le patchouli et le cèdre donnent du corps, puis l'ambre, le santal et le musc s'installent. Boisé, chaud, magnétique. Flacon noir mat et bouchon doré, dans son coffret." },
+  { slug: "paris-corner-marshmallow-blush", name: "Paris Corner Marshmallow Blush", brand: "Paris Corner", price: 20000, volume: "100 ml", concentration: "Eau de parfum", family: "Gourmand fruité · Mixte", head: "Fraise · Framboise · Citron", heart: "Fleur d'oranger · Ambroxan · Crème fouettée", base: "Guimauve · Musc · Vanille", text: "Marshmallow Blush de Paris Corner : fraise et framboise juteuses, un cœur de fleur d'oranger et de crème fouettée, puis la guimauve et la vanille. Sucré, joyeux, irrésistible. Flacon rose marbré façon bonbon." },
+  { slug: "lattafa-ameerat-al-arab", name: "Lattafa Ameerat Al Arab", brand: "Asdaaf by Lattafa", price: 15000, volume: "100 ml", concentration: "Eau de parfum", family: "Floral musqué boisé · Femme", head: "Agrumes · Bergamote", heart: "Musc blanc · Aloe vera", base: "Jasmin · Musc · Bois · Oud", text: "Ameerat Al Arab, « la princesse des Arabes » : des agrumes frais, un cœur de musc blanc, puis le jasmin et un fond boisé touché d'oud. Doux, féminin, facile à porter tous les jours. Flacon en velours bordeaux, à petit prix." },
+  { slug: "lattafa-victoria", name: "Lattafa Victoria", brand: "Lattafa", price: 30000, volume: "100 ml", concentration: "Eau de parfum", family: "Gourmand floral · Mixte", head: "Tarte au citron meringuée", heart: "Néroli", base: "Vanille", text: "Victoria de Lattafa : une tarte au citron meringuée en ouverture, un cœur de néroli, puis une vanille douce et réconfortante. Gourmand, lumineux, impossible à oublier. Flacon doré ciselé au médaillon bleu marbré." },
+  { slug: "lattafa-musamam-white-intense", name: "Lattafa Musamam White Intense", brand: "Lattafa", price: 27000, volume: "100 ml", concentration: "Eau de parfum", family: "Ambré épicé crémeux · Mixte", head: "Épices · Bergamote · Orange", heart: "Noix de coco · Ylang-ylang · Ambroxan · Mahonial", base: "Santal · Musc · Benjoin", text: "Musamam White Intense de Lattafa : des épices et des agrumes en ouverture, un cœur crémeux de noix de coco et d'ylang-ylang, puis un fond doux de santal, musc et benjoin. Chaleureux, enveloppant, pour elle comme pour lui. Flacon doré enlacé d'un serpent, dans son écrin." },
+  // Ajoutés le 07/11/2026. Notes : Fragrantica.
+  { slug: "afnan-supremacy-collectors-edition", name: "Afnan Supremacy Collector's Edition", brand: "Afnan", price: 43000, volume: "100 ml", concentration: "Eau de parfum", family: "Fruité boisé chypré · Homme", head: "Ananas · Bergamote · Pomme · Fleurs blanches", heart: "Fleur d'oranger · Bouleau · Ambre", base: "Mousse de chêne · Musc · Ambre gris", text: "Supremacy Collector's Edition d'Afnan : l'ananas et la bergamote ouvrent fort, le bouleau fumé et l'ambre prennent le relais, puis la mousse de chêne et l'ambre gris s'installent. Un parfum d'homme sûr de lui, qui tient longtemps. Flacon moucheté gris et noir, dans son coffret noir." },
+  { slug: "afnan-supremacy-not-only-intense", name: "Afnan Supremacy Not Only Intense", brand: "Afnan", price: 45000, volume: "100 ml", concentration: "Extrait de parfum", family: "Fruité boisé · Homme", head: "Cassis · Bergamote · Pomme", heart: "Mousse de chêne · Patchouli · Lavande", base: "Ambre gris · Musc · Safran", text: "Supremacy Not Only Intense d'Afnan : cassis, bergamote et pomme en ouverture, un cœur de mousse de chêne, patchouli et lavande, puis l'ambre gris et le safran. Fruité, boisé, puissant : un sillage qu'on remarque et une tenue de toute la journée." },
+  // Ajouté le 07/11/2026. Notes : visuel du fournisseur.
+  { slug: "armaf-club-de-nuit-elite", name: "Armaf Club de Nuit Élite", brand: "Armaf", price: 45000, volume: "", concentration: "Eau de parfum", family: "Frais boisé aromatique · Homme", head: "Poivre de Sichuan · Bergamote · Poivre rose · Thé vert · Pomme", heart: "Rose de mai · Cassis · Géranium · Notes aromatiques · Notes terreuses", base: "Vétiver · Musc · Cèdre · Cashmeran · Ambre", text: "Club de Nuit Élite d'Armaf : une ouverture fraîche de pomme, bergamote et thé vert relevée de poivres, un cœur de rose et de cassis, puis un fond boisé de vétiver, cèdre et ambre. Frais, élégant, il plaît au bureau comme en soirée. Flacon dégradé vert, médaillon argenté." },
+  // Ajoutés le 19/11/2026. Prix fournisseur + 8 000 F. Notes : sites revendeurs (Lattafa USA, Gush, Emirates Oud, Intense Oud, Fraganty).
+  { slug: "lattafa-mashrabya", name: "Lattafa Mashrabya", brand: "Lattafa", price: 25000, volume: "100 ml", concentration: "Eau de parfum", family: "Tabac gourmand · Mixte", head: "Pomme façon chicha · Poivre rose", heart: "Tabac · Cannelle · Datte", base: "Fumée d'oud · Caramel · Vanille · Patchouli", text: "Mashrabya de Lattafa : une pomme façon chicha et du poivre rose en ouverture, un cœur de tabac, de cannelle et de datte, puis la fumée d'oud, le caramel et la vanille. Chaud, gourmand, envoûtant. Flacon noir sculpté au bouchon doré géométrique." },
+  { slug: "lattafa-atheeri", name: "Lattafa Atheeri", brand: "Lattafa", price: 30000, volume: "100 ml", concentration: "Eau de parfum", family: "Floral vanillé · Femme", head: "Fleur de la passion · Notes de rosée", heart: "Orchidée · Jasmin", base: "Vanille · Ambre boisé", text: "Atheeri de Lattafa : fleur de la passion et notes de rosée en ouverture, un cœur d'orchidée et de jasmin, puis la vanille et l'ambre boisé. Floral, doux, lumineux. Flacon doré en nid d'abeille orné d'une abeille." },
+  { slug: "muzn-ahmed-al-maghribi", name: "Muzn", brand: "Ahmed Al Maghribi", price: 23000, volume: "100 ml", concentration: "Eau de parfum", family: "Fruité musqué · Mixte", head: "Melon · Sel marin", heart: "Musc · Santal", base: "Notes fruitées · Ambre", text: "Muzn d'Ahmed Al Maghribi : melon et sel marin en ouverture, un cœur de musc et de santal, puis des notes fruitées sur un fond d'ambre. Frais, propre, facile à porter. Flacon laqué bordeaux." },
+  { slug: "rayhaan-wolf", name: "Rayhaan Wolf", brand: "Rayhaan", price: 24000, volume: "100 ml", concentration: "Eau de parfum", family: "Boisé épicé vanillé · Homme", head: "Gingembre", heart: "Notes boisées", base: "Vanille bourbon", text: "Wolf de Rayhaan : le gingembre en ouverture, un cœur boisé, puis une vanille bourbon chaude. Viril, épicé, enveloppant. Flacon noir mat au médaillon de loup." },
+  { slug: "rayhaan-azul", name: "Rayhaan Azul", brand: "Rayhaan", price: 24000, volume: "100 ml", concentration: "Eau de parfum", family: "Aquatique hespéridé · Homme", head: "Bergamote · Citron", heart: "Fleur de pamplemousse", base: "Calone · Santal", text: "Azul de Rayhaan : bergamote et citron en ouverture, un cœur de fleur de pamplemousse, puis la calone marine et le santal. Frais, marin, parfait pour la journée. Flacon blanc ajouré de motifs bleus." },
+  { slug: "hayana-ahmed-al-maghribi", name: "Hayana", brand: "Ahmed Al Maghribi", price: 23000, volume: "100 ml", concentration: "Eau de parfum", family: "Floral fruité vanillé · Femme", head: "Héliotrope · Clémentine · Orchidée", heart: "Fleurs blanches · Fruits · Pivoine", base: "Ambre · Musc · Vanille", text: "Hayana d'Ahmed Al Maghribi : héliotrope, clémentine et orchidée en ouverture, un cœur de fleurs blanches, de fruits et de pivoine, puis l'ambre, le musc et la vanille. Féminin, doux, élégant. Flacon rouge au bouchon gravé." },
+  { slug: "azure-royal-ahmed-al-maghribi", name: "Azure Royal", brand: "Ahmed Al Maghribi", price: 24000, volume: "100 ml", concentration: "Eau de parfum", family: "Fruité floral musqué · Mixte", head: "Poire · Orange · Notes sucrées", heart: "Freesia · Rose", base: "Cèdre · Musc", text: "Azure Royal d'Ahmed Al Maghribi : poire, orange et notes sucrées en ouverture, un cœur de freesia et de rose, puis le cèdre et le musc. Frais, fruité, raffiné. Flacon bleu ciel au bouchon argenté serti." },
+  { slug: "lattafa-ajwad-pink-to-pink", name: "Lattafa Ajwad Pink to Pink Creamy Elixir", brand: "Lattafa", price: 26000, volume: "60 ml", concentration: "Eau de parfum", family: "Gourmand fruité · Femme", head: "Framboise · Cassis · Poire", heart: "Chocolat blanc", base: "Gousse de vanille · Ambre boisé · Musc", text: "Ajwad Pink to Pink Creamy Elixir de Lattafa : framboise, cassis et poire en ouverture, un cœur de chocolat blanc, puis la gousse de vanille, l'ambre boisé et le musc. Crémeux, gourmand, irrésistible. Flacon rose aux motifs pastel." },
+  { slug: "lattafa-habik-femme", name: "Lattafa Habik Femme", brand: "Lattafa", price: 26000, volume: "100 ml", concentration: "Eau de parfum", family: "Fruité floral · Femme", head: "Pomme · Pêche · Poire · Cassis · Orange douce", heart: "Jasmin sambac · Rose · Fleur d'oranger", base: "Santal · Musc blanc · Vanille · Patchouli", text: "Habik pour femme de Lattafa : pomme, pêche, poire, cassis et orange douce en ouverture, un cœur de jasmin sambac, de rose et de fleur d'oranger, puis le santal, le musc blanc et la vanille. Fruité, floral, joyeux. Flacon fuchsia habillé d'arabesques dorées." },
+  // Ajoutés le 20/11/2026. Prix de vente donné par le client : 20 000 F. Notes : sites revendeurs (Perfume Box, Arabic Parfums, Fraganty).
+  { slug: "fa-paris-cuir-noir", name: "Cuir Noir", brand: "FA Paris", price: 20000, volume: "100 ml", concentration: "Eau de parfum", family: "Cuir floral boisé · Mixte", head: "Baies de genièvre · Pomelo · Safran", heart: "Violette noire · Rose · Accord cuir", base: "Bois blonds · Framboise · Vétiver", text: "Cuir Noir de FA Paris (Fragrance World) : genièvre, pomelo et safran en ouverture, un cœur de violette noire, de rose et de cuir, puis les bois blonds, la framboise et le vétiver. Élégant, sombre, raffiné. Flacon au bouchon gainé de noir, coffret façon cuir." },
+  { slug: "fa-paris-pure-desert-oud", name: "Pure Desert Oud", brand: "FA Paris", price: 20000, volume: "100 ml", concentration: "Eau de parfum", family: "Oud ambré fumé · Mixte", head: "Encens", heart: "Oud · Ambre", base: "Musc", text: "Pure Desert Oud de FA Paris (Fragrance World) : l'encens en ouverture, un cœur d'oud et d'ambre, puis un musc chaud et fumé. Profond, oriental, enveloppant. Flacon carré fumé au bouchon velours et or." },
+  { slug: "fragrance-world-night-club-absolute", name: "Night Club Absolute", brand: "Fragrance World", price: 20000, volume: "100 ml", concentration: "Eau de parfum", family: "Fruité boisé · Homme", head: "Cassis · Bergamote · Pamplemousse", heart: "Géranium · Jasmin", base: "Patchouli · Ambre · Musc", text: "Night Club Absolute de Fragrance World : cassis, bergamote et pamplemousse en ouverture, un cœur de géranium et de jasmin, puis le patchouli, l'ambre et le musc. Frais, fruité, masculin. Flacon gris anthracite à la plaque gravée." },
+  { slug: "fragrance-world-extremely-unique", name: "Extremely Unique", brand: "Fragrance World", price: 20000, volume: "100 ml", concentration: "Eau de parfum", family: "Eau de parfum · Mixte" },
+  // Ajoutés le 20/11/2026. Fragrance World / Essencia de Flores, prix de vente donné par le client : 12 000 F. Notes à compléter.
+  { slug: "fragrance-world-versus-ocean-bleu", name: "Versus Océan Bleu", brand: "Fragrance World", price: 12000, volume: "100 ml", concentration: "Eau de parfum", family: "Eau de parfum · Homme", text: "Versus Océan Bleu de Fragrance World : eau de parfum 100 ml pour homme, dans sa boîte d'origine." },
+  { slug: "fragrance-world-rose-seduction-secret-reveal", name: "Rose Seduction Secret Reveal", brand: "Fragrance World", price: 12000, volume: "100 ml", concentration: "Eau de parfum", family: "Eau de parfum · Femme", text: "Rose Seduction Secret Reveal de Fragrance World : eau de parfum 100 ml pour femme, dans sa boîte d'origine." },
+  { slug: "fragrance-world-night-oud", name: "Night Oud", brand: "Fragrance World", price: 12000, volume: "80 ml", concentration: "Eau de parfum", family: "Eau de parfum · Mixte", text: "Night Oud de Fragrance World : eau de parfum 80 ml, mixte, dans sa boîte d'origine." },
+  { slug: "fragrance-world-harmony-code-intense", name: "Harmony Code Intense", brand: "Fragrance World", price: 12000, volume: "100 ml", concentration: "Eau de parfum", family: "Eau de parfum · Homme", text: "Harmony Code Intense de Fragrance World : eau de parfum 100 ml pour homme, dans sa boîte d'origine." },
+  { slug: "essencia-de-flores-secret-passion-intense", name: "Secret Passion Intense", brand: "Essencia de Flores", price: 12000, volume: "100 ml", concentration: "Eau de parfum", family: "Eau de parfum · Femme", text: "Secret Passion Intense de Essencia de Flores : eau de parfum 100 ml pour femme, dans sa boîte d'origine." },
+  { slug: "fragrance-world-ideal-for-woman", name: "Idéal for Woman", brand: "Fragrance World", price: 12000, volume: "100 ml", concentration: "Eau de parfum", family: "Eau de parfum · Femme", text: "Idéal for Woman de Fragrance World : eau de parfum 100 ml pour femme, dans sa boîte d'origine." },
+  { slug: "fragrance-world-mon-gracieuse", name: "Mon Gracieuse", brand: "Fragrance World", price: 12000, volume: "100 ml", concentration: "Eau de parfum", family: "Eau de parfum · Femme", text: "Mon Gracieuse de Fragrance World : eau de parfum 100 ml pour femme, dans sa boîte d'origine." },
+  { slug: "fragrance-world-zara-man", name: "Zara Man", brand: "Fragrance World", price: 12000, volume: "100 ml", concentration: "Eau de parfum", family: "Eau de parfum · Homme", text: "Zara Man de Fragrance World : eau de parfum 100 ml pour homme, dans sa boîte d'origine." },
+  { slug: "fragrance-world-prohibit-intense", name: "Prohibit Intense", brand: "Fragrance World", price: 12000, volume: "100 ml", concentration: "Eau de parfum", family: "Eau de parfum · Femme", text: "Prohibit Intense de Fragrance World : eau de parfum 100 ml pour femme, dans sa boîte d'origine." },
+  { slug: "fragrance-world-roses-de-mai", name: "Roses de Mai Jacques Yves", brand: "Fragrance World", price: 12000, volume: "100 ml", concentration: "Eau de parfum", family: "Eau de parfum · Femme", text: "Roses de Mai Jacques Yves de Fragrance World : eau de parfum 100 ml pour femme, dans sa boîte d'origine." },
+  { slug: "fragrance-world-bavaria-man-intense", name: "Bavaria Man Intense", brand: "Fragrance World", price: 12000, volume: "100 ml", concentration: "Eau de parfum", family: "Eau de parfum · Homme", text: "Bavaria Man Intense de Fragrance World : eau de parfum 100 ml pour homme, dans sa boîte d'origine." },
+  { slug: "fragrance-world-canal-de-moiselle-intense", name: "Canal de Moiselle Intense", brand: "Fragrance World", price: 12000, volume: "100 ml", concentration: "Eau de parfum", family: "Eau de parfum · Femme", text: "Canal de Moiselle Intense de Fragrance World : eau de parfum 100 ml pour femme, dans sa boîte d'origine." },
+  { slug: "fragrance-world-champ-de-rose", name: "Champ de Rose Jacques Yves", brand: "Fragrance World", price: 12000, volume: "100 ml", concentration: "Eau de parfum", family: "Eau de parfum · Femme", text: "Champ de Rose Jacques Yves de Fragrance World : eau de parfum 100 ml pour femme, dans sa boîte d'origine." },
+  { slug: "essencia-de-flores-euphoric-oud", name: "Euphoric Oud", brand: "Essencia de Flores", price: 12000, volume: "80 ml", concentration: "Eau de parfum", family: "Eau de parfum · Mixte", text: "Euphoric Oud de Essencia de Flores : eau de parfum 80 ml, mixte, dans sa boîte d'origine." },
+  { slug: "fragrance-world-my-soulmate", name: "My Soulmate", brand: "Fragrance World", price: 12000, volume: "100 ml", concentration: "Eau de parfum", family: "Eau de parfum · Femme", text: "My Soulmate de Fragrance World : eau de parfum 100 ml pour femme, dans sa boîte d'origine." },
+  { slug: "fragrance-world-la-vida-es-bella-eclat", name: "La Vida es Bella Éclat", brand: "Fragrance World", price: 12000, volume: "100 ml", concentration: "Eau de parfum", family: "Eau de parfum · Femme", text: "La Vida es Bella Éclat de Fragrance World : eau de parfum 100 ml pour femme, dans sa boîte d'origine." },
+  { slug: "fragrance-world-private-incenso", name: "Private Incenso", brand: "Fragrance World", price: 12000, volume: "100 ml", concentration: "Eau de parfum", family: "Eau de parfum · Mixte", text: "Private Incenso de Fragrance World : eau de parfum 100 ml, mixte, dans sa boîte d'origine." },
+  { slug: "fragrance-world-oud-wonder", name: "Oud Wonder", brand: "Fragrance World", price: 12000, volume: "80 ml", concentration: "Eau de parfum", family: "Eau de parfum · Mixte", text: "Oud Wonder de Fragrance World : eau de parfum 80 ml, mixte, dans sa boîte d'origine." },
+  { slug: "fragrance-world-neroli-riviera", name: "Neroli Riviera", brand: "Fragrance World", price: 12000, volume: "100 ml", concentration: "Eau de parfum", family: "Eau de parfum · Mixte", text: "Neroli Riviera de Fragrance World : eau de parfum 100 ml, mixte, dans sa boîte d'origine." },
+  { slug: "fragrance-world-prohibit-rouge", name: "Prohibit Rouge", brand: "Fragrance World", price: 12000, volume: "100 ml", concentration: "Eau de parfum", family: "Eau de parfum · Femme", text: "Prohibit Rouge de Fragrance World : eau de parfum 100 ml pour femme, dans sa boîte d'origine." },
+  { slug: "fragrance-world-suave-intense", name: "Suave Intense", brand: "Fragrance World", price: 12000, volume: "100 ml", concentration: "Eau de parfum", family: "Eau de parfum · Homme", text: "Suave Intense de Fragrance World : eau de parfum 100 ml pour homme, dans sa boîte d'origine." },
+  { slug: "fragrance-world-picky-rose", name: "Picky Rose", brand: "Fragrance World", price: 12000, volume: "100 ml", concentration: "Eau de parfum", family: "Eau de parfum · Femme", text: "Picky Rose de Fragrance World : eau de parfum 100 ml pour femme, dans sa boîte d'origine." },
+  { slug: "fragrance-world-le-bois-blanc", name: "Le Bois Blanc", brand: "Fragrance World", price: 12000, volume: "100 ml", concentration: "Eau de parfum", family: "Eau de parfum · Mixte", text: "Le Bois Blanc de Fragrance World : eau de parfum 100 ml, mixte, dans sa boîte d'origine." },
+  { slug: "fragrance-world-suave", name: "Suave", brand: "Fragrance World", price: 12000, volume: "100 ml", concentration: "Eau de parfum", family: "Eau de parfum · Homme", text: "Suave de Fragrance World : eau de parfum 100 ml pour homme, dans sa boîte d'origine." },
+  { slug: "fragrance-world-aventos-blue-for-him", name: "Aventos Blue for Him (avec déodorant)", brand: "Fragrance World", price: 12000, volume: "100 ml", concentration: "Eau de parfum", family: "Eau de parfum · Homme", text: "Aventos Blue for Him (avec déodorant) de Fragrance World : eau de parfum 100 ml pour homme, dans sa boîte d'origine." },
+  { slug: "fragrance-world-fiero-bleu-man", name: "Fiero Bleu Man", brand: "Fragrance World", price: 12000, volume: "100 ml", concentration: "Eau de parfum", family: "Eau de parfum · Homme", text: "Fiero Bleu Man de Fragrance World : eau de parfum 100 ml pour homme, dans sa boîte d'origine." },
+  { slug: "fragrance-world-exchange-unlimited-blanc-edition", name: "Exchange Unlimited Blanc Édition", brand: "Fragrance World", price: 12000, volume: "100 ml", concentration: "Eau de parfum", family: "Eau de parfum · Homme", text: "Exchange Unlimited Blanc Édition de Fragrance World : eau de parfum 100 ml pour homme, dans sa boîte d'origine." },
+  { slug: "fragrance-world-invicto-intense", name: "Invicto Intense", brand: "Fragrance World", price: 12000, volume: "100 ml", concentration: "Eau de parfum", family: "Eau de parfum · Homme", text: "Invicto Intense de Fragrance World : eau de parfum 100 ml pour homme, dans sa boîte d'origine." },
+  { slug: "fragrance-world-midnight-oud", name: "Midnight Oud", brand: "Fragrance World", price: 12000, volume: "100 ml", concentration: "Eau de parfum", family: "Eau de parfum · Mixte", text: "Midnight Oud de Fragrance World : eau de parfum 100 ml, mixte, dans sa boîte d'origine." },
+  { slug: "fragrance-world-leather-oud", name: "Leather Oud", brand: "Fragrance World", price: 12000, volume: "80 ml", concentration: "Eau de parfum", family: "Eau de parfum · Mixte", text: "Leather Oud de Fragrance World : eau de parfum 80 ml, mixte, dans sa boîte d'origine." },
+  { slug: "fragrance-world-deux-cent-douze-men", name: "Deux Cent Douze Men", brand: "Fragrance World", price: 12000, volume: "100 ml", concentration: "Eau de parfum", family: "Eau de parfum · Homme", text: "Deux Cent Douze Men de Fragrance World : eau de parfum 100 ml pour homme, dans sa boîte d'origine." },
+  { slug: "fragrance-world-extreme-aoud", name: "Extreme Aoud", brand: "Fragrance World", price: 12000, volume: "100 ml", concentration: "Eau de parfum", family: "Eau de parfum · Mixte", text: "Extreme Aoud de Fragrance World : eau de parfum 100 ml, mixte, dans sa boîte d'origine." },
+  { slug: "fragrance-world-valiance-lorigine", name: "Valiance L'Origine", brand: "Fragrance World", price: 12000, volume: "100 ml", concentration: "Eau de parfum", family: "Eau de parfum · Homme", text: "Valiance L'Origine de Fragrance World : eau de parfum 100 ml pour homme, dans sa boîte d'origine." },
+];
+
+const dubaiCatalog: BoutiqueProduct[] = dubaiProducts.map((product) => ({
+  slug: product.slug,
+  name: product.name,
+  ref: product.brand,
+  notes: product.notes || (product.head ? [product.head, product.heart, product.base].join(" · ") : "Notes à préciser"),
+  headNotes: product.head || "Notes à préciser",
+  heartNotes: product.heart || "Notes à préciser",
+  baseNotes: product.base || "Notes à préciser",
+  price: product.price,
+  collection: "dubai",
+  image: `/images/optimized/dubai-${product.slug}-w800.webp`,
+  family: product.family,
+  concentration: product.concentration,
+  volume: product.volume || "Flacon",
+  description: product.text
+    ? `${product.text} Disponible chez 2M Parfumerie, livraison partout au Sénégal.`
+    : product.contents
+    ? `${product.name} de ${product.brand} : ${product.contents}. Présenté dans sa boîte d'origine, disponible chez 2M Parfumerie, livraison partout au Sénégal.`
+    : `${product.name} de ${product.brand}, ${product.concentration.toLowerCase()}${product.volume ? ` ${product.volume}` : ""} dans sa boîte d'origine. Disponible chez 2M Parfumerie, livraison partout au Sénégal.`,
+}));
+
+// Rupture de stock : masqués partout sur le site. Retirer le slug pour remettre le produit en ligne.
+// Masqués : ruptures (Seoul) et doublons (rayhaan-nova-sol = ancienne fiche de Rayhaan Nava Sol).
+export const outOfStockSlugs = new Set(["seoul", "seoul-louis-vuitton-imagination", "rayhaan-nova-sol"]);
+
+export const catalog: BoutiqueProduct[] = [...takeoffCatalog, ...scentlabCatalog, ...scentlabExtraCatalog, ...haqqiCatalog, ...pocketCatalog, ...libraryCatalog, ...coffretCatalog, ...dubaiCatalog].filter((product) => !outOfStockSlugs.has(slugifyProduct(product)));
+
+// Adresse propre : minuscules, sans accents, mots séparés par des tirets.
+export function cleanSlug(value: string) {
+  let text = value;
+  try {
+    text = decodeURIComponent(value);
+  } catch {}
+  return text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+export function slugifyProduct(product: BoutiqueProduct) {
+  // Une adresse saisie à la main dans l'admin (espaces, parenthèses…) est nettoyée aussi.
+  if (product.slug) return cleanSlug(product.slug);
+  return cleanSlug(`${product.name}-${product.ref}`);
+}
+
+export function findProductBySlug(slug: string) {
+  const wanted = cleanSlug(slug);
+  return catalog.find((product) => slugifyProduct(product) === wanted);
+}
+
+export function productImages(product: BoutiqueProduct) {
+  return Array.from(new Set([product.image, ...(product.imageUrls ?? [])].filter(Boolean)));
+}
+
+export function optimizedProductImageBase(image: string) {
+  if (!image.startsWith("/images/")) return "";
+  const fileName = image.split("/").pop() ?? "";
+  return fileName.replace(/-w\d+\.[a-zA-Z]+$/, "");
+}
+
+// Photos envoyées depuis l'admin : compressées et redimensionnées par Vercel (WebP/AVIF).
+const REMOTE_IMAGE_PREFIX = "https://urquhrasvuexivrkevad.supabase.co/storage/v1/object/public/";
+const isRemoteProductImage = (image: string) => image.startsWith(REMOTE_IMAGE_PREFIX);
+const remoteImageUrl = (image: string, width: number) =>
+  `/_vercel/image?url=${encodeURIComponent(image)}&w=${width}&q=75`;
+
+export function optimizedProductImageUrl(image: string, width = 800) {
+  if (isRemoteProductImage(image)) return remoteImageUrl(image, width);
+  const base = optimizedProductImageBase(image);
+  return base ? `/images/optimized/${base}-w${width}.webp` : image;
+}
+
+export function optimizedProductImageSet(image: string) {
+  if (isRemoteProductImage(image)) {
+    const set = [1200, 800, 400].map((w) => `${remoteImageUrl(image, w)} ${w}w`).join(", ");
+    return { avif: "", webp: set };
+  }
+  const base = optimizedProductImageBase(image);
+  if (!base) return { avif: "", webp: "" };
+  return {
+    avif: `/images/optimized/${base}-w1200.avif 1200w, /images/optimized/${base}-w800.avif 800w, /images/optimized/${base}-w400.avif 400w`,
+    webp: `/images/optimized/${base}-w1200.webp 1200w, /images/optimized/${base}-w800.webp 800w, /images/optimized/${base}-w400.webp 400w`,
+  };
+}
+
+// Prix barrés : ancien prix affiché à côté du prix actuel, par collection.
+const compareAtPrices: Record<string, number> = {
+  callisto: 80000,
+  "soie-sublime": 120000,
+};
+
+export function compareAtPrice(product: { collection: string; price: number }) {
+  const old = compareAtPrices[product.collection];
+  return old && old > product.price ? old : undefined;
+}
+
+export function formatPrice(price: number) {
+  return `${new Intl.NumberFormat("fr-FR").format(price)} FCFA`;
+}
+
+export function productOrderUrl(product: BoutiqueProduct) {
+  const price = new Intl.NumberFormat("fr-FR").format(product.price);
+  const message = `Bonjour 2M Parfumerie 👋 Je souhaite commander *${product.name}* — ${price} FCFA. Est-il disponible ?`;
+  return `https://wa.me/221761923441?text=${encodeURIComponent(message)}`;
+}
+
+export function collectionLabel(value: Collection) {
+  const known = collectionFilters.find((filter) => filter.value === value)?.label;
+  if (known) return known;
+  const custom = customCollectionLabels.get(value);
+  if (custom) return custom;
+  const words = value.replace(/-/g, " ").trim();
+  return words ? words.charAt(0).toUpperCase() + words.slice(1) : "Collection";
+}
+
+// Filtres de la boutique : les catégories connues, puis celles créées dans l'admin.
+export function collectionFiltersFor(products: { collection: Collection }[]) {
+  const custom = Array.from(new Set(products.map((product) => product.collection)))
+    .filter((value) => !isKnownCollection(value))
+    .map((value) => ({ label: collectionLabel(value), value: value as Collection }))
+    .sort((a, b) => a.label.localeCompare(b.label, "fr"));
+  return [...(collectionFilters as { label: string; value: Collection }[]), ...custom];
+}
