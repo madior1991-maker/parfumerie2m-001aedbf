@@ -7,8 +7,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: |
-          curl -sSL -o rider-af.png "$U"
+          curl -sSL -o poche.jpg "$U"
           git config user.name bot && git config user.email bot@users.noreply.github.com
-          git add rider-af.png && git commit -m media && git push
+          git add poche.jpg && git commit -m media && git push
         env:
-          U: "https://export-download.canva.com/Yy5hY/DAHbkQYy5hY/-1/0/0001-4170856147952486029.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAQYCGKMUH4R7NKVBA%2F20261121%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20261121T081042Z&X-Amz-Expires=41706&X-Amz-Signature=537248ad81bad0039f65b2c5d72fcb317ce1cf641afbb737f55c35a56aefddfc&X-Amz-SignedHeaders=host%3Bx-amz-expected-bucket-owner&response-expires=Sat%2C%2021%20Nov%202026%2019%3A45%3A48%20GMT"
+          U: "https://export-download.canva.com/zLNOE/DAHbqQzLNOE/-1/0/0001-8735254472242375926.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAQYCGKMUH4R7NKVBA%2F20261122%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20261122T110827Z&X-Amz-Expires=28831&X-Amz-Signature=4fd4d9e91ac82281848fccb7bb783989653ff78e1cb12a509d4d6ba3a0955d7a&X-Amz-SignedHeaders=host%3Bx-amz-expected-bucket-owner&response-expires=Sun%2C%2022%20Nov%202026%2019%3A08%3A58%20GMT"
