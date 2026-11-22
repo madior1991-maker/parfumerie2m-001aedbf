@@ -46,7 +46,12 @@ function productFromRow(product: ProductRow, fallback?: BoutiqueProduct): Boutiq
   const collection = isCallisto ? "callisto" : normalizeCollectionValue(product.collection);
   const name = isCallisto ? product.name.replace(CALLISTO_SUFFIX, "").trim() || product.name : product.name;
   const hdPhoto = collection === "haqqi" && HAQQI_HD_PHOTOS[product.slug] ? `/images/optimized/${HAQQI_HD_PHOTOS[product.slug]}-w800.webp` : "";
-  const image = hdPhoto || product.image_url || product.image_urls?.[0] || fallback?.image || "";
+  // Les anciennes images « /assets/…-hash.png » de l'admin n'existent plus après une nouvelle mise en ligne :
+  // on prend alors la photo du catalogue local.
+  const isStale = (url?: string | null) => Boolean(url && /^\/assets\//.test(url) && fallback?.image);
+  const rowImages = (product.image_urls ?? []).filter((url) => !isStale(url));
+  const rowImage = isStale(product.image_url) ? "" : product.image_url;
+  const image = hdPhoto || rowImage || rowImages[0] || fallback?.image || "";
   const notes = product.notes_top || fallback?.notes || "Notes à préciser";
 
   return {
@@ -66,7 +71,7 @@ function productFromRow(product: ProductRow, fallback?: BoutiqueProduct): Boutiq
     price: collection === "library" ? 30000 : product.price,
     collection,
     image,
-    imageUrls: hdPhoto ? [hdPhoto] : product.image_urls?.length ? product.image_urls : image ? [image] : [],
+    imageUrls: hdPhoto ? [hdPhoto] : rowImages.length ? rowImages : image ? [image] : [],
     family: fallback?.family || collectionLabelFallback(collection),
     concentration: fallback?.concentration || (["soie-sublime", "callisto"].includes(collection) ? "Extrait de parfum" : "Eau de parfum"),
     volume: fallback?.volume || "100 ml",

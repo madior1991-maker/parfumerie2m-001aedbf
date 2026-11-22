@@ -12,8 +12,9 @@ const steps = [
 ];
 
 const videos = [
-  { key: "cadeau", label: "Pack cadeau", src: "/videos/tuto-packs.mp4?v=2", poster: "/videos/tuto-packs-poster.jpg?v=2" },
-  { key: "haqqi", label: "Pack Haqqi", src: "/videos/tuto-pack-haqqi.mp4", poster: "/videos/tuto-pack-haqqi-poster.jpg" },
+  { key: "cadeau", label: "Cadeau", src: "/videos/tuto-packs.mp4?v=2", poster: "/videos/tuto-packs-poster.jpg?v=2" },
+  { key: "haqqi", label: "Haqqi", src: "/videos/tuto-pack-haqqi.mp4", poster: "/videos/tuto-pack-haqqi-poster.jpg" },
+  { key: "scentlab", label: "SCENTLAB", src: "/videos/tuto-pack-scentlab.mp4", poster: "/videos/tuto-pack-scentlab-poster.jpg" },
 ] as const;
 
 export function TutoVideoSection() {
@@ -38,7 +39,7 @@ export function TutoVideoSection() {
     <section aria-labelledby="tuto-pack-title" className="border-b border-border bg-surface py-12 md:py-16">
       <div className="section-shell grid items-center gap-8 md:grid-cols-[340px_1fr] md:gap-14">
         <div className="mx-auto w-full max-w-[340px] md:mx-0">
-        <div role="tablist" aria-label="Choisis le tuto" className="mb-3 grid grid-cols-2 gap-2 rounded-full border border-border bg-background p-1">
+        <div role="tablist" aria-label="Choisis le tuto" className="mb-3 grid grid-cols-3 gap-1 rounded-full border border-border bg-background p-1">
           {videos.map((item, index) => (
             <button
               key={item.key}
@@ -64,7 +65,7 @@ export function TutoVideoSection() {
             loop
             playsInline
             preload="metadata"
-            aria-label={`Tutoriel : comment commander le ${video.label} sur 2mparfumeriedk.com`}
+            aria-label={`Tutoriel : comment commander le pack ${video.label} sur 2mparfumeriedk.com`}
           />
           <button
             type="button"
