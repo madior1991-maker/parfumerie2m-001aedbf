@@ -11,9 +11,16 @@ const steps = [
   { title: "On te livre", text: "Réponse en moins d’1h, livraison partout au Sénégal." },
 ];
 
+const videos = [
+  { key: "cadeau", label: "Pack cadeau", src: "/videos/tuto-packs.mp4?v=2", poster: "/videos/tuto-packs-poster.jpg?v=2" },
+  { key: "haqqi", label: "Pack Haqqi", src: "/videos/tuto-pack-haqqi.mp4", poster: "/videos/tuto-pack-haqqi-poster.jpg" },
+] as const;
+
 export function TutoVideoSection() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [muted, setMuted] = useState(true);
+  const [current, setCurrent] = useState(0);
+  const video = videos[current];
 
   const toggleSound = () => {
     const video = videoRef.current;
@@ -30,18 +37,34 @@ export function TutoVideoSection() {
   return (
     <section aria-labelledby="tuto-pack-title" className="border-b border-border bg-surface py-12 md:py-16">
       <div className="section-shell grid items-center gap-8 md:grid-cols-[340px_1fr] md:gap-14">
+        <div className="mx-auto w-full max-w-[340px] md:mx-0">
+        <div role="tablist" aria-label="Choisis le tuto" className="mb-3 grid grid-cols-2 gap-2 rounded-full border border-border bg-background p-1">
+          {videos.map((item, index) => (
+            <button
+              key={item.key}
+              type="button"
+              role="tab"
+              aria-selected={index === current}
+              onClick={() => { setCurrent(index); setMuted(true); }}
+              className={`rounded-full px-3 py-2 text-[14px] font-semibold transition-colors ${index === current ? "bg-primary text-primary-foreground" : "text-foreground hover:bg-muted"}`}
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
         <div className="relative mx-auto aspect-[9/16] w-full max-w-[340px] overflow-hidden rounded-[28px] border border-border bg-footer shadow-glow md:mx-0">
           <video
+            key={video.key}
             ref={videoRef}
             className="h-full w-full object-cover"
-            src="/videos/tuto-packs.mp4?v=2"
-            poster="/videos/tuto-packs-poster.jpg?v=2"
+            src={video.src}
+            poster={video.poster}
             autoPlay
             muted
             loop
             playsInline
             preload="metadata"
-            aria-label="Tutoriel : comment commander un pack sur 2mparfumeriedk.com"
+            aria-label={`Tutoriel : comment commander le ${video.label} sur 2mparfumeriedk.com`}
           />
           <button
             type="button"
@@ -52,6 +75,7 @@ export function TutoVideoSection() {
             {muted ? <VolumeX className="size-4" aria-hidden="true" /> : <Volume2 className="size-4" aria-hidden="true" />}
             {muted ? "Activer le son" : "Couper le son"}
           </button>
+        </div>
         </div>
 
         <div className="min-w-0">
