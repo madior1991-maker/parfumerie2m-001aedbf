@@ -168,6 +168,7 @@ function buildPackOptions(products: BoutiqueProduct[]): Record<CoffretCollection
     products
       .filter((product) => product.collection === key)
       .map((product) => ({ id: `${key}:${slugifyProduct(product)}`, title: product.name, image: product.image, gender: genderOf(product), group: key }))
+      .filter((option, index, all) => all.findIndex((o) => o.title.toLowerCase() === option.title.toLowerCase()) === index)
       .sort((x, y) => x.title.localeCompare(y.title, "fr")),
   );
   return result;
