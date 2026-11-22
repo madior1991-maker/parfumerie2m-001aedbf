@@ -987,6 +987,7 @@ const roomSprayProducts: { slug: string; name: string }[] = [
   { slug: "melon-crush", name: "Melon Crush" },
   { slug: "oud-bouquet", name: "Oud Bouquet" },
   { slug: "noir-oud", name: "Noir Oud" },
+  { slug: "mango-bloom", name: "Mango Bloom" },
 ];
 
 const roomSprayCatalog: BoutiqueProduct[] = roomSprayProducts.map((product) => ({

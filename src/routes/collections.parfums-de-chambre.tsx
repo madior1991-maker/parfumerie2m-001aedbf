@@ -34,7 +34,7 @@ export const Route = createFileRoute("/collections/parfums-de-chambre")({
       collection="parfums-de-chambre"
       eyebrow="SCENTLAB · Room spray"
       h1="Parfums de chambre à Dakar"
-      intro="Lavender Whisper, Melon Crush, Oud Bouquet et Noir Oud : les room spray SCENTLAB en flacon de 500&nbsp;ml, à 5&nbsp;000&nbsp;F. Commande sur WhatsApp, livraison partout au Sénégal."
+      intro="Lavender Whisper, Melon Crush, Mango Bloom, Oud Bouquet et Noir Oud : les room spray SCENTLAB en flacon de 500&nbsp;ml, à 5&nbsp;000&nbsp;F. Commande sur WhatsApp, livraison partout au Sénégal."
     />
   ),
 });
