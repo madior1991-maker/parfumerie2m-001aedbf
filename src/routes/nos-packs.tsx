@@ -221,6 +221,8 @@ function CoffretSignaturePage() {
   const [packOptions, setPackOptions] = useState(staticPackOptions);
   const [query, setQuery] = useState("");
   const [gender, setGender] = useState<GenderTab>("Tous");
+  // Pack cadeau : une catégorie à la fois, on passe à la suivante après chaque choix.
+  const [cadeauStep, setCadeauStep] = useState(0);
 
   useEffect(() => {
     if (search.pack) setSelectedCollection(fromPackParam(search.pack));
@@ -280,7 +282,15 @@ function CoffretSignaturePage() {
         // Un seul parfum par catégorie : choisir un autre parfum de la même catégorie remplace le premier.
         if (active.includes(optionId)) return { ...current, cadeau: active.filter((id) => id !== optionId) };
         const group = optionId.split(":")[0];
-        return { ...current, cadeau: [...active.filter((id) => id.split(":")[0] !== group), optionId] };
+        const next = [...active.filter((id) => id.split(":")[0] !== group), optionId];
+        // Catégorie suivante encore vide : on y passe tout de suite.
+        const nextStep = cadeauGroups.findIndex((g) => !next.some((id) => id.startsWith(`${g.key}:`)));
+        if (nextStep >= 0) {
+          setCadeauStep(nextStep);
+          setQuery("");
+          requestAnimationFrame(() => document.getElementById("cadeau-steps")?.scrollIntoView({ behavior: "smooth", block: "start" }));
+        }
+        return { ...current, cadeau: next };
       }
       if (active.includes(optionId)) {
         return { ...current, [selectedCollection]: active.filter((id) => id !== optionId) };
@@ -404,7 +414,40 @@ function CoffretSignaturePage() {
             )}
           </div>
 
-          {(isCadeau ? cadeauGroups.map((g) => ({ key: g.key, title: `${g.label} · ${g.detail}`, list: visibleOptions.filter((o) => o.group === g.key) })) : [{ key: "all", title: "", list: visibleOptions }]).map(({ key, title, list }) => (
+          {isCadeau && (
+            <div id="cadeau-steps" className="scroll-mt-20 grid grid-cols-2 gap-2 sm:grid-cols-4 md:max-w-4xl">
+              {cadeauGroups.map((g, index) => {
+                const chosen = selectedOptions.find((o) => o.group === g.key);
+                const current = index === cadeauStep;
+                return (
+                  <button
+                    key={g.key}
+                    type="button"
+                    onClick={() => {
+                      setCadeauStep(index);
+                      setQuery("");
+                    }}
+                    aria-current={current ? "step" : undefined}
+                    className={cn(
+                      "rounded-xl border-[1.5px] px-3 py-2 text-left transition-colors",
+                      current ? "border-accent bg-primary text-primary-foreground" : chosen ? "border-accent bg-surface-alt" : "border-border bg-card",
+                    )}
+                  >
+                    <span className={cn("block text-[12px] font-bold uppercase tracking-wide", current ? "text-[#D4B26A]" : "text-accent")}>
+                      {chosen ? "✓ " : ""}Étape {index + 1} · {g.label}
+                    </span>
+                    <span className={cn("block truncate text-[14px] font-semibold", current ? "text-primary-foreground" : "text-foreground")}>
+                      {chosen ? chosen.title : "À choisir"}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
+          {(isCadeau
+            ? [cadeauGroups[cadeauStep]].map((g) => ({ key: g.key, title: `Étape ${cadeauStep + 1} sur 4 · Choisis ton ${g.label === "Parfum de chambre" ? "parfum de chambre" : g.label} (${g.detail})`, list: visibleOptions.filter((o) => o.group === g.key) }))
+            : [{ key: "all", title: "", list: visibleOptions }]
+          ).map(({ key, title, list }) => (
             <div key={key} className={isCadeau ? "mt-6" : undefined}>
               {title && (
                 <h3 className="flex items-center gap-2 font-display text-xl font-semibold text-foreground md:text-2xl">
