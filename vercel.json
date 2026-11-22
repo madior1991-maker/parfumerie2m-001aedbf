@@ -256,6 +256,26 @@
       "source": "/boutique/ysl-cinema-inspiration-ysl-cinema",
       "destination": "/boutique/ysl-cinema",
       "permanent": true
+    },
+    {
+      "source": "/boutique/rosy-glow-lancome-idole",
+      "destination": "/collections/scentlab",
+      "permanent": false
+    },
+    {
+      "source": "/boutique/rosy-hazelnut-amouage-guidance",
+      "destination": "/collections/scentlab",
+      "permanent": false
+    },
+    {
+      "source": "/boutique/mystic-jasmine-mugler-alien",
+      "destination": "/collections/scentlab",
+      "permanent": false
+    },
+    {
+      "source": "/boutique/orange-blossom-ysl-libre",
+      "destination": "/collections/scentlab",
+      "permanent": false
     }
   ],
   "rewrites": [

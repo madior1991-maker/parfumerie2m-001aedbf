@@ -1009,7 +1009,8 @@ const roomSprayCatalog: BoutiqueProduct[] = roomSprayProducts.map((product) => (
 
 // Rupture de stock : masqués partout sur le site. Retirer le slug pour remettre le produit en ligne.
 // Masqués : ruptures (Seoul) et doublons (rayhaan-nova-sol = ancienne fiche de Rayhaan Nava Sol).
-export const outOfStockSlugs = new Set(["seoul", "seoul-louis-vuitton-imagination", "rayhaan-nova-sol"]);
+// Ruptures SCENTLAB du 22/11/2026 : Rosy Glow, Rosy Hazelnut, Mystic Jasmine, Orange Blossom.
+export const outOfStockSlugs = new Set(["seoul", "seoul-louis-vuitton-imagination", "rayhaan-nova-sol", "rosy-glow-lancome-idole", "rosy-hazelnut-amouage-guidance", "mystic-jasmine-mugler-alien", "orange-blossom-ysl-libre"]);
 
 export const catalog: BoutiqueProduct[] = [...takeoffCatalog, ...scentlabCatalog, ...scentlabExtraCatalog, ...haqqiCatalog, ...pocketCatalog, ...libraryCatalog, ...coffretCatalog, ...dubaiCatalog, ...roomSprayCatalog].filter((product) => !outOfStockSlugs.has(slugifyProduct(product)));
 
