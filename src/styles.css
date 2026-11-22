@@ -425,7 +425,7 @@ footer.bg-footer .caption-luxe { color: #D4B26A; }
     box-shadow: 0 0 0 0 rgba(212, 178, 106, 0.85), 0 6px 24px rgba(37, 211, 102, 0.45);
   }
   50% {
-    transform: scale(1.06);
+    transform: scale(1.03);
     box-shadow: 0 0 0 10px rgba(212, 178, 106, 0), 0 8px 34px rgba(37, 211, 102, 0.7);
   }
 }

@@ -544,14 +544,14 @@ function CoffretSignaturePage() {
         <TutoVideoSection />
       </div>
 
-      {canSend && (
-        <div className="pack-hint pointer-events-none fixed inset-x-0 z-50 flex justify-end px-4 md:justify-center" style={{ bottom: "calc(118px + env(safe-area-inset-bottom))" }}>
-          <span className="rounded-2xl bg-[#D4B26A] px-4 py-2.5 text-[15px] font-extrabold text-[#0A2E22] shadow-xl">
-            ✓ Pack complet ! Appuie ici pour valider ta commande 👇
-          </span>
-        </div>
-      )}
       <div className="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-primary pb-[max(12px,env(safe-area-inset-bottom))] pt-2.5 text-primary-foreground md:py-3 shadow-[0_-10px_30px_rgba(0,0,0,0.18)]">
+        {canSend && (
+          <div className="pointer-events-none absolute inset-x-0 bottom-full flex justify-center px-3 pb-2">
+            <span className="pack-hint block max-w-md rounded-2xl bg-[#D4B26A] px-4 py-2.5 text-center text-[15px] font-extrabold leading-snug text-[#0A2E22] shadow-xl">
+              ✓ Pack complet ! Appuie sur le bouton WhatsApp pour valider ta commande 👇
+            </span>
+          </div>
+        )}
         <div className="section-shell md:flex md:items-center md:gap-6">
           <div className="mb-2 flex min-h-[26px] flex-wrap gap-1.5 md:order-2 md:mb-0 md:flex-1 md:justify-center">
             {selectedOptions.map((option) => (
@@ -594,7 +594,7 @@ function CoffretSignaturePage() {
                 href={whatsappUrl(buildWhatsAppMessage(selectedCollection, selectedOptions))}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="pack-ready relative inline-flex shrink-0 items-center gap-2 rounded-full bg-whatsapp px-5 py-3 text-sm font-bold text-white ring-2 ring-[#D4B26A] md:order-3"
+                className="pack-ready relative mr-1 inline-flex shrink-0 origin-right items-center gap-2 rounded-full bg-whatsapp px-5 py-3 text-sm font-bold text-white ring-2 ring-[#D4B26A] md:order-3"
               >
                 <WhatsAppLogo tone="light" className="size-5" /> Valider sur WhatsApp
               </a>
