@@ -156,7 +156,7 @@ async function main() {
   for (const r of live) {
     const notes = [r.notes_top, r.notes_heart, r.notes_base].filter(Boolean).join(", ");
     const coll = collectionOf0(r.collection);
-    const price = coll === "library" && r.price === 30000 ? 35000 : r.price;
+    const price = coll === "library" ? 30000 : r.price;
     const hd = coll === "haqqi" && hdPhotos[r.slug] ? `/images/optimized/${hdPhotos[r.slug]}-w800.webp` : "";
     writeProductPage(base, { slug: r.slug, name: r.name, collection: r.collection, price, notes, image: hd || r.image_url || (r.image_urls && r.image_urls[0]) });
   }

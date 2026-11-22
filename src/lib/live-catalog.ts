@@ -62,8 +62,8 @@ function productFromRow(product: ProductRow, fallback?: BoutiqueProduct): Boutiq
     headNotes: product.notes_top || fallback?.headNotes || notes,
     heartNotes: product.notes_heart || fallback?.heartNotes || "Notes à préciser",
     baseNotes: product.notes_base || fallback?.baseNotes || "Notes à préciser",
-    // Fragrance Library passée de 30 000 à 35 000 F : les anciennes fiches admin à 30 000 F prennent le nouveau prix.
-    price: collection === "library" && product.price === 30000 ? 35000 : product.price,
+    // Fragrance Library : 30 000 F le flacon (prix confirmé le 22/11/2026).
+    price: collection === "library" ? 30000 : product.price,
     collection,
     image,
     imageUrls: hdPhoto ? [hdPhoto] : product.image_urls?.length ? product.image_urls : image ? [image] : [],

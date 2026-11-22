@@ -712,7 +712,7 @@ const pocketCatalog: BoutiqueProduct[] = pocketProducts.map((product) => ({
   description: `${product.name} fait partie des Parfums de poche 2M : un petit format pratique à glisser dans le sac. À choisir dans le pack de 5 parfums de poche à 10 000 FCFA.`,
 }));
 
-// Fragrance Library : 38 eaux de parfum 100 ml à 35 000 F, un titre de roman par flacon.
+// Fragrance Library : 38 eaux de parfum 100 ml à 30 000 F, un titre de roman par flacon.
 // ref = parfum d'inspiration (vide pour Old Book, création de la maison).
 // Les 6 fiches déjà créées dans l'admin gardent leurs données (même adresse = même fiche).
 const libraryProducts: { name: string; ref: string; notes: string; family: string; head?: string; heart?: string; base?: string; concentration?: string }[] = [
@@ -770,13 +770,13 @@ const libraryCatalog: BoutiqueProduct[] = libraryProducts.map((product) => {
     headNotes: product.head || notes,
     heartNotes: product.heart || "Notes à préciser",
     baseNotes: product.base || "Notes à préciser",
-    price: 35000,
+    price: 30000,
     collection: "library",
     image: `/images/optimized/library-${slug}-w800.webp`,
     family: product.family,
     concentration,
     volume: "100 ml",
-    description: `${product.name}, de la collection Fragrance Library : ${concentration === "Eau de parfum" ? "une eau de parfum" : "un extrait de parfum"} de 100 ml${sillage} présentée dans son coffret d'origine.${inspiration} Disponible chez 2M Parfumerie à 35 000 F, livraison partout au Sénégal.`,
+    description: `${product.name}, de la collection Fragrance Library : ${concentration === "Eau de parfum" ? "une eau de parfum" : "un extrait de parfum"} de 100 ml${sillage} présentée dans son coffret d'origine.${inspiration} Disponible chez 2M Parfumerie à 30 000 F, livraison partout au Sénégal.`,
   };
 });
 

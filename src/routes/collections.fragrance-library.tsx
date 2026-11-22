@@ -39,7 +39,7 @@ export const Route = createFileRoute("/collections/fragrance-library")({
         { src: "/images/optimized/library-coffret-noir-w800.webp", avif: "/images/optimized/library-coffret-noir-w800.avif", alt: "Coffret noir Fragrance Library au cheval doré" },
       ]}
       h1="Fragrance Library — Des parfums qui se lisent comme des romans"
-      intro="Chaque flacon porte le titre d'un grand roman : A Tale of Two Cities, The Golden Bowl, Sense and Sensibility, In Search of Lost Time… Eaux de parfum 100 ml, dans leur coffret d'origine, à 35 000 F. Livraison partout au Sénégal."
+      intro="Chaque flacon porte le titre d'un grand roman : A Tale of Two Cities, The Golden Bowl, Sense and Sensibility, In Search of Lost Time… Eaux de parfum 100 ml, dans leur coffret d'origine, à 30 000 F. Livraison partout au Sénégal."
     />
   ),
 });
