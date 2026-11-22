@@ -27,6 +27,7 @@ import { Route as CollectionsSoieSublimeRouteImport } from './routes/collections
 import { Route as CollectionsScentlabRouteImport } from './routes/collections.scentlab'
 import { Route as CollectionsParfumsDubaiRouteImport } from './routes/collections.parfums-dubai'
 import { Route as CollectionsParfumsDePochesRouteImport } from './routes/collections.parfums-de-poches'
+import { Route as CollectionsParfumsDeChambreRouteImport } from './routes/collections.parfums-de-chambre'
 import { Route as CollectionsParfumsAuthentiquesRouteImport } from './routes/collections.parfums-authentiques'
 import { Route as CollectionsHaqqiRouteImport } from './routes/collections.haqqi'
 import { Route as CollectionsFragranceLibraryRouteImport } from './routes/collections.fragrance-library'
@@ -127,6 +128,12 @@ const CollectionsParfumsDePochesRoute =
     path: '/collections/parfums-de-poches',
     getParentRoute: () => rootRouteImport,
   } as any)
+const CollectionsParfumsDeChambreRoute =
+  CollectionsParfumsDeChambreRouteImport.update({
+    id: '/collections/parfums-de-chambre',
+    path: '/collections/parfums-de-chambre',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const CollectionsParfumsAuthentiquesRoute =
   CollectionsParfumsAuthentiquesRouteImport.update({
     id: '/collections/parfums-authentiques',
@@ -194,6 +201,7 @@ export interface FileRoutesByFullPath {
   '/collections/fragrance-library': typeof CollectionsFragranceLibraryRoute
   '/collections/haqqi': typeof CollectionsHaqqiRoute
   '/collections/parfums-authentiques': typeof CollectionsParfumsAuthentiquesRoute
+  '/collections/parfums-de-chambre': typeof CollectionsParfumsDeChambreRoute
   '/collections/parfums-de-poches': typeof CollectionsParfumsDePochesRoute
   '/collections/parfums-dubai': typeof CollectionsParfumsDubaiRoute
   '/collections/scentlab': typeof CollectionsScentlabRoute
@@ -222,6 +230,7 @@ export interface FileRoutesByTo {
   '/collections/fragrance-library': typeof CollectionsFragranceLibraryRoute
   '/collections/haqqi': typeof CollectionsHaqqiRoute
   '/collections/parfums-authentiques': typeof CollectionsParfumsAuthentiquesRoute
+  '/collections/parfums-de-chambre': typeof CollectionsParfumsDeChambreRoute
   '/collections/parfums-de-poches': typeof CollectionsParfumsDePochesRoute
   '/collections/parfums-dubai': typeof CollectionsParfumsDubaiRoute
   '/collections/scentlab': typeof CollectionsScentlabRoute
@@ -251,6 +260,7 @@ export interface FileRoutesById {
   '/collections/fragrance-library': typeof CollectionsFragranceLibraryRoute
   '/collections/haqqi': typeof CollectionsHaqqiRoute
   '/collections/parfums-authentiques': typeof CollectionsParfumsAuthentiquesRoute
+  '/collections/parfums-de-chambre': typeof CollectionsParfumsDeChambreRoute
   '/collections/parfums-de-poches': typeof CollectionsParfumsDePochesRoute
   '/collections/parfums-dubai': typeof CollectionsParfumsDubaiRoute
   '/collections/scentlab': typeof CollectionsScentlabRoute
@@ -281,6 +291,7 @@ export interface FileRouteTypes {
     | '/collections/fragrance-library'
     | '/collections/haqqi'
     | '/collections/parfums-authentiques'
+    | '/collections/parfums-de-chambre'
     | '/collections/parfums-de-poches'
     | '/collections/parfums-dubai'
     | '/collections/scentlab'
@@ -309,6 +320,7 @@ export interface FileRouteTypes {
     | '/collections/fragrance-library'
     | '/collections/haqqi'
     | '/collections/parfums-authentiques'
+    | '/collections/parfums-de-chambre'
     | '/collections/parfums-de-poches'
     | '/collections/parfums-dubai'
     | '/collections/scentlab'
@@ -337,6 +349,7 @@ export interface FileRouteTypes {
     | '/collections/fragrance-library'
     | '/collections/haqqi'
     | '/collections/parfums-authentiques'
+    | '/collections/parfums-de-chambre'
     | '/collections/parfums-de-poches'
     | '/collections/parfums-dubai'
     | '/collections/scentlab'
@@ -364,6 +377,7 @@ export interface RootRouteChildren {
   CollectionsFragranceLibraryRoute: typeof CollectionsFragranceLibraryRoute
   CollectionsHaqqiRoute: typeof CollectionsHaqqiRoute
   CollectionsParfumsAuthentiquesRoute: typeof CollectionsParfumsAuthentiquesRoute
+  CollectionsParfumsDeChambreRoute: typeof CollectionsParfumsDeChambreRoute
   CollectionsParfumsDePochesRoute: typeof CollectionsParfumsDePochesRoute
   CollectionsParfumsDubaiRoute: typeof CollectionsParfumsDubaiRoute
   CollectionsScentlabRoute: typeof CollectionsScentlabRoute
@@ -499,6 +513,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CollectionsParfumsDePochesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/collections/parfums-de-chambre': {
+      id: '/collections/parfums-de-chambre'
+      path: '/collections/parfums-de-chambre'
+      fullPath: '/collections/parfums-de-chambre'
+      preLoaderRoute: typeof CollectionsParfumsDeChambreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/collections/parfums-authentiques': {
       id: '/collections/parfums-authentiques'
       path: '/collections/parfums-authentiques'
@@ -600,6 +621,7 @@ const rootRouteChildren: RootRouteChildren = {
   CollectionsFragranceLibraryRoute: CollectionsFragranceLibraryRoute,
   CollectionsHaqqiRoute: CollectionsHaqqiRoute,
   CollectionsParfumsAuthentiquesRoute: CollectionsParfumsAuthentiquesRoute,
+  CollectionsParfumsDeChambreRoute: CollectionsParfumsDeChambreRoute,
   CollectionsParfumsDePochesRoute: CollectionsParfumsDePochesRoute,
   CollectionsParfumsDubaiRoute: CollectionsParfumsDubaiRoute,
   CollectionsScentlabRoute: CollectionsScentlabRoute,

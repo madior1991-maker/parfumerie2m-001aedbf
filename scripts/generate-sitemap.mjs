@@ -28,6 +28,7 @@ const ROUTES = [
   "/collections/coffrets",
   "/collections/fragrance-library",
   "/collections/soie-sublime",
+  "/collections/parfums-de-chambre",
   "/catalogues",
 ];
 

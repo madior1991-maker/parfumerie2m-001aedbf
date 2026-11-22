@@ -20,6 +20,7 @@ const pages = [
   { path: "/collections/callisto-paris", title: "Callisto Paris à Dakar | Parfums de la maison Callisto — 2M Parfumerie", desc: "Les parfums Callisto Paris à Dakar : African Gold, Oud Sable, Iris Absolu et plus. Commande sur WhatsApp, livraison rapide à Dakar, 24 à 48h en régions.", image: "callisto" },
   { path: "/collections/coffrets", title: "Coffrets parfums Dakar | Idées cadeaux — 2M Parfumerie", desc: "Coffrets de parfums prêts à offrir à Dakar. Commande sur WhatsApp, livraison rapide à Dakar, 24 à 48h en régions, offerte dès 75 000 FCFA.", image: "coffrets" },
   { path: "/collections/soie-sublime", title: "", desc: "", image: "soie-sublime" },
+  { path: "/collections/parfums-de-chambre", title: "", desc: "", image: "parfums-de-chambre" },
   { path: "/collections/parfums-dubai", title: "", desc: "", image: "dubai" },
   { path: "/collections/parfums-authentiques", title: "", desc: "", image: "authentiques" },
   { path: "/catalogues", title: "Catalogues PDF à télécharger | 2M Parfumerie Dakar", desc: "Téléchargez gratuitement les catalogues 2M Parfumerie : Haqqi, SCENTLAB, Takeoff, Parfums de poche, Parfums Dubai, parfums authentiques, Callisto Paris, collections privées, coffrets, Fragrance Library et Soie Sublime Paris.", image: "default" },

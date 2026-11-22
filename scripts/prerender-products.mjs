@@ -19,12 +19,12 @@ function readEnv() {
   return env;
 }
 
-const LABELS = { scentlab: "SCENTLAB", takeoff: "Takeoff Fragrance", dubai: "Parfums Dubai", pocket: "Parfums de poche", authentic: "Parfums authentiques", haqqi: "Haqqi", callisto: "Callisto Paris", privees: "Collections privées", coffrets: "Coffrets", library: "Fragrance Library", "soie-sublime": "Soie Sublime Paris" };
-const ALIASES = { "scent lab": "scentlab", "takeoff fragrance": "takeoff", "takeoff fragance": "takeoff", "dubai perfumes": "dubai", "pocket perfumes": "pocket", "authentic perfumes": "authentic", haqqui: "haqqi", "collections privees": "privees", "collections privées": "privees", "collection privee": "privees", "private collection": "privees", coffret: "coffrets", "fragrance library": "library", "soie sublime": "soie-sublime", "soie sublime paris": "soie-sublime" };
+const LABELS = { scentlab: "SCENTLAB", takeoff: "Takeoff Fragrance", dubai: "Parfums Dubai", pocket: "Parfums de poche", authentic: "Parfums authentiques", haqqi: "Haqqi", callisto: "Callisto Paris", privees: "Collections privées", coffrets: "Coffrets", library: "Fragrance Library", "soie-sublime": "Soie Sublime Paris", "parfums-de-chambre": "Parfums de chambre" };
+const ALIASES = { "scent lab": "scentlab", "takeoff fragrance": "takeoff", "takeoff fragance": "takeoff", "dubai perfumes": "dubai", "pocket perfumes": "pocket", "authentic perfumes": "authentic", haqqui: "haqqi", "collections privees": "privees", "collections privées": "privees", "collection privee": "privees", "private collection": "privees", coffret: "coffrets", "fragrance library": "library", "soie sublime": "soie-sublime", "soie sublime paris": "soie-sublime", "parfums de chambre": "parfums-de-chambre", "parfum de chambre": "parfums-de-chambre" };
 const collectionOf0 = (v) => { const n = (v || "").trim().toLowerCase(); return LABELS[n] ? n : ALIASES[n] || "scentlab"; };
 const collectionOf = (v, name = "") => (/callisto/i.test(name) ? "callisto" : collectionOf0(v));
 // Mots-clés recherchés à Dakar, par collection (titre et description des fiches).
-const KEYWORDS = { scentlab: "Parfum SCENTLAB", takeoff: "Parfum Takeoff", dubai: "Parfum Dubaï", pocket: "Parfum de poche", authentic: "Parfum original", haqqi: "Parfum Haqqi", callisto: "Extrait Callisto Paris", privees: "Parfum de niche", coffrets: "Coffret parfum", library: "Parfum Fragrance Library", "soie-sublime": "Extrait Soie Sublime Paris" };
+const KEYWORDS = { scentlab: "Parfum SCENTLAB", takeoff: "Parfum Takeoff", dubai: "Parfum Dubaï", pocket: "Parfum de poche", authentic: "Parfum original", haqqi: "Parfum Haqqi", callisto: "Extrait Callisto Paris", privees: "Parfum de niche", coffrets: "Coffret parfum", library: "Parfum Fragrance Library", "soie-sublime": "Extrait Soie Sublime Paris", "parfums-de-chambre": "Parfum de chambre" };
 const price = (n) => `${new Intl.NumberFormat("fr-FR").format(n).replace(/ | /g, " ")} FCFA`;
 const clean = (v) => {
   let t = String(v || "");

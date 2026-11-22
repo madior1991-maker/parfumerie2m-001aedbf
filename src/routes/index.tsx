@@ -88,6 +88,7 @@ const homeCollections = [
   { name: "Collections privées", price: "Dès 25 000 F", note: "Éditions rares", image: "/images/home/tuile-privees.webp", to: "/collections/collections-privees" },
   { name: "Coffrets", price: "90 000 F", note: "Prêts à offrir", image: "/images/home/tuile-coffrets.webp", to: "/collections/coffrets" },
   { name: "Fragrance Library", price: "35 000 F", note: "Un roman par flacon", image: "/images/home/tuile-library.webp", to: "/collections/fragrance-library" },
+  { name: "Parfums de chambre", price: "5 000 F", note: "SCENTLAB · 500 ml", image: "/images/home/tuile-parfums-de-chambre.webp", to: "/collections/parfums-de-chambre" },
 ] as const;
 
 const featuredPackCards = [

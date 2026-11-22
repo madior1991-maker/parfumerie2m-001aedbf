@@ -48,6 +48,7 @@ export const collectionValues = [
   "coffrets",
   "library",
   "soie-sublime",
+  "parfums-de-chambre",
 ] as const;
 export const priceValues = ["all", "under-10000", "10000-25000", "over-25000"] as const;
 
@@ -91,6 +92,7 @@ export const collectionFilters: { label: string; value: KnownCollection }[] = [
   { label: "Coffrets", value: "coffrets" },
   { label: "Fragrance Library", value: "library" },
   { label: "Soie Sublime Paris", value: "soie-sublime" },
+  { label: "Parfums de chambre", value: "parfums-de-chambre" },
 ];
 
 const collectionAliases: Record<string, KnownCollection> = {
@@ -122,6 +124,10 @@ const collectionAliases: Record<string, KnownCollection> = {
   "soie-sublime": "soie-sublime",
   "soie sublime": "soie-sublime",
   "soie sublime paris": "soie-sublime",
+  "parfums-de-chambre": "parfums-de-chambre",
+  "parfums de chambre": "parfums-de-chambre",
+  "parfum de chambre": "parfums-de-chambre",
+  "room spray": "parfums-de-chambre",
 };
 
 // Libellés des catégories créées dans l'admin (clé normalisée -> texte saisi).
@@ -975,11 +981,36 @@ const dubaiCatalog: BoutiqueProduct[] = dubaiProducts.map((product) => ({
     : `${product.name} de ${product.brand}, ${product.concentration.toLowerCase()}${product.volume ? ` ${product.volume}` : ""} dans sa boîte d'origine. Disponible chez 2M Parfumerie, livraison partout au Sénégal.`,
 }));
 
+// Parfums de chambre SCENTLAB (room spray 500 ml). Ajoutés le 22/11/2026, prix donné par le client : 5 000 F.
+const roomSprayProducts: { slug: string; name: string }[] = [
+  { slug: "lavender-whisper", name: "Lavender Whisper" },
+  { slug: "melon-crush", name: "Melon Crush" },
+  { slug: "oud-bouquet", name: "Oud Bouquet" },
+  { slug: "noir-oud", name: "Noir Oud" },
+];
+
+const roomSprayCatalog: BoutiqueProduct[] = roomSprayProducts.map((product) => ({
+  slug: `scentlab-room-spray-${product.slug}`,
+  name: product.name,
+  ref: "SCENTLAB",
+  notes: "Parfum de chambre",
+  headNotes: "Notes à préciser",
+  heartNotes: "Notes à préciser",
+  baseNotes: "Notes à préciser",
+  price: 5000,
+  collection: "parfums-de-chambre",
+  image: `/images/optimized/chambre-scentlab-${product.slug}-w800.webp`,
+  family: "Parfum de chambre",
+  concentration: "Room spray",
+  volume: "500 ml",
+  description: `${product.name} de SCENTLAB : parfum de chambre (room spray) de 500 ml, en flacon ambré avec vaporisateur à gâchette. Quelques pulvérisations parfument le salon ou la chambre. Disponible chez 2M Parfumerie à 5 000 F, livraison partout au Sénégal.`,
+}));
+
 // Rupture de stock : masqués partout sur le site. Retirer le slug pour remettre le produit en ligne.
 // Masqués : ruptures (Seoul) et doublons (rayhaan-nova-sol = ancienne fiche de Rayhaan Nava Sol).
 export const outOfStockSlugs = new Set(["seoul", "seoul-louis-vuitton-imagination", "rayhaan-nova-sol"]);
 
-export const catalog: BoutiqueProduct[] = [...takeoffCatalog, ...scentlabCatalog, ...scentlabExtraCatalog, ...haqqiCatalog, ...pocketCatalog, ...libraryCatalog, ...coffretCatalog, ...dubaiCatalog].filter((product) => !outOfStockSlugs.has(slugifyProduct(product)));
+export const catalog: BoutiqueProduct[] = [...takeoffCatalog, ...scentlabCatalog, ...scentlabExtraCatalog, ...haqqiCatalog, ...pocketCatalog, ...libraryCatalog, ...coffretCatalog, ...dubaiCatalog, ...roomSprayCatalog].filter((product) => !outOfStockSlugs.has(slugifyProduct(product)));
 
 // Adresse propre : minuscules, sans accents, mots séparés par des tirets.
 export function cleanSlug(value: string) {

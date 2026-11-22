@@ -57,6 +57,7 @@ type SiteCollection = {
     | "/collections/coffrets"
     | "/collections/fragrance-library"
     | "/collections/soie-sublime"
+    | "/collections/parfums-de-chambre"
     | "/boutique";
   collection?: Collection;
 };
@@ -74,6 +75,7 @@ const siteCollections: SiteCollection[] = [
   { label: "Collections privées", price: "Éditions rares", to: "/collections/collections-privees" },
   { label: "Coffrets", price: "Prêts à offrir", to: "/collections/coffrets" },
   { label: "Fragrance Library", price: "35 000 F", to: "/collections/fragrance-library" },
+  { label: "Parfums de chambre", price: "5 000 F", to: "/collections/parfums-de-chambre" },
 ];
 
 const footerPages = [

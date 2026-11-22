@@ -329,6 +329,7 @@ const categoryPriceHint: Record<string, string> = {
   coffrets: "90 000 F",
   library: "35 000 F",
   "soie-sublime": "90 000 F",
+  "parfums-de-chambre": "5 000 F",
 };
 
 const categoryImages = new Set(Object.keys(categoryPriceHint));
