@@ -5,9 +5,9 @@ import { Button } from "@/components/ui/button";
 import { WhatsAppLogo } from "@/components/commerce/WhatsAppLogo";
 
 const steps = [
-  { title: "Choisis ton pack", text: "Haqqi 10 000 F, SCENTLAB 15 000 F ou Poche 10 000 F." },
-  { title: "Coche tes parfums", text: "3 pour Haqqi et SCENTLAB, 5 pour les parfums de poche." },
-  { title: "Envoie sur WhatsApp", text: "Ta sélection part toute seule dans le message." },
+  { title: "Choisis ton pack", text: "Cadeau fin d’année 35 000 F, Haqqi 10 000 F, SCENTLAB 15 000 F ou Poche 10 000 F." },
+  { title: "Coche tes parfums", text: "4 pour le Pack cadeau (un par étape), 3 pour Haqqi et SCENTLAB, 5 pour la poche." },
+  { title: "Envoie sur WhatsApp", text: "Le bouton s’allume quand ton pack est complet. Ta sélection part toute seule." },
   { title: "On te livre", text: "Réponse en moins d’1h, livraison partout au Sénégal." },
 ];
 
@@ -34,8 +34,8 @@ export function TutoVideoSection() {
           <video
             ref={videoRef}
             className="h-full w-full object-cover"
-            src="/videos/tuto-packs.mp4"
-            poster="/videos/tuto-packs-poster.jpg"
+            src="/videos/tuto-packs.mp4?v=2"
+            poster="/videos/tuto-packs-poster.jpg?v=2"
             autoPlay
             muted
             loop
@@ -60,7 +60,7 @@ export function TutoVideoSection() {
             Commande ton pack en 40 secondes
           </h2>
           <p className="mt-3 max-w-xl text-muted-foreground">
-            Pack Haqqi, pack SCENTLAB ou pack de 5 parfums de poche : c’est le même chemin, et on livre partout au Sénégal.
+            Pack cadeau fin d’année, Haqqi, SCENTLAB ou parfums de poche : c’est le même chemin, et on livre partout au Sénégal.
           </p>
           <ol className="mt-6 grid gap-3">
             {steps.map((step, index) => (
