@@ -18,7 +18,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { whatsappUrl } from "@/lib/perfume-data";
 import { cn } from "@/lib/utils";
 
-type CoffretCollection = "haqqi" | "scentlab" | "pocket";
+type CoffretCollection = "cadeau" | "haqqi" | "scentlab" | "pocket";
 
 type CoffretOption = {
   id: string;
@@ -26,12 +26,25 @@ type CoffretOption = {
   image: string;
   gender: Gender | "Nouveautés";
   inspiration?: string;
+  // Pack cadeau : catégorie du parfum (un choix par catégorie).
+  group?: CadeauGroup;
 };
+
+// Pack cadeau fin d'année : 1 Takeoff + 1 SCENTLAB + 1 Haqqi + 1 parfum de chambre, parfum de poche offert choisi par 2M.
+type CadeauGroup = "takeoff" | "scentlab" | "haqqi" | "parfums-de-chambre";
+const cadeauGroups: { key: CadeauGroup; label: string; detail: string }[] = [
+  { key: "takeoff", label: "Takeoff", detail: "Eau de parfum 100 ml" },
+  { key: "scentlab", label: "SCENTLAB", detail: "Eau de parfum 50 ml" },
+  { key: "haqqi", label: "Haqqi", detail: "Eau de parfum 40 ml" },
+  { key: "parfums-de-chambre", label: "Parfum de chambre", detail: "Room spray SCENTLAB 500 ml" },
+];
+const CADEAU_VALUE = 42000;
 
 const coffretOffers: Record<
   CoffretCollection,
   { label: string; short: string; price: number; requiredCount: number; imageBase: string }
 > = {
+  cadeau: { label: "Pack cadeau fin d'année", short: "Cadeau fin d'année", price: 35000, requiredCount: 4, imageBase: "pack-cadeau-fin-annee" },
   haqqi: { label: "Pack Haqqi", short: "Haqqi", price: 10000, requiredCount: 3, imageBase: "pack-haqqi-3" },
   scentlab: { label: "Pack SCENTLAB", short: "SCENTLAB", price: 15000, requiredCount: 3, imageBase: "pack-scentlab-3" },
   pocket: { label: "Pack Parfums de poche", short: "Poche", price: 10000, requiredCount: 5, imageBase: "pocket-perfumes-homme" },
@@ -108,6 +121,7 @@ const scentlabGender: Record<string, Gender> = {
 
 // Choix proposés dans les packs mais sans fiche produit sur le site.
 const packOnlyOptions: Record<CoffretCollection, CoffretOption[]> = {
+  cadeau: [],
   haqqi: [{ id: "haqqi-femme-gucci-bloom", title: "Gucci Bloom", image: "", gender: "Femme" }],
   scentlab: [],
   pocket: [],
@@ -127,6 +141,7 @@ function genderOf(product: BoutiqueProduct): Gender | "Nouveautés" {
 function buildPackOptions(products: BoutiqueProduct[]): Record<CoffretCollection, CoffretOption[]> {
   const result = {} as Record<CoffretCollection, CoffretOption[]>;
   for (const collection of collectionOrder) {
+    if (collection === "cadeau") continue;
     const seen = new Set<string>();
     const list: CoffretOption[] = [];
     const push = (option: CoffretOption) => {
@@ -148,23 +163,30 @@ function buildPackOptions(products: BoutiqueProduct[]): Record<CoffretCollection
     packOnlyOptions[collection].forEach(push);
     result[collection] = list.sort((x, y) => x.title.localeCompare(y.title, "fr"));
   }
+  // Pack cadeau : tous les parfums disponibles des 4 catégories.
+  result.cadeau = cadeauGroups.flatMap(({ key }) =>
+    products
+      .filter((product) => product.collection === key)
+      .map((product) => ({ id: `${key}:${slugifyProduct(product)}`, title: product.name, image: product.image, gender: genderOf(product), group: key }))
+      .sort((x, y) => x.title.localeCompare(y.title, "fr")),
+  );
   return result;
 }
 
-const collectionOrder: CoffretCollection[] = ["haqqi", "scentlab", "pocket"];
+const collectionOrder: CoffretCollection[] = ["cadeau", "haqqi", "scentlab", "pocket"];
 const staticPackOptions = buildPackOptions(catalog);
 const genderTabs = ["Tous", "Homme", "Femme", "Unisex"] as const;
 type GenderTab = (typeof genderTabs)[number];
 
-type PackParam = "haqqi" | "scentlab" | "poche";
-const toPackParam = (c: CoffretCollection): PackParam => (c === "pocket" ? "poche" : c);
-const fromPackParam = (p: PackParam): CoffretCollection => (p === "poche" ? "pocket" : p);
+type PackParam = "fin-annee" | "haqqi" | "scentlab" | "poche";
+const toPackParam = (c: CoffretCollection): PackParam => (c === "pocket" ? "poche" : c === "cadeau" ? "fin-annee" : c);
+const fromPackParam = (p: PackParam): CoffretCollection => (p === "poche" ? "pocket" : p === "fin-annee" ? "cadeau" : p);
 
-// Dans l'adresse : ?pack=haqqi, ?pack=scentlab ou ?pack=poche (« pocket » reste accepté pour les anciens liens).
+// Dans l'adresse : ?pack=fin-annee, ?pack=haqqi, ?pack=scentlab ou ?pack=poche (« pocket » reste accepté pour les anciens liens).
 function validatePackSearch(search: Record<string, unknown>): { pack?: PackParam } {
   const raw = typeof search.pack === "string" ? search.pack.toLowerCase() : "";
   const pack = raw === "pocket" ? "poche" : raw;
-  return pack === "haqqi" || pack === "scentlab" || pack === "poche" ? { pack } : {};
+  return pack === "fin-annee" || pack === "haqqi" || pack === "scentlab" || pack === "poche" ? { pack } : {};
 }
 
 export const Route = createFileRoute("/nos-packs")({
@@ -188,8 +210,9 @@ function packImage(base: string, width: 400 | 800 = 400) {
 
 function CoffretSignaturePage() {
   const search = Route.useSearch();
-  const [selectedCollection, setSelectedCollection] = useState<CoffretCollection>(search.pack ? fromPackParam(search.pack) : "haqqi");
+  const [selectedCollection, setSelectedCollection] = useState<CoffretCollection>(search.pack ? fromPackParam(search.pack) : "cadeau");
   const [selections, setSelections] = useState<Record<CoffretCollection, string[]>>({
+    cadeau: [],
     haqqi: [],
     scentlab: [],
     pocket: [],
@@ -226,7 +249,8 @@ function CoffretSignaturePage() {
     () => genderTabs.filter((tab) => tab === "Tous" || allOptions.some((option) => option.gender === tab)),
     [allOptions],
   );
-  const showGender = availableTabs.length > 2;
+  const isCadeau = selectedCollection === "cadeau";
+  const showGender = !isCadeau && availableTabs.length > 2;
   // Les parfums de poche partagent la même photo : on les liste par leur nom.
   const showPhotos = selectedCollection !== "pocket";
 
@@ -251,6 +275,12 @@ function CoffretSignaturePage() {
   const toggleOption = (optionId: string) => {
     setSelections((current) => {
       const active = current[selectedCollection];
+      if (selectedCollection === "cadeau") {
+        // Un seul parfum par catégorie : choisir un autre parfum de la même catégorie remplace le premier.
+        if (active.includes(optionId)) return { ...current, cadeau: active.filter((id) => id !== optionId) };
+        const group = optionId.split(":")[0];
+        return { ...current, cadeau: [...active.filter((id) => id.split(":")[0] !== group), optionId] };
+      }
       if (active.includes(optionId)) {
         return { ...current, [selectedCollection]: active.filter((id) => id !== optionId) };
       }
@@ -265,7 +295,7 @@ function CoffretSignaturePage() {
         <div className="section-shell">
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
-              <p className="text-[15px] font-semibold text-accent md:text-base">3 parfums Haqqi ou SCENTLAB · 5 parfums de poche</p>
+              <p className="text-[15px] font-semibold text-accent md:text-base">Pack cadeau fin d'année · 3 parfums Haqqi ou SCENTLAB · 5 parfums de poche</p>
               <h1 className="mt-2 font-display text-[34px] font-semibold leading-[1.05] text-foreground md:text-5xl">
                 Compose ton pack
               </h1>
@@ -282,7 +312,7 @@ function CoffretSignaturePage() {
           </div>
 
           <StepTitle number={1}>Choisis ton pack</StepTitle>
-          <div className="grid grid-cols-3 gap-2 md:max-w-4xl md:gap-4">
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 md:max-w-5xl md:gap-4">
             {collectionOrder.map((collection) => {
               const item = coffretOffers[collection];
               const active = collection === selectedCollection;
@@ -312,7 +342,15 @@ function CoffretSignaturePage() {
                       {item.short}
                     </span>
                     <span className="block text-[13px] font-medium text-foreground/80 md:mt-1 md:text-[15px]">
-                      {item.requiredCount} pour {formatShortPrice(item.price)}
+                      {collection === "cadeau" ? (
+                        <>
+                          {formatShortPrice(item.price)} <s className="text-foreground/55">{formatShortPrice(CADEAU_VALUE)}</s>
+                        </>
+                      ) : (
+                        <>
+                          {item.requiredCount} pour {formatShortPrice(item.price)}
+                        </>
+                      )}
                     </span>
                   </span>
                   {count > 0 && (
@@ -326,8 +364,13 @@ function CoffretSignaturePage() {
           </div>
 
           <StepTitle number={2}>
-            Choisis {offer.requiredCount} parfums {offer.short}
+            {isCadeau ? "Choisis 1 parfum dans chaque catégorie" : `Choisis ${offer.requiredCount} parfums ${offer.short}`}
           </StepTitle>
+          {isCadeau && (
+            <p className="-mt-1 mb-3 text-[15px] text-foreground/85">
+              1 Takeoff + 1 SCENTLAB + 1 Haqqi + 1 parfum de chambre pour <b>35 000 F au lieu de 42 000 F</b>. On ajoute un parfum de poche offert, choisi par nous.
+            </p>
+          )}
           <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-4">
             <input
               type="search"
@@ -360,16 +403,24 @@ function CoffretSignaturePage() {
             )}
           </div>
 
+          {(isCadeau ? cadeauGroups.map((g) => ({ key: g.key, title: `${g.label} · ${g.detail}`, list: visibleOptions.filter((o) => o.group === g.key) })) : [{ key: "all", title: "", list: visibleOptions }]).map(({ key, title, list }) => (
+            <div key={key} className={isCadeau ? "mt-6" : undefined}>
+              {title && (
+                <h3 className="flex items-center gap-2 font-display text-xl font-semibold text-foreground md:text-2xl">
+                  {title}
+                  {selectedIds.some((id) => id.startsWith(`${key}:`)) && <span className="rounded-full bg-accent px-2 py-0.5 font-body text-[11px] font-bold text-primary-foreground">✓ choisi</span>}
+                </h3>
+              )}
           <div
             className={cn(
               "mt-3 grid gap-2 md:gap-3",
               showPhotos ? "grid-cols-3 sm:grid-cols-4 lg:grid-cols-6" : "grid-cols-2 sm:grid-cols-3 lg:grid-cols-5",
             )}
           >
-            {visibleOptions.map((option) => {
+            {list.map((option) => {
               const position = selectedIds.indexOf(option.id);
               const checked = position >= 0;
-              const disabled = !checked && remaining === 0;
+              const disabled = !isCadeau && !checked && remaining === 0;
               return (
                 <button
                   key={option.id}
@@ -417,13 +468,15 @@ function CoffretSignaturePage() {
                   )}
                   {checked && (
                     <span className="absolute right-2 top-2 grid size-6 place-items-center rounded-full bg-accent text-xs font-bold text-primary-foreground">
-                      {position + 1}
+                      {isCadeau ? "✓" : position + 1}
                     </span>
                   )}
                 </button>
               );
             })}
           </div>
+            </div>
+          ))}
           {visibleOptions.length === 0 && (
             <p className="mt-6 rounded-xl border border-dashed border-border bg-surface px-4 py-8 text-center text-sm text-muted-foreground">
               Aucun parfum trouvé. Essaie un autre nom.
@@ -458,6 +511,9 @@ function CoffretSignaturePage() {
                 </button>
               </span>
             ))}
+            {isCadeau && (
+              <span className="rounded-full bg-[#D4B26A] px-3 py-1 text-[13px] font-semibold text-[#0A2E22]">+ 1 parfum de poche offert</span>
+            )}
             {Array.from({ length: Math.max(0, remaining) }).map((_, index) => (
               <span
                 key={index}
@@ -512,6 +568,16 @@ function formatShortPrice(price: number) {
 
 function buildWhatsAppMessage(collection: CoffretCollection, options: CoffretOption[]) {
   const offer = coffretOffers[collection];
+  if (collection === "cadeau") {
+    const lines = cadeauGroups
+      .map((g) => {
+        const option = options.find((o) => o.group === g.key);
+        return option ? `• ${g.label} : ${option.title}` : null;
+      })
+      .filter(Boolean)
+      .join("\n");
+    return `Bonjour 2M Parfumerie 👋 Je veux le Pack cadeau fin d'année à 35 000 F (au lieu de 42 000 F).\n\nMes choix :\n${lines}\n• Parfum de poche offert : choisi par 2M Parfumerie\n\nMerci de me préparer le pack.`;
+  }
   const choiceLines = options.map((option) => `• ${option.title}`).join("\n");
   return `Bonjour 2M Parfumerie 👋 Je veux un ${offer.label} à ${formatPrice(offer.price)}.\n\nMes ${offer.requiredCount} choix :\n${choiceLines}\n\nMerci de me préparer le pack.`;
 }

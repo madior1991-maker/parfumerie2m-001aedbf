@@ -457,6 +457,28 @@ function Index() {
               Clique sur l’un des packs
             </p>
           </div>
+          <Link
+            to="/nos-packs"
+            search={{ pack: "fin-annee" }}
+            className="group mx-auto mt-10 block max-w-5xl overflow-hidden rounded-2xl border-2 border-accent bg-[#0E3B2C] text-left text-[#F7F1E4] shadow-elegant transition-all hover:-translate-y-1"
+          >
+            <div className="md:flex">
+              <picture className="block md:w-[55%]">
+                <source type="image/avif" srcSet="/images/optimized/pack-cadeau-fin-annee-wide-w800.avif 800w, /images/optimized/pack-cadeau-fin-annee-wide-w1200.avif 1200w" sizes="(min-width: 768px) 55vw, 100vw" />
+                <img src="/images/optimized/pack-cadeau-fin-annee-wide-w800.webp" alt="Pack cadeau fin d'année : Takeoff, SCENTLAB, Haqqi, parfum de chambre et parfum de poche offert" width={1200} height={500} loading="lazy" className="h-full w-full object-cover" />
+              </picture>
+              <div className="flex flex-col justify-center gap-2 p-6 md:w-[45%] md:p-8">
+                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#D4B26A]">Offre de fin d'année</p>
+                <h3 className="font-display text-3xl font-semibold leading-tight !text-[#F7F1E4] md:text-4xl">Pack cadeau fin d'année</h3>
+                <p className="text-[15px] !text-[#E9DFC9]">1 Takeoff + 1 SCENTLAB + 1 Haqqi + 1 parfum de chambre, au choix. + 1 parfum de poche offert.</p>
+                <p className="mt-1 flex flex-wrap items-baseline gap-3">
+                  <span className="rounded-lg bg-[#D4B26A] px-3 py-1 font-body text-2xl font-extrabold text-[#0A2E22]">35 000 F</span>
+                  <span className="text-[15px] !text-[#F7F1E4]">au lieu de <s>42 000 F</s></span>
+                </p>
+                <span className="mt-3 inline-flex w-fit items-center rounded-full bg-[#D4B26A] px-5 py-2.5 text-sm font-bold text-[#0A2E22]">Composer mon pack cadeau</span>
+              </div>
+            </div>
+          </Link>
           <div className="mt-10 grid gap-4 md:grid-cols-3">
             {featuredPackCards.map((pack) => (
               <article
