@@ -42,10 +42,22 @@ function setMeta(html, attr, key, value) {
   return re.test(html) ? html.replace(re, tag) : html.replace("</head>", `    ${tag}\n  </head>`);
 }
 
+// Liens de partage par pack (?pack=...) : chaque lien a son titre et son image.
+// vercel.json envoie /nos-packs?pack=X vers le fichier nos-packs-X.html.
+const packPages = [
+  { key: "fin-annee", title: "Pack cadeau fin d'année : 35 000 F au lieu de 42 000 F | 2M Parfumerie", desc: "1 Takeoff + 1 SCENTLAB + 1 Haqqi + 1 parfum de chambre au choix, et un parfum de poche offert. 35 000 F au lieu de 42 000 F. Compose ton pack et valide sur WhatsApp, livraison partout au Sénégal." },
+  { key: "haqqi", title: "Pack Haqqi : 3 parfums au choix à 10 000 F | 2M Parfumerie", desc: "Choisis 3 parfums Haqqi pour 10 000 F et valide sur WhatsApp. Livraison partout au Sénégal, paiement à la livraison." },
+  { key: "scentlab", title: "Pack SCENTLAB : 3 parfums au choix à 15 000 F | 2M Parfumerie", desc: "Choisis 3 parfums SCENTLAB pour 15 000 F et valide sur WhatsApp. Livraison partout au Sénégal, paiement à la livraison." },
+  { key: "poche", title: "Pack parfums de poche : 5 au choix à 10 000 F | 2M Parfumerie", desc: "Choisis 5 parfums de poche pour 10 000 F et valide sur WhatsApp. Livraison partout au Sénégal, paiement à la livraison." },
+];
+for (const pk of packPages) pages.push({ path: "/nos-packs", query: `?pack=${pk.key}`, out: `nos-packs-${pk.key}`, title: pk.title, desc: pk.desc, image: `pack-${pk.key}`, fixed: true });
+// La page /nos-packs sans paramètre est servie depuis nos-packs-tous.html (voir vercel.json).
+pages.find((p) => p.path === "/nos-packs" && !p.query).out = "nos-packs-tous";
+
 for (const page of [...pages, { path: "/", image: "default" }]) {
   const seo = seoContent[page.path];
-  if (seo) { page.title = seo.title; page.desc = seo.desc; }
-  const url = SITE + (page.path === "/" ? "/" : page.path);
+  if (seo && !page.fixed) { page.title = seo.title; page.desc = seo.desc; }
+  const url = SITE + (page.path === "/" ? "/" : page.path) + (page.query ?? "");
   const img = `${SITE}/og/${page.image}.jpg`;
   let html = base.replace(/<title>[^<]*<\/title>/, `<title>${esc(page.title)}</title>`);
   html = setMeta(html, "name", "description", page.desc);
@@ -77,7 +89,7 @@ for (const page of [...pages, { path: "/", image: "default" }]) {
   if (page.path === "/contact") ld.push(STORE);
   html = injectHead(html, `<link rel="canonical" href="${url}" />${ld.map(jsonLd).join("")}`);
   if (body?.h1) html = injectBody(html, body);
-  const out = page.path === "/" ? path.join(dist, "index.html") : path.join(dist, `${page.path.slice(1)}.html`);
+  const out = page.path === "/" ? path.join(dist, "index.html") : path.join(dist, `${page.out ?? page.path.slice(1)}.html`);
   fs.mkdirSync(path.dirname(out), { recursive: true });
   fs.writeFileSync(out, html);
 }

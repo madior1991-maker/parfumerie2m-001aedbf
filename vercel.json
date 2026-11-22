@@ -280,6 +280,65 @@
   ],
   "rewrites": [
     {
+      "source": "/nos-packs",
+      "has": [
+        {
+          "type": "query",
+          "key": "pack",
+          "value": "fin-annee"
+        }
+      ],
+      "destination": "/nos-packs-fin-annee"
+    },
+    {
+      "source": "/nos-packs",
+      "has": [
+        {
+          "type": "query",
+          "key": "pack",
+          "value": "haqqi"
+        }
+      ],
+      "destination": "/nos-packs-haqqi"
+    },
+    {
+      "source": "/nos-packs",
+      "has": [
+        {
+          "type": "query",
+          "key": "pack",
+          "value": "scentlab"
+        }
+      ],
+      "destination": "/nos-packs-scentlab"
+    },
+    {
+      "source": "/nos-packs",
+      "has": [
+        {
+          "type": "query",
+          "key": "pack",
+          "value": "poche"
+        }
+      ],
+      "destination": "/nos-packs-poche"
+    },
+    {
+      "source": "/nos-packs",
+      "has": [
+        {
+          "type": "query",
+          "key": "pack",
+          "value": "pocket"
+        }
+      ],
+      "destination": "/nos-packs-poche"
+    },
+    {
+      "source": "/nos-packs",
+      "destination": "/nos-packs-tous"
+    },
+    {
       "source": "/(.*)",
       "destination": "/"
     }

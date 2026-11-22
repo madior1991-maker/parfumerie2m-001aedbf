@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { CartDrawer } from "@/components/commerce/CartDrawer";
+import { GiftPackPopup } from "@/components/commerce/GiftPackPopup";
 import { WhatsAppLogo } from "@/components/commerce/WhatsAppLogo";
 import { useCart } from "@/hooks/useCart";
 import { cn } from "@/lib/utils";
@@ -395,6 +396,7 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
       {/* Sur les fiches produits, le grand bouton WhatsApp suffit : la bulle le cachait sur mobile. */}
       {!open && !cartOpen && !location.pathname.startsWith("/boutique/") && location.pathname !== "/nos-packs" && <FloatingWhatsApp />}
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
+      <GiftPackPopup />
     </div>
   );
 }
