@@ -18,12 +18,12 @@ export const fullCatalogue = {
   slug: "complet",
   title: "Le catalogue complet",
   summary: "Toutes nos collections réunies dans un seul fichier, avec les prix et les senteurs.",
-  pages: 61,
+  pages: 64,
   size: "17 Mo",
 };
 
 export const catalogues: CatalogueEntry[] = [
-  { slug: "00-nos-collections", title: "Nos collections", summary: "L'aperçu des 11 collections et des prix.", pages: 2, size: "0,3 Mo" },
+  { slug: "00-nos-collections", title: "Nos collections", summary: "L'aperçu de nos collections et des prix.", pages: 2, size: "0,3 Mo" },
   { slug: "01-haqqi", title: "Haqqi", summary: "60 senteurs, pack de 3 à 10 000 F.", pages: 5, size: "1,3 Mo", collection: "haqqi" },
   { slug: "02-scentlab", title: "SCENTLAB", summary: "61 senteurs, 6 000 F, pack de 3 à 15 000 F.", pages: 6, size: "1,3 Mo", collection: "scentlab" },
   { slug: "03-parfums-de-poche", title: "Parfums de poche", summary: "49 senteurs, pack de 5 à 10 000 F.", pages: 3, size: "0,4 Mo", collection: "pocket" },
@@ -35,6 +35,7 @@ export const catalogues: CatalogueEntry[] = [
   { slug: "09-coffrets", title: "Coffrets", summary: "30 coffrets des grandes maisons, 90 000 F.", pages: 6, size: "2,2 Mo", collection: "coffrets" },
   { slug: "10-fragrance-library", title: "Fragrance Library", summary: "38 parfums 100 ml à 35 000 F, un roman par flacon.", pages: 7, size: "1,8 Mo", collection: "library" },
   { slug: "11-soie-sublime", title: "Soie Sublime Paris", summary: "Alba, Encens, Somari : 90 000 F au lieu de 120 000 F.", pages: 3, size: "0,5 Mo", collection: "soie-sublime" },
+  { slug: "12-parfums-de-chambre", title: "Parfums de chambre", summary: "5 room spray SCENTLAB 500 ml à 5 000 F.", pages: 3, size: "0,6 Mo", collection: "parfums-de-chambre" },
 ];
 
 export const catalogueForCollection = (collection: Collection) =>
