@@ -983,6 +983,29 @@ const dubaiCatalog: BoutiqueProduct[] = dubaiProducts.map((product) => ({
     : `${product.name} de ${product.brand}, ${product.concentration.toLowerCase()}${product.volume ? ` ${product.volume}` : ""} dans sa boîte d'origine. Disponible chez 2M Parfumerie, livraison partout au Sénégal.`,
 }));
 
+// Parfums authentiques ajoutés depuis le code (les autres originaux sont gérés dans l'admin).
+// Bvlgari Man in Black 150 ml : ajouté le 22/11/2026, prix donné par le client : 95 000 F.
+const authenticProducts: { slug: string; name: string; brand: string; price: number; volume: string; family: string; head: string; heart: string; base: string; text: string }[] = [
+  { slug: "bvlgari-man-in-black-150ml", name: "Bvlgari Man in Black", brand: "Bvlgari", price: 95000, volume: "150 ml", family: "Ambré épicé cuiré · Homme", head: "Rhum · Épices", heart: "Cuir · Tubéreuse · Iris", base: "Benjoin · Fève tonka · Gaïac", text: "Bvlgari Man in Black, l'original : le rhum et les épices ouvrent le bal, le cuir et la tubéreuse prennent le relais, puis le benjoin et la fève tonka laissent un sillage chaud et ambré. Un parfum d'homme sûr de lui, pour le soir et les grandes occasions. Grand format 150 ml, eau de parfum, dans sa boîte d'origine." },
+];
+
+const authenticCatalog: BoutiqueProduct[] = authenticProducts.map((product) => ({
+  slug: product.slug,
+  name: product.name,
+  ref: product.brand,
+  notes: [product.head, product.heart, product.base].join(" · "),
+  headNotes: product.head,
+  heartNotes: product.heart,
+  baseNotes: product.base,
+  price: product.price,
+  collection: "authentic",
+  image: `/images/optimized/authentic-${product.slug}-w800.webp`,
+  family: product.family,
+  concentration: "Eau de parfum",
+  volume: product.volume,
+  description: `${product.text} Disponible chez 2M Parfumerie, livraison partout au Sénégal.`,
+}));
+
 // Parfums de chambre SCENTLAB (room spray 500 ml). Ajoutés le 22/11/2026, prix donné par le client : 5 000 F.
 const roomSprayProducts: { slug: string; name: string }[] = [
   { slug: "lavender-whisper", name: "Lavender Whisper" },
@@ -1014,7 +1037,7 @@ const roomSprayCatalog: BoutiqueProduct[] = roomSprayProducts.map((product) => (
 // Ruptures SCENTLAB du 22/11/2026 : Rosy Glow, Rosy Hazelnut, Mystic Jasmine, Orange Blossom.
 export const outOfStockSlugs = new Set(["seoul", "seoul-louis-vuitton-imagination", "rayhaan-nova-sol", "rosy-glow-lancome-idole", "rosy-hazelnut-amouage-guidance", "mystic-jasmine-mugler-alien", "orange-blossom-ysl-libre", "rosy-glow", "rosy-hazelnut", "mystic-jasmine", "orange-blossom"]);
 
-export const catalog: BoutiqueProduct[] = [...takeoffCatalog, ...scentlabCatalog, ...scentlabExtraCatalog, ...haqqiCatalog, ...pocketCatalog, ...libraryCatalog, ...coffretCatalog, ...dubaiCatalog, ...roomSprayCatalog].filter((product) => !outOfStockSlugs.has(slugifyProduct(product)));
+export const catalog: BoutiqueProduct[] = [...takeoffCatalog, ...scentlabCatalog, ...scentlabExtraCatalog, ...haqqiCatalog, ...pocketCatalog, ...libraryCatalog, ...coffretCatalog, ...dubaiCatalog, ...authenticCatalog, ...roomSprayCatalog].filter((product) => !outOfStockSlugs.has(slugifyProduct(product)));
 
 // Adresse propre : minuscules, sans accents, mots séparés par des tirets.
 export function cleanSlug(value: string) {
