@@ -339,7 +339,7 @@
       "destination": "/nos-packs-tous"
     },
     {
-      "source": "/(.*)",
+      "source": "/((?!assets/).*)",
       "destination": "/"
     }
   ],

@@ -1,8 +1,16 @@
+import { useEffect, useState } from "react";
 import { createRouter, useRouter } from "@tanstack/react-router";
+import { isOutdatedBuildError, reloadForUpdate } from "./lib/reload-on-update";
 import { routeTree } from "./routeTree.gen";
 
 function DefaultErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   const router = useRouter();
+  // Site mis à jour pendant la visite : on recharge tout de suite au lieu d'afficher l'erreur.
+  const [reloading, setReloading] = useState(() => isOutdatedBuildError(error));
+  useEffect(() => {
+    if (reloading && !reloadForUpdate()) setReloading(false);
+  }, [reloading]);
+  if (reloading) return <div className="min-h-screen bg-background" />;
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
