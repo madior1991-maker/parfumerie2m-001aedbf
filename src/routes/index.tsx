@@ -98,7 +98,7 @@ const featuredPackCards = [
     title: "Parfums de poche",
     subtitle: "5 parfums",
     price: "10 000 FCFA",
-    imageBase: "pocket-perfumes-homme",
+    imageBase: "pack-poche-5-wide",
     pack: "pocket" as const,
   },
 ] as const;
@@ -256,6 +256,7 @@ function HeroVideos() {
 }
 
 function Index() {
+  const [showAllCollections, setShowAllCollections] = useState(false);
   const [featuredProducts, setFeaturedProducts] =
     useState<BoutiqueProduct[]>(fallbackFeaturedProducts);
 
@@ -367,106 +368,6 @@ function Index() {
         <Ticker />
       </Suspense>
 
-      <section className="band-maison relative py-14 md:py-20">
-        <div className="section-shell">
-          <div className="fade-up mb-8 text-center">
-            <p className="caption-luxe mb-3 text-accent">Nos collections</p>
-            <h2 className="font-display text-[32px] font-medium text-foreground md:text-5xl">
-              Un parfum pour chaque budget
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-sm text-muted-foreground">
-              Douze collections, de 4 000 F à 130 000 F : nos créations inspirées des grands parfums,
-              les parfums orientaux de Dubai et les originaux des grandes maisons.
-            </p>
-          </div>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4">
-            {homeCollections.map((item, index) => (
-              <Link
-                key={item.name}
-                to={item.to}
-                search={"collection" in item ? { collection: item.collection } : {}}
-                className="fade-up group overflow-hidden rounded-lg border border-border bg-card shadow-card transition-all hover:-translate-y-1 hover:border-accent"
-                style={{ animationDelay: `${index * 60}ms` }}
-              >
-                <div className="aspect-[4/5] overflow-hidden bg-surface">
-                  <img
-                    src={item.image}
-                    alt={`Collection ${item.name}, 2M Parfumerie`}
-                    loading="lazy"
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
-                <div className="p-3 sm:p-4">
-                  <h3 className="font-display text-lg leading-tight text-foreground sm:text-xl">{item.name}</h3>
-                  <p className="mt-1 text-sm font-semibold text-accent">{item.price}</p>
-                  <p className="text-xs text-muted-foreground">{item.note}</p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="relative border-t-4 border-accent/20 bg-background py-16 md:py-24">
-        <div className="section-shell text-center">
-          <HomeHeader
-            title="Nos parfums du moment"
-            subtitle="Nos coups de cœur, piochés dans chaque collection."
-          />
-          <div className="mx-auto grid max-w-7xl grid-cols-2 gap-3 text-left sm:gap-5 md:grid-cols-3 lg:grid-cols-6 lg:gap-4">
-            {featuredProducts.map((product, index) => (
-              <article
-                key={product.name}
-                className="fade-up group flex flex-col overflow-hidden rounded-lg border border-border bg-card shadow-card transition-all hover:-translate-y-1.5 hover:border-accent"
-                style={{ animationDelay: `${index * 80}ms` }}
-              >
-                <Link
-                  to="/boutique/$productSlug"
-                  params={{ productSlug: slugifyProduct(product) }}
-                  search={{}}
-                  aria-label={`Voir la fiche produit de ${product.name}`}
-                  className="image-zoom relative block aspect-square overflow-hidden bg-white"
-                >
-                  <img
-                    src={optimizedProductImageUrl(product.image, 800)}
-                    alt={`${product.name}, ${collectionLabel(product.collection)}, chez 2M Parfumerie`}
-                    className="h-full w-full object-contain p-2 transition-transform duration-500 group-hover:scale-105 sm:p-4 lg:p-3"
-                    loading="lazy"
-                  />
-                </Link>
-                <div className="flex flex-1 flex-col p-3 sm:p-4">
-                  <p className="mb-1 truncate text-[10px] uppercase tracking-[0.1em] text-muted-foreground sm:text-[11px]">
-                    {collectionLabel(product.collection)}
-                  </p>
-                  <h3 className="mb-1 line-clamp-2 min-h-[2.5em] font-display text-sm leading-tight text-foreground sm:text-lg lg:text-base">
-                    {product.name}
-                  </h3>
-                  <p className="mb-2 font-body text-base font-semibold text-accent sm:mb-3 sm:text-lg lg:text-base">
-                    <PriceTag product={product} />
-                  </p>
-                  <div className="mt-auto">
-                  <AddToCartButton
-                    item={{
-                      id: slugifyProduct(product),
-                      name: product.name,
-                      collection: collectionLabel(product.collection),
-                      price: product.price,
-                      imageUrl: product.image,
-                    }}
-                  />
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-          <Button asChild variant="outline" size="lg" className="mt-12">
-            <Link to="/boutique" search={{}}>
-              Voir toute la sélection
-            </Link>
-          </Button>
-        </div>
-      </section>
-
       <section className="band-maison relative border-t-4 border-accent/20 py-16 md:py-24">
         <div className="section-shell text-center">
           <p className="caption-luxe text-accent">Compose ton pack</p>
@@ -559,6 +460,113 @@ function Index() {
         </div>
       </section>
 
+      <section className="band-maison relative py-14 md:py-20">
+        <div className="section-shell">
+          <div className="fade-up mb-8 text-center">
+            <p className="caption-luxe mb-3 text-accent">Nos collections</p>
+            <h2 className="font-display text-[32px] font-medium text-foreground md:text-5xl">
+              Un parfum pour chaque budget
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-sm text-muted-foreground">
+              Douze collections, de 4 000 F à 130 000 F : nos créations inspirées des grands parfums,
+              les parfums orientaux de Dubai et les originaux des grandes maisons.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4">
+            {(showAllCollections ? homeCollections : homeCollections.slice(0, 6)).map((item, index) => (
+              <Link
+                key={item.name}
+                to={item.to}
+                search={"collection" in item ? { collection: item.collection } : {}}
+                className="fade-up group overflow-hidden rounded-lg border border-border bg-card shadow-card transition-all hover:-translate-y-1 hover:border-accent"
+                style={{ animationDelay: `${index * 60}ms` }}
+              >
+                <div className="aspect-[4/5] overflow-hidden bg-surface">
+                  <img
+                    src={item.image}
+                    alt={`Collection ${item.name}, 2M Parfumerie`}
+                    loading="lazy"
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="p-3 sm:p-4">
+                  <h3 className="font-display text-lg leading-tight text-foreground sm:text-xl">{item.name}</h3>
+                  <p className="mt-1 text-sm font-semibold text-accent">{item.price}</p>
+                  <p className="text-xs text-muted-foreground">{item.note}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+          {!showAllCollections && (
+            <div className="mt-8 text-center">
+              <Button variant="outline" size="lg" onClick={() => setShowAllCollections(true)}>
+                Voir les {homeCollections.length} collections
+              </Button>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <section className="relative border-t-4 border-accent/20 bg-background py-16 md:py-24">
+        <div className="section-shell text-center">
+          <HomeHeader
+            title="Nos parfums du moment"
+            subtitle="Nos coups de cœur, piochés dans chaque collection."
+          />
+          <div className="mx-auto grid max-w-7xl grid-cols-2 gap-3 text-left sm:gap-5 md:grid-cols-3 lg:grid-cols-6 lg:gap-4">
+            {featuredProducts.map((product, index) => (
+              <article
+                key={product.name}
+                className="fade-up group flex flex-col overflow-hidden rounded-lg border border-border bg-card shadow-card transition-all hover:-translate-y-1.5 hover:border-accent"
+                style={{ animationDelay: `${index * 80}ms` }}
+              >
+                <Link
+                  to="/boutique/$productSlug"
+                  params={{ productSlug: slugifyProduct(product) }}
+                  search={{}}
+                  aria-label={`Voir la fiche produit de ${product.name}`}
+                  className="image-zoom relative block aspect-square overflow-hidden bg-white"
+                >
+                  <img
+                    src={optimizedProductImageUrl(product.image, 800)}
+                    alt={`${product.name}, ${collectionLabel(product.collection)}, chez 2M Parfumerie`}
+                    className="h-full w-full object-contain p-2 transition-transform duration-500 group-hover:scale-105 sm:p-4 lg:p-3"
+                    loading="lazy"
+                  />
+                </Link>
+                <div className="flex flex-1 flex-col p-3 sm:p-4">
+                  <p className="mb-1 truncate text-[10px] uppercase tracking-[0.1em] text-muted-foreground sm:text-[11px]">
+                    {collectionLabel(product.collection)}
+                  </p>
+                  <h3 className="mb-1 line-clamp-2 min-h-[2.5em] font-display text-sm leading-tight text-foreground sm:text-lg lg:text-base">
+                    {product.name}
+                  </h3>
+                  <p className="mb-2 font-body text-base font-semibold text-accent sm:mb-3 sm:text-lg lg:text-base">
+                    <PriceTag product={product} />
+                  </p>
+                  <div className="mt-auto">
+                  <AddToCartButton
+                    item={{
+                      id: slugifyProduct(product),
+                      name: product.name,
+                      collection: collectionLabel(product.collection),
+                      price: product.price,
+                      imageUrl: product.image,
+                    }}
+                  />
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+          <Button asChild variant="outline" size="lg" className="mt-12">
+            <Link to="/boutique" search={{}}>
+              Voir toute la sélection
+            </Link>
+          </Button>
+        </div>
+      </section>
+
       <section className="relative border-t-4 border-accent/20 bg-background py-16 md:py-24">
         <div className="section-shell">
           <div className="fade-up mb-10 max-w-2xl">
@@ -635,32 +643,22 @@ function Index() {
         </div>
       </section>
 
-      <section className="relative border-t-4 border-accent/20 bg-background py-16 md:py-24">
-        <div className="section-shell grid gap-10 md:grid-cols-[0.8fr_1.2fr] md:gap-12">
-          <div className="fade-up">
-            <h2 className="font-display text-[32px] font-medium text-foreground md:text-5xl">
-              Notre Promesse
-            </h2>
-            <p className="mt-6 max-w-sm text-muted-foreground">
-              Chez 2M Parfumerie, chaque commande est une rencontre entre ton identité et le
-              parfum parfait. Nous ne vendons pas des flacons — nous livrons des émotions.
-            </p>
-            <Button asChild variant="outline" size="lg" className="mt-8">
-              <Link to="/contact">Nous contacter</Link>
-            </Button>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {promises.map(({ icon: Icon, title, body }, index) => (
-              <article
-                key={title}
-                className="fade-up rounded-lg border border-border bg-surface p-6 transition-all hover:border-accent hover:shadow-green"
-                style={{ animationDelay: `${index * 80}ms` }}
-              >
-                <Icon className="mb-6 size-8 text-accent drop-shadow-md" aria-hidden="true" />
-                <h3 className="font-display text-2xl text-foreground">{title}</h3>
-                <p className="mt-3 text-sm text-muted-foreground">{body}</p>
+      <section className="relative border-t-4 border-accent/20 bg-background py-10 md:py-14">
+        <div className="section-shell">
+          <h2 className="mb-6 text-center font-display text-[28px] font-medium text-foreground md:text-4xl">Notre promesse</h2>
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
+            {promises.map(({ icon: Icon, title, body }) => (
+              <article key={title} className="rounded-lg border border-border bg-surface p-4">
+                <Icon className="mb-3 size-6 text-accent" aria-hidden="true" />
+                <h3 className="font-display text-lg leading-tight text-foreground md:text-xl">{title}</h3>
+                <p className="mt-1.5 text-[13px] leading-snug text-muted-foreground">{body}</p>
               </article>
             ))}
+          </div>
+          <div className="mt-6 text-center">
+            <Button asChild variant="outline" size="lg">
+              <Link to="/contact">Nous contacter</Link>
+            </Button>
           </div>
         </div>
       </section>

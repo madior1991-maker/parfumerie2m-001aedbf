@@ -86,6 +86,20 @@ const collectionFamilies = [
   { key: "originaux", label: "Originaux et cadeaux", hint: "Grandes maisons", items: ["Parfums authentiques", "Collections privées", "Coffrets"] },
 ] as const;
 
+function groupByFamily(all: SiteCollection[]) {
+  return collectionFamilies.map((family, index) => {
+    const known = family.items
+      .map((label) => all.find((item) => item.label === label))
+      .filter((item): item is SiteCollection => Boolean(item));
+    // Les catégories créées dans l'admin vont avec les créations.
+    const extra =
+      index === 1
+        ? all.filter((item) => !collectionFamilies.some((f) => (f.items as readonly string[]).includes(item.label)))
+        : [];
+    return { ...family, collections: [...known, ...extra] };
+  });
+}
+
 const footerPages = [
   { label: "Boutique", to: "/boutique" },
   { label: "Nos packs", to: "/nos-packs" },
@@ -216,38 +230,53 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
               <div
                 id="menu-collections"
                 className={cn(
-                  "absolute left-1/2 top-full z-50 w-[520px] -translate-x-1/2 pt-3 transition-all duration-200",
+                  "absolute left-1/2 top-full z-50 w-[640px] -translate-x-1/2 pt-3 transition-all duration-200",
                   collectionsOpen ? "visible opacity-100" : "invisible opacity-0",
                 )}
               >
-                <div className="grid grid-cols-2 gap-1 rounded-lg border border-border bg-card p-3 shadow-elegant">
-                  {allCollections.map((item) => (
-                    <Link
-                      key={item.label}
-                      to={item.to}
-                      search={collectionSearch(item)}
-                      className="rounded-md px-3 py-2 transition-colors hover:bg-surface-alt"
-                    >
-                      <span className="block text-sm font-medium text-foreground">{item.label}</span>
-                      <span className="block text-xs text-accent">{item.price}</span>
-                    </Link>
+                <div className="grid grid-cols-3 gap-x-2 gap-y-1 rounded-lg border border-border bg-card p-3 shadow-elegant">
+                  {groupByFamily(allCollections).map((family) => (
+                    <div key={family.key} className="min-w-0">
+                      <p className="px-3 pb-1 pt-1 text-[11px] font-bold uppercase tracking-[0.14em] text-accent">
+                        {family.label}
+                        <span className="block text-[10.5px] font-semibold normal-case tracking-normal text-muted-foreground">{family.hint}</span>
+                      </p>
+                      {family.collections.map((item) => (
+                        <Link
+                          key={item.label}
+                          to={item.to}
+                          search={collectionSearch(item)}
+                          className="block rounded-md px-3 py-1.5 transition-colors hover:bg-surface-alt"
+                        >
+                          <span className="block text-sm font-medium text-foreground">{item.label}</span>
+                          <span className="block text-xs text-accent">{item.price}</span>
+                        </Link>
+                      ))}
+                    </div>
                   ))}
                   <Link
                     to="/boutique"
                     search={{}}
-                    className="col-span-2 mt-1 rounded-md border-t border-border px-3 pt-3 text-sm font-semibold text-accent hover:underline"
+                    className="col-span-3 mt-1 rounded-md border-t border-border px-3 pt-3 text-sm font-semibold text-accent hover:underline"
                   >
                     Voir tous les parfums →
                   </Link>
                   <Link
                     to="/catalogues"
-                    className="col-span-2 rounded-md px-3 pb-1 text-xs text-muted-foreground hover:text-accent hover:underline"
+                    className="col-span-3 rounded-md px-3 pb-1 text-xs text-muted-foreground hover:text-accent hover:underline"
                   >
                     Télécharger les catalogues PDF
                   </Link>
                 </div>
               </div>
             </div>
+            <Link
+              to="/nos-packs"
+              search={{ pack: "fin-annee" }}
+              className="nav-luxe inline-flex min-h-9 items-center gap-1.5 rounded-full bg-[#D4B26A] px-4 !text-[#0A2E22] transition-colors hover:bg-[#E2C88E]"
+            >
+              <span aria-hidden="true">🎁</span> Pack cadeau
+            </Link>
             {navItems.map((item) => (
               <Link
                 key={item.to}
@@ -383,16 +412,8 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
           </div>
           <p className="caption-luxe mb-1 mt-6 text-accent">Collections</p>
           <div className="grid">
-            {collectionFamilies.map((family, index) => {
-              const known = family.items
-                .map((label) => allCollections.find((item) => item.label === label))
-                .filter((item): item is SiteCollection => Boolean(item));
-              // Les catégories créées dans l'admin vont avec les créations.
-              const extra =
-                index === 1
-                  ? allCollections.filter((item) => !collectionFamilies.some((f) => (f.items as readonly string[]).includes(item.label)))
-                  : [];
-              const items = [...known, ...extra];
+            {groupByFamily(allCollections).map((family) => {
+              const items = family.collections;
               const isOpen = mobileFamily === family.key;
               return (
                 <div key={family.key} className="border-b border-border">
