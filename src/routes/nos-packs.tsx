@@ -287,9 +287,11 @@ function CoffretSignaturePage() {
         // Catégorie suivante encore vide : on y passe tout de suite.
         const nextStep = cadeauGroups.findIndex((g) => !next.some((id) => id.startsWith(`${g.key}:`)));
         if (nextStep >= 0) {
-          setCadeauStep(nextStep);
+          // On remonte d'abord jusqu'aux étapes, puis on affiche la catégorie suivante :
+          // la liste suivante est plus courte, et la changer avant ferait sauter la page jusqu'au pied de page.
           setQuery("");
-          requestAnimationFrame(() => document.getElementById("cadeau-steps")?.scrollIntoView({ behavior: "smooth", block: "start" }));
+          document.getElementById("cadeau-steps")?.scrollIntoView({ behavior: "smooth", block: "start" });
+          window.setTimeout(() => setCadeauStep(nextStep), 450);
         }
         return { ...current, cadeau: next };
       }
