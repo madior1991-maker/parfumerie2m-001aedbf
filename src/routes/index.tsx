@@ -92,12 +92,15 @@ const homeCollections = [
 ] as const;
 
 const featuredPackCards = [
-  { title: "Pack Haqqi", subtitle: "3 parfums", price: "10 000 FCFA", imageBase: "pack-haqqi-3-wide", pack: "haqqi" as const },
-  { title: "Pack SCENTLAB", subtitle: "3 parfums", price: "15 000 FCFA", imageBase: "pack-scentlab-3-wide", pack: "scentlab" as const },
+  // regular : les mêmes parfums à l'unité (Haqqi 4 000 F, SCENTLAB 6 000 F, poche 2 500 F).
+  { title: "Pack Haqqi", subtitle: "3 parfums", price: "10 000 FCFA", regular: "12 000 F", saving: "2 000 F", imageBase: "pack-haqqi-3-wide", pack: "haqqi" as const },
+  { title: "Pack SCENTLAB", subtitle: "3 parfums", price: "15 000 FCFA", regular: "18 000 F", saving: "3 000 F", imageBase: "pack-scentlab-3-wide", pack: "scentlab" as const },
   {
     title: "Parfums de poche",
     subtitle: "5 parfums",
     price: "10 000 FCFA",
+    regular: "12 500 F",
+    saving: "2 500 F",
     imageBase: "pack-poche-5-wide",
     pack: "pocket" as const,
   },
@@ -442,7 +445,10 @@ function Index() {
                       {pack.title}
                     </h3>
                     <p className="mt-2 text-sm text-muted-foreground">{pack.subtitle}</p>
-                    <p className="mt-1 font-body text-lg font-semibold text-accent">{pack.price}</p>
+                    <p className="mt-1 font-body text-lg font-semibold text-accent">
+                      {pack.price} <s className="ml-1 text-sm font-medium text-muted-foreground">{pack.regular}</s>
+                    </p>
+                    <p className="mt-1 text-[13px] font-semibold text-accent/90">Tu économises {pack.saving}</p>
                   </div>
                   <div className="mt-auto">
                     <Button

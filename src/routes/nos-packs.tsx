@@ -39,6 +39,10 @@ const cadeauGroups: { key: CadeauGroup; label: string; detail: string }[] = [
   { key: "parfums-de-chambre", label: "Parfum de chambre", detail: "Room spray SCENTLAB 500 ml" },
 ];
 const CADEAU_VALUE = 42000;
+// Prix des mêmes parfums achetés à l'unité : Haqqi 4 000 F, SCENTLAB 6 000 F, poche 2 500 F.
+const UNIT_PRICE: Record<CoffretCollection, number> = { cadeau: CADEAU_VALUE, haqqi: 4000, scentlab: 6000, pocket: 2500 };
+const regularPrice = (collection: CoffretCollection, count: number) =>
+  collection === "cadeau" ? CADEAU_VALUE : UNIT_PRICE[collection] * count;
 
 const coffretOffers: Record<
   CoffretCollection,
@@ -370,7 +374,8 @@ function CoffretSignaturePage() {
                         </>
                       ) : (
                         <>
-                          {item.requiredCount} pour {formatShortPrice(item.price)}
+                          {item.requiredCount} pour {formatShortPrice(item.price)}{" "}
+                          <s className="text-foreground/55">{formatShortPrice(regularPrice(collection, item.requiredCount))}</s>
                         </>
                       )}
                     </span>
