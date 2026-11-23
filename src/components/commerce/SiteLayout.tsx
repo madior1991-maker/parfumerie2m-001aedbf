@@ -79,6 +79,13 @@ const siteCollections: SiteCollection[] = [
   { label: "Parfums de chambre", price: "5 000 F", to: "/collections/parfums-de-chambre" },
 ];
 
+// Menu téléphone : les 12 collections rangées en 3 familles repliables.
+const collectionFamilies = [
+  { key: "petits-prix", label: "Petits prix", hint: "Dès 4 000 F", items: ["Haqqi", "SCENTLAB", "Parfums de poche", "Parfums de chambre"] },
+  { key: "creations", label: "Créations", hint: "Dès 12 000 F", items: ["Takeoff", "Parfums Dubai", "Fragrance Library", "Callisto Paris", "Soie Sublime Paris"] },
+  { key: "originaux", label: "Originaux et cadeaux", hint: "Grandes maisons", items: ["Parfums authentiques", "Collections privées", "Coffrets"] },
+] as const;
+
 const footerPages = [
   { label: "Boutique", to: "/boutique" },
   { label: "Nos packs", to: "/nos-packs" },
@@ -118,6 +125,7 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   const [collectionsOpen, setCollectionsOpen] = useState(false);
   const [helpOpen, setHelpOpen] = useState(false);
+  const [mobileFamily, setMobileFamily] = useState<string | null>(null);
   const [cartOpen, setCartOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { itemCount } = useCart();
@@ -133,6 +141,7 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     setOpen(false);
+    setMobileFamily(null);
     setCollectionsOpen(false);
     setHelpOpen(false);
   }, [location.pathname, location.searchStr]);
@@ -339,21 +348,28 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
         style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
       >
         <div className="flex-1 overflow-y-auto pb-4">
-          <p className="caption-luxe mb-2 text-accent">Collections</p>
-          <div className="grid grid-cols-2 gap-2">
-            {allCollections.map((item) => (
-              <Link
-                key={item.label}
-                to={item.to}
-                search={collectionSearch(item)}
-                className="rounded-lg border border-border bg-card px-3 py-2"
-              >
-                <span className="block truncate text-[14px] font-medium leading-tight text-foreground">{item.label}</span>
-                <span className="mt-0.5 block truncate text-[11px] text-accent">{item.price}</span>
-              </Link>
-            ))}
-          </div>
-          <div className="mt-6 grid">
+          <Link
+            to="/nos-packs"
+            search={{ pack: "fin-annee" }}
+            className="flex items-center gap-3 rounded-2xl bg-[#0E3B2C] p-2.5 pr-4 text-[#F7F1E4] shadow-md"
+          >
+            <img
+              src="/images/optimized/pack-cadeau-fin-annee-w400.webp"
+              alt=""
+              width={56}
+              height={56}
+              className="size-14 shrink-0 rounded-xl object-cover"
+            />
+            <span className="min-w-0 flex-1">
+              <span className="block text-[11px] font-bold uppercase tracking-[0.14em] text-[#D4B26A]">Offre de fin d’année</span>
+              <span className="block font-display text-[20px] leading-tight text-[#F7F1E4]">Pack cadeau</span>
+              <span className="block text-[12.5px] text-[#F7F1E4]/85">
+                <b className="text-[#D4B26A]">35 000 F</b> au lieu de <s>42 000 F</s>
+              </span>
+            </span>
+            <span aria-hidden="true" className="text-xl text-[#D4B26A]">→</span>
+          </Link>
+          <div className="mt-3 grid">
             {navItems.map((item) => (
               <Link
                 key={item.to}
@@ -364,6 +380,52 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
                 {item.label}
               </Link>
             ))}
+          </div>
+          <p className="caption-luxe mb-1 mt-6 text-accent">Collections</p>
+          <div className="grid">
+            {collectionFamilies.map((family, index) => {
+              const known = family.items
+                .map((label) => allCollections.find((item) => item.label === label))
+                .filter((item): item is SiteCollection => Boolean(item));
+              // Les catégories créées dans l'admin vont avec les créations.
+              const extra =
+                index === 1
+                  ? allCollections.filter((item) => !collectionFamilies.some((f) => (f.items as readonly string[]).includes(item.label)))
+                  : [];
+              const items = [...known, ...extra];
+              const isOpen = mobileFamily === family.key;
+              return (
+                <div key={family.key} className="border-b border-border">
+                  <button
+                    type="button"
+                    aria-expanded={isOpen}
+                    onClick={() => setMobileFamily(isOpen ? null : family.key)}
+                    className="flex w-full items-center justify-between py-3 text-left"
+                  >
+                    <span className="text-[16px] font-semibold text-foreground">{family.label}</span>
+                    <span className="flex items-center gap-2 text-[12px] font-semibold text-accent">
+                      {family.hint}
+                      <ChevronDown aria-hidden="true" className={cn("size-4 transition-transform", isOpen && "rotate-180")} />
+                    </span>
+                  </button>
+                  {isOpen && (
+                    <div className="grid grid-cols-2 gap-2 pb-3">
+                      {items.map((item) => (
+                        <Link
+                          key={item.label}
+                          to={item.to}
+                          search={collectionSearch(item)}
+                          className="rounded-lg border border-border bg-card px-3 py-2"
+                        >
+                          <span className="block truncate text-[14px] font-medium leading-tight text-foreground">{item.label}</span>
+                          <span className="mt-0.5 block truncate text-[11px] text-accent">{item.price}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
           <p className="caption-luxe mb-2 mt-6 text-accent">Aide</p>
           <div className="grid grid-cols-2 gap-x-4">
