@@ -20,27 +20,27 @@ export const faqs = [
   {
     question: "Comment passer une commande ?",
     answer:
-      "Trouvez votre parfum dans la boutique et cliquez sur « Commander » : WhatsApp s'ouvre avec le parfum déjà indiqué dans le message. Vous pouvez aussi composer votre pack sur la page « Compose ton pack », ou nous appeler au 76 192 34 41 ou au 78 144 17 66.",
+      "Trouve ton parfum dans la boutique et clique sur « Commander » : WhatsApp s'ouvre avec le parfum déjà indiqué dans le message. Tu peux aussi composer ton pack sur la page « Compose ton pack », ou nous appeler au 76 192 34 41 ou au 78 144 17 66.",
   },
   {
     question: "Comment je paie ?",
     answer:
-      "La commande se finalise avec le gérant, sur WhatsApp ou par téléphone. Vous payez par Wave, Orange Money ou en espèces à la livraison. Il n'y a pas de paiement en ligne sur le site.",
+      "La commande se finalise avec le gérant, sur WhatsApp ou par téléphone. Tu paies par Wave, Orange Money ou en espèces à la livraison. Il n'y a pas de paiement en ligne sur le site.",
   },
   {
     question: "Puis-je retourner un produit si je ne suis pas satisfait(e) ?",
     answer:
-      "Si un flacon arrive cassé, qu'il fuit ou qu'il ne correspond pas à votre commande, envoyez-nous une photo sur WhatsApp dans les 24h après réception. Nous vous l'échangeons, sans frais.",
+      "Si un flacon arrive cassé, qu'il fuit ou qu'il ne correspond pas à ta commande, envoie-nous une photo sur WhatsApp dans les 24h après réception. On te l'échange, sans frais.",
   },
   {
     question: "Comment savoir quel parfum me correspond ?",
     answer:
-      "Faites le quiz « Trouve ton parfum » : 4 questions, 3 suggestions en 30 secondes. Vous pouvez aussi nous écrire sur WhatsApp en décrivant votre style, l'occasion et votre budget : nous vous proposerons 2 ou 3 parfums.",
+      "Fais le quiz « Trouve ton parfum » : 4 questions, 3 suggestions en 30 secondes. Tu peux aussi nous écrire sur WhatsApp en décrivant ton style, l'occasion et ton budget : on te propose 2 ou 3 parfums.",
   },
   {
     question: "Livrez-vous dans les régions du Sénégal ?",
     answer:
-      "Oui, partout au Sénégal, en 24 à 48h pour 2 000 FCFA. Écrivez-nous sur WhatsApp pour confirmer le délai et le mode de livraison pour votre ville.",
+      "Oui, partout au Sénégal, en 24 à 48h pour 2 000 FCFA. Écris-nous sur WhatsApp pour confirmer le délai et le mode de livraison pour ta ville.",
   },
   {
     question: "Quelle est la différence entre vos collections ?",

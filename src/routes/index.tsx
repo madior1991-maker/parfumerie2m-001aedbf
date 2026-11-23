@@ -138,7 +138,7 @@ const promises = [
   {
     icon: WhatsAppLogo,
     title: "Réponse en moins d'1h",
-    body: "Notre équipe WhatsApp est disponible 7j/7 pour vous aider à trouver votre fragrance.",
+    body: "Notre équipe WhatsApp est disponible 7j/7 pour t'aider à trouver ta fragrance.",
   },
   {
     icon: ShieldCheck,
@@ -148,7 +148,7 @@ const promises = [
   {
     icon: Truck,
     title: "Livraison Sénégal",
-    body: "Partout au Sénégal. Commandez avant 21h, nous confirmons le meilleur délai selon votre zone.",
+    body: "Partout au Sénégal. Commande avant 21h, on te confirme le meilleur délai selon ta zone.",
   },
   {
     icon: Handshake,
@@ -375,7 +375,7 @@ function Index() {
               Un parfum pour chaque budget
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-sm text-muted-foreground">
-              Onze collections, de 4 000 F à 130 000 F : nos créations inspirées des grands parfums,
+              Douze collections, de 4 000 F à 130 000 F : nos créations inspirées des grands parfums,
               les parfums orientaux de Dubai et les originaux des grandes maisons.
             </p>
           </div>
@@ -614,12 +614,12 @@ function Index() {
 
       <section className="relative border-t-4 border-accent/20 final-cta-bg border-t border-border py-16 md:py-20">
         <div className="section-shell mx-auto max-w-2xl text-center">
-          <p className="caption-luxe mb-4 text-accent">Trouvez votre signature</p>
+          <p className="caption-luxe mb-4 text-accent">Trouve ta signature</p>
           <h2 className="font-display text-[32px] leading-[1.2] text-foreground md:text-5xl">
-            Pas sûr de votre choix ? 4 questions suffisent.
+            Pas sûr de ton choix ? 4 questions suffisent.
           </h2>
           <p className="mt-4 text-muted-foreground">
-            Le quiz vous propose 3 parfums selon votre style, votre budget et le moment. Ou écrivez-nous
+            Le quiz te propose 3 parfums selon ton style, ton budget et le moment. Ou écris-nous
             directement, on s'occupe du reste.
           </p>
           <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
@@ -642,7 +642,7 @@ function Index() {
               Notre Promesse
             </h2>
             <p className="mt-6 max-w-sm text-muted-foreground">
-              Chez 2M Parfumerie, chaque commande est une rencontre entre votre identité et le
+              Chez 2M Parfumerie, chaque commande est une rencontre entre ton identité et le
               parfum parfait. Nous ne vendons pas des flacons — nous livrons des émotions.
             </p>
             <Button asChild variant="outline" size="lg" className="mt-8">

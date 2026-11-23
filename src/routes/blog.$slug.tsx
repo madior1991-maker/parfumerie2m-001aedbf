@@ -39,7 +39,7 @@ export const Route = createFileRoute("/blog/$slug")({
     const title = article ? `${article.title} | 2M Parfumerie` : "Article blog | 2M Parfumerie";
     const description = article
       ? article.excerpt
-      : "Découvrez les conseils parfum de 2M Parfumerie.";
+      : "Découvre les conseils parfum de 2M Parfumerie.";
 
     return {
       meta: [

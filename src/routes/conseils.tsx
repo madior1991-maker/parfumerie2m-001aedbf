@@ -32,12 +32,12 @@ function AdvicePage() {
     {
       icon: Moon,
       title: "Pour le soir",
-      text: "Osez l’ambre, le cuir, la tonka ou l’oud lorsque vous cherchez une présence plus sensuelle.",
+      text: "Ose l’ambre, le cuir, la tonka ou l’oud quand tu cherches une présence plus sensuelle.",
     },
     {
       icon: Droplets,
       title: "Pour durer",
-      text: "Vaporisez sur peau hydratée, textile léger et points de chaleur, sans saturer votre entourage.",
+      text: "Vaporise sur peau hydratée, textile léger et points de chaleur, sans saturer ton entourage.",
     },
   ];
   return (
@@ -48,7 +48,7 @@ function AdvicePage() {
             eyebrow="Conseils"
             as="h1"
             title="Choisir un parfum, c’est choisir une manière d’entrer."
-            text="Quelques repères simples pour trouver un sillage qui correspond à votre rythme et à votre présence."
+            text="Quelques repères simples pour trouver un sillage qui correspond à ton rythme et à ta présence."
           />
           <div className="grid gap-4 md:grid-cols-3 md:gap-5">
             {advice.map(({ icon: Icon, title, text }, index) => (

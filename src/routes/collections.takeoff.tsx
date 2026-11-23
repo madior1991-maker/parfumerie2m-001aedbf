@@ -39,7 +39,7 @@ export const Route = createFileRoute("/collections/takeoff")({
       collection="takeoff"
       eyebrow="Collection Takeoff — Scent of Journey"
       h1="Takeoff — Scent of Journey, la collection voyage de 2M Parfumerie"
-      intro="Takeoff est la collection signature de 2M Parfumerie : des parfums inspirés des grandes villes du monde — Paris, New York, Dubai, Rome, Lisbon, Capri et bien d'autres. Chaque flacon (Eau de Parfum, 100 ml) est à 25 000 FCFA. Les 2 à 50 000 FCFA, livraison offerte. Commandez sur WhatsApp, livraison rapide à Dakar, 24 à 48h en régions."
+      intro="Takeoff est la collection signature de 2M Parfumerie : des parfums inspirés des grandes villes du monde — Paris, New York, Dubai, Rome, Lisbon, Capri et bien d'autres. Chaque flacon (Eau de Parfum, 100 ml) est à 25 000 FCFA. Les 2 à 50 000 FCFA, livraison offerte. Commande sur WhatsApp, livraison rapide à Dakar, 24 à 48h en régions."
       heroImage={takeoffMoscow}
       heroImageAlt="Parfum Takeoff Moscow, inspiré de Xerjoff La Capitale"
     >
@@ -59,8 +59,8 @@ export const Route = createFileRoute("/collections/takeoff")({
               Commander en gros
             </h2>
             <p className="mx-auto mt-5 max-w-xl text-base leading-[1.9] text-muted-foreground md:mx-0">
-              Vous revendez ou souhaitez équiper votre commerce en parfums Takeoff ? À partir de 6
-              unités, bénéficiez de tarifs de gros — communiqués directement sur demande via
+              Tu revends ou tu veux équiper ton commerce en parfums Takeoff ? À partir de 6
+              unités, profite de tarifs de gros — communiqués directement sur demande via
               WhatsApp.
             </p>
             <Button asChild variant="whatsapp" size="lg" className="mt-8">

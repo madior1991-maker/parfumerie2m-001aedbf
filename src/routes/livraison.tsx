@@ -28,7 +28,7 @@ function DeliveryPage() {
     {
       icon: WhatsAppLogo,
       title: "Commande",
-      text: "Envoyez votre choix sur WhatsApp avec le parfum, l’édition et vos coordonnées.",
+      text: "Envoie ton choix sur WhatsApp avec le parfum, l’édition et tes coordonnées.",
     },
     {
       icon: Clock,
@@ -38,7 +38,7 @@ function DeliveryPage() {
     {
       icon: MapPinned,
       title: "Réception",
-      text: "Vous payez à réception par Wave, Orange Money ou en espèces.",
+      text: "Tu paies à réception par Wave, Orange Money ou en espèces.",
     },
   ];
   const rates = [

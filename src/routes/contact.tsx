@@ -184,7 +184,7 @@ function ContactPage() {
             <div className="my-6 h-px bg-border" />
             <h3 className="mb-4 font-display text-xl text-foreground">Zone de livraison</h3>
             <p className="text-[13px] leading-[1.8] text-muted-foreground">
-              Livraison disponible partout au Sénégal, avec confirmation du délai selon votre ville
+              Livraison disponible partout au Sénégal, avec confirmation du délai selon ta ville
               ou région.
             </p>
             <span className="caption-luxe mt-4 block text-accent">

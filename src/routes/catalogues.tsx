@@ -10,7 +10,7 @@ import { displayPhone, secondPhone, whatsappUrl } from "@/lib/perfume-data";
 const URL = "https://www.2mparfumeriedk.com/catalogues";
 const TITLE = "Catalogues PDF à télécharger | 2M Parfumerie Dakar";
 const DESC =
-  "Téléchargez gratuitement les catalogues 2M Parfumerie : Haqqi, SCENTLAB, Takeoff, Parfums de poche, Parfums Dubai, parfums authentiques, Callisto Paris, collections privées, coffrets, Fragrance Library et Soie Sublime Paris.";
+  "Télécharge gratuitement les catalogues 2M Parfumerie : Haqqi, SCENTLAB, Takeoff, Parfums de poche, Parfums Dubai, parfums authentiques, Callisto Paris, collections privées, coffrets, Fragrance Library, Soie Sublime Paris et parfums de chambre.";
 
 export const Route = createFileRoute("/catalogues")({
   head: () => ({
@@ -34,8 +34,8 @@ function CataloguesPage() {
               Nos catalogues, à télécharger et à partager
             </h1>
             <p className="mx-auto mt-5 max-w-2xl text-muted-foreground md:mx-0">
-              Chaque collection a son catalogue, avec les senteurs et les prix. Gardez-le sur votre téléphone, envoyez-le à
-              vos proches, puis commandez sur WhatsApp au {displayPhone.replace("+221 ", "")}.
+              Chaque collection a son catalogue, avec les senteurs et les prix. Garde-le sur ton téléphone, envoie-le à
+              tes proches, puis commande sur WhatsApp au {displayPhone.replace("+221 ", "")}.
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-3 md:justify-start">
               <Button asChild size="lg" className="bg-accent text-primary-foreground hover:bg-accent/90">

@@ -398,7 +398,7 @@ function ProductTemplate({ product, products }: { product: BoutiqueProduct; prod
       <section className="bg-background py-16 md:py-20">
         <div className="section-shell">
           <h2 className="mb-12 text-center font-display text-[32px] text-foreground md:text-5xl">
-            Vous aimerez aussi
+            Tu aimeras aussi
           </h2>
           <div className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
             {similar.map((item) => (

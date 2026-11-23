@@ -27,12 +27,12 @@ const values = [
   {
     icon: Gem,
     title: "La transparence avant tout",
-    body: "Chaque fiche dit ce que vous achetez : création inspirée ou parfum original. Chaque flacon est vérifié avant envoi.",
+    body: "Chaque fiche dit ce que tu achètes : création inspirée ou parfum original. Chaque flacon est vérifié avant envoi.",
   },
   {
     icon: Users,
     title: "Le parfum est personnel",
-    body: "Il n'existe pas un parfum universel. C'est pour ça qu'on prend le temps de vous connaître avant de vous conseiller.",
+    body: "Il n'existe pas un parfum universel. C'est pour ça qu'on prend le temps de te connaître avant de te conseiller.",
   },
   {
     icon: MapPin,
@@ -83,14 +83,14 @@ function AboutPage() {
               </p>
               <p>
                 Nous avons commencé par une passion, une sélection rigoureuse, et l'obsession d'une
-                seule chose : vous livrer exactement ce que vous attendez. Des créations inspirées des grands
+                seule chose : te livrer exactement ce que tu attends. Des créations inspirées des grands
                 parfums, présentées comme telles, et des originaux pour ceux qui veulent la grande
                 maison.
               </p>
               <p>
                 Aujourd'hui, nos douze collections couvrent tous les budgets — du SCENTLAB épuré aux
                 parfums Dubai orientaux — et notre équipe est disponible 7j/7 sur WhatsApp pour
-                vous guider vers votre signature personnelle.
+                te guider vers ta signature personnelle.
               </p>
             </div>
           </div>

@@ -81,7 +81,7 @@ export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => vo
         {!items.length ? (
           <div className="flex flex-1 flex-col items-center justify-center px-8 text-center">
             <ShoppingBag className="size-12 text-muted-foreground" aria-hidden="true" />
-            <p className="mt-6 font-display text-2xl text-foreground">Votre panier est vide.</p>
+            <p className="mt-6 font-display text-2xl text-foreground">Ton panier est vide.</p>
             <Button asChild variant="outline" className="mt-8" onClick={onClose}>
               <Link to="/boutique" search={{}}>
                 Visiter la boutique
