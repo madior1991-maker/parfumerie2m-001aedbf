@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Volume2, VolumeX } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -15,12 +15,25 @@ const videos = [
   { key: "cadeau", label: "Cadeau", src: "/videos/tuto-packs.mp4?v=2", poster: "/videos/tuto-packs-poster.jpg?v=2" },
   { key: "haqqi", label: "Haqqi", src: "/videos/tuto-pack-haqqi.mp4", poster: "/videos/tuto-pack-haqqi-poster.jpg" },
   { key: "scentlab", label: "SCENTLAB", src: "/videos/tuto-pack-scentlab.mp4", poster: "/videos/tuto-pack-scentlab-poster.jpg" },
+  { key: "pocket", label: "Poche", src: "/videos/tuto-pack-poche.mp4", poster: "/videos/tuto-pack-poche-poster.jpg" },
 ] as const;
 
-export function TutoVideoSection() {
+export type TutoKey = (typeof videos)[number]["key"];
+
+// `pack` : le tuto à montrer d'abord (celui du pack choisi sur la page).
+export function TutoVideoSection({ pack }: { pack?: TutoKey }) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [muted, setMuted] = useState(true);
-  const [current, setCurrent] = useState(0);
+  const [current, setCurrent] = useState(() => Math.max(0, videos.findIndex((item) => item.key === pack)));
+
+  useEffect(() => {
+    if (!pack) return;
+    const index = videos.findIndex((item) => item.key === pack);
+    if (index >= 0) {
+      setCurrent(index);
+      setMuted(true);
+    }
+  }, [pack]);
   const video = videos[current];
 
   const toggleSound = () => {
@@ -39,7 +52,7 @@ export function TutoVideoSection() {
     <section aria-labelledby="tuto-pack-title" className="border-b border-border bg-surface py-12 md:py-16">
       <div className="section-shell grid items-center gap-8 md:grid-cols-[340px_1fr] md:gap-14">
         <div className="mx-auto w-full max-w-[340px] md:mx-0">
-        <div role="tablist" aria-label="Choisis le tuto" className="mb-3 grid grid-cols-3 gap-1 rounded-full border border-border bg-background p-1">
+        <div role="tablist" aria-label="Choisis le tuto" className="mb-3 grid grid-cols-4 gap-1 rounded-full border border-border bg-background p-1">
           {videos.map((item, index) => (
             <button
               key={item.key}
@@ -47,7 +60,7 @@ export function TutoVideoSection() {
               role="tab"
               aria-selected={index === current}
               onClick={() => { setCurrent(index); setMuted(true); }}
-              className={`rounded-full px-3 py-2 text-[14px] font-semibold transition-colors ${index === current ? "bg-primary text-primary-foreground" : "text-foreground hover:bg-muted"}`}
+              className={`rounded-full px-1.5 py-2 text-[13px] font-semibold transition-colors ${index === current ? "bg-primary text-primary-foreground" : "text-foreground hover:bg-muted"}`}
             >
               {item.label}
             </button>

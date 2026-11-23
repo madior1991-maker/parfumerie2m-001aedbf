@@ -47,7 +47,7 @@ const coffretOffers: Record<
   cadeau: { label: "Pack cadeau fin d'année", short: "Cadeau fin d'année", price: 35000, requiredCount: 4, imageBase: "pack-cadeau-fin-annee" },
   haqqi: { label: "Pack Haqqi", short: "Haqqi", price: 10000, requiredCount: 3, imageBase: "pack-haqqi-3" },
   scentlab: { label: "Pack SCENTLAB", short: "SCENTLAB", price: 15000, requiredCount: 3, imageBase: "pack-scentlab-3" },
-  pocket: { label: "Pack Parfums de poche", short: "Poche", price: 10000, requiredCount: 5, imageBase: "pocket-perfumes-homme" },
+  pocket: { label: "Pack Parfums de poche", short: "Poche", price: 10000, requiredCount: 5, imageBase: "pack-poche-5" },
 };
 
 type Gender = "Homme" | "Unisex" | "Femme";
@@ -303,7 +303,7 @@ function CoffretSignaturePage() {
 
   return (
     <SiteLayout>
-      <section id="pack" className="scroll-mt-16 bg-background pt-20 pb-40 md:pt-28 md:pb-44">
+      <section id="pack" className="scroll-mt-16 bg-background pt-20 pb-10 md:pt-28 md:pb-16">
         <div className="section-shell">
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
@@ -392,6 +392,7 @@ function CoffretSignaturePage() {
             </p>
           )}
           <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-4">
+            {!isCadeau && (
             <input
               type="search"
               value={query}
@@ -400,6 +401,7 @@ function CoffretSignaturePage() {
               aria-label="Rechercher un parfum du pack"
               className="w-full rounded-full border border-border bg-card px-5 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30 md:max-w-sm"
             />
+            )}
             {showGender && (
               <div
                 className="grid gap-1 rounded-full bg-surface-alt p-1 md:w-[420px]"
@@ -542,7 +544,7 @@ function CoffretSignaturePage() {
       </section>
 
       <div id="tuto" className="scroll-mt-20">
-        <TutoVideoSection />
+        <TutoVideoSection pack={selectedCollection} />
       </div>
 
       <div className="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-primary pb-[max(10px,env(safe-area-inset-bottom))] pt-2 text-primary-foreground md:py-3 shadow-[0_-10px_30px_rgba(0,0,0,0.18)]">
