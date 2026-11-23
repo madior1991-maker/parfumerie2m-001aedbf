@@ -220,6 +220,7 @@ function CoffretSignaturePage() {
   });
   const [packOptions, setPackOptions] = useState(staticPackOptions);
   const [query, setQuery] = useState("");
+  const [barOpen, setBarOpen] = useState(false);
   const [gender, setGender] = useState<GenderTab>("Tous");
   // Pack cadeau : une catégorie à la fois, on passe à la suivante après chaque choix.
   const [cadeauStep, setCadeauStep] = useState(0);
@@ -544,7 +545,7 @@ function CoffretSignaturePage() {
         <TutoVideoSection />
       </div>
 
-      <div className="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-primary pb-[max(12px,env(safe-area-inset-bottom))] pt-2.5 text-primary-foreground md:py-3 shadow-[0_-10px_30px_rgba(0,0,0,0.18)]">
+      <div className="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-primary pb-[max(10px,env(safe-area-inset-bottom))] pt-2 text-primary-foreground md:py-3 shadow-[0_-10px_30px_rgba(0,0,0,0.18)]">
         {canSend && (
           <div className="pointer-events-none absolute inset-x-0 bottom-full flex justify-center px-3 pb-2">
             <span className="pack-hint block max-w-md rounded-2xl bg-[#D4B26A] px-4 py-2.5 text-center text-[15px] font-extrabold leading-snug text-[#0A2E22] shadow-xl">
@@ -553,7 +554,7 @@ function CoffretSignaturePage() {
           </div>
         )}
         <div className="section-shell md:flex md:items-center md:gap-6">
-          <div className="mb-2 flex min-h-[26px] flex-wrap gap-1.5 md:order-2 md:mb-0 md:flex-1 md:justify-center">
+          <div id="pack-selection" className={cn("mb-2 min-h-[26px] flex-wrap gap-1.5 md:order-2 md:mb-0 md:flex md:flex-1 md:justify-center", barOpen ? "flex" : "hidden")}>
             {selectedOptions.map((option) => (
               <span
                 key={option.id}
@@ -583,12 +584,23 @@ function CoffretSignaturePage() {
             ))}
           </div>
           <div className="flex items-center justify-between gap-3 md:contents">
-            <div className="min-w-0 md:order-1 md:shrink-0">
-              <p className="text-sm text-white/85">
-                {selectedOptions.length}/{offer.requiredCount} choisis · {offer.label}
+            <button
+              type="button"
+              onClick={() => setBarOpen((value) => !value)}
+              aria-expanded={barOpen}
+              aria-controls="pack-selection"
+              className="min-w-0 text-left md:pointer-events-none md:order-1 md:shrink-0"
+            >
+              <p className="text-[13px] text-white/85 md:text-sm">
+                {selectedOptions.length}/{offer.requiredCount} choisis
+                <span className="hidden md:inline"> · {offer.label}</span>
+                <span className="md:hidden"> {barOpen ? "▾" : "▴"}</span>
               </p>
-              <p className="font-display text-xl font-semibold leading-tight md:text-2xl">{formatShortPrice(offer.price)}</p>
-            </div>
+              <p className="font-display text-xl font-semibold leading-tight md:text-2xl">
+                {formatShortPrice(offer.price)}
+                {isCadeau && <span className="ml-2 font-body text-[12px] font-semibold text-[#D4B26A] md:hidden">+ poche offert</span>}
+              </p>
+            </button>
             {canSend ? (
               <a
                 href={whatsappUrl(buildWhatsAppMessage(selectedCollection, selectedOptions))}

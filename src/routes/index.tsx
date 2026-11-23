@@ -275,6 +275,31 @@ function Index() {
         <div className="relative z-10 grid items-stretch lg:min-h-[calc(100svh-5rem)] lg:grid-cols-[minmax(0,55fr)_minmax(0,45fr)]">
           <div className="section-shell z-10 order-1 flex items-center py-6 md:py-10 lg:w-auto lg:pl-[max(2rem,calc((100vw-1180px)/2))] lg:pr-10">
             <div className="max-w-2xl">
+              <Link
+                to="/nos-packs"
+                search={{ pack: "fin-annee" }}
+                className="fade-up mb-6 block overflow-hidden rounded-2xl border-2 border-[#D4B26A] bg-[#0E3B2C] !text-[#F7F1E4] shadow-xl transition-transform hover:-translate-y-0.5"
+              >
+                <div className="flex items-center gap-4 p-3 md:p-4">
+                  <img
+                    src="/images/optimized/pack-cadeau-fin-annee-w400.webp"
+                    alt="Pack cadeau : Takeoff, SCENTLAB, Haqqi et parfum de chambre"
+                    width={400}
+                    height={400}
+                    className="size-24 shrink-0 rounded-xl bg-white object-cover md:size-28"
+                  />
+                  <div className="min-w-0">
+                    <p className="text-[11px] font-bold uppercase tracking-[0.16em] !text-[#D4B26A]">Offre de fin d’année</p>
+                    <p className="font-display text-[26px] font-semibold leading-tight !text-[#F7F1E4] md:text-3xl">Pack cadeau</p>
+                    <p className="text-[13px] !text-[#F7F1E4]/85">4 parfums au choix + 1 parfum de poche offert</p>
+                    <p className="mt-1 flex flex-wrap items-baseline gap-x-2">
+                      <span className="rounded-md bg-[#D4B26A] px-2 py-0.5 text-lg font-extrabold !text-[#0A2E22]">35 000 F</span>
+                      <span className="text-[13px] !text-[#F7F1E4]/80">au lieu de <s>42 000 F</s></span>
+                    </p>
+                  </div>
+                </div>
+                <span className="block bg-[#D4B26A] py-2.5 text-center text-sm font-extrabold !text-[#0A2E22]">Composer mon pack cadeau →</span>
+              </Link>
               <h1
                 className="fade-up font-display text-4xl font-semibold leading-[1.1] text-foreground md:text-5xl xl:text-6xl"
                 style={{ animationDelay: "120ms" }}
