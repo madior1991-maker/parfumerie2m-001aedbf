@@ -12,10 +12,10 @@ const steps = [
 ];
 
 const videos = [
-  { key: "cadeau", label: "Cadeau", src: "/videos/tuto-packs.mp4?v=2", poster: "/videos/tuto-packs-poster.jpg?v=2" },
-  { key: "haqqi", label: "Haqqi", src: "/videos/tuto-pack-haqqi.mp4", poster: "/videos/tuto-pack-haqqi-poster.jpg" },
-  { key: "scentlab", label: "SCENTLAB", src: "/videos/tuto-pack-scentlab.mp4", poster: "/videos/tuto-pack-scentlab-poster.jpg" },
-  { key: "pocket", label: "Poche", src: "/videos/tuto-pack-poche.mp4", poster: "/videos/tuto-pack-poche-poster.jpg" },
+  { key: "cadeau", label: "Cadeau", src: "/videos/tuto-packs.mp4?v=3", poster: "/videos/tuto-packs-poster.jpg?v=3" },
+  { key: "haqqi", label: "Haqqi", src: "/videos/tuto-pack-haqqi.mp4?v=3", poster: "/videos/tuto-pack-haqqi-poster.jpg?v=3" },
+  { key: "scentlab", label: "SCENTLAB", src: "/videos/tuto-pack-scentlab.mp4?v=3", poster: "/videos/tuto-pack-scentlab-poster.jpg?v=3" },
+  { key: "pocket", label: "Poche", src: "/videos/tuto-pack-poche.mp4?v=3", poster: "/videos/tuto-pack-poche-poster.jpg?v=3" },
 ] as const;
 
 export type TutoKey = (typeof videos)[number]["key"];
