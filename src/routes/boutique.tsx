@@ -295,7 +295,7 @@ function BoutiquePage() {
                 size="lg"
                 className="h-auto max-w-full whitespace-normal break-words bg-accent px-6 py-3 text-center text-primary-foreground shadow-elegant ring-2 ring-accent/40 ring-offset-2 ring-offset-surface-alt animate-pulse hover:bg-accent/90"
               >
-                <Link to="/nos-packs" search={{ pack: "haqqi" }}>Pack Haqqi (3 parfums) — 10 000 FCFA</Link>
+                <Link to="/nos-packs" search={{ pack: "haqqi" }}>3 Haqqi pour 10 000 F</Link>
               </Button>
             )}
             {collection === "scentlab" && (
@@ -304,7 +304,7 @@ function BoutiquePage() {
                 size="lg"
                 className="h-auto max-w-full whitespace-normal break-words bg-accent px-6 py-3 text-center text-primary-foreground shadow-elegant ring-2 ring-accent/40 ring-offset-2 ring-offset-surface-alt animate-pulse hover:bg-accent/90"
               >
-                <Link to="/nos-packs" search={{ pack: "scentlab" }}>Pack SCENTLAB (3 parfums) — 15 000 FCFA</Link>
+                <Link to="/nos-packs" search={{ pack: "scentlab" }}>3 SCENTLAB pour 15 000 F</Link>
               </Button>
             )}
           </div>

@@ -51,7 +51,7 @@ export function PocketShowcase() {
             size="lg"
             className="h-auto max-w-full whitespace-normal break-words bg-accent px-6 py-3 text-center text-primary-foreground shadow-elegant ring-2 ring-accent/40 ring-offset-2 ring-offset-surface-alt animate-pulse hover:bg-accent/90"
           >
-            <Link to="/nos-packs" search={{ pack: "poche" }}>Pack Parfums de poche (5 parfums) — 10 000 FCFA</Link>
+            <Link to="/nos-packs" search={{ pack: "poche" }}>5 parfums de poche pour 10 000 F</Link>
           </Button>
         </div>
       </div>

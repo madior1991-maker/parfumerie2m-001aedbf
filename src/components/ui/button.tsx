@@ -25,7 +25,7 @@ const buttonVariants = cva(
       size: {
         default: "h-auto min-h-12 max-w-full whitespace-normal px-5 py-3 text-center leading-snug",
         sm: "h-11 px-4 text-xs",
-        lg: "h-auto min-h-14 max-w-full whitespace-normal px-6 py-3 text-center leading-snug sm:px-8",
+        lg: "h-auto min-h-14 max-w-full whitespace-normal px-5 py-3 text-center leading-snug tracking-[0.07em] sm:px-8 sm:tracking-[0.12em]",
         icon: "h-11 w-11",
       },
     },

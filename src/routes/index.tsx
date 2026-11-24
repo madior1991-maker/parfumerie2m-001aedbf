@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { ArrowDown, Check, Handshake, ShieldCheck, Truck } from "lucide-react";
 import React, { Suspense, useEffect, useState } from "react";
@@ -479,12 +480,16 @@ function Index() {
             </p>
           </div>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4">
-            {(showAllCollections ? homeCollections : homeCollections.slice(0, 6)).map((item, index) => (
+            {(showAllCollections ? homeCollections : homeCollections.slice(0, 8)).map((item, index) => (
               <Link
                 key={item.name}
                 to={item.to}
                 search={"collection" in item ? { collection: item.collection } : {}}
-                className="fade-up group overflow-hidden rounded-lg border border-border bg-card shadow-card transition-all hover:-translate-y-1 hover:border-accent"
+                className={cn(
+                  "fade-up group overflow-hidden rounded-lg border border-border bg-card shadow-card transition-all hover:-translate-y-1 hover:border-accent",
+                  // 6 cases sur téléphone et tablette, 8 sur ordinateur (2 rangées pleines de 4).
+                  !showAllCollections && index >= 6 && "hidden lg:block",
+                )}
                 style={{ animationDelay: `${index * 60}ms` }}
               >
                 <div className="aspect-[4/5] overflow-hidden bg-surface">

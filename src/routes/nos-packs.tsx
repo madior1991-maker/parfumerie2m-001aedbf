@@ -338,7 +338,7 @@ function CoffretSignaturePage() {
           </div>
 
           <StepTitle number={1}>Choisis ton pack</StepTitle>
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 md:max-w-5xl md:gap-4">
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 md:gap-4">
             {collectionOrder.map((collection) => {
               const item = coffretOffers[collection];
               const active = collection === selectedCollection;
@@ -350,7 +350,7 @@ function CoffretSignaturePage() {
                   onClick={() => choosePack(collection)}
                   aria-pressed={active}
                   className={cn(
-                    "relative rounded-xl border-[1.5px] bg-card p-1.5 pb-2 text-center transition-all md:flex md:items-center md:gap-4 md:p-3 md:text-left",
+                    "relative rounded-xl border-[1.5px] bg-card p-1.5 pb-2 text-center transition-all lg:flex lg:items-center lg:gap-4 lg:p-3 lg:text-left",
                     active
                       ? "border-accent bg-surface-alt ring-1 ring-accent"
                       : "border-border hover:border-accent",
@@ -361,21 +361,22 @@ function CoffretSignaturePage() {
                     alt=""
                     width={400}
                     height={400}
-                    className="aspect-square w-full rounded-lg object-cover md:size-24 md:w-24 md:shrink-0"
+                    className="aspect-square w-full rounded-lg object-cover lg:size-24 lg:w-24 lg:shrink-0"
                   />
                   <span className="block min-w-0">
-                    <span className="mt-1.5 block text-[15px] font-bold leading-tight text-foreground md:mt-0 md:text-lg">
+                    <span className="mt-1.5 block text-[15px] font-bold leading-tight text-foreground lg:mt-0 md:text-lg">
                       {item.short}
                     </span>
                     <span className="block text-[13px] font-medium text-foreground/80 md:mt-1 md:text-[15px]">
                       {collection === "cadeau" ? (
                         <>
-                          {formatShortPrice(item.price)} <s className="text-foreground/55">{formatShortPrice(CADEAU_VALUE)}</s>
+                          <span className="whitespace-nowrap">{formatShortPrice(item.price)}</span>{" "}
+                          <s className="whitespace-nowrap text-foreground/55">{formatShortPrice(CADEAU_VALUE)}</s>
                         </>
                       ) : (
                         <>
-                          {item.requiredCount} pour {formatShortPrice(item.price)}{" "}
-                          <s className="text-foreground/55">{formatShortPrice(regularPrice(collection, item.requiredCount))}</s>
+                          <span className="whitespace-nowrap">{item.requiredCount} pour {formatShortPrice(item.price)}</span>{" "}
+                          <s className="whitespace-nowrap text-foreground/55">{formatShortPrice(regularPrice(collection, item.requiredCount))}</s>
                         </>
                       )}
                     </span>
@@ -433,7 +434,7 @@ function CoffretSignaturePage() {
           </div>
 
           {isCadeau && (
-            <div id="cadeau-steps" className="scroll-mt-20 grid grid-cols-2 gap-2 sm:grid-cols-4 md:max-w-4xl">
+            <div id="cadeau-steps" className="scroll-mt-20 grid grid-cols-2 gap-2 sm:grid-cols-4 md:gap-4">
               {cadeauGroups.map((g, index) => {
                 const chosen = selectedOptions.find((o) => o.group === g.key);
                 const current = index === cadeauStep;

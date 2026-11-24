@@ -35,7 +35,7 @@ export const Route = createFileRoute("/collections/scentlab")({
       eyebrow="Collection SCENTLAB"
       h1="SCENTLAB à Dakar — Parfums de luxe livrés à Dakar"
       intro="SCENTLAB est une maison de parfumerie qui crée des fragrances inspirées des plus grands parfums de luxe au monde. Chez 2M Parfumerie, nous sommes ton revendeur officiel SCENTLAB à Dakar. Chaque flacon SCENTLAB est une Eau de Parfum longue tenue, disponible en livraison partout au Sénégal, avec confirmation directe avec le gérant. Découvre notre sélection complète de SCENTLAB Dakar et trouve ta signature olfactive."
-      ctaLabel="Pack SCENTLAB (3 parfums) — 15 000 FCFA"
+      ctaLabel="3 SCENTLAB pour 15 000 F"
       ctaHref="/nos-packs"
       ctaPack="scentlab"
     />
